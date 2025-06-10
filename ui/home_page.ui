@@ -13,14 +13,14 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget_campaigns">
-   <widget class="QTableWidget" name="visor_campaign">
+  <widget class="QWidget" name="centralwidget_bugs">
+   <widget class="QTableWidget" name="visor_bugs">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>60</y>
-      <width>761</width>
-      <height>511</height>
+      <y>90</y>
+      <width>771</width>
+      <height>441</height>
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
@@ -51,57 +51,134 @@
      <number>4</number>
     </property>
     <property name="columnCount">
-     <number>7</number>
+     <number>12</number>
     </property>
     <attribute name="horizontalHeaderVisible">
-     <bool>false</bool>
+     <bool>true</bool>
     </attribute>
     <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
+     <bool>true</bool>
     </attribute>
     <attribute name="horizontalHeaderHighlightSections">
      <bool>true</bool>
     </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
     <row/>
     <row/>
     <row/>
     <row/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
+    <column>
+     <property name="text">
+      <string>Status</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>System</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Creation time</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last update</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Service now ID</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Campaign</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Affected requirements</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Short description</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Long description</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Severity</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Impact</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Comments</string>
+     </property>
+    </column>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QLabel" name="home_page_title">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>550</y>
-      <width>259</width>
+      <x>40</x>
+      <y>10</y>
+      <width>251</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Bugs List</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>540</y>
+      <width>239</width>
       <height>26</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="homeButton_Layout">
      <item>
-      <widget class="QPushButton" name="new_campaign">
+      <widget class="QPushButton" name="add_bug_button">
        <property name="text">
-        <string>Nueva Campaña</string>
+        <string>Add bug</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="edit_campaign">
+      <widget class="QPushButton" name="edit_bug_button">
        <property name="text">
-        <string>Editar</string>
+        <string>Edit bug</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="delete_campaign">
+      <widget class="QPushButton" name="remove_bug_button">
        <property name="text">
-        <string>Eliminar</string>
+        <string>Remove bug</string>
        </property>
       </widget>
      </item>
@@ -114,7 +191,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>24</height>
+     <height>33</height>
     </rect>
    </property>
    <property name="font">
@@ -169,7 +246,7 @@
    <addaction name="menuAssets"/>
    <addaction name="menuStatistics"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar_campaign"/>
+  <widget class="QStatusBar" name="statusbar_bugs"/>
   <action name="actionNew_Campaign">
    <property name="text">
     <string>New Campaign</string>
