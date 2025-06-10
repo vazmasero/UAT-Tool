@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>801</width>
-    <height>547</height>
+    <width>850</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,26 +17,26 @@
    <widget class="QTableWidget" name="visor_campaign">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>40</y>
-      <width>521</width>
-      <height>391</height>
+      <x>40</x>
+      <y>60</y>
+      <width>761</width>
+      <height>511</height>
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOn</enum>
+     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
     </property>
     <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOn</enum>
+     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
     </property>
     <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::AdjustIgnored</enum>
+     <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
     </property>
     <property name="showGrid">
      <bool>true</bool>
     </property>
     <property name="gridStyle">
-     <enum>Qt::SolidLine</enum>
+     <enum>Qt::PenStyle::SolidLine</enum>
     </property>
     <property name="sortingEnabled">
      <bool>false</bool>
@@ -48,10 +48,10 @@
      <bool>false</bool>
     </property>
     <property name="rowCount">
-     <number>5</number>
+     <number>4</number>
     </property>
     <property name="columnCount">
-     <number>5</number>
+     <number>7</number>
     </property>
     <attribute name="horizontalHeaderVisible">
      <bool>false</bool>
@@ -66,57 +66,19 @@
     <row/>
     <row/>
     <row/>
-    <row/>
     <column/>
     <column/>
     <column/>
     <column/>
     <column/>
-   </widget>
-   <widget class="QPushButton" name="requirements_travel">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>60</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Requirements</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="case_travel">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>110</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test Cases</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="block_travel">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>160</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test Blocks</string>
-    </property>
+    <column/>
+    <column/>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>440</y>
+      <x>320</x>
+      <y>550</y>
       <width>259</width>
       <height>26</height>
      </rect>
@@ -146,17 +108,113 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar_campaign">
+  <widget class="QMenuBar" name="menubar_home">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>801</width>
-     <height>22</height>
+     <width>850</width>
+     <height>24</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <widget class="QMenu" name="menuCampaigns">
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Test Campaigns</string>
+    </property>
+    <addaction name="actionNew_Campaign"/>
+    <addaction name="actionView_Campaigns"/>
+   </widget>
+   <widget class="QMenu" name="menuTest_Cases">
+    <property name="title">
+     <string>Test Cases</string>
+    </property>
+    <addaction name="actionNew_Block"/>
+    <addaction name="actionNew_Case"/>
+    <addaction name="actionView_Cases"/>
+   </widget>
+   <widget class="QMenu" name="menuRequirements">
+    <property name="title">
+     <string>Requirements</string>
+    </property>
+    <addaction name="actionNew_Requirement"/>
+    <addaction name="actionView_Requirements"/>
+   </widget>
+   <widget class="QMenu" name="menuAssets">
+    <property name="title">
+     <string>Assets</string>
+    </property>
+    <addaction name="actionNew_Asset"/>
+    <addaction name="actionView_Assets"/>
+   </widget>
+   <widget class="QMenu" name="menuStatistics">
+    <property name="title">
+     <string>Statistics</string>
+    </property>
+   </widget>
+   <addaction name="menuCampaigns"/>
+   <addaction name="menuTest_Cases"/>
+   <addaction name="menuRequirements"/>
+   <addaction name="menuAssets"/>
+   <addaction name="menuStatistics"/>
   </widget>
   <widget class="QStatusBar" name="statusbar_campaign"/>
+  <action name="actionNew_Campaign">
+   <property name="text">
+    <string>New Campaign</string>
+   </property>
+  </action>
+  <action name="actionView_Campaigns">
+   <property name="text">
+    <string>View Campaigns</string>
+   </property>
+  </action>
+  <action name="actionNew_Block">
+   <property name="text">
+    <string>New Block</string>
+   </property>
+  </action>
+  <action name="actionNew_Case">
+   <property name="text">
+    <string>New Case</string>
+   </property>
+  </action>
+  <action name="actionView_Cases">
+   <property name="text">
+    <string>View Cases</string>
+   </property>
+  </action>
+  <action name="actionNew_Requirement">
+   <property name="text">
+    <string>New Requirement</string>
+   </property>
+  </action>
+  <action name="actionView_Requirements">
+   <property name="text">
+    <string>View Requirements</string>
+   </property>
+  </action>
+  <action name="actionNew_Asset">
+   <property name="text">
+    <string>New Asset</string>
+   </property>
+  </action>
+  <action name="actionView_Assets">
+   <property name="text">
+    <string>View Assets</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
