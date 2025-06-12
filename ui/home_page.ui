@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>90</y>
+      <y>130</y>
       <width>771</width>
-      <height>441</height>
+      <height>421</height>
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
@@ -31,6 +31,9 @@
     </property>
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::EditTrigger::AnyKeyPressed|QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed|QAbstractItemView::EditTrigger::SelectedClicked</set>
     </property>
     <property name="showGrid">
      <bool>true</bool>
@@ -151,11 +154,11 @@
      <string>Bugs List</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>540</y>
+      <y>560</y>
       <width>239</width>
       <height>26</height>
      </rect>
@@ -184,6 +187,87 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>41</x>
+      <y>90</y>
+      <width>510</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="searchfilter_layout">
+     <item>
+      <widget class="QLineEdit" name="searchBug_bar">
+       <property name="placeholderText">
+        <string>Search...</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="searchType">
+       <item>
+        <property name="text">
+         <string>Service now ID</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Short description</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacerSearch_bar">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="filterby_label">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Filter by:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="filterStatus">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string>Status</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="filterSystem">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string>System</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar_home">
    <property name="geometry">
@@ -191,7 +275,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>33</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="font">
