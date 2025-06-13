@@ -107,7 +107,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Affected requirements</string>
+      <string>Requirements affected</string>
      </property>
     </column>
     <column>
@@ -187,12 +187,12 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>41</x>
       <y>90</y>
-      <width>510</width>
+      <width>531</width>
       <height>24</height>
      </rect>
     </property>

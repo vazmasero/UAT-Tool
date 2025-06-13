@@ -121,19 +121,19 @@ class Ui_home_page(object):
 
         self.homeButton_Layout.addWidget(self.remove_bug_button)
 
-        self.widget = QWidget(self.centralwidget_bugs)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(41, 90, 510, 24))
-        self.searchfilter_layout = QHBoxLayout(self.widget)
+        self.layoutWidget1 = QWidget(self.centralwidget_bugs)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(41, 90, 531, 24))
+        self.searchfilter_layout = QHBoxLayout(self.layoutWidget1)
         self.searchfilter_layout.setObjectName(u"searchfilter_layout")
         self.searchfilter_layout.setContentsMargins(0, 0, 0, 0)
-        self.searchBug_bar = QLineEdit(self.widget)
+        self.searchBug_bar = QLineEdit(self.layoutWidget1)
         self.searchBug_bar.setObjectName(u"searchBug_bar")
         self.searchBug_bar.setClearButtonEnabled(True)
 
         self.searchfilter_layout.addWidget(self.searchBug_bar)
 
-        self.searchType = QComboBox(self.widget)
+        self.searchType = QComboBox(self.layoutWidget1)
         self.searchType.addItem("")
         self.searchType.addItem("")
         self.searchType.setObjectName(u"searchType")
@@ -144,7 +144,7 @@ class Ui_home_page(object):
 
         self.searchfilter_layout.addItem(self.spacerSearch_bar)
 
-        self.filterby_label = QLabel(self.widget)
+        self.filterby_label = QLabel(self.layoutWidget1)
         self.filterby_label.setObjectName(u"filterby_label")
         font1 = QFont()
         font1.setPointSize(10)
@@ -152,13 +152,13 @@ class Ui_home_page(object):
 
         self.searchfilter_layout.addWidget(self.filterby_label)
 
-        self.filterStatus = QComboBox(self.widget)
+        self.filterStatus = QComboBox(self.layoutWidget1)
         self.filterStatus.setObjectName(u"filterStatus")
         self.filterStatus.setEditable(True)
 
         self.searchfilter_layout.addWidget(self.filterStatus)
 
-        self.filterSystem = QComboBox(self.widget)
+        self.filterSystem = QComboBox(self.layoutWidget1)
         self.filterSystem.setObjectName(u"filterSystem")
         self.filterSystem.setEditable(True)
 
@@ -233,7 +233,7 @@ class Ui_home_page(object):
         ___qtablewidgetitem5 = self.visor_bugs.horizontalHeaderItem(5)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("home_page", u"Campaign", None));
         ___qtablewidgetitem6 = self.visor_bugs.horizontalHeaderItem(6)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("home_page", u"Affected requirements", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("home_page", u"Requirements affected", None));
         ___qtablewidgetitem7 = self.visor_bugs.horizontalHeaderItem(7)
         ___qtablewidgetitem7.setText(QCoreApplication.translate("home_page", u"Short description", None));
         ___qtablewidgetitem8 = self.visor_bugs.horizontalHeaderItem(8)

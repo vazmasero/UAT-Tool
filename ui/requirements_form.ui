@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -28,7 +28,7 @@
       <item>
        <widget class="QLabel" name="requirement_id_label">
         <property name="text">
-         <string>Identificador:</string>
+         <string>Identifier:</string>
         </property>
        </widget>
       </item>
@@ -42,7 +42,7 @@
       <item>
        <widget class="QLabel" name="requirement_sec_label">
         <property name="text">
-         <string>Sección:</string>
+         <string>System:</string>
         </property>
        </widget>
       </item>
@@ -56,7 +56,7 @@
       <item>
        <widget class="QLabel" name="requirement_sys_label">
         <property name="text">
-         <string>Sistema:</string>
+         <string>Section:</string>
         </property>
        </widget>
       </item>
@@ -70,7 +70,7 @@
       <item>
        <widget class="QLabel" name="requirement_def_label">
         <property name="text">
-         <string>Definición:</string>
+         <string>Definition:</string>
         </property>
        </widget>
       </item>
@@ -81,7 +81,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>320</x>
@@ -94,14 +94,14 @@
     <item>
      <widget class="QPushButton" name="accept_requirement">
       <property name="text">
-       <string>Aceptar</string>
+       <string>Accept</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="cancel_requirement">
       <property name="text">
-       <string>Cancelar</string>
+       <string>Cancel</string>
       </property>
      </widget>
     </item>
