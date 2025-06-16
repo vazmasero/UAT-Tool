@@ -28,7 +28,7 @@
       <item>
        <widget class="QLabel" name="requirement_id_label">
         <property name="text">
-         <string>ID:</string>
+         <string>Name</string>
         </property>
        </widget>
       </item>
@@ -42,40 +42,12 @@
       <item>
        <widget class="QLabel" name="requirement_sec_label">
         <property name="text">
-         <string>System:</string>
+         <string>EASA ID:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox"/>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="requirement_sys_label">
-        <property name="text">
-         <string>Section</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBox_2"/>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="requirement_def_label">
-        <property name="text">
-         <string>Definition:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="requirement_def_input"/>
+       <widget class="QLineEdit" name="requirement_id_input_2"/>
       </item>
      </layout>
     </item>

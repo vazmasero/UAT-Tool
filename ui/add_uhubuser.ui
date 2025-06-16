@@ -28,7 +28,7 @@
       <item>
        <widget class="QLabel" name="requirement_id_label">
         <property name="text">
-         <string>ID:</string>
+         <string>Name:</string>
         </property>
        </widget>
       </item>
@@ -42,12 +42,12 @@
       <item>
        <widget class="QLabel" name="requirement_sec_label">
         <property name="text">
-         <string>System:</string>
+         <string>Email:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox"/>
+       <widget class="QLineEdit" name="requirement_def_input_2"/>
       </item>
      </layout>
     </item>
@@ -56,12 +56,12 @@
       <item>
        <widget class="QLabel" name="requirement_sys_label">
         <property name="text">
-         <string>Section</string>
+         <string>Password:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_2"/>
+       <widget class="QLineEdit" name="requirement_def_input_3"/>
       </item>
      </layout>
     </item>
@@ -70,7 +70,7 @@
       <item>
        <widget class="QLabel" name="requirement_def_label">
         <property name="text">
-         <string>Definition:</string>
+         <string>Jurisdiction:</string>
         </property>
        </widget>
       </item>

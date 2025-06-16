@@ -28,7 +28,7 @@
       <item>
        <widget class="QLabel" name="requirement_id_label">
         <property name="text">
-         <string>ID:</string>
+         <string>Name:</string>
         </property>
        </widget>
       </item>
@@ -42,12 +42,12 @@
       <item>
        <widget class="QLabel" name="requirement_sec_label">
         <property name="text">
-         <string>System:</string>
+         <string>Reason:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox"/>
+       <widget class="QLineEdit" name="requirement_id_input_2"/>
       </item>
      </layout>
     </item>
@@ -56,26 +56,39 @@
       <item>
        <widget class="QLabel" name="requirement_sys_label">
         <property name="text">
-         <string>Section</string>
+         <string>Type:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_2"/>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="requirement_def_label">
-        <property name="text">
-         <string>Definition:</string>
+       <widget class="QComboBox" name="comboBox">
+        <property name="currentText">
+         <string>No restriction</string>
         </property>
+        <property name="placeholderText">
+         <string>UAS Zone Type</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>No restriction</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Requires authorization</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Prohibited</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Conditional</string>
+         </property>
+        </item>
        </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="requirement_def_input"/>
       </item>
      </layout>
     </item>
