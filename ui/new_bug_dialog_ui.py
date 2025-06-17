@@ -16,35 +16,43 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QLabel, QSizePolicy, QWidget)
+    QLabel, QSizePolicy, QVBoxLayout, QWidget)
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(365, 155)
-        self.buttonBox = QDialogButtonBox(Dialog)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setGeometry(QRect(200, 120, 141, 31))
-        self.buttonBox.setOrientation(Qt.Orientation.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Yes)
-        self.label = QLabel(Dialog)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(30, 30, 301, 81))
+class Ui_new_bug_dialog(object):
+    def setupUi(self, new_bug_dialog):
+        if not new_bug_dialog.objectName():
+            new_bug_dialog.setObjectName(u"new_bug_dialog")
+        new_bug_dialog.resize(365, 155)
+        self.main_vlayout = QVBoxLayout(new_bug_dialog)
+        self.main_vlayout.setSpacing(6)
+        self.main_vlayout.setObjectName(u"main_vlayout")
+        self.main_vlayout.setContentsMargins(20, -1, 15, 9)
+        self.dialog_lbl = QLabel(new_bug_dialog)
+        self.dialog_lbl.setObjectName(u"dialog_lbl")
         font = QFont()
         font.setPointSize(11)
-        self.label.setFont(font)
-        self.label.setWordWrap(True)
+        self.dialog_lbl.setFont(font)
+        self.dialog_lbl.setWordWrap(True)
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
+        self.main_vlayout.addWidget(self.dialog_lbl)
 
-        QMetaObject.connectSlotsByName(Dialog)
+        self.btn_box = QDialogButtonBox(new_bug_dialog)
+        self.btn_box.setObjectName(u"btn_box")
+        self.btn_box.setOrientation(Qt.Orientation.Horizontal)
+        self.btn_box.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Yes)
+
+        self.main_vlayout.addWidget(self.btn_box)
+
+
+        self.retranslateUi(new_bug_dialog)
+        self.btn_box.accepted.connect(new_bug_dialog.accept)
+        self.btn_box.rejected.connect(new_bug_dialog.reject)
+
+        QMetaObject.connectSlotsByName(new_bug_dialog)
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Are you sure you want to create a new bug?", None))
+    def retranslateUi(self, new_bug_dialog):
+        new_bug_dialog.setWindowTitle(QCoreApplication.translate("new_bug_dialog", u"Dialog", None))
+        self.dialog_lbl.setText(QCoreApplication.translate("new_bug_dialog", u"Are you sure you want to create a new bug?", None))
     # retranslateUi
 

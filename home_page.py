@@ -12,7 +12,7 @@ if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Construye la ruta al archivo .ui
-    ui_file_route = os.path.join(base_dir, "ui", "home_page.ui")
+    ui_file_route = os.path.join(base_dir, "ui", "assets_page.ui")
 
     ui_file = QFile(ui_file_route)
     if not ui_file.open(QIODevice.ReadOnly):

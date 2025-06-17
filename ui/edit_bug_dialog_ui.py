@@ -16,41 +16,41 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QLabel, QSizePolicy, QWidget)
+    QLabel, QSizePolicy, QVBoxLayout, QWidget)
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(365, 155)
-        self.buttonBox = QDialogButtonBox(Dialog)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setGeometry(QRect(20, 160, 341, 32))
-        self.buttonBox.setOrientation(Qt.Orientation.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
-        self.label = QLabel(Dialog)
+class Ui_edit_but_dialog(object):
+    def setupUi(self, edit_but_dialog):
+        if not edit_but_dialog.objectName():
+            edit_but_dialog.setObjectName(u"edit_but_dialog")
+        edit_but_dialog.resize(365, 155)
+        self.verticalLayout = QVBoxLayout(edit_but_dialog)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(20, -1, 15, -1)
+        self.label = QLabel(edit_but_dialog)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(30, 30, 301, 81))
         font = QFont()
         font.setPointSize(11)
         self.label.setFont(font)
         self.label.setWordWrap(True)
-        self.buttonBox_2 = QDialogButtonBox(Dialog)
-        self.buttonBox_2.setObjectName(u"buttonBox_2")
-        self.buttonBox_2.setGeometry(QRect(200, 120, 141, 31))
-        self.buttonBox_2.setOrientation(Qt.Orientation.Horizontal)
-        self.buttonBox_2.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Yes)
-        self.buttonBox_2.setCenterButtons(False)
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
+        self.verticalLayout.addWidget(self.label)
 
-        QMetaObject.connectSlotsByName(Dialog)
+        self.btn_box = QDialogButtonBox(edit_but_dialog)
+        self.btn_box.setObjectName(u"btn_box")
+        self.btn_box.setOrientation(Qt.Orientation.Horizontal)
+        self.btn_box.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Yes)
+        self.btn_box.setCenterButtons(False)
+
+        self.verticalLayout.addWidget(self.btn_box)
+
+
+        self.retranslateUi(edit_but_dialog)
+
+        QMetaObject.connectSlotsByName(edit_but_dialog)
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Are you sure you want to edit this bug? All changes will be applied", None))
+    def retranslateUi(self, edit_but_dialog):
+        edit_but_dialog.setWindowTitle(QCoreApplication.translate("edit_but_dialog", u"Dialog", None))
+        self.label.setText(QCoreApplication.translate("edit_but_dialog", u"Are you sure you want to edit this bug? All changes will be applied", None))
     # retranslateUi
 

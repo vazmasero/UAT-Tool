@@ -37,7 +37,7 @@
       </font>
      </property>
      <property name="text">
-      <string>New bug</string>
+      <string>[Edit bug #]</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -307,9 +307,9 @@
       <number>400</number>
      </property>
      <item>
-      <widget class="QPushButton" name="create_bug_btn">
+      <widget class="QPushButton" name="edit_bug_btn">
        <property name="text">
-        <string>Create bug</string>
+        <string>Edit bug</string>
        </property>
       </widget>
      </item>

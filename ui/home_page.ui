@@ -13,263 +13,287 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget_bugs">
-   <widget class="QTableWidget" name="visor_bugs">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>130</y>
-      <width>771</width>
-      <height>421</height>
-     </rect>
+  <widget class="QWidget" name="central_widget">
+   <layout class="QVBoxLayout" name="main_vlayout">
+    <property name="spacing">
+     <number>15</number>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+    <property name="leftMargin">
+     <number>30</number>
     </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+    <property name="topMargin">
+     <number>10</number>
     </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+    <property name="rightMargin">
+     <number>30</number>
     </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::EditTrigger::AnyKeyPressed|QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed|QAbstractItemView::EditTrigger::SelectedClicked</set>
+    <property name="bottomMargin">
+     <number>25</number>
     </property>
-    <property name="showGrid">
-     <bool>true</bool>
-    </property>
-    <property name="gridStyle">
-     <enum>Qt::PenStyle::SolidLine</enum>
-    </property>
-    <property name="sortingEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-    <property name="cornerButtonEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="rowCount">
-     <number>4</number>
-    </property>
-    <property name="columnCount">
-     <number>12</number>
-    </property>
-    <attribute name="horizontalHeaderVisible">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="horizontalHeaderHighlightSections">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="horizontalHeaderStretchLastSection">
-     <bool>false</bool>
-    </attribute>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <column>
-     <property name="text">
-      <string>Status</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>System</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Creation time</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Last update</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Service now ID</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Campaign</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Requirements affected</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Short description</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Long description</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Severity</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Impact</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Comments</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QLabel" name="home_page_title">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>10</y>
-      <width>251</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>36</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Bugs List</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>560</y>
-      <width>239</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="homeButton_Layout">
-     <item>
-      <widget class="QPushButton" name="add_bug_button">
-       <property name="text">
-        <string>Add bug</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="edit_bug_button">
-       <property name="text">
-        <string>Edit bug</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="remove_bug_button">
-       <property name="text">
-        <string>Remove bug</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>41</x>
-      <y>90</y>
-      <width>531</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="searchfilter_layout">
-     <item>
-      <widget class="QLineEdit" name="searchBug_bar">
-       <property name="placeholderText">
-        <string>Search...</string>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="searchType">
-       <item>
-        <property name="text">
-         <string>Service now ID</string>
+    <item>
+     <widget class="QLabel" name="bugs_title_lbl">
+      <property name="font">
+       <font>
+        <pointsize>36</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Bugs List</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="filter_hlayout" stretch="0,0,0,0,0,0">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>200</number>
+      </property>
+      <item>
+       <widget class="QLineEdit" name="search_bug_le">
+        <property name="placeholderText">
+         <string>Search...</string>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Short description</string>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
         </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <spacer name="spacerSearch_bar">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="filterby_label">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="search_type_cb">
+        <item>
+         <property name="text">
+          <string>Service now ID</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Short description</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <spacer name="spacerSearch_bar">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="filter_lbl">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Filter by:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="status_filter_cb">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>Status</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="system_filter_cb">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>System</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="bugs_tabl">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::EditTrigger::AnyKeyPressed|QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed|QAbstractItemView::EditTrigger::SelectedClicked</set>
+      </property>
+      <property name="showGrid">
+       <bool>true</bool>
+      </property>
+      <property name="gridStyle">
+       <enum>Qt::PenStyle::SolidLine</enum>
+      </property>
+      <property name="sortingEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="cornerButtonEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="rowCount">
+       <number>4</number>
+      </property>
+      <property name="columnCount">
+       <number>13</number>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderHighlightSections">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column>
        <property name="text">
-        <string>Filter by:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="filterStatus">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <property name="placeholderText">
         <string>Status</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="filterSystem">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <property name="placeholderText">
+      </column>
+      <column>
+       <property name="text">
         <string>System</string>
        </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+      </column>
+      <column>
+       <property name="text">
+        <string>Version</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Creation time</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Last update</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Service now ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Campaign</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Affected requirements</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Short description</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Definition</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Urgency</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Impact</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Comments</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="bug_actions_hlayout" stretch="0,0,0">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <property name="leftMargin">
+       <number>450</number>
+      </property>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="add_bug_btn">
+        <property name="text">
+         <string>Add bug</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="edit_bug_btn">
+        <property name="text">
+         <string>Edit bug</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="remove_bug_btn">
+        <property name="text">
+         <string>Remove bug</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar_home">
+  <widget class="QMenuBar" name="menu_bar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -283,7 +307,7 @@
      <pointsize>10</pointsize>
     </font>
    </property>
-   <widget class="QMenu" name="menuCampaigns">
+   <widget class="QMenu" name="menu_campaigns">
     <property name="font">
      <font>
       <pointsize>10</pointsize>
@@ -294,84 +318,87 @@
     <property name="title">
      <string>Test Campaigns</string>
     </property>
-    <addaction name="actionNew_Campaign"/>
-    <addaction name="actionView_Campaigns"/>
+    <addaction name="action_new_campaign"/>
+    <addaction name="action_view_campaigns"/>
    </widget>
    <widget class="QMenu" name="menuTest_Cases">
     <property name="title">
      <string>Test Cases</string>
     </property>
-    <addaction name="actionNew_Block"/>
-    <addaction name="actionNew_Case"/>
-    <addaction name="actionView_Cases"/>
+    <addaction name="action_new_block"/>
+    <addaction name="action_new_case"/>
+    <addaction name="action_view_cases"/>
    </widget>
-   <widget class="QMenu" name="menuRequirements">
+   <widget class="QMenu" name="menu_requirements">
     <property name="title">
      <string>Requirements</string>
     </property>
-    <addaction name="actionNew_Requirement"/>
-    <addaction name="actionView_Requirements"/>
+    <addaction name="action_new_requirement"/>
+    <addaction name="action_view_requirements"/>
    </widget>
-   <widget class="QMenu" name="menuAssets">
+   <widget class="QMenu" name="menu_assets">
     <property name="title">
      <string>Assets</string>
     </property>
-    <addaction name="actionNew_Asset"/>
-    <addaction name="actionView_Assets"/>
+    <addaction name="action_new_asset"/>
+    <addaction name="action_view_assets"/>
    </widget>
-   <widget class="QMenu" name="menuStatistics">
+   <widget class="QMenu" name="menu_statistics">
     <property name="title">
      <string>Statistics</string>
     </property>
    </widget>
-   <addaction name="menuCampaigns"/>
+   <addaction name="menu_campaigns"/>
    <addaction name="menuTest_Cases"/>
-   <addaction name="menuRequirements"/>
-   <addaction name="menuAssets"/>
-   <addaction name="menuStatistics"/>
+   <addaction name="menu_requirements"/>
+   <addaction name="menu_assets"/>
+   <addaction name="menu_statistics"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar_bugs"/>
-  <action name="actionNew_Campaign">
+  <widget class="QStatusBar" name="status_bar"/>
+  <action name="action_new_campaign">
    <property name="text">
     <string>New Campaign</string>
    </property>
   </action>
-  <action name="actionView_Campaigns">
+  <action name="action_view_campaigns">
    <property name="text">
     <string>View Campaigns</string>
    </property>
   </action>
-  <action name="actionNew_Block">
+  <action name="action_new_block">
    <property name="text">
     <string>New Block</string>
    </property>
   </action>
-  <action name="actionNew_Case">
+  <action name="action_new_case">
    <property name="text">
     <string>New Case</string>
    </property>
   </action>
-  <action name="actionView_Cases">
+  <action name="action_view_cases">
    <property name="text">
     <string>View Cases</string>
    </property>
   </action>
-  <action name="actionNew_Requirement">
+  <action name="action_new_requirement">
    <property name="text">
     <string>New Requirement</string>
    </property>
   </action>
-  <action name="actionView_Requirements">
+  <action name="action_view_requirements">
    <property name="text">
     <string>View Requirements</string>
    </property>
   </action>
-  <action name="actionNew_Asset">
+  <action name="action_new_asset">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>New Asset</string>
    </property>
   </action>
-  <action name="actionView_Assets">
+  <action name="action_view_assets">
    <property name="text">
     <string>View Assets</string>
    </property>

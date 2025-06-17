@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'add_bug.ui'
+## Form generated from reading UI file 'edit_bug.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -210,10 +210,10 @@ class Ui_bug_form(object):
         self.bug_actions_hlayout.setSpacing(5)
         self.bug_actions_hlayout.setObjectName(u"bug_actions_hlayout")
         self.bug_actions_hlayout.setContentsMargins(400, -1, -1, -1)
-        self.create_bug_btn = QPushButton(bug_form)
-        self.create_bug_btn.setObjectName(u"create_bug_btn")
+        self.edit_bug_btn = QPushButton(bug_form)
+        self.edit_bug_btn.setObjectName(u"edit_bug_btn")
 
-        self.bug_actions_hlayout.addWidget(self.create_bug_btn)
+        self.bug_actions_hlayout.addWidget(self.edit_bug_btn)
 
         self.cancel_btn = QPushButton(bug_form)
         self.cancel_btn.setObjectName(u"cancel_btn")
@@ -231,7 +231,7 @@ class Ui_bug_form(object):
 
     def retranslateUi(self, bug_form):
         bug_form.setWindowTitle(QCoreApplication.translate("bug_form", u"Form", None))
-        self.lbl_bug.setText(QCoreApplication.translate("bug_form", u"New bug", None))
+        self.lbl_bug.setText(QCoreApplication.translate("bug_form", u"[Edit bug #]", None))
         self.status_lbl.setText(QCoreApplication.translate("bug_form", u"Status:", None))
         self.status_le.setText("")
         self.status_le.setPlaceholderText(QCoreApplication.translate("bug_form", u"[Status]", None))
@@ -260,7 +260,7 @@ class Ui_bug_form(object):
         self.definition_lbl.setText(QCoreApplication.translate("bug_form", u"Definition:", None))
         self.definition_le.setText("")
         self.definition_le.setPlaceholderText(QCoreApplication.translate("bug_form", u"[Definition]", None))
-        self.create_bug_btn.setText(QCoreApplication.translate("bug_form", u"Create bug", None))
+        self.edit_bug_btn.setText(QCoreApplication.translate("bug_form", u"Edit bug", None))
         self.cancel_btn.setText(QCoreApplication.translate("bug_form", u"Cancel", None))
     # retranslateUi
 
