@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>720</width>
+    <height>510</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>30</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>30</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="lbl_bug">
+     <property name="font">
+      <font>
+       <pointsize>28</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>[Campaign name]</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabBugs">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tab_bug_info">
+      <attribute name="title">
+       <string>General Info</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,10,0,70">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="status_lbl">
+           <property name="text">
+            <string>Id:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="status_le">
+           <property name="cursor">
+            <cursorShape>ArrowCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[Identification]</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="system_lbl">
+           <property name="text">
+            <string>Description:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="system_le">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[Description]</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>350</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="sys_version_lbl">
+           <property name="text">
+            <string>System:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox">
+           <property name="placeholderText">
+            <string>[System]</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="service_now_id_lbl">
+           <property name="text">
+            <string>Version:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="service_now_id_le">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[Version]</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="creation_time_lbl">
+           <property name="text">
+            <string>Creation time:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="creation_time_le">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[Creation time]</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="last_update_lbl">
+           <property name="text">
+            <string>Last update:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="last_update_le">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[Last update]</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="last_update_lbl_2">
+           <property name="text">
+            <string>Start date:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="last_update_le_2">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[Start date]</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="last_update_lbl_3">
+           <property name="text">
+            <string>End date:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="last_update_le_3">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>[End date]</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Steps</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="rowCount">
+          <number>4</number>
+         </property>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <column>
+          <property name="text">
+           <string>Action</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Expected result</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Requirements affected</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>OK/NO OK</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Comments</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Files</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_bug_history">
+      <attribute name="title">
+       <string>History</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="listWidget">
+         <item>
+          <property name="text">
+           <string>[Change in status:...]</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>200</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="add_bug_button">
+       <property name="text">
+        <string>Start/Continue Campaign</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="add_bug_button_2">
+       <property name="text">
+        <string>Edit campaign</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="add_bug_button_3">
+       <property name="text">
+        <string>Delete campaign</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="add_bug_button_4">
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

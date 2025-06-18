@@ -1,0 +1,1442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>main_window</class>
+ <widget class="QMainWindow" name="main_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>823</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="central_main">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>30</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>30</number>
+    </property>
+    <item>
+     <widget class="QStackedWidget" name="stacked_main">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="pg_bugs">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lbl_bugs">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Bugs List</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hlayout_filter_bugs" stretch="25,10,2,0,0">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>150</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="le_search_bug">
+            <property name="placeholderText">
+             <string>Search by...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cb_search_bug">
+            <item>
+             <property name="text">
+              <string>Service now ID</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Short description</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lbl_filterby_status">
+            <property name="text">
+             <string>Filter by:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cb_filter_status">
+            <property name="placeholderText">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cb_filter_system">
+            <property name="placeholderText">
+             <string>System</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tbl_bugs">
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+          </property>
+          <property name="rowCount">
+           <number>4</number>
+          </property>
+          <property name="columnCount">
+           <number>13</number>
+          </property>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <column>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>System</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Version</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Creation time</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Last update</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Service now ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Campaign</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Affected requirements</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Short description</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Definition</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Urgency</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Impact</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Comments</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hlayout_btn_bugs">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="leftMargin">
+           <number>450</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btn_add_bug">
+            <property name="text">
+             <string>Add bug</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_edit_bug">
+            <property name="text">
+             <string>Edit bug</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_remove_bug">
+            <property name="text">
+             <string>Remove bug</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pg_campaigns">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lbl_campaigns">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Test campaigns</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tbl_campaigns">
+          <property name="rowCount">
+           <number>4</number>
+          </property>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <column>
+           <property name="text">
+            <string>Id</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Description</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>System</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Version</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Test blocks</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Passed</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Success</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Creation date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Start date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>End date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Last update</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hlayout_btn_campaigns">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="leftMargin">
+           <number>450</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btn_start_campaign">
+            <property name="text">
+             <string>Start campaign</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_add_campaign">
+            <property name="text">
+             <string>Add campaign</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_delete_campaign">
+            <property name="text">
+             <string>Delete campaign</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pg_test_management">
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lbl_management">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Test management</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tab_widget_management">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="tab_cases">
+           <attribute name="title">
+            <string>Cases</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_13">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_cases">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Id</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>System</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Assets</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Steps</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Comments</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_cases">
+              <property name="spacing">
+               <number>5</number>
+              </property>
+              <property name="leftMargin">
+               <number>450</number>
+              </property>
+              <property name="rightMargin">
+               <number>10</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_case">
+                <property name="text">
+                 <string>Add case</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_edit_case">
+                <property name="text">
+                 <string>Edit case</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_delete_case">
+                <property name="text">
+                 <string>Delete case</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_blocks">
+           <attribute name="title">
+            <string>Blocks</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_blocks">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Id</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>System(s)</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Cases</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Comments</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_blocks">
+              <property name="spacing">
+               <number>5</number>
+              </property>
+              <property name="leftMargin">
+               <number>450</number>
+              </property>
+              <property name="rightMargin">
+               <number>10</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_block">
+                <property name="text">
+                 <string>Add block</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_edit_block">
+                <property name="text">
+                 <string>Edit block</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_delete_block">
+                <property name="text">
+                 <string>Delete block</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pg_requirements">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lbl_requirements">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Requirements</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hlayout_search_requirements" stretch="0,0,0">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>150</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="le_search_requirement">
+            <property name="placeholderText">
+             <string>Search by ID...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lbl_filterby_system">
+            <property name="text">
+             <string>Filter by:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cb_system">
+            <property name="placeholderText">
+             <string>System</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tbl_requirements">
+          <property name="rowCount">
+           <number>4</number>
+          </property>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <column>
+           <property name="text">
+            <string>Id</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>System</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Section</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Definition</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Creation date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Last update</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hlayout_btn_requirements">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="leftMargin">
+           <number>400</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btn_add_requirement">
+            <property name="text">
+             <string>Add requirement</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_edit_requirement">
+            <property name="text">
+             <string>Edit requirement</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_remove_requirement">
+            <property name="text">
+             <string>Remove requirement</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pg_assets">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="title_assets">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Assets management</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tab_widget_assets">
+          <property name="currentIndex">
+           <number>6</number>
+          </property>
+          <widget class="QWidget" name="tab_email">
+           <attribute name="title">
+            <string>Emails</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_15">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tabl_email">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Email</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Password</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_email">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_email">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_email">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_operators">
+           <attribute name="title">
+            <string>Operators</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_operators">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>EASA ID</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Verification code</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Email</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Password</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Phone</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_operators">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_operator">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_operator">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_drones">
+           <attribute name="title">
+            <string>Drones</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_drones">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Operator</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Serial Number</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Manufacturer</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Model</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Tracker type</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Transponder ID</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_drones">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_drone">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_drone">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_uas_zones">
+           <attribute name="title">
+            <string>UAS Zones</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_uas_zones">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Reason</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Cause</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Restriction type</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Activación time</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Authority</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_uas_zones">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_uas_zone">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_uas_zone">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_uhub_org">
+           <attribute name="title">
+            <string>U-hub Organizations</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_uhub_org">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Role</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Jurisdiction</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>AoI</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Email</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Phone</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_uhub_org">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_uhub_org">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_uhub_org">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_uhub_user">
+           <attribute name="title">
+            <string>U-hub Users</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_uhub_user">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Username</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Email</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Password</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Organization</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Role</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Jurisdiction</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>AoI</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_uhub_user">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_uhub_user">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_uhub_user">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_uspaces">
+           <attribute name="title">
+            <string>U-spaces</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tbl_uspaces">
+              <property name="rowCount">
+               <number>4</number>
+              </property>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Id</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string># of sectors</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>File</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="hlayout_btn_uspaces">
+              <property name="leftMargin">
+               <number>600</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_add_uspace">
+                <property name="text">
+                 <string>+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_remove_uspace">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menu_bar_main">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>823</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_bugs">
+    <property name="title">
+     <string>Bugs</string>
+    </property>
+    <addaction name="action_add_bug"/>
+    <addaction name="action_view_bugs"/>
+   </widget>
+   <widget class="QMenu" name="menu_campaigns">
+    <property name="title">
+     <string>Campaigns</string>
+    </property>
+    <addaction name="action_new_campaign"/>
+    <addaction name="action_view_campaigns"/>
+   </widget>
+   <widget class="QMenu" name="menu_cases">
+    <property name="title">
+     <string>Cases</string>
+    </property>
+    <addaction name="action_new_test_case"/>
+    <addaction name="action_new_test_block"/>
+    <addaction name="action_view_cases"/>
+   </widget>
+   <widget class="QMenu" name="menu_requirements">
+    <property name="title">
+     <string>Requirements</string>
+    </property>
+    <addaction name="action_new_requirement"/>
+    <addaction name="action_view_requirements"/>
+   </widget>
+   <widget class="QMenu" name="menu_assets">
+    <property name="title">
+     <string>Assets</string>
+    </property>
+    <addaction name="action_new_asset"/>
+    <addaction name="action_view_assets"/>
+   </widget>
+   <widget class="QMenu" name="menu_statistics">
+    <property name="title">
+     <string>Statistics</string>
+    </property>
+   </widget>
+   <addaction name="menu_bugs"/>
+   <addaction name="menu_campaigns"/>
+   <addaction name="menu_cases"/>
+   <addaction name="menu_requirements"/>
+   <addaction name="menu_assets"/>
+   <addaction name="menu_statistics"/>
+  </widget>
+  <widget class="QStatusBar" name="status_bar"/>
+  <action name="action_add_bug">
+   <property name="text">
+    <string>New bug</string>
+   </property>
+  </action>
+  <action name="action_view_bugs">
+   <property name="text">
+    <string>View bugs</string>
+   </property>
+  </action>
+  <action name="action_new_campaign">
+   <property name="text">
+    <string>New campaign</string>
+   </property>
+  </action>
+  <action name="action_view_campaigns">
+   <property name="text">
+    <string>View campaigns</string>
+   </property>
+  </action>
+  <action name="action_new_test_case">
+   <property name="text">
+    <string>New test case</string>
+   </property>
+  </action>
+  <action name="action_new_test_block">
+   <property name="text">
+    <string>New test block</string>
+   </property>
+  </action>
+  <action name="action_view_cases">
+   <property name="text">
+    <string>View cases</string>
+   </property>
+  </action>
+  <action name="action_new_requirement">
+   <property name="text">
+    <string>New requirement</string>
+   </property>
+  </action>
+  <action name="action_view_requirements">
+   <property name="text">
+    <string>View requirements</string>
+   </property>
+  </action>
+  <action name="action_new_asset">
+   <property name="text">
+    <string>New asset</string>
+   </property>
+  </action>
+  <action name="action_view_assets">
+   <property name="text">
+    <string>View assets</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

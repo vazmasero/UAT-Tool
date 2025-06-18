@@ -1,0 +1,24 @@
+{
+    "files": [
+        "main.py",
+        "ui/add_step.ui",
+        "ui/dialog_action.ui",
+        "ui/execution_campaign.ui",
+        "ui/form_block.ui",
+        "ui/form_bug.ui",
+        "ui/form_campaign.ui",
+        "ui/form_case.ui",
+        "ui/form_drone.ui",
+        "ui/form_email.ui",
+        "ui/form_operator.ui",
+        "ui/form_requirements.ui",
+        "ui/form_uas_zone.ui",
+        "ui/form_uhub_org.ui",
+        "ui/form_uhub_user.ui",
+        "ui/form_uspace.ui",
+        "ui/info_bug.ui",
+        "ui/info_campaign.ui",
+        "ui/main.ui",
+        "window_manager.py"
+    ]
+}

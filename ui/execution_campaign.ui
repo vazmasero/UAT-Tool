@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>execution_campaign</class>
+ <widget class="QWidget" name="execution_campaign">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>720</width>
+    <height>510</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>15</number>
+   </property>
+   <property name="leftMargin">
+    <number>30</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>30</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="lbl_campaign">
+     <property name="font">
+      <font>
+       <pointsize>28</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>[Campaign name]</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_table" stretch="0,0">
+     <item>
+      <widget class="QTableWidget" name="tbl_steps">
+       <property name="rowCount">
+        <number>4</number>
+       </property>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <column>
+        <property name="text">
+         <string>Block</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Case</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Action</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Expected result</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Requirements affected</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>OK</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>NO OK</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Comments</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Files</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_add_file">
+       <property name="text">
+        <string>Add file</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_btn_campaign">
+     <property name="leftMargin">
+      <number>300</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="btn_save_campaign">
+       <property name="text">
+        <string>Save campaign</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_end_campaign">
+       <property name="text">
+        <string>End campaign</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_back">
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

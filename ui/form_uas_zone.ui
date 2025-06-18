@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>form_requirement</class>
- <widget class="QWidget" name="form_requirement">
+ <class>form_uas_zone</class>
+ <widget class="QWidget" name="form_uas_zone">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
+    <width>571</width>
     <height>408</height>
    </rect>
   </property>
@@ -24,7 +24,10 @@
     <number>30</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_action">
+    <layout class="QHBoxLayout" name="hlayout_name" stretch="0,0,0,0">
+     <property name="spacing">
+      <number>3</number>
+     </property>
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -32,89 +35,99 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_action">
+      <widget class="QLabel" name="lbl_name">
        <property name="text">
-        <string>Action:</string>
+        <string>Name:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_action"/>
+      <widget class="QLineEdit" name="le_name"/>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="hlayout_expected">
-     <property name="leftMargin">
-      <number>5</number>
-     </property>
-     <property name="rightMargin">
-      <number>5</number>
-     </property>
      <item>
-      <widget class="QLabel" name="lbl_expected">
+      <widget class="QLabel" name="lbl_reason">
        <property name="text">
-        <string>Expected result:</string>
+        <string>Reason:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_expected"/>
+      <widget class="QLineEdit" name="le_reason"/>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_requirement" stretch="0,30">
+    <layout class="QHBoxLayout" name="hlayout_cause" stretch="0,5,0,5">
      <property name="leftMargin">
       <number>5</number>
      </property>
      <property name="rightMargin">
+      <number>5</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="lbl_cause">
+       <property name="text">
+        <string>Cause:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_cause"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_restriction">
+       <property name="text">
+        <string>Restriction type:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_restriction"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_authority" stretch="0,5,0,5">
+     <property name="leftMargin">
+      <number>5</number>
+     </property>
+     <property name="rightMargin">
+      <number>5</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="lbl_authority">
+       <property name="text">
+        <string>Authority:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_authority"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_activation">
+       <property name="text">
+        <string>Activation time:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_activation"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_btn_uas_zone">
+     <property name="leftMargin">
       <number>300</number>
      </property>
      <item>
-      <widget class="QLabel" name="b_requirement">
+      <widget class="QPushButton" name="btn_accept">
        <property name="text">
-        <string>Affected requirements:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cb_requirement"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="hlayout_comment">
-     <property name="leftMargin">
-      <number>5</number>
-     </property>
-     <property name="rightMargin">
-      <number>5</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="lbl_comment">
-       <property name="text">
-        <string>Comments:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="le_comment"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="hlayout_btn_step">
-     <property name="leftMargin">
-      <number>300</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="btn_add_step">
-       <property name="text">
-        <string>Add</string>
+        <string>Accept</string>
        </property>
       </widget>
      </item>
