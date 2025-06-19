@@ -1,10 +1,13 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QVBoxLayout, QDialog
+from PySide6.QtWidgets import QMainWindow, QDialog
 
 from ui.ui_main import Ui_main_window
-from ui.ui_form_bug import Ui_form_bug
 from ui.ui_dialog_action import Ui_dialog_action
-from ui.ui_execution_campaign import Ui_execution_campaign
-from ui.ui_form_campaign import Ui_form_campaign
+from campaigns import ExecutionCampaign, FormCampaign
+from bugs import FormBug
+from cases import FormCase, FormBlock
+from requirements import FormRequirement
+from assets import (FormDrone, FormEmail, FormOperator, 
+                    FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
 
 # Home Page
 class HomePage(QMainWindow):
@@ -13,6 +16,9 @@ class HomePage(QMainWindow):
         self.ui = Ui_main_window()
         self.ui.setupUi(self)
         self.setWindowTitle("UAT Tool")
+        self.change_page(0)
+
+        self.form_windows = {}
 
         # Menubar actions
         self.ui.action_view_bugs.triggered.connect(lambda: self.change_page(0))
@@ -21,103 +27,146 @@ class HomePage(QMainWindow):
         self.ui.action_view_requirements.triggered.connect(lambda: self.change_page(3))
         self.ui.action_view_assets.triggered.connect(lambda: self.change_page(4))
 
-        # Bugs section
-        # Add bug button
-        self.ui.btn_add_bug.clicked.connect(lambda: self.open_form_bug(0))
-        # Edit bug button
-        self.ui.btn_edit_bug.clicked.connect(lambda: self.open_form_bug(1))
-        self.form_bug_window=None
-        # Remove bug button
-        self.ui.btn_remove_bug.clicked.connect(lambda: self.show_dialog(2))
+        # General add/remove buttons
+        self.ui.btn_add.clicked.connect(self.handle_add_button)
+        self.ui.btn_remove.clicked.connect(lambda: self.show_dialog(2))
 
-        # Campaigns section
-        # Start campaign button
-        self.ui.btn_start_campaign.clicked.connect(self.open_execution_campaign)
-        self.form_execution_campaign=None
-        # Open campaign form
-        self.ui.btn_add_campaign.clicked.connect(self.open_form_campaign)
-        self.form_campaign=None
-        # Remove bug button
-        self.ui.btn_delete_campaign.clicked.connect(lambda: self.show_dialog(2))
+        #Generic edit buttons
+        self.ui.btn_edit.clicked.connect(self.handle_edit_button)
 
-        # Cases section
-        # Start campaign button
-        self.ui.btn_start_campaign.clicked.connect(self.open_execution_campaign)
-        self.form_execution_campaign=None
-        # Open campaign form
-        self.ui.btn_add_campaign.clicked.connect(self.open_form_campaign)
-        self.form_campaign=None
-        # Remove bug button
-        self.ui.btn_delete_campaign.clicked.connect(lambda: self.show_dialog(2))
-
-        # Requirements section
-        # Start campaign button
-        self.ui.btn_start_campaign.clicked.connect(self.open_execution_campaign)
-        self.form_execution_campaign=None
-        # Open campaign form
-        self.ui.btn_add_campaign.clicked.connect(self.open_form_campaign)
-        self.form_campaign=None
-        # Remove bug button
-        self.ui.btn_delete_campaign.clicked.connect(lambda: self.show_dialog(2))
-
-        # Assets section
-        # Start campaign button
-        self.ui.btn_start_campaign.clicked.connect(self.open_execution_campaign)
-        self.form_execution_campaign=None
-        # Open campaign form
-        self.ui.btn_add_campaign.clicked.connect(self.open_form_campaign)
-        self.form_campaign=None
-        # Remove bug button
-        self.ui.btn_delete_campaign.clicked.connect(lambda: self.show_dialog(2))
+        # Start campaign (pendiente de generar botón de start campaign)
+        #self.ui.btn_start_campaign.clicked.connect(self.open_execution_campaign)
 
 
     def change_page(self,index):
         self.ui.stacked_main.setCurrentIndex(index)
 
-    def open_form_bug(self,type):
-        self.form_bug_window=FormBug()
-        if type == 0:
-            self.form_bug_window.setWindowTitle("Add bug")
-            self.form_bug_window.ui.lbl_bug.setText("New bug")
-        elif type == 1:
-            self.form_bug_window.setWindowTitle("Edit bug")
-            self.form_bug_window.ui.lbl_bug.setText("Edit bug")
-
-        self.form_bug_window.show()
-
-    def show_dialog(self,type):
+    def show_dialog(self,dialogue_type):
         self.dialog=Dialog()
-        if type == 2:
+        if dialogue_type == 2:
             self.dialog.ui.lbl_dialog.setText("Are you sure you want to delete it? Changes will not be reversible.")
             self.dialog.setWindowTitle("Confirmation")
             self.dialog.exec_()
 
-    def open_execution_campaign(self):
+    # Botón de start campaign (pendiente)
+    """def open_execution_campaign(self):
         self.form_execution_campaign=ExecutionCampaign()
-        self.form_execution_campaign.show()
+        self.form_execution_campaign.show()"""
 
-    def open_form_campaign(self):
-        self.form_campaign=FormCampaign()
-        self.form_campaign.show()
+    def open_form(self, FormClass, title:str, label_attr:str=None, label_text:str=None):
+        form = FormClass()
+        form.setWindowTitle(title)
+        if label_attr and hasattr(form.ui, label_attr):
+            getattr(form.ui, label_attr).setText(label_text)
 
-class FormBug(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_bug()
-        self.ui.setupUi(self)
+        self.form_windows[title] = form
+        form.destroyed.connect(lambda _, f=form: self.form_windows.pop(f,None))
 
-class ExecutionCampaign(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_execution_campaign()
-        self.ui.setupUi(self)
+        form.show()
 
-class FormCampaign(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_campaign()
-        self.ui.setupUi(self)
+    def handle_add_button(self):
+        page = self.ui.stacked_main.currentIndex()
+        tab_tests = self.ui.tab_widget_management.currentIndex() if page == 2 else -1
+        tab_assets = self.ui.tab_widget_assets.currentIndex() if page == 4 else -1
 
+        form_map = {
+            0: lambda: self.open_form(FormBug, "Add bug", "lbl_bug", "New bug"),
+            1: lambda: self.open_form(FormCampaign, "Add campaign", "lbl_campaign", "New campaign"),
+            2: lambda: self.handle_add_test(tab_tests),
+            3: lambda: self.open_form(FormRequirement, "Add requirement"),
+            4: lambda: self.handle_add_asset(tab_assets)
+        }
+
+        if page in form_map:
+            form_map[page]()
+
+    def handle_edit_button(self):
+        page = self.ui.stacked_main.currentIndex()
+        tab_tests = self.ui.tab_widget_management.currentIndex() if page == 2 else -1
+        tab_assets = self.ui.tab_widget_assets.currentIndex() if page == 4 else -1
+
+        form_map = {
+            0: lambda: self.open_form(FormBug, "Edit bug", "lbl_bug", "Edit bug"),
+            1: lambda: self.open_form(FormCampaign, "Edit campaign", "lbl_campaign", "Edit campaign"),
+            2: lambda: self.handle_edit_test(tab_tests),
+            3: lambda: self.open_form(FormRequirement, "Edit requirement"),
+            4: lambda: self.handle_edit_asset(tab_assets)
+        }
+
+        if page in form_map:
+            form_map[page]()
+
+    def handle_add_test(self,tab_index):
+        form_classes = [
+            (FormCase, "Add case", "New test case"),
+            (FormBlock, "Add block", "New test block")
+        ]
+        if 0<= tab_index < len(form_classes):
+            FormClass, title, lbl_text = form_classes[tab_index]
+            form = FormClass()
+            form.setWindowTitle(title)
+            if FormClass == FormCase:
+                form.ui.lbl_case.setText(lbl_text)
+            elif FormClass == FormBlock:
+                form.ui.lbl_block.setText(lbl_text)
+            self.form_windows[form] = form
+            form.destroyed.connect(lambda _, f=form: self.form_windows.pop(f, None))
+            form.show()
+
+    def handle_edit_test(self, tab_index):
+        edit_titles = [
+            (FormBlock, "Edit block", "Edit test case"),
+            (FormCase, "Edit case", "Edit test block")
+        ]
+        if 0 <= tab_index < len(edit_titles):
+            FormClass, title, lbl_text = edit_titles[tab_index]
+            form = FormClass()
+            form.setWindowTitle(title)
+            if FormClass == FormCase:
+                form.ui.lbl_case.setText(lbl_text)
+            elif FormClass == FormBlock:
+                form.ui.lbl_block.setText(lbl_text)
+            self.form_windows[form] = form
+            form.destroyed.connect(lambda _, f=form: self.form_windows.pop(f, None))
+            form.show()  
+
+    def handle_add_asset(self, tab_index):
+        form_classes = [
+            (FormEmail, "Add email"),
+            (FormOperator, "Add operator"),
+            (FormDrone, "Add drone"),
+            (FormUASZone, "Add UAS zone"),
+            (FormUhubOrg, "Add U-hub org"),
+            (FormUhubUser, "Add U-hub user"),
+            (FormUspace, "Add U-space"),
+        ]
+        if 0 <= tab_index < len(form_classes):
+            FormClass, title = form_classes[tab_index]
+            form = FormClass()
+            form.setWindowTitle(title)
+            self.form_windows[form] = form
+            form.destroyed.connect(lambda _, f=form: self.form_windows.pop(f, None))
+            form.show()
+    
+    def handle_edit_asset(self, tab_index):
+        edit_titles = [
+            (FormEmail, "Edit email"),
+            (FormOperator, "Edit operator"),
+            (FormDrone, "Edit drone"),
+            (FormUASZone, "Edit UAS zone"),
+            (FormUhubOrg, "Edit U-hub org"),
+            (FormUhubUser, "Edit U-hub user"),
+            (FormUspace, "Edit U-space"),
+        ]
+        if 0 <= tab_index < len(edit_titles):
+            FormClass, title = edit_titles[tab_index]
+            form = FormClass()
+            form.setWindowTitle(title)
+            self.form_windows[form] = form
+            form.destroyed.connect(lambda _, f=form: self.form_windows.pop(f, None))
+            form.show()
+
+# Generic dialog window
 class Dialog(QDialog):
     def __init__(self):
         super().__init__()
