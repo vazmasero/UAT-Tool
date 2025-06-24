@@ -1,5 +1,6 @@
 {
     "files": [
+        "db.py",
         "main.py",
         "ui/add_step.ui",
         "ui/dialog_action.ui",
@@ -18,7 +19,6 @@
         "ui/form_uspace.ui",
         "ui/info_bug.ui",
         "ui/info_campaign.ui",
-        "ui/main.ui",
-        "window_manager.py"
+        "ui/main.ui"
     ]
 }

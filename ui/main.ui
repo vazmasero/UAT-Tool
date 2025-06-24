@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>898</width>
+    <width>882</width>
     <height>647</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
     <item>
      <widget class="QStackedWidget" name="stacked_main">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pg_bugs">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -114,85 +114,13 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="tbl_bugs">
+         <widget class="QTableView" name="tbl_bugs">
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
           </property>
-          <property name="rowCount">
-           <number>4</number>
+          <property name="cornerButtonEnabled">
+           <bool>false</bool>
           </property>
-          <property name="columnCount">
-           <number>13</number>
-          </property>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <column>
-           <property name="text">
-            <string>Status</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>System</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Version</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Creation time</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Last update</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Service now ID</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Campaign</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Affected requirements</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Short description</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Definition</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Urgency</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Impact</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Comments</string>
-           </property>
-          </column>
          </widget>
         </item>
        </layout>
@@ -1007,8 +935,15 @@
     <item>
      <layout class="QHBoxLayout" name="hlayout_btn">
       <property name="leftMargin">
-       <number>600</number>
+       <number>475</number>
       </property>
+      <item>
+       <widget class="QPushButton" name="btn_start">
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QPushButton" name="btn_add">
         <property name="text">
@@ -1039,8 +974,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>898</width>
-     <height>22</height>
+     <width>882</width>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_bugs">
@@ -1061,8 +996,14 @@
     <property name="title">
      <string>Cases</string>
     </property>
-    <addaction name="action_new_test_case"/>
-    <addaction name="action_new_test_block"/>
+    <widget class="QMenu" name="menu_new_test">
+     <property name="title">
+      <string>New...</string>
+     </property>
+     <addaction name="action_new_case"/>
+     <addaction name="action_new_block"/>
+    </widget>
+    <addaction name="menu_new_test"/>
     <addaction name="action_view_cases"/>
    </widget>
    <widget class="QMenu" name="menu_requirements">
@@ -1076,7 +1017,19 @@
     <property name="title">
      <string>Assets</string>
     </property>
-    <addaction name="action_new_asset"/>
+    <widget class="QMenu" name="menu_new_asset">
+     <property name="title">
+      <string>New asset</string>
+     </property>
+     <addaction name="action_new_email"/>
+     <addaction name="action_new_operator"/>
+     <addaction name="action_new_drone"/>
+     <addaction name="action_new_uas_zone"/>
+     <addaction name="action_new_uhub_organization"/>
+     <addaction name="action_new_uhub_user"/>
+     <addaction name="action_new_uspace"/>
+    </widget>
+    <addaction name="menu_new_asset"/>
     <addaction name="action_view_assets"/>
    </widget>
    <widget class="QMenu" name="menu_statistics">
@@ -1112,12 +1065,7 @@
     <string>View campaigns</string>
    </property>
   </action>
-  <action name="action_new_test_case">
-   <property name="text">
-    <string>New test case</string>
-   </property>
-  </action>
-  <action name="action_new_test_block">
+  <action name="action">
    <property name="text">
     <string>New test block</string>
    </property>
@@ -1137,14 +1085,54 @@
     <string>View requirements</string>
    </property>
   </action>
-  <action name="action_new_asset">
-   <property name="text">
-    <string>New asset</string>
-   </property>
-  </action>
   <action name="action_view_assets">
    <property name="text">
     <string>View assets</string>
+   </property>
+  </action>
+  <action name="action_new_email">
+   <property name="text">
+    <string>Email</string>
+   </property>
+  </action>
+  <action name="action_new_operator">
+   <property name="text">
+    <string>Operator</string>
+   </property>
+  </action>
+  <action name="action_new_drone">
+   <property name="text">
+    <string>Drone</string>
+   </property>
+  </action>
+  <action name="action_new_uas_zone">
+   <property name="text">
+    <string>UAS Zone</string>
+   </property>
+  </action>
+  <action name="action_new_uhub_organization">
+   <property name="text">
+    <string>U-hub organization</string>
+   </property>
+  </action>
+  <action name="action_new_uhub_user">
+   <property name="text">
+    <string>U-hub user</string>
+   </property>
+  </action>
+  <action name="action_new_uspace">
+   <property name="text">
+    <string>U-space</string>
+   </property>
+  </action>
+  <action name="action_new_case">
+   <property name="text">
+    <string>Test case</string>
+   </property>
+  </action>
+  <action name="action_new_block">
+   <property name="text">
+    <string>Test block</string>
    </property>
   </action>
  </widget>
