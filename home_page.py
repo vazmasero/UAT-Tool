@@ -180,13 +180,9 @@ class HomePage(QMainWindow):
     # Configuration of headers for bugs table
     def configure_bug_table_headers(self):
         header = self.ui.tbl_bugs.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.Interactive)
-
-        for i in range(self.ui.tbl_bugs.model().columnCount()):
-            header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
-
-        header.setStretchLastSection(False)
-        header.setSectionResizeMode(QHeaderView.Stretch)
+        header.setStretchLastSection(True)
+        header.setMaximumSectionSize(150)
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
 
     # Loading bugs table
     def load_bugs_data(self):
@@ -208,9 +204,41 @@ class HomePage(QMainWindow):
             model.appendRow(items)
 
         self.ui.tbl_bugs.setModel(model)
-        self.ui.tbl_bugs.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.ui.tbl_bugs.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.ui.tbl_bugs.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.ui.tbl_bugs.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.ui.tbl_bugs.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerItem)
+        self.ui.tbl_bugs.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.configure_bug_table_headers()
+
+        # Opening form when clicking twice on an item in the table
+        self.ui.tbl_bugs.doubleClicked.connect(self.handle_double_clicked_bug)
+        
+    @Slot()
+    def handle_double_clicked_bug(self, index):
+        if not self.ui.tbl_bugs.selectionModel().hasSelection():
+            return
+        row = index.row()
+
+        model = self.ui.tbl_bugs.model()
+
+        # Obtain data from row
+        row_data =[]
+        for column in range(model.columnCount()):
+            item = model.index(row, column)
+            row_data.append(model.data(item))
+
+        self.open_edit_form_with_data(row_data)
+
+    def open_edit_form_with_data(self, data):
+        form = FormBug()
+        form.setWindowTitle("Edit bug")
+
+        form.load_data(data)
+
+        self.form_windows["Edit bug"] =  form
+        self.form_windows["Edit bug"] = form
+        form.destroyed.connect(lambda _, f=form: self.form_windows.pop("Edit bug", None))
+        form.show()
 
 # Generic dialog window
 class Dialog(QDialog):

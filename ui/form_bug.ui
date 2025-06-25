@@ -60,16 +60,45 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_status">
-       <property name="cursor">
-        <cursorShape>ArrowCursor</cursorShape>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
+      <widget class="QComboBox" name="cb_status">
        <property name="placeholderText">
         <string>[Status]</string>
        </property>
+       <item>
+        <property name="text">
+         <string>IN PROGRESS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PENDING</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ON HOLD</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SOLVED</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CLOSED</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CLOSED BY INDRA</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>UNSOLVED</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -80,13 +109,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="system_le">
-       <property name="text">
-        <string/>
-       </property>
+      <widget class="QComboBox" name="cb_system">
        <property name="placeholderText">
         <string>[System]</string>
        </property>
+       <item>
+        <property name="text">
+         <string>U-hub</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>USSP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -185,7 +226,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_campaign"/>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="placeholderText">
+        <string>[Campaign]</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbl_requirements">
@@ -215,7 +260,26 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_urgency"/>
+      <widget class="QComboBox" name="cb_urgency">
+       <property name="placeholderText">
+        <string>[Urgency]</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>High - 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Medium - 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Low - 3</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbl_impact">
@@ -225,7 +289,26 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_impact"/>
+      <widget class="QComboBox" name="cb_impact">
+       <property name="placeholderText">
+        <string>[Impact]</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>High - 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Medium - 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Low - 3</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -125,6 +125,7 @@ class Ui_main_window(object):
         self.tbl_bugs.setObjectName(u"tbl_bugs")
         self.tbl_bugs.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
         self.tbl_bugs.setCornerButtonEnabled(False)
+        self.tbl_bugs.horizontalHeader().setStretchLastSection(False)
 
         self.verticalLayout_2.addWidget(self.tbl_bugs)
 
@@ -545,7 +546,7 @@ class Ui_main_window(object):
         main_window.setCentralWidget(self.central_main)
         self.menu_bar_main = QMenuBar(main_window)
         self.menu_bar_main.setObjectName(u"menu_bar_main")
-        self.menu_bar_main.setGeometry(QRect(0, 0, 882, 33))
+        self.menu_bar_main.setGeometry(QRect(0, 0, 882, 22))
         self.menu_bugs = QMenu(self.menu_bar_main)
         self.menu_bugs.setObjectName(u"menu_bugs")
         self.menu_campaigns = QMenu(self.menu_bar_main)
