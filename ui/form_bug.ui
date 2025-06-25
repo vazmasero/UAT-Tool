@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>739</width>
     <height>510</height>
    </rect>
   </property>
@@ -123,11 +123,6 @@
          <string>USSP</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
       </widget>
      </item>
      <item>
@@ -213,7 +208,7 @@
    <item>
     <layout class="QHBoxLayout" name="hlayout_campaign">
      <property name="spacing">
-      <number>15</number>
+      <number>10</number>
      </property>
      <property name="rightMargin">
       <number>275</number>
@@ -226,11 +221,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit">
-       <property name="placeholderText">
-        <string>[Campaign]</string>
-       </property>
-      </widget>
+      <widget class="QComboBox" name="cb_campaign"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_requirements">

@@ -27,7 +27,7 @@
     <item>
      <widget class="QStackedWidget" name="stacked_main">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="pg_bugs">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -978,7 +978,7 @@
      <x>0</x>
      <y>0</y>
      <width>876</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_bugs">

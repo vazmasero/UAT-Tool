@@ -11,7 +11,7 @@ from requirements import FormRequirement
 from assets import (FormDrone, FormEmail, FormOperator,
             FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
 
-from db import get_all_bugs
+from db import get_all_bugs, get_all_campaigns
 
 # Home Page
 class HomePage(QMainWindow):
@@ -67,6 +67,7 @@ class HomePage(QMainWindow):
 
         if index == 0:
             self.load_bugs_data()
+            self.load_campaign_data()
 
     def show_dialog(self,dialogue_type):
         self.dialog=Dialog()
@@ -184,6 +185,13 @@ class HomePage(QMainWindow):
         header.setMaximumSectionSize(150)
         header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
 
+    # Configuration of headers for bugs table
+    def configure_campaign_table_headers(self):
+        header = self.ui.tbl_campaigns.horizontalHeader()
+        header.setStretchLastSection(True)
+        header.setMaximumSectionSize(150)
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+
     # Loading bugs table
     def load_bugs_data(self):
         data = get_all_bugs()
@@ -212,6 +220,34 @@ class HomePage(QMainWindow):
 
         # Opening form when clicking twice on an item in the table
         self.ui.tbl_bugs.doubleClicked.connect(self.handle_double_clicked_bug)
+
+    # Loading campaign table
+    def load_campaign_data(self):
+        data = get_all_campaigns()
+        headers = [
+            "Id", "Description", "System", "Version", "Test blocks", "Passed",
+            "Success", "Creation Time", "Start date", "End date", "Last Update"
+        ]
+
+        model = QStandardItemModel()
+        model.setColumnCount(11)
+        model.setHorizontalHeaderLabels(headers)
+
+        for row in data:
+            items = [QStandardItem(str(cell) if cell is not None else "") for cell in row]
+            for item in items:
+                item.setEditable(False)
+            model.appendRow(items)
+
+        self.ui.tbl_bugs.setModel(model)
+        self.ui.tbl_bugs.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.ui.tbl_bugs.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.ui.tbl_bugs.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerItem)
+        self.ui.tbl_bugs.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.configure_campaign_table_headers()
+
+        # Opening form when clicking twice on an item in the table
+        #self.ui.tbl_bugs.doubleClicked.connect(self.handle_double_clicked_bug)
         
     @Slot()
     def handle_double_clicked_bug(self, index):

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form_bug.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_form_bug(object):
     def setupUi(self, form_bug):
         if not form_bug.objectName():
             form_bug.setObjectName(u"form_bug")
-        form_bug.resize(720, 510)
+        form_bug.resize(739, 510)
         self.main_vlayout = QVBoxLayout(form_bug)
         self.main_vlayout.setSpacing(15)
         self.main_vlayout.setObjectName(u"main_vlayout")
@@ -64,7 +64,6 @@ class Ui_form_bug(object):
         self.hlayout_status.addWidget(self.lbl_system)
 
         self.cb_system = QComboBox(form_bug)
-        self.cb_system.addItem("")
         self.cb_system.addItem("")
         self.cb_system.addItem("")
         self.cb_system.setObjectName(u"cb_system")
@@ -122,7 +121,7 @@ class Ui_form_bug(object):
         self.main_vlayout.addLayout(self.hlayout_date)
 
         self.hlayout_campaign = QHBoxLayout()
-        self.hlayout_campaign.setSpacing(15)
+        self.hlayout_campaign.setSpacing(10)
         self.hlayout_campaign.setObjectName(u"hlayout_campaign")
         self.hlayout_campaign.setContentsMargins(-1, -1, 275, -1)
         self.lbl_campaign = QLabel(form_bug)
@@ -130,10 +129,10 @@ class Ui_form_bug(object):
 
         self.hlayout_campaign.addWidget(self.lbl_campaign)
 
-        self.lineEdit = QLineEdit(form_bug)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.cb_campaign = QComboBox(form_bug)
+        self.cb_campaign.setObjectName(u"cb_campaign")
 
-        self.hlayout_campaign.addWidget(self.lineEdit)
+        self.hlayout_campaign.addWidget(self.cb_campaign)
 
         self.lbl_requirements = QLabel(form_bug)
         self.lbl_requirements.setObjectName(u"lbl_requirements")
@@ -260,7 +259,6 @@ class Ui_form_bug(object):
         self.lbl_system.setText(QCoreApplication.translate("form_bug", u"System:", None))
         self.cb_system.setItemText(0, QCoreApplication.translate("form_bug", u"U-hub", None))
         self.cb_system.setItemText(1, QCoreApplication.translate("form_bug", u"USSP", None))
-        self.cb_system.setItemText(2, "")
 
         self.cb_system.setPlaceholderText(QCoreApplication.translate("form_bug", u"[System]", None))
         self.lbl_version.setText(QCoreApplication.translate("form_bug", u"System Version:", None))
@@ -276,7 +274,6 @@ class Ui_form_bug(object):
         self.le_update.setText("")
         self.le_update.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Last update]", None))
         self.lbl_campaign.setText(QCoreApplication.translate("form_bug", u"Campaign:", None))
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Campaign]", None))
         self.lbl_requirements.setText(QCoreApplication.translate("form_bug", u"Requirements affected:", None))
         self.lbl_urgency.setText(QCoreApplication.translate("form_bug", u"Urgency:", None))
         self.cb_urgency.setItemText(0, QCoreApplication.translate("form_bug", u"High - 1", None))

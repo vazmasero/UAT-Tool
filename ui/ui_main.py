@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -26,7 +26,7 @@ class Ui_main_window(object):
     def setupUi(self, main_window):
         if not main_window.objectName():
             main_window.setObjectName(u"main_window")
-        main_window.resize(882, 647)
+        main_window.resize(876, 634)
         self.action_add_bug = QAction(main_window)
         self.action_add_bug.setObjectName(u"action_add_bug")
         self.action_view_bugs = QAction(main_window)
@@ -546,7 +546,7 @@ class Ui_main_window(object):
         main_window.setCentralWidget(self.central_main)
         self.menu_bar_main = QMenuBar(main_window)
         self.menu_bar_main.setObjectName(u"menu_bar_main")
-        self.menu_bar_main.setGeometry(QRect(0, 0, 882, 22))
+        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 17))
         self.menu_bugs = QMenu(self.menu_bar_main)
         self.menu_bugs.setObjectName(u"menu_bugs")
         self.menu_campaigns = QMenu(self.menu_bar_main)
@@ -596,7 +596,7 @@ class Ui_main_window(object):
 
         self.retranslateUi(main_window)
 
-        self.stacked_main.setCurrentIndex(0)
+        self.stacked_main.setCurrentIndex(3)
         self.tab_widget_management.setCurrentIndex(0)
         self.tab_widget_assets.setCurrentIndex(0)
 
