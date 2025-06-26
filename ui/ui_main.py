@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QHB
     QHeaderView, QLabel, QLineEdit, QMainWindow,
     QMenu, QMenuBar, QPushButton, QSizePolicy,
     QStackedWidget, QStatusBar, QTabWidget, QTableView,
-    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
+    QVBoxLayout, QWidget)
 
 class Ui_main_window(object):
     def setupUi(self, main_window):
@@ -142,35 +142,8 @@ class Ui_main_window(object):
 
         self.verticalLayout_3.addWidget(self.lbl_campaigns)
 
-        self.tbl_campaigns = QTableWidget(self.pg_campaigns)
-        if (self.tbl_campaigns.columnCount() < 11):
-            self.tbl_campaigns.setColumnCount(11)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(4, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(5, __qtablewidgetitem5)
-        __qtablewidgetitem6 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(6, __qtablewidgetitem6)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(7, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(8, __qtablewidgetitem8)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(9, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        self.tbl_campaigns.setHorizontalHeaderItem(10, __qtablewidgetitem10)
-        if (self.tbl_campaigns.rowCount() < 4):
-            self.tbl_campaigns.setRowCount(4)
+        self.tbl_campaigns = QTableView(self.pg_campaigns)
         self.tbl_campaigns.setObjectName(u"tbl_campaigns")
-        self.tbl_campaigns.setRowCount(4)
 
         self.verticalLayout_3.addWidget(self.tbl_campaigns)
 
@@ -194,25 +167,8 @@ class Ui_main_window(object):
         self.verticalLayout_13 = QVBoxLayout(self.tab_cases)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.tbl_cases = QTableWidget(self.tab_cases)
-        if (self.tbl_cases.columnCount() < 6):
-            self.tbl_cases.setColumnCount(6)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        self.tbl_cases.setHorizontalHeaderItem(0, __qtablewidgetitem11)
-        __qtablewidgetitem12 = QTableWidgetItem()
-        self.tbl_cases.setHorizontalHeaderItem(1, __qtablewidgetitem12)
-        __qtablewidgetitem13 = QTableWidgetItem()
-        self.tbl_cases.setHorizontalHeaderItem(2, __qtablewidgetitem13)
-        __qtablewidgetitem14 = QTableWidgetItem()
-        self.tbl_cases.setHorizontalHeaderItem(3, __qtablewidgetitem14)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        self.tbl_cases.setHorizontalHeaderItem(4, __qtablewidgetitem15)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        self.tbl_cases.setHorizontalHeaderItem(5, __qtablewidgetitem16)
-        if (self.tbl_cases.rowCount() < 4):
-            self.tbl_cases.setRowCount(4)
+        self.tbl_cases = QTableView(self.tab_cases)
         self.tbl_cases.setObjectName(u"tbl_cases")
-        self.tbl_cases.setRowCount(4)
 
         self.verticalLayout_13.addWidget(self.tbl_cases)
 
@@ -222,23 +178,8 @@ class Ui_main_window(object):
         self.verticalLayout_14 = QVBoxLayout(self.tab_blocks)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
         self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
-        self.tbl_blocks = QTableWidget(self.tab_blocks)
-        if (self.tbl_blocks.columnCount() < 5):
-            self.tbl_blocks.setColumnCount(5)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        self.tbl_blocks.setHorizontalHeaderItem(0, __qtablewidgetitem17)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        self.tbl_blocks.setHorizontalHeaderItem(1, __qtablewidgetitem18)
-        __qtablewidgetitem19 = QTableWidgetItem()
-        self.tbl_blocks.setHorizontalHeaderItem(2, __qtablewidgetitem19)
-        __qtablewidgetitem20 = QTableWidgetItem()
-        self.tbl_blocks.setHorizontalHeaderItem(3, __qtablewidgetitem20)
-        __qtablewidgetitem21 = QTableWidgetItem()
-        self.tbl_blocks.setHorizontalHeaderItem(4, __qtablewidgetitem21)
-        if (self.tbl_blocks.rowCount() < 4):
-            self.tbl_blocks.setRowCount(4)
+        self.tbl_blocks = QTableView(self.tab_blocks)
         self.tbl_blocks.setObjectName(u"tbl_blocks")
-        self.tbl_blocks.setRowCount(4)
 
         self.verticalLayout_14.addWidget(self.tbl_blocks)
 
@@ -281,25 +222,8 @@ class Ui_main_window(object):
 
         self.verticalLayout_4.addLayout(self.hlayout_search_requirements)
 
-        self.tbl_requirements = QTableWidget(self.pg_requirements)
-        if (self.tbl_requirements.columnCount() < 6):
-            self.tbl_requirements.setColumnCount(6)
-        __qtablewidgetitem22 = QTableWidgetItem()
-        self.tbl_requirements.setHorizontalHeaderItem(0, __qtablewidgetitem22)
-        __qtablewidgetitem23 = QTableWidgetItem()
-        self.tbl_requirements.setHorizontalHeaderItem(1, __qtablewidgetitem23)
-        __qtablewidgetitem24 = QTableWidgetItem()
-        self.tbl_requirements.setHorizontalHeaderItem(2, __qtablewidgetitem24)
-        __qtablewidgetitem25 = QTableWidgetItem()
-        self.tbl_requirements.setHorizontalHeaderItem(3, __qtablewidgetitem25)
-        __qtablewidgetitem26 = QTableWidgetItem()
-        self.tbl_requirements.setHorizontalHeaderItem(4, __qtablewidgetitem26)
-        __qtablewidgetitem27 = QTableWidgetItem()
-        self.tbl_requirements.setHorizontalHeaderItem(5, __qtablewidgetitem27)
-        if (self.tbl_requirements.rowCount() < 4):
-            self.tbl_requirements.setRowCount(4)
+        self.tbl_requirements = QTableView(self.pg_requirements)
         self.tbl_requirements.setObjectName(u"tbl_requirements")
-        self.tbl_requirements.setRowCount(4)
 
         self.verticalLayout_4.addWidget(self.tbl_requirements)
 
@@ -323,19 +247,8 @@ class Ui_main_window(object):
         self.verticalLayout_15 = QVBoxLayout(self.tab_email)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.tabl_email = QTableWidget(self.tab_email)
-        if (self.tabl_email.columnCount() < 3):
-            self.tabl_email.setColumnCount(3)
-        __qtablewidgetitem28 = QTableWidgetItem()
-        self.tabl_email.setHorizontalHeaderItem(0, __qtablewidgetitem28)
-        __qtablewidgetitem29 = QTableWidgetItem()
-        self.tabl_email.setHorizontalHeaderItem(1, __qtablewidgetitem29)
-        __qtablewidgetitem30 = QTableWidgetItem()
-        self.tabl_email.setHorizontalHeaderItem(2, __qtablewidgetitem30)
-        if (self.tabl_email.rowCount() < 4):
-            self.tabl_email.setRowCount(4)
+        self.tabl_email = QTableView(self.tab_email)
         self.tabl_email.setObjectName(u"tabl_email")
-        self.tabl_email.setRowCount(4)
 
         self.verticalLayout_15.addWidget(self.tabl_email)
 
@@ -346,25 +259,8 @@ class Ui_main_window(object):
         self.verticalLayout_6.setSpacing(6)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.tbl_operators = QTableWidget(self.tab_operators)
-        if (self.tbl_operators.columnCount() < 6):
-            self.tbl_operators.setColumnCount(6)
-        __qtablewidgetitem31 = QTableWidgetItem()
-        self.tbl_operators.setHorizontalHeaderItem(0, __qtablewidgetitem31)
-        __qtablewidgetitem32 = QTableWidgetItem()
-        self.tbl_operators.setHorizontalHeaderItem(1, __qtablewidgetitem32)
-        __qtablewidgetitem33 = QTableWidgetItem()
-        self.tbl_operators.setHorizontalHeaderItem(2, __qtablewidgetitem33)
-        __qtablewidgetitem34 = QTableWidgetItem()
-        self.tbl_operators.setHorizontalHeaderItem(3, __qtablewidgetitem34)
-        __qtablewidgetitem35 = QTableWidgetItem()
-        self.tbl_operators.setHorizontalHeaderItem(4, __qtablewidgetitem35)
-        __qtablewidgetitem36 = QTableWidgetItem()
-        self.tbl_operators.setHorizontalHeaderItem(5, __qtablewidgetitem36)
-        if (self.tbl_operators.rowCount() < 4):
-            self.tbl_operators.setRowCount(4)
+        self.tbl_operators = QTableView(self.tab_operators)
         self.tbl_operators.setObjectName(u"tbl_operators")
-        self.tbl_operators.setRowCount(4)
 
         self.verticalLayout_6.addWidget(self.tbl_operators)
 
@@ -374,27 +270,8 @@ class Ui_main_window(object):
         self.verticalLayout_7 = QVBoxLayout(self.tab_drones)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.tbl_drones = QTableWidget(self.tab_drones)
-        if (self.tbl_drones.columnCount() < 7):
-            self.tbl_drones.setColumnCount(7)
-        __qtablewidgetitem37 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(0, __qtablewidgetitem37)
-        __qtablewidgetitem38 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(1, __qtablewidgetitem38)
-        __qtablewidgetitem39 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(2, __qtablewidgetitem39)
-        __qtablewidgetitem40 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(3, __qtablewidgetitem40)
-        __qtablewidgetitem41 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(4, __qtablewidgetitem41)
-        __qtablewidgetitem42 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(5, __qtablewidgetitem42)
-        __qtablewidgetitem43 = QTableWidgetItem()
-        self.tbl_drones.setHorizontalHeaderItem(6, __qtablewidgetitem43)
-        if (self.tbl_drones.rowCount() < 4):
-            self.tbl_drones.setRowCount(4)
+        self.tbl_drones = QTableView(self.tab_drones)
         self.tbl_drones.setObjectName(u"tbl_drones")
-        self.tbl_drones.setRowCount(4)
 
         self.verticalLayout_7.addWidget(self.tbl_drones)
 
@@ -404,25 +281,8 @@ class Ui_main_window(object):
         self.verticalLayout_8 = QVBoxLayout(self.tab_uas_zones)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.tbl_uas_zones = QTableWidget(self.tab_uas_zones)
-        if (self.tbl_uas_zones.columnCount() < 6):
-            self.tbl_uas_zones.setColumnCount(6)
-        __qtablewidgetitem44 = QTableWidgetItem()
-        self.tbl_uas_zones.setHorizontalHeaderItem(0, __qtablewidgetitem44)
-        __qtablewidgetitem45 = QTableWidgetItem()
-        self.tbl_uas_zones.setHorizontalHeaderItem(1, __qtablewidgetitem45)
-        __qtablewidgetitem46 = QTableWidgetItem()
-        self.tbl_uas_zones.setHorizontalHeaderItem(2, __qtablewidgetitem46)
-        __qtablewidgetitem47 = QTableWidgetItem()
-        self.tbl_uas_zones.setHorizontalHeaderItem(3, __qtablewidgetitem47)
-        __qtablewidgetitem48 = QTableWidgetItem()
-        self.tbl_uas_zones.setHorizontalHeaderItem(4, __qtablewidgetitem48)
-        __qtablewidgetitem49 = QTableWidgetItem()
-        self.tbl_uas_zones.setHorizontalHeaderItem(5, __qtablewidgetitem49)
-        if (self.tbl_uas_zones.rowCount() < 4):
-            self.tbl_uas_zones.setRowCount(4)
+        self.tbl_uas_zones = QTableView(self.tab_uas_zones)
         self.tbl_uas_zones.setObjectName(u"tbl_uas_zones")
-        self.tbl_uas_zones.setRowCount(4)
 
         self.verticalLayout_8.addWidget(self.tbl_uas_zones)
 
@@ -432,25 +292,8 @@ class Ui_main_window(object):
         self.verticalLayout_9 = QVBoxLayout(self.tab_uhub_org)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.tbl_uhub_org = QTableWidget(self.tab_uhub_org)
-        if (self.tbl_uhub_org.columnCount() < 6):
-            self.tbl_uhub_org.setColumnCount(6)
-        __qtablewidgetitem50 = QTableWidgetItem()
-        self.tbl_uhub_org.setHorizontalHeaderItem(0, __qtablewidgetitem50)
-        __qtablewidgetitem51 = QTableWidgetItem()
-        self.tbl_uhub_org.setHorizontalHeaderItem(1, __qtablewidgetitem51)
-        __qtablewidgetitem52 = QTableWidgetItem()
-        self.tbl_uhub_org.setHorizontalHeaderItem(2, __qtablewidgetitem52)
-        __qtablewidgetitem53 = QTableWidgetItem()
-        self.tbl_uhub_org.setHorizontalHeaderItem(3, __qtablewidgetitem53)
-        __qtablewidgetitem54 = QTableWidgetItem()
-        self.tbl_uhub_org.setHorizontalHeaderItem(4, __qtablewidgetitem54)
-        __qtablewidgetitem55 = QTableWidgetItem()
-        self.tbl_uhub_org.setHorizontalHeaderItem(5, __qtablewidgetitem55)
-        if (self.tbl_uhub_org.rowCount() < 4):
-            self.tbl_uhub_org.setRowCount(4)
+        self.tbl_uhub_org = QTableView(self.tab_uhub_org)
         self.tbl_uhub_org.setObjectName(u"tbl_uhub_org")
-        self.tbl_uhub_org.setRowCount(4)
 
         self.verticalLayout_9.addWidget(self.tbl_uhub_org)
 
@@ -461,27 +304,8 @@ class Ui_main_window(object):
         self.verticalLayout_10.setSpacing(6)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
         self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
-        self.tbl_uhub_user = QTableWidget(self.tab_uhub_user)
-        if (self.tbl_uhub_user.columnCount() < 7):
-            self.tbl_uhub_user.setColumnCount(7)
-        __qtablewidgetitem56 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(0, __qtablewidgetitem56)
-        __qtablewidgetitem57 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(1, __qtablewidgetitem57)
-        __qtablewidgetitem58 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(2, __qtablewidgetitem58)
-        __qtablewidgetitem59 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(3, __qtablewidgetitem59)
-        __qtablewidgetitem60 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(4, __qtablewidgetitem60)
-        __qtablewidgetitem61 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(5, __qtablewidgetitem61)
-        __qtablewidgetitem62 = QTableWidgetItem()
-        self.tbl_uhub_user.setHorizontalHeaderItem(6, __qtablewidgetitem62)
-        if (self.tbl_uhub_user.rowCount() < 4):
-            self.tbl_uhub_user.setRowCount(4)
+        self.tbl_uhub_user = QTableView(self.tab_uhub_user)
         self.tbl_uhub_user.setObjectName(u"tbl_uhub_user")
-        self.tbl_uhub_user.setRowCount(4)
 
         self.verticalLayout_10.addWidget(self.tbl_uhub_user)
 
@@ -491,21 +315,8 @@ class Ui_main_window(object):
         self.verticalLayout_11 = QVBoxLayout(self.tab_uspaces)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.tbl_uspaces = QTableWidget(self.tab_uspaces)
-        if (self.tbl_uspaces.columnCount() < 4):
-            self.tbl_uspaces.setColumnCount(4)
-        __qtablewidgetitem63 = QTableWidgetItem()
-        self.tbl_uspaces.setHorizontalHeaderItem(0, __qtablewidgetitem63)
-        __qtablewidgetitem64 = QTableWidgetItem()
-        self.tbl_uspaces.setHorizontalHeaderItem(1, __qtablewidgetitem64)
-        __qtablewidgetitem65 = QTableWidgetItem()
-        self.tbl_uspaces.setHorizontalHeaderItem(2, __qtablewidgetitem65)
-        __qtablewidgetitem66 = QTableWidgetItem()
-        self.tbl_uspaces.setHorizontalHeaderItem(3, __qtablewidgetitem66)
-        if (self.tbl_uspaces.rowCount() < 4):
-            self.tbl_uspaces.setRowCount(4)
+        self.tbl_uspaces = QTableView(self.tab_uspaces)
         self.tbl_uspaces.setObjectName(u"tbl_uspaces")
-        self.tbl_uspaces.setRowCount(4)
 
         self.verticalLayout_11.addWidget(self.tbl_uspaces)
 
@@ -546,7 +357,7 @@ class Ui_main_window(object):
         main_window.setCentralWidget(self.central_main)
         self.menu_bar_main = QMenuBar(main_window)
         self.menu_bar_main.setObjectName(u"menu_bar_main")
-        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 17))
+        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 22))
         self.menu_bugs = QMenu(self.menu_bar_main)
         self.menu_bugs.setObjectName(u"menu_bugs")
         self.menu_campaigns = QMenu(self.menu_bar_main)
@@ -596,7 +407,7 @@ class Ui_main_window(object):
 
         self.retranslateUi(main_window)
 
-        self.stacked_main.setCurrentIndex(3)
+        self.stacked_main.setCurrentIndex(2)
         self.tab_widget_management.setCurrentIndex(0)
         self.tab_widget_assets.setCurrentIndex(0)
 
@@ -633,154 +444,20 @@ class Ui_main_window(object):
         self.cb_filter_status.setPlaceholderText(QCoreApplication.translate("main_window", u"Status", None))
         self.cb_filter_system.setPlaceholderText(QCoreApplication.translate("main_window", u"System", None))
         self.lbl_campaigns.setText(QCoreApplication.translate("main_window", u"Test campaigns", None))
-        ___qtablewidgetitem = self.tbl_campaigns.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("main_window", u"Id", None));
-        ___qtablewidgetitem1 = self.tbl_campaigns.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("main_window", u"Description", None));
-        ___qtablewidgetitem2 = self.tbl_campaigns.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("main_window", u"System", None));
-        ___qtablewidgetitem3 = self.tbl_campaigns.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("main_window", u"Version", None));
-        ___qtablewidgetitem4 = self.tbl_campaigns.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("main_window", u"Test blocks", None));
-        ___qtablewidgetitem5 = self.tbl_campaigns.horizontalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("main_window", u"Passed", None));
-        ___qtablewidgetitem6 = self.tbl_campaigns.horizontalHeaderItem(6)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("main_window", u"Success", None));
-        ___qtablewidgetitem7 = self.tbl_campaigns.horizontalHeaderItem(7)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("main_window", u"Creation date", None));
-        ___qtablewidgetitem8 = self.tbl_campaigns.horizontalHeaderItem(8)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("main_window", u"Start date", None));
-        ___qtablewidgetitem9 = self.tbl_campaigns.horizontalHeaderItem(9)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("main_window", u"End date", None));
-        ___qtablewidgetitem10 = self.tbl_campaigns.horizontalHeaderItem(10)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("main_window", u"Last update", None));
         self.lbl_management.setText(QCoreApplication.translate("main_window", u"Test management", None))
-        ___qtablewidgetitem11 = self.tbl_cases.horizontalHeaderItem(0)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("main_window", u"Id", None));
-        ___qtablewidgetitem12 = self.tbl_cases.horizontalHeaderItem(1)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem13 = self.tbl_cases.horizontalHeaderItem(2)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("main_window", u"System", None));
-        ___qtablewidgetitem14 = self.tbl_cases.horizontalHeaderItem(3)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("main_window", u"Assets", None));
-        ___qtablewidgetitem15 = self.tbl_cases.horizontalHeaderItem(4)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("main_window", u"Steps", None));
-        ___qtablewidgetitem16 = self.tbl_cases.horizontalHeaderItem(5)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("main_window", u"Comments", None));
         self.tab_widget_management.setTabText(self.tab_widget_management.indexOf(self.tab_cases), QCoreApplication.translate("main_window", u"Cases", None))
-        ___qtablewidgetitem17 = self.tbl_blocks.horizontalHeaderItem(0)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("main_window", u"Id", None));
-        ___qtablewidgetitem18 = self.tbl_blocks.horizontalHeaderItem(1)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem19 = self.tbl_blocks.horizontalHeaderItem(2)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("main_window", u"System(s)", None));
-        ___qtablewidgetitem20 = self.tbl_blocks.horizontalHeaderItem(3)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("main_window", u"Cases", None));
-        ___qtablewidgetitem21 = self.tbl_blocks.horizontalHeaderItem(4)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("main_window", u"Comments", None));
         self.tab_widget_management.setTabText(self.tab_widget_management.indexOf(self.tab_blocks), QCoreApplication.translate("main_window", u"Blocks", None))
         self.lbl_requirements.setText(QCoreApplication.translate("main_window", u"Requirements", None))
         self.le_search_requirement.setPlaceholderText(QCoreApplication.translate("main_window", u"Search by ID...", None))
         self.lbl_filterby_system.setText(QCoreApplication.translate("main_window", u"Filter by:", None))
         self.cb_system.setPlaceholderText(QCoreApplication.translate("main_window", u"System", None))
-        ___qtablewidgetitem22 = self.tbl_requirements.horizontalHeaderItem(0)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("main_window", u"Id", None));
-        ___qtablewidgetitem23 = self.tbl_requirements.horizontalHeaderItem(1)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("main_window", u"System", None));
-        ___qtablewidgetitem24 = self.tbl_requirements.horizontalHeaderItem(2)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("main_window", u"Section", None));
-        ___qtablewidgetitem25 = self.tbl_requirements.horizontalHeaderItem(3)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("main_window", u"Definition", None));
-        ___qtablewidgetitem26 = self.tbl_requirements.horizontalHeaderItem(4)
-        ___qtablewidgetitem26.setText(QCoreApplication.translate("main_window", u"Creation date", None));
-        ___qtablewidgetitem27 = self.tbl_requirements.horizontalHeaderItem(5)
-        ___qtablewidgetitem27.setText(QCoreApplication.translate("main_window", u"Last update", None));
         self.title_assets.setText(QCoreApplication.translate("main_window", u"Assets management", None))
-        ___qtablewidgetitem28 = self.tabl_email.horizontalHeaderItem(0)
-        ___qtablewidgetitem28.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem29 = self.tabl_email.horizontalHeaderItem(1)
-        ___qtablewidgetitem29.setText(QCoreApplication.translate("main_window", u"Email", None));
-        ___qtablewidgetitem30 = self.tabl_email.horizontalHeaderItem(2)
-        ___qtablewidgetitem30.setText(QCoreApplication.translate("main_window", u"Password", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_email), QCoreApplication.translate("main_window", u"Emails", None))
-        ___qtablewidgetitem31 = self.tbl_operators.horizontalHeaderItem(0)
-        ___qtablewidgetitem31.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem32 = self.tbl_operators.horizontalHeaderItem(1)
-        ___qtablewidgetitem32.setText(QCoreApplication.translate("main_window", u"EASA ID", None));
-        ___qtablewidgetitem33 = self.tbl_operators.horizontalHeaderItem(2)
-        ___qtablewidgetitem33.setText(QCoreApplication.translate("main_window", u"Verification code", None));
-        ___qtablewidgetitem34 = self.tbl_operators.horizontalHeaderItem(3)
-        ___qtablewidgetitem34.setText(QCoreApplication.translate("main_window", u"Email", None));
-        ___qtablewidgetitem35 = self.tbl_operators.horizontalHeaderItem(4)
-        ___qtablewidgetitem35.setText(QCoreApplication.translate("main_window", u"Password", None));
-        ___qtablewidgetitem36 = self.tbl_operators.horizontalHeaderItem(5)
-        ___qtablewidgetitem36.setText(QCoreApplication.translate("main_window", u"Phone", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_operators), QCoreApplication.translate("main_window", u"Operators", None))
-        ___qtablewidgetitem37 = self.tbl_drones.horizontalHeaderItem(0)
-        ___qtablewidgetitem37.setText(QCoreApplication.translate("main_window", u"Operator", None));
-        ___qtablewidgetitem38 = self.tbl_drones.horizontalHeaderItem(1)
-        ___qtablewidgetitem38.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem39 = self.tbl_drones.horizontalHeaderItem(2)
-        ___qtablewidgetitem39.setText(QCoreApplication.translate("main_window", u"Serial Number", None));
-        ___qtablewidgetitem40 = self.tbl_drones.horizontalHeaderItem(3)
-        ___qtablewidgetitem40.setText(QCoreApplication.translate("main_window", u"Manufacturer", None));
-        ___qtablewidgetitem41 = self.tbl_drones.horizontalHeaderItem(4)
-        ___qtablewidgetitem41.setText(QCoreApplication.translate("main_window", u"Model", None));
-        ___qtablewidgetitem42 = self.tbl_drones.horizontalHeaderItem(5)
-        ___qtablewidgetitem42.setText(QCoreApplication.translate("main_window", u"Tracker type", None));
-        ___qtablewidgetitem43 = self.tbl_drones.horizontalHeaderItem(6)
-        ___qtablewidgetitem43.setText(QCoreApplication.translate("main_window", u"Transponder ID", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_drones), QCoreApplication.translate("main_window", u"Drones", None))
-        ___qtablewidgetitem44 = self.tbl_uas_zones.horizontalHeaderItem(0)
-        ___qtablewidgetitem44.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem45 = self.tbl_uas_zones.horizontalHeaderItem(1)
-        ___qtablewidgetitem45.setText(QCoreApplication.translate("main_window", u"Reason", None));
-        ___qtablewidgetitem46 = self.tbl_uas_zones.horizontalHeaderItem(2)
-        ___qtablewidgetitem46.setText(QCoreApplication.translate("main_window", u"Cause", None));
-        ___qtablewidgetitem47 = self.tbl_uas_zones.horizontalHeaderItem(3)
-        ___qtablewidgetitem47.setText(QCoreApplication.translate("main_window", u"Restriction type", None));
-        ___qtablewidgetitem48 = self.tbl_uas_zones.horizontalHeaderItem(4)
-        ___qtablewidgetitem48.setText(QCoreApplication.translate("main_window", u"Activaci\u00f3n time", None));
-        ___qtablewidgetitem49 = self.tbl_uas_zones.horizontalHeaderItem(5)
-        ___qtablewidgetitem49.setText(QCoreApplication.translate("main_window", u"Authority", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_uas_zones), QCoreApplication.translate("main_window", u"UAS Zones", None))
-        ___qtablewidgetitem50 = self.tbl_uhub_org.horizontalHeaderItem(0)
-        ___qtablewidgetitem50.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem51 = self.tbl_uhub_org.horizontalHeaderItem(1)
-        ___qtablewidgetitem51.setText(QCoreApplication.translate("main_window", u"Role", None));
-        ___qtablewidgetitem52 = self.tbl_uhub_org.horizontalHeaderItem(2)
-        ___qtablewidgetitem52.setText(QCoreApplication.translate("main_window", u"Jurisdiction", None));
-        ___qtablewidgetitem53 = self.tbl_uhub_org.horizontalHeaderItem(3)
-        ___qtablewidgetitem53.setText(QCoreApplication.translate("main_window", u"AoI", None));
-        ___qtablewidgetitem54 = self.tbl_uhub_org.horizontalHeaderItem(4)
-        ___qtablewidgetitem54.setText(QCoreApplication.translate("main_window", u"Email", None));
-        ___qtablewidgetitem55 = self.tbl_uhub_org.horizontalHeaderItem(5)
-        ___qtablewidgetitem55.setText(QCoreApplication.translate("main_window", u"Phone", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_uhub_org), QCoreApplication.translate("main_window", u"U-hub Organizations", None))
-        ___qtablewidgetitem56 = self.tbl_uhub_user.horizontalHeaderItem(0)
-        ___qtablewidgetitem56.setText(QCoreApplication.translate("main_window", u"Username", None));
-        ___qtablewidgetitem57 = self.tbl_uhub_user.horizontalHeaderItem(1)
-        ___qtablewidgetitem57.setText(QCoreApplication.translate("main_window", u"Email", None));
-        ___qtablewidgetitem58 = self.tbl_uhub_user.horizontalHeaderItem(2)
-        ___qtablewidgetitem58.setText(QCoreApplication.translate("main_window", u"Password", None));
-        ___qtablewidgetitem59 = self.tbl_uhub_user.horizontalHeaderItem(3)
-        ___qtablewidgetitem59.setText(QCoreApplication.translate("main_window", u"Organization", None));
-        ___qtablewidgetitem60 = self.tbl_uhub_user.horizontalHeaderItem(4)
-        ___qtablewidgetitem60.setText(QCoreApplication.translate("main_window", u"Role", None));
-        ___qtablewidgetitem61 = self.tbl_uhub_user.horizontalHeaderItem(5)
-        ___qtablewidgetitem61.setText(QCoreApplication.translate("main_window", u"Jurisdiction", None));
-        ___qtablewidgetitem62 = self.tbl_uhub_user.horizontalHeaderItem(6)
-        ___qtablewidgetitem62.setText(QCoreApplication.translate("main_window", u"AoI", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_uhub_user), QCoreApplication.translate("main_window", u"U-hub Users", None))
-        ___qtablewidgetitem63 = self.tbl_uspaces.horizontalHeaderItem(0)
-        ___qtablewidgetitem63.setText(QCoreApplication.translate("main_window", u"Id", None));
-        ___qtablewidgetitem64 = self.tbl_uspaces.horizontalHeaderItem(1)
-        ___qtablewidgetitem64.setText(QCoreApplication.translate("main_window", u"Name", None));
-        ___qtablewidgetitem65 = self.tbl_uspaces.horizontalHeaderItem(2)
-        ___qtablewidgetitem65.setText(QCoreApplication.translate("main_window", u"# of sectors", None));
-        ___qtablewidgetitem66 = self.tbl_uspaces.horizontalHeaderItem(3)
-        ___qtablewidgetitem66.setText(QCoreApplication.translate("main_window", u"File", None));
         self.tab_widget_assets.setTabText(self.tab_widget_assets.indexOf(self.tab_uspaces), QCoreApplication.translate("main_window", u"U-spaces", None))
         self.btn_start.setText(QCoreApplication.translate("main_window", u"Start", None))
         self.btn_add.setText(QCoreApplication.translate("main_window", u"Add", None))

@@ -10,7 +10,7 @@ def init_db():
     con = get_connection()
     cursor = con.cursor()
     
-    # Load tables
+    # Create/Load tables
     schema_dir = os.path.join(os.path.dirname(__file__),"schemas")
     for filename in os.listdir(schema_dir):
         if filename.endswith(".sql"):

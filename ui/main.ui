@@ -27,7 +27,7 @@
     <item>
      <widget class="QStackedWidget" name="stacked_main">
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pg_bugs">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -158,70 +158,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="tbl_campaigns">
-          <property name="rowCount">
-           <number>4</number>
-          </property>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <column>
-           <property name="text">
-            <string>Id</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Description</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>System</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Version</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Test blocks</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Passed</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Success</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Creation date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Start date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>End date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Last update</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTableView" name="tbl_campaigns"/>
         </item>
        </layout>
       </widget>
@@ -277,45 +214,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_cases">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Id</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>System</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Assets</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Steps</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Comments</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_cases"/>
             </item>
            </layout>
           </widget>
@@ -337,40 +236,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_blocks">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Id</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>System(s)</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Cases</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Comments</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_blocks"/>
             </item>
            </layout>
           </widget>
@@ -442,45 +308,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="tbl_requirements">
-          <property name="rowCount">
-           <number>4</number>
-          </property>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <column>
-           <property name="text">
-            <string>Id</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>System</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Section</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Definition</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Creation date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Last update</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTableView" name="tbl_requirements"/>
         </item>
        </layout>
       </widget>
@@ -536,30 +364,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tabl_email">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Email</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Password</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tabl_email"/>
             </item>
            </layout>
           </widget>
@@ -584,45 +389,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_operators">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>EASA ID</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Verification code</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Email</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Password</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Phone</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_operators"/>
             </item>
            </layout>
           </widget>
@@ -644,50 +411,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_drones">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Operator</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Serial Number</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Manufacturer</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Model</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Tracker type</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Transponder ID</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_drones"/>
             </item>
            </layout>
           </widget>
@@ -709,45 +433,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_uas_zones">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Reason</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Cause</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Restriction type</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Activación time</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Authority</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_uas_zones"/>
             </item>
            </layout>
           </widget>
@@ -769,45 +455,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_uhub_org">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Role</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Jurisdiction</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>AoI</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Email</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Phone</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_uhub_org"/>
             </item>
            </layout>
           </widget>
@@ -832,50 +480,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_uhub_user">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Username</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Email</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Password</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Organization</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Role</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Jurisdiction</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>AoI</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_uhub_user"/>
             </item>
            </layout>
           </widget>
@@ -897,35 +502,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tbl_uspaces">
-              <property name="rowCount">
-               <number>4</number>
-              </property>
-              <row/>
-              <row/>
-              <row/>
-              <row/>
-              <column>
-               <property name="text">
-                <string>Id</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string># of sectors</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>File</string>
-               </property>
-              </column>
-             </widget>
+             <widget class="QTableView" name="tbl_uspaces"/>
             </item>
            </layout>
           </widget>
@@ -978,7 +555,7 @@
      <x>0</x>
      <y>0</y>
      <width>876</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_bugs">

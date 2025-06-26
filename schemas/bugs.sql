@@ -1,7 +1,7 @@
 -- Bugs table
 CREATE TABLE IF NOT EXISTS bugs (
     id INTEGER PRIMARY KEY,
-    status TEXT
+    status TEXT,
     system TEXT,
     version TEXT,
     creation_time TEXT,
