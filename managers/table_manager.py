@@ -1,16 +1,15 @@
-# managers/table_manager.py
 from typing import List, Optional, Any, Dict, Callable
 from PySide6.QtCore import QObject, Signal, QModelIndex, Qt
 from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QMenu, QApplication
 from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
 
+from config.table_config import TableConfigs
+
 class TableManager(QObject):
-    """Gestor centralizado para el manejo de tablas en la aplicación."""
     
     # Señales para comunicación con otros componentes
     row_double_clicked = Signal(QTableView, int, list)  # tabla, fila, datos
     row_selected = Signal(QTableView, list)  # tabla, filas seleccionadas
-    context_menu_requested = Signal(QTableView, int, object)  # tabla, fila, posición
     
     def __init__(self):
         super().__init__()
@@ -18,43 +17,16 @@ class TableManager(QObject):
         self.table_configs: Dict[str, Dict] = {}
         
     def register_table(self, table: QTableView, name: str, config: Optional[Dict] = None):
-        """
-        Registra una tabla en el gestor.
-        
-        Args:
-            table: La tabla a registrar
-            name: Nombre único para identificar la tabla
-            config: Configuración opcional de la tabla
-        """
+
         self.tables[name] = table
         self.table_configs[name] = config or {}
         
-        # Conectar señales básicas
         table.doubleClicked.connect(
             lambda index: self._handle_double_click(table, index)
         )
-        table.selectionModel().selectionChanged.connect(
-            lambda: self._handle_selection_changed(table)
-        )
-        
-        # Configurar menú contextual si está habilitado
-        if config and config.get('context_menu', False):
-            table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-            table.customContextMenuRequested.connect(
-                lambda pos: self._show_context_menu(table, pos)
-            )
     
     def setup_table(self, table: QTableView, data: List[List[Any]], headers: List[str], 
                    config: Optional[Dict] = None):
-        """
-        Configura una tabla con datos y headers.
-        
-        Args:
-            table: La tabla a configurar
-            data: Datos para poblar la tabla
-            headers: Lista de nombres de columnas
-            config: Configuración adicional de la tabla
-        """
         # Crear y configurar el modelo
         model = QStandardItemModel()
         model.setColumnCount(len(headers))
@@ -66,6 +38,13 @@ class TableManager(QObject):
         # Asignar modelo a la tabla
         table.setModel(model)
         
+        selection_model = table.selectionModel()
+        if selection_model:
+            try:
+                selection_model.selectionChanged.disconnect()
+            except RuntimeError:
+                pass
+        
         # Configurar propiedades de la tabla
         self._configure_table_properties(table, config)
         
@@ -74,7 +53,7 @@ class TableManager(QObject):
     
     def _populate_model(self, model: QStandardItemModel, data: List[List[Any]], 
                        config: Optional[Dict]):
-        """Puebla el modelo con los datos proporcionados."""
+        
         for row_data in data:
             items = []
             for i, cell_data in enumerate(row_data):
@@ -85,14 +64,14 @@ class TableManager(QObject):
                     col_config = config['column_config'].get(i, {})
                     self._apply_item_config(item, col_config)
                 
-                # Por defecto, hacer items no editables
+                # Non editable items by default
                 item.setEditable(config.get('editable', False) if config else False)
                 items.append(item)
             
             model.appendRow(items)
     
     def _apply_item_config(self, item: QStandardItem, col_config: Dict):
-        """Aplica configuración específica a un item de celda."""
+        
         # Alineación
         if 'alignment' in col_config:
             item.setTextAlignment(col_config['alignment'])
@@ -116,7 +95,7 @@ class TableManager(QObject):
             'selection_mode': QAbstractItemView.SelectionMode.ExtendedSelection,
             'scroll_mode': QAbstractItemView.ScrollMode.ScrollPerItem,
             'edit_triggers': QAbstractItemView.EditTrigger.NoEditTriggers,
-            'alternating_row_colors': True,
+            'alternating_row_colors': False,
             'sort_enabled': True
         }
         
@@ -162,16 +141,7 @@ class TableManager(QObject):
             vertical_header.setVisible(False)
     
     def get_row_data(self, table: QTableView, row: int) -> List[Any]:
-        """
-        Obtiene los datos de una fila específica.
-        
-        Args:
-            table: La tabla de la cual obtener los datos
-            row: Índice de la fila
-            
-        Returns:
-            Lista con los datos de la fila
-        """
+
         model = table.model()
         if not model or row < 0 or row >= model.rowCount():
             return []
@@ -185,17 +155,9 @@ class TableManager(QObject):
         return row_data
     
     def get_selected_rows_data(self, table: QTableView) -> List[List[Any]]:
-        """
-        Obtiene los datos de todas las filas seleccionadas.
-        
-        Args:
-            table: La tabla de la cual obtener los datos
-            
-        Returns:
-            Lista de listas con los datos de las filas seleccionadas
-        """
+
         selection_model = table.selectionModel()
-        if not selection_model.hasSelection():
+        if not selection_model or not selection_model.hasSelection():
             return []
         
         selected_rows = set()
@@ -205,9 +167,9 @@ class TableManager(QObject):
         return [self.get_row_data(table, row) for row in sorted(selected_rows)]
     
     def get_selected_row_indices(self, table: QTableView) -> List[int]:
-        """Obtiene los índices de las filas seleccionadas."""
+        
         selection_model = table.selectionModel()
-        if not selection_model.hasSelection():
+        if not selection_model or not selection_model.hasSelection():
             return []
         
         selected_rows = set()
@@ -217,14 +179,7 @@ class TableManager(QObject):
         return sorted(selected_rows)
     
     def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None):
-        """
-        Añade una nueva fila a la tabla.
-        
-        Args:
-            table: La tabla donde añadir la fila
-            row_data: Datos de la nueva fila
-            position: Posición donde insertar (None = al final)
-        """
+
         model = table.model()
         if not model:
             return
@@ -239,15 +194,7 @@ class TableManager(QObject):
             model.insertRow(position, items)
     
     def remove_selected_rows(self, table: QTableView) -> bool:
-        """
-        Elimina las filas seleccionadas.
-        
-        Args:
-            table: La tabla de la cual eliminar filas
-            
-        Returns:
-            True si se eliminaron filas, False en caso contrario
-        """
+
         selected_rows = self.get_selected_row_indices(table)
         if not selected_rows:
             return False
@@ -263,17 +210,7 @@ class TableManager(QObject):
         return True
     
     def update_row(self, table: QTableView, row: int, row_data: List[Any]) -> bool:
-        """
-        Actualiza los datos de una fila específica.
-        
-        Args:
-            table: La tabla a actualizar
-            row: Índice de la fila
-            row_data: Nuevos datos para la fila
-            
-        Returns:
-            True si se actualizó correctamente, False en caso contrario
-        """
+
         model = table.model()
         if not model or row < 0 or row >= model.rowCount():
             return False
@@ -286,14 +223,7 @@ class TableManager(QObject):
         return True
     
     def filter_table(self, table: QTableView, column: int, text: str):
-        """
-        Aplica un filtro simple a una columna de la tabla.
-        
-        Args:
-            table: La tabla a filtrar
-            column: Índice de la columna
-            text: Texto a filtrar
-        """
+
         # Nota: Para filtrado más avanzado, considerar usar QSortFilterProxyModel
         model = table.model()
         if not model:
@@ -311,48 +241,6 @@ class TableManager(QObject):
         if model:
             model.clear()
     
-    def export_to_csv(self, table: QTableView, filename: str) -> bool:
-        """
-        Exporta los datos de la tabla a un archivo CSV.
-        
-        Args:
-            table: La tabla a exportar
-            filename: Nombre del archivo de destino
-            
-        Returns:
-            True si se exportó correctamente, False en caso contrario
-        """
-        try:
-            import csv
-            
-            model = table.model()
-            if not model:
-                return False
-            
-            with open(filename, 'w', newline='', encoding='utf-8') as file:
-                writer = csv.writer(file)
-                
-                # Escribir headers
-                headers = []
-                for column in range(model.columnCount()):
-                    header_data = model.headerData(column, Qt.Orientation.Horizontal, Qt.ItemDataRole.DisplayRole)
-                    headers.append(str(header_data) if header_data else f"Column {column}")
-                writer.writerow(headers)
-                
-                # Escribir datos
-                for row in range(model.rowCount()):
-                    row_data = []
-                    for column in range(model.columnCount()):
-                        index = model.index(row, column)
-                        data = model.data(index, Qt.ItemDataRole.DisplayRole)
-                        row_data.append(str(data) if data else "")
-                    writer.writerow(row_data)
-            
-            return True
-        except Exception as e:
-            print(f"Error exportando a CSV: {e}")
-            return False
-    
     def _handle_double_click(self, table: QTableView, index: QModelIndex):
         """Maneja el evento de doble clic en una tabla."""
         if index.isValid():
@@ -363,60 +251,3 @@ class TableManager(QObject):
         """Maneja el cambio de selección en una tabla."""
         selected_data = self.get_selected_rows_data(table)
         self.row_selected.emit(table, selected_data)
-    
-    def _show_context_menu(self, table: QTableView, position):
-        """Muestra el menú contextual de la tabla."""
-        # Obtener la fila en la posición del clic
-        index = table.indexAt(position)
-        row = index.row() if index.isValid() else -1
-        
-        # Emitir señal para que otros componentes puedan manejar el menú
-        global_pos = table.mapToGlobal(position)
-        self.context_menu_requested.emit(table, row, global_pos)
-
-# Ejemplo de configuraciones predefinidas para diferentes tipos de tabla
-class TableConfigs:
-    """Configuraciones predefinidas para diferentes tipos de tablas."""
-    
-    @staticmethod
-    def get_bugs_table_config():
-        """Configuración para la tabla de bugs."""
-        return {
-            'context_menu': True,
-            'column_widths': [80, 100, 80, 120, 120, 100, 120, 150, 200, 300, 80, 80, 200],
-            'column_config': {
-                0: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Status
-                6: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Campaign
-                10: {'alignment': Qt.AlignmentFlag.AlignCenter}, # Urgency
-                11: {'alignment': Qt.AlignmentFlag.AlignCenter}, # Impact
-            },
-            'max_section_size': 400,
-            'alternating_row_colors': True,
-            'sort_enabled': True
-        }
-    
-    @staticmethod
-    def get_campaigns_table_config():
-        """Configuración para la tabla de campañas."""
-        return {
-            'context_menu': True,
-            'column_widths': [50, 200, 100, 80, 120, 80, 80, 120, 120, 120, 120],
-            'column_config': {
-                0: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Id
-                5: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Passed
-                6: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Success
-            },
-            'max_section_size': 300,
-            'alternating_row_colors': True,
-            'sort_enabled': True
-        }
-    
-    @staticmethod
-    def get_generic_table_config():
-        """Configuración genérica para tablas."""
-        return {
-            'context_menu': False,
-            'alternating_row_colors': True,
-            'sort_enabled': True,
-            'max_section_size': 250
-        }

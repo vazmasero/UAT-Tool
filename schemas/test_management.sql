@@ -1,5 +1,5 @@
 -- Test cases table
-CREATE TABLE IF NOT EXISTS test_cases (
+CREATE TABLE IF NOT EXISTS cases (
     id INTEGER PRIMARY KEY,
     identifier TEXT,
     name TEXT,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS test_cases (
 );
 
 -- Test blocks table
-CREATE TABLE IF NOT EXISTS test_blocks (
+CREATE TABLE IF NOT EXISTS blocks (
     id INTEGER PRIMARY KEY,
     identifier TEXT,
     name TEXT,

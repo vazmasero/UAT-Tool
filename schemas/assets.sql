@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS uhub_users (
 );
 
 -- U-spaces table
-CREATE TABLE IF NOT EXISTS uhub_users (
+CREATE TABLE IF NOT EXISTS uspaces (
     id INTEGER PRIMARY KEY,
     identification TEXT,
     name TEXT,

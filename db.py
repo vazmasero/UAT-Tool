@@ -20,29 +20,88 @@ def init_db():
 
     con.commit()
     con.close()
-
-def get_all_bugs():
-    con = get_connection()
-    cursor = con.cursor()
-    cursor.execute('''
-        SELECT status, system, version, creation_time, last_update,
+    
+TABLE_CONFIGS = {
+    'bugs': {
+        'table': 'bugs',
+        'columns': '''status, system, version, creation_time, last_update,
             service_now_id, campaign, requirements, short_desc,
-            definition, urgency, impact, comments
-        FROM bugs
-    ''')
-    data = cursor.fetchall()
-    con.close()
-    return data
-
-def get_all_campaigns():
-    con = get_connection()
-    cursor = con.cursor()
-    cursor.execute('''
-        SELECT id, identifier, description, system, version,
+            definition, urgency, impact, comments'''
+    },
+    'campaigns': {
+        'table': 'campaigns',
+        'columns': '''id, identifier, description, system, version,
         test_blocks, passed, success, creation_time, start_date,
-        end_date, last_update, comments
-        FROM campaigns
-    ''')
-    data = cursor.fetchall()
-    con.close()
-    return data
+        end_date, last_update, comments'''
+    },
+    'cases': {
+        'table': 'cases',
+        'columns': '''id, identifier, name, system, assets, steps'''
+    },
+    'blocks': {
+        'table': 'blocks',
+        'columns': '''id, identifier, name, system, cases, comments'''
+    },
+    'requirements': {
+        'table': 'requirements',
+        'columns': '''id, system, section, definition, creation_date,
+        last_update'''
+    },
+    'emails': {
+        'table': 'emails',
+        'columns': '''id, name, email, password'''
+    },
+    'operators': {
+        'table': 'operators',
+        'columns': '''id, name, easa_id, verification_code, email,
+        password, phone'''
+    },
+    'drones': {
+        'table': 'drones',
+        'columns': '''id, operator, name, sn, manufacturer,
+        model, tracker_type, transponder_id'''
+    },
+    'uas_zones': {
+        'table': 'uas_zones',
+        'columns': '''id, name, reason, cause, restriction_type, 
+        activation_time, authority'''
+    },
+    'uhub_orgs': {
+        'table': 'uhub_orgs',
+        'columns': '''id, name, role, jurisdiction, aoi, email, phone'''
+    },
+    'uhub_users': {
+        'table': 'uhub_users',
+        'columns': '''id, username, email, password, organization, role,
+        jurisdiction, aoi'''
+    },
+    'uspaces': {
+        'table': 'uspaces',
+        'columns': '''id, identification, name, sectors_number, file'''
+    }
+}
+
+class DatabaseManager:
+    
+    def __init__(self):
+        self.table_configs = TABLE_CONFIGS
+    
+    def get_all_data(self, key, custom_columns=None):
+        
+        if key not in self.table_configs:
+            available_keys = ', '.join(self.table_configs.keys())
+            raise ValueError(f"Clave '{key}' no encontrada. Claves disponibles: {available_keys}")
+        
+        config = self.table_configs[key]
+        columns = custom_columns or config['columns']
+        
+        con = get_connection()
+        cursor = con.cursor()
+        
+        try:
+            cursor.execute(f"SELECT {columns} FROM {config['table']}")
+            data = cursor.fetchall()
+            return data
+        finally:
+            con.close()
+    

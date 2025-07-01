@@ -1,5 +1,6 @@
 from typing import Dict, Optional, Type, Any
 from PySide6.QtWidgets import QWidget, QDialog
+
 from config.app_config import AppConfig
 from config.forms_config import FormConfig
 
@@ -14,7 +15,7 @@ class FormManager:
         """Opens a form based on its configuration key."""
         config = self.config.FORMS_CONFIG.get(form_key)
         if not config:
-            print(f"No se encontró configuración para el formulario: {form_key}")
+            print(f"Configuration not founded for form: {form_key}")
             return None
         
         title = config.edit_title if edit_mode else config.add_title

@@ -6,7 +6,7 @@ from enum import Enum
 
 @dataclass
 class FormConfig:
-    """Specific form configuration"""
+    """Specific form configuration according to definition in .ui files"""
     form_class: Type[QWidget]
     add_title: str
     edit_title: str
@@ -16,23 +16,24 @@ class FormConfig:
     menu_action_attr: Optional[str]
 
 class PageType(Enum):
+    """Enumeration of pages in the home page's stacked widget"""
     BUGS = "bugs"
     CAMPAIGNS = "campaigns"
-    CASES = "cases"
+    MANAGEMENT = "management"
     REQUIREMENTS = "requirements"
     ASSETS = "assets"
-
-class FormType(Enum):
-    # Test management
-    CASE = "case"
-    BLOCK = "block"
     
-    # Assets
-    EMAIL = "email"
-    OPERATOR = "operator"
-    DRONE = "drone"
-    UAS_ZONE = "uas_zone"
-    UHUB_ORG = "uhub_org"
-    UHUB_USER = "uhub_user"
-    USPACE = "uspace"
-
+class FormType(Enum):
+    """Enumeration of tabs in test management and assets pages"""
+    # Test management tabs
+    CASE = "test_cases"
+    BLOCK = "test_blocks"
+    
+    # Assets tabs
+    EMAIL = "emails"
+    OPERATOR = "operators"
+    DRONE = "drones"
+    UAS_ZONE = "uas_zones"
+    UHUB_ORG = "uhub_orgs"
+    UHUB_USER = "uhub_users"
+    USPACE = "uspaces"

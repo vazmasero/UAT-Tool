@@ -1,13 +1,13 @@
 from .forms_config import FormConfig, FormType, PageType
-from campaigns import FormCampaign
-from bugs import FormBug
-from cases import FormCase, FormBlock
-from requirements import FormRequirement
-from assets import (FormDrone, FormEmail, FormOperator,
+from pages.campaigns import FormCampaign
+from pages.bugs import FormBug
+from pages.test_management import FormCase, FormBlock
+from pages.requirements import FormRequirement
+from pages.assets import (FormDrone, FormEmail, FormOperator,
                    FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
 
 class AppConfig:
-    """Centralized configuration for the application"""
+    """Centralized configuration for the application. """
 
     FORMS_CONFIG = {
         # Core forms
@@ -33,6 +33,9 @@ class AppConfig:
             form_class=FormRequirement,
             add_title="Add requirement",
             edit_title="Edit requirement",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_requirement"
         ),
         
@@ -61,42 +64,63 @@ class AppConfig:
             form_class=FormEmail,
             add_title="Add email",
             edit_title="Edit email",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_email"
         ),
         FormType.OPERATOR.value: FormConfig(
             form_class=FormOperator,
             add_title="Add operator", 
             edit_title="Edit operator",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_operator"
         ),
         FormType.DRONE.value: FormConfig(
             form_class=FormDrone,
             add_title="Add drone",
             edit_title="Edit drone",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_drone"
         ),
         FormType.UAS_ZONE.value: FormConfig(
             form_class=FormUASZone,
             add_title="Add UAS zone",
             edit_title="Edit UAS zone", 
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_uas_zone"
         ),
         FormType.UHUB_ORG.value: FormConfig(
             form_class=FormUhubOrg,
             add_title="Add U-hub org",
             edit_title="Edit U-hub org",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_uhub_organization"
         ),
         FormType.UHUB_USER.value: FormConfig(
             form_class=FormUhubUser,
             add_title="Add U-hub user",
             edit_title="Edit U-hub user",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_uhub_user"
         ),
         FormType.USPACE.value: FormConfig(
             form_class=FormUspace,
             add_title="Add U-space",
             edit_title="Edit U-space",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
             menu_action_attr="action_new_uspace"
         ),
     }
@@ -104,7 +128,7 @@ class AppConfig:
     PAGE_FORM_MAPPING = {
         PageType.BUGS: ["bug"],
         PageType.CAMPAIGNS: ["campaign"], 
-        PageType.CASES: [FormType.CASE.value, FormType.BLOCK.value],
+        PageType.MANAGEMENT: [FormType.CASE.value, FormType.BLOCK.value],
         PageType.REQUIREMENTS: ["requirement"],
         PageType.ASSETS: [
             FormType.EMAIL.value, FormType.OPERATOR.value, FormType.DRONE.value,

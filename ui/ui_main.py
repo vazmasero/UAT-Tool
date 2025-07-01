@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -37,8 +37,8 @@ class Ui_main_window(object):
         self.action_view_campaigns.setObjectName(u"action_view_campaigns")
         self.action = QAction(main_window)
         self.action.setObjectName(u"action")
-        self.action_view_cases = QAction(main_window)
-        self.action_view_cases.setObjectName(u"action_view_cases")
+        self.action_view_management = QAction(main_window)
+        self.action_view_management.setObjectName(u"action_view_management")
         self.action_new_requirement = QAction(main_window)
         self.action_new_requirement.setObjectName(u"action_new_requirement")
         self.action_view_requirements = QAction(main_window)
@@ -247,10 +247,10 @@ class Ui_main_window(object):
         self.verticalLayout_15 = QVBoxLayout(self.tab_email)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.tabl_email = QTableView(self.tab_email)
-        self.tabl_email.setObjectName(u"tabl_email")
+        self.tbl_emails = QTableView(self.tab_email)
+        self.tbl_emails.setObjectName(u"tbl_emails")
 
-        self.verticalLayout_15.addWidget(self.tabl_email)
+        self.verticalLayout_15.addWidget(self.tbl_emails)
 
         self.tab_widget_assets.addTab(self.tab_email, "")
         self.tab_operators = QWidget()
@@ -357,14 +357,14 @@ class Ui_main_window(object):
         main_window.setCentralWidget(self.central_main)
         self.menu_bar_main = QMenuBar(main_window)
         self.menu_bar_main.setObjectName(u"menu_bar_main")
-        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 22))
+        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 33))
         self.menu_bugs = QMenu(self.menu_bar_main)
         self.menu_bugs.setObjectName(u"menu_bugs")
         self.menu_campaigns = QMenu(self.menu_bar_main)
         self.menu_campaigns.setObjectName(u"menu_campaigns")
-        self.menu_cases = QMenu(self.menu_bar_main)
-        self.menu_cases.setObjectName(u"menu_cases")
-        self.menu_new_test = QMenu(self.menu_cases)
+        self.menu_management = QMenu(self.menu_bar_main)
+        self.menu_management.setObjectName(u"menu_management")
+        self.menu_new_test = QMenu(self.menu_management)
         self.menu_new_test.setObjectName(u"menu_new_test")
         self.menu_requirements = QMenu(self.menu_bar_main)
         self.menu_requirements.setObjectName(u"menu_requirements")
@@ -381,7 +381,7 @@ class Ui_main_window(object):
 
         self.menu_bar_main.addAction(self.menu_bugs.menuAction())
         self.menu_bar_main.addAction(self.menu_campaigns.menuAction())
-        self.menu_bar_main.addAction(self.menu_cases.menuAction())
+        self.menu_bar_main.addAction(self.menu_management.menuAction())
         self.menu_bar_main.addAction(self.menu_requirements.menuAction())
         self.menu_bar_main.addAction(self.menu_assets.menuAction())
         self.menu_bar_main.addAction(self.menu_statistics.menuAction())
@@ -389,8 +389,8 @@ class Ui_main_window(object):
         self.menu_bugs.addAction(self.action_view_bugs)
         self.menu_campaigns.addAction(self.action_new_campaign)
         self.menu_campaigns.addAction(self.action_view_campaigns)
-        self.menu_cases.addAction(self.menu_new_test.menuAction())
-        self.menu_cases.addAction(self.action_view_cases)
+        self.menu_management.addAction(self.menu_new_test.menuAction())
+        self.menu_management.addAction(self.action_view_management)
         self.menu_new_test.addAction(self.action_new_case)
         self.menu_new_test.addAction(self.action_new_block)
         self.menu_requirements.addAction(self.action_new_requirement)
@@ -407,7 +407,7 @@ class Ui_main_window(object):
 
         self.retranslateUi(main_window)
 
-        self.stacked_main.setCurrentIndex(2)
+        self.stacked_main.setCurrentIndex(0)
         self.tab_widget_management.setCurrentIndex(0)
         self.tab_widget_assets.setCurrentIndex(0)
 
@@ -416,13 +416,13 @@ class Ui_main_window(object):
     # setupUi
 
     def retranslateUi(self, main_window):
-        main_window.setWindowTitle(QCoreApplication.translate("main_window", u"MainWindow", None))
+        main_window.setWindowTitle(QCoreApplication.translate("main_window", u"UAT Tool", None))
         self.action_add_bug.setText(QCoreApplication.translate("main_window", u"New bug", None))
         self.action_view_bugs.setText(QCoreApplication.translate("main_window", u"View bugs", None))
         self.action_new_campaign.setText(QCoreApplication.translate("main_window", u"New campaign", None))
         self.action_view_campaigns.setText(QCoreApplication.translate("main_window", u"View campaigns", None))
         self.action.setText(QCoreApplication.translate("main_window", u"New test block", None))
-        self.action_view_cases.setText(QCoreApplication.translate("main_window", u"View cases", None))
+        self.action_view_management.setText(QCoreApplication.translate("main_window", u"View tests", None))
         self.action_new_requirement.setText(QCoreApplication.translate("main_window", u"New requirement", None))
         self.action_view_requirements.setText(QCoreApplication.translate("main_window", u"View requirements", None))
         self.action_view_assets.setText(QCoreApplication.translate("main_window", u"View assets", None))
@@ -465,7 +465,7 @@ class Ui_main_window(object):
         self.btn_remove.setText(QCoreApplication.translate("main_window", u"Remove", None))
         self.menu_bugs.setTitle(QCoreApplication.translate("main_window", u"Bugs", None))
         self.menu_campaigns.setTitle(QCoreApplication.translate("main_window", u"Campaigns", None))
-        self.menu_cases.setTitle(QCoreApplication.translate("main_window", u"Cases", None))
+        self.menu_management.setTitle(QCoreApplication.translate("main_window", u"Test Management", None))
         self.menu_new_test.setTitle(QCoreApplication.translate("main_window", u"New...", None))
         self.menu_requirements.setTitle(QCoreApplication.translate("main_window", u"Requirements", None))
         self.menu_assets.setTitle(QCoreApplication.translate("main_window", u"Assets", None))

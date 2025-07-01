@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UAT Tool</string>
   </property>
   <widget class="QWidget" name="central_main">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -27,7 +27,7 @@
     <item>
      <widget class="QStackedWidget" name="stacked_main">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pg_bugs">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -364,7 +364,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableView" name="tabl_email"/>
+             <widget class="QTableView" name="tbl_emails"/>
             </item>
            </layout>
           </widget>
@@ -555,7 +555,7 @@
      <x>0</x>
      <y>0</y>
      <width>876</width>
-     <height>22</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_bugs">
@@ -572,9 +572,9 @@
     <addaction name="action_new_campaign"/>
     <addaction name="action_view_campaigns"/>
    </widget>
-   <widget class="QMenu" name="menu_cases">
+   <widget class="QMenu" name="menu_management">
     <property name="title">
-     <string>Cases</string>
+     <string>Test Management</string>
     </property>
     <widget class="QMenu" name="menu_new_test">
      <property name="title">
@@ -584,7 +584,7 @@
      <addaction name="action_new_block"/>
     </widget>
     <addaction name="menu_new_test"/>
-    <addaction name="action_view_cases"/>
+    <addaction name="action_view_management"/>
    </widget>
    <widget class="QMenu" name="menu_requirements">
     <property name="title">
@@ -619,7 +619,7 @@
    </widget>
    <addaction name="menu_bugs"/>
    <addaction name="menu_campaigns"/>
-   <addaction name="menu_cases"/>
+   <addaction name="menu_management"/>
    <addaction name="menu_requirements"/>
    <addaction name="menu_assets"/>
    <addaction name="menu_statistics"/>
@@ -650,9 +650,9 @@
     <string>New test block</string>
    </property>
   </action>
-  <action name="action_view_cases">
+  <action name="action_view_management">
    <property name="text">
-    <string>View cases</string>
+    <string>View tests</string>
    </property>
   </action>
   <action name="action_new_requirement">
