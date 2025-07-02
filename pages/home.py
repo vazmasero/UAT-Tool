@@ -4,13 +4,13 @@ from PySide6.QtWidgets import QMainWindow, QDialog, QTableView
 from PySide6.QtGui import QStandardItem, QStandardItemModel
 
 from ui.ui_main import Ui_main_window
-from ui.ui_dialog_action import Ui_dialog_action
 from pages.campaigns import ExecutionCampaign
+from pages.dialogs import Dialog
 from db import DatabaseManager
 
 from config.app_config import AppConfig
 from config.forms_config import PageType, FormType
-from config.table_config import TableConfig
+from config.table_config import TableSpecificConfig
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager
@@ -53,18 +53,18 @@ class HomePage(QMainWindow):
 
     def _register_table(self):
         table_registrations = [
-            (self.ui.tbl_bugs, "bugs", TableConfig.BUGS_TABLE_CONFIG),
-            (self.ui.tbl_campaigns, "campaigns", TableConfig.CAMPAIGNS_TABLE_CONFIG),
-            (self.ui.tbl_cases, "cases", TableConfig.CASES_TABLE_CONFIG),
-            (self.ui.tbl_requirements, "requirements", TableConfig.REQUIREMENTS_TABLE_CONFIG),
-            (self.ui.tbl_emails, "emails", TableConfig.EMAILS_TABLE_CONFIG),
-            (self.ui.tbl_blocks, "blocks", TableConfig.BLOCKS_TABLE_CONFIG),
-            (self.ui.tbl_operators, "operators", TableConfig.OPERATORS_TABLE_CONFIG),
-            (self.ui.tbl_drones, "drones", TableConfig.DRONES_TABLE_CONFIG),
-            (self.ui.tbl_uas_zones, "uas_zones", TableConfig.ZONES_TABLE_CONFIG),
-            (self.ui.tbl_uhub_org, "uhub_orgs", TableConfig.ORGS_TABLE_CONFIG),
-            (self.ui.tbl_uhub_user, "uhub_users", TableConfig.USERS_TABLE_CONFIG),
-            (self.ui.tbl_uspaces, "uspaces", TableConfig.USPACES_TABLE_CONFIG),
+            (self.ui.tbl_bugs, "bugs", TableSpecificConfig.BUGS_TABLE_CONFIG),
+            (self.ui.tbl_campaigns, "campaigns", TableSpecificConfig.CAMPAIGNS_TABLE_CONFIG),
+            (self.ui.tbl_cases, "cases", TableSpecificConfig.CASES_TABLE_CONFIG),
+            (self.ui.tbl_requirements, "requirements", TableSpecificConfig.REQUIREMENTS_TABLE_CONFIG),
+            (self.ui.tbl_emails, "emails", TableSpecificConfig.EMAILS_TABLE_CONFIG),
+            (self.ui.tbl_blocks, "blocks", TableSpecificConfig.BLOCKS_TABLE_CONFIG),
+            (self.ui.tbl_operators, "operators", TableSpecificConfig.OPERATORS_TABLE_CONFIG),
+            (self.ui.tbl_drones, "drones", TableSpecificConfig.DRONES_TABLE_CONFIG),
+            (self.ui.tbl_uas_zones, "uas_zones", TableSpecificConfig.ZONES_TABLE_CONFIG),
+            (self.ui.tbl_uhub_org, "uhub_orgs", TableSpecificConfig.ORGS_TABLE_CONFIG),
+            (self.ui.tbl_uhub_user, "uhub_users", TableSpecificConfig.USERS_TABLE_CONFIG),
+            (self.ui.tbl_uspaces, "uspaces", TableSpecificConfig.USPACES_TABLE_CONFIG),
         ]
         
         for table, name, config in table_registrations:
@@ -231,26 +231,26 @@ class HomePage(QMainWindow):
     
     def _load_table_data(self, key:str, index:Optional[int]):
         TABLE_CONFIG_MAPPING = {
-            "bugs": (self.ui.tbl_bugs, TableConfig.BUGS_TABLE_CONFIG),
-            "campaigns": (self.ui.tbl_campaigns, TableConfig.CAMPAIGNS_TABLE_CONFIG),
-            "cases": (self.ui.tbl_cases, TableConfig.CASES_TABLE_CONFIG),
-            "requirements": (self.ui.tbl_requirements, TableConfig.REQUIREMENTS_TABLE_CONFIG),
-            "emails": (self.ui.tbl_emails, TableConfig.EMAILS_TABLE_CONFIG),
+            "bugs": (self.ui.tbl_bugs, TableSpecificConfig.BUGS_TABLE_CONFIG),
+            "campaigns": (self.ui.tbl_campaigns, TableSpecificConfig.CAMPAIGNS_TABLE_CONFIG),
+            "cases": (self.ui.tbl_cases, TableSpecificConfig.CASES_TABLE_CONFIG),
+            "requirements": (self.ui.tbl_requirements, TableSpecificConfig.REQUIREMENTS_TABLE_CONFIG),
+            "emails": (self.ui.tbl_emails, TableSpecificConfig.EMAILS_TABLE_CONFIG),
         }
         
         TAB_TABLE_CONFIG = {
             "management": {
-                0: ("cases", self.ui.tbl_cases, TableConfig.CASES_TABLE_CONFIG),
-                1: ("blocks", self.ui.tbl_blocks, TableConfig.BLOCKS_TABLE_CONFIG)
+                0: ("cases", self.ui.tbl_cases, TableSpecificConfig.CASES_TABLE_CONFIG),
+                1: ("blocks", self.ui.tbl_blocks, TableSpecificConfig.BLOCKS_TABLE_CONFIG)
             },
             "assets": {
-                0: ("emails", self.ui.tbl_emails, TableConfig.CASES_TABLE_CONFIG),
-                1: ("operators", self.ui.tbl_operators, TableConfig.OPERATORS_TABLE_CONFIG),
-                2: ("drones", self.ui.tbl_drones, TableConfig.DRONES_TABLE_CONFIG),
-                3: ("uas_zones", self.ui.tbl_uas_zones, TableConfig.ZONES_TABLE_CONFIG),
-                4: ("uhub_orgs", self.ui.tbl_uhub_org, TableConfig.ORGS_TABLE_CONFIG),
-                5: ("uhub_users", self.ui.tbl_uhub_user, TableConfig.USERS_TABLE_CONFIG),
-                6: ("uspaces", self.ui.tbl_uspaces, TableConfig.USPACES_TABLE_CONFIG),
+                0: ("emails", self.ui.tbl_emails, TableSpecificConfig.CASES_TABLE_CONFIG),
+                1: ("operators", self.ui.tbl_operators, TableSpecificConfig.OPERATORS_TABLE_CONFIG),
+                2: ("drones", self.ui.tbl_drones, TableSpecificConfig.DRONES_TABLE_CONFIG),
+                3: ("uas_zones", self.ui.tbl_uas_zones, TableSpecificConfig.ZONES_TABLE_CONFIG),
+                4: ("uhub_orgs", self.ui.tbl_uhub_org, TableSpecificConfig.ORGS_TABLE_CONFIG),
+                5: ("uhub_users", self.ui.tbl_uhub_user, TableSpecificConfig.USERS_TABLE_CONFIG),
+                6: ("uspaces", self.ui.tbl_uspaces, TableSpecificConfig.USPACES_TABLE_CONFIG),
             }
         }
         
@@ -268,10 +268,3 @@ class HomePage(QMainWindow):
     def closeEvent(self, event):
         self.form_manager.close_all_forms()
         super().closeEvent(event)
-
-class Dialog(QDialog):
-
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_dialog_action()
-        self.ui.setupUi(self)

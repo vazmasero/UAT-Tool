@@ -2,24 +2,6 @@ import os
 import sqlite3
 
 DB_NAME = "uat_tool.db"
-
-def get_connection():
-    return sqlite3.connect(DB_NAME)
-
-def init_db():
-    con = get_connection()
-    cursor = con.cursor()
-    
-    # Create/Load tables
-    schema_dir = os.path.join(os.path.dirname(__file__),"schemas")
-    for filename in os.listdir(schema_dir):
-        if filename.endswith(".sql"):
-            with open(os.path.join(schema_dir, filename), "r", encoding="utf-8") as f:
-                sql =f.read()
-                cursor.executescript(sql)
-
-    con.commit()
-    con.close()
     
 TABLE_CONFIGS = {
     'bugs': {
@@ -81,6 +63,24 @@ TABLE_CONFIGS = {
     }
 }
 
+def get_connection():
+    return sqlite3.connect(DB_NAME)
+
+def init_db():
+    con = get_connection()
+    cursor = con.cursor()
+    
+    # Create/Load tables
+    schema_dir = os.path.join(os.path.dirname(__file__),"schemas")
+    for filename in os.listdir(schema_dir):
+        if filename.endswith(".sql"):
+            with open(os.path.join(schema_dir, filename), "r", encoding="utf-8") as f:
+                sql =f.read()
+                cursor.executescript(sql)
+
+    con.commit()
+    con.close()
+
 class DatabaseManager:
     
     def __init__(self):
@@ -90,7 +90,7 @@ class DatabaseManager:
         
         if key not in self.table_configs:
             available_keys = ', '.join(self.table_configs.keys())
-            raise ValueError(f"Clave '{key}' no encontrada. Claves disponibles: {available_keys}")
+            raise ValueError(f"Key '{key}' not found. Available keys: {available_keys}")
         
         config = self.table_configs[key]
         columns = custom_columns or config['columns']

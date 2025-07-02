@@ -1,14 +1,15 @@
 from PySide6.QtCore import Qt
 from dataclasses import dataclass
 from typing import List
-# Predefine configurations for tables
+
+# Predefined configurations for tables
 
 @dataclass
 class TableData:
     """Table common data model"""
     headers: List[str]
     
-class TableConfig:
+class TableSpecificConfig:
     """Specific configuration for each table"""
     
     BUGS_TABLE_CONFIG = TableData(
@@ -87,42 +88,9 @@ class TableConfig:
     )    
     
 
-class TableConfigs:
+class TableCommonConfig:
     """Configuraciones predefinidas para diferentes tipos de tablas."""
-    
-    @staticmethod
-    def get_bugs_table_config():
-        """Configuración para la tabla de bugs."""
-        return {
-            'context_menu': True,
-            'column_widths': [80, 100, 80, 120, 120, 100, 120, 150, 200, 300, 80, 80, 200],
-            'column_config': {
-                0: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Status
-                6: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Campaign
-                10: {'alignment': Qt.AlignmentFlag.AlignCenter}, # Urgency
-                11: {'alignment': Qt.AlignmentFlag.AlignCenter}, # Impact
-            },
-            'max_section_size': 400,
-            'alternating_row_colors': True,
-            'sort_enabled': True
-        }
-    
-    @staticmethod
-    def get_campaigns_table_config():
-        """Configuración para la tabla de campañas."""
-        return {
-            'context_menu': True,
-            'column_widths': [50, 200, 100, 80, 120, 80, 80, 120, 120, 120, 120],
-            'column_config': {
-                0: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Id
-                5: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Passed
-                6: {'alignment': Qt.AlignmentFlag.AlignCenter},  # Success
-            },
-            'max_section_size': 300,
-            'alternating_row_colors': True,
-            'sort_enabled': True
-        }
-    
+      
     @staticmethod
     def get_generic_table_config():
         """Configuración genérica para tablas."""

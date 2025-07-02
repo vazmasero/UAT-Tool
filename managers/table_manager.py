@@ -3,7 +3,7 @@ from PySide6.QtCore import QObject, Signal, QModelIndex, Qt
 from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QMenu, QApplication
 from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
 
-from config.table_config import TableConfigs
+from config.table_config import TableSpecificConfig
 
 class TableManager(QObject):
     
@@ -15,6 +15,24 @@ class TableManager(QObject):
         super().__init__()
         self.tables: Dict[str, QTableView] = {}
         self.table_configs: Dict[str, Dict] = {}
+
+    def setup_table(self, table: QTableView, data: List[List[Any]], headers: List[str], 
+                   config: Optional[Dict] = None):
+        # Create and configure the model
+        model = QStandardItemModel(0, len(headers))
+        model.setHorizontalHeaderLabels(headers)
+        
+        # Populate with data
+        self._populate_model(model, data, config)
+
+        # Assign model to the table
+        table.setModel(model)
+        
+        # Configure table properties
+        self._configure_table_properties(table, config)
+
+        # Configure headers
+        self._configure_headers(table, config)
         
     def register_table(self, table: QTableView, name: str, config: Optional[Dict] = None):
 
@@ -25,32 +43,6 @@ class TableManager(QObject):
             lambda index: self._handle_double_click(table, index)
         )
     
-    def setup_table(self, table: QTableView, data: List[List[Any]], headers: List[str], 
-                   config: Optional[Dict] = None):
-        # Crear y configurar el modelo
-        model = QStandardItemModel()
-        model.setColumnCount(len(headers))
-        model.setHorizontalHeaderLabels(headers)
-        
-        # Poblar con datos
-        self._populate_model(model, data, config)
-        
-        # Asignar modelo a la tabla
-        table.setModel(model)
-        
-        selection_model = table.selectionModel()
-        if selection_model:
-            try:
-                selection_model.selectionChanged.disconnect()
-            except RuntimeError:
-                pass
-        
-        # Configurar propiedades de la tabla
-        self._configure_table_properties(table, config)
-        
-        # Configurar headers
-        self._configure_headers(table, config)
-    
     def _populate_model(self, model: QStandardItemModel, data: List[List[Any]], 
                        config: Optional[Dict]):
         
@@ -59,13 +51,14 @@ class TableManager(QObject):
             for i, cell_data in enumerate(row_data):
                 item = QStandardItem(str(cell_data) if cell_data is not None else "")
                 
-                # Aplicar configuración específica de columna si existe
+                # Apply specific column configuration to the item (if it exists)
                 if config and 'column_config' in config:
                     col_config = config['column_config'].get(i, {})
                     self._apply_item_config(item, col_config)
                 
-                # Non editable items by default
+                # Non editable and non drop enabled items by default
                 item.setEditable(config.get('editable', False) if config else False)
+                item.setDropEnabled(config.get('drop_enabled', False) if config else False)
                 items.append(item)
             
             model.appendRow(items)
