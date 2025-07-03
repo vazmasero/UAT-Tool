@@ -2,7 +2,8 @@ from enum import Enum
 from typing import Dict, Callable, Optional
 from PySide6.QtCore import QObject, Signal
 from config.app_config import AppConfig
-from config.forms_config import PageType, FormType
+from config.forms_config import PageType, FormType, FORMS
+from config.page_config import PAGES
 
 class PageManager(QObject):
 

@@ -3,7 +3,7 @@ from PySide6.QtCore import QObject, Signal, QModelIndex, Qt
 from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QMenu, QApplication
 from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
 
-from config.table_config import TableSpecificConfig
+from config.table_config import TableConfig, TABLES
 
 class TableManager(QObject):
     
@@ -16,8 +16,8 @@ class TableManager(QObject):
         self.tables: Dict[str, QTableView] = {}
         self.table_configs: Dict[str, Dict] = {}
 
-    def setup_table(self, table: QTableView, data: List[List[Any]], headers: List[str], 
-                   config: Optional[Dict] = None):
+    def setup_table(self, table: QTableView, name:str, data: List[List[Any]], headers: List[str], 
+                   config: Optional[Dict] = None, register: bool=True):
         # Create and configure the model
         model = QStandardItemModel(0, len(headers))
         model.setHorizontalHeaderLabels(headers)
@@ -33,6 +33,11 @@ class TableManager(QObject):
 
         # Configure headers
         self._configure_headers(table, config)
+        
+        # Register the table if required
+        if register:
+            self.register_table(table, name, config)
+        
         
     def register_table(self, table: QTableView, name: str, config: Optional[Dict] = None):
 
@@ -104,9 +109,8 @@ class TableManager(QObject):
         table.setSortingEnabled(final_config['sort_enabled'])
     
     def _configure_headers(self, table: QTableView, config: Optional[Dict]):
-        """Configura los headers de la tabla."""
+        """Configures table headers."""
         horizontal_header = table.horizontalHeader()
-        vertical_header = table.verticalHeader()
         
         # Configuración horizontal por defecto
         horizontal_header.setStretchLastSection(True)
@@ -128,10 +132,6 @@ class TableManager(QObject):
                         i, QHeaderView.ResizeMode.Fixed
                     )
                     horizontal_header.resizeSection(i, width)
-        
-        # Ocultar header vertical si se especifica
-        if config and config.get('hide_vertical_header', False):
-            vertical_header.setVisible(False)
     
     def get_row_data(self, table: QTableView, row: int) -> List[Any]:
 

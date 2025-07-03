@@ -2,7 +2,7 @@ from typing import Dict, Optional, Type, Any
 from PySide6.QtWidgets import QWidget, QDialog
 
 from config.app_config import AppConfig
-from config.forms_config import FormConfig
+from config.forms_config import FormConfig, FORMS
 
 class FormManager:
     """Forms centralized management"""
@@ -13,7 +13,7 @@ class FormManager:
 
     def open_form(self, form_key: str, edit_mode: bool = False, data: Optional[Any] = None) -> Optional[QWidget]:
         """Opens a form based on its configuration key."""
-        config = self.config.FORMS_CONFIG.get(form_key)
+        config = FORMS.get(form_key, {}).get("config")
         if not config:
             print(f"Configuration not founded for form: {form_key}")
             return None

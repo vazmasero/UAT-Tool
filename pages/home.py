@@ -8,9 +8,9 @@ from pages.campaigns import ExecutionCampaign
 from pages.dialogs import Dialog
 from db import DatabaseManager
 
-from config.app_config import AppConfig
-from config.forms_config import PageType, FormType
-from config.table_config import TableSpecificConfig
+from config.forms_config import PageType, FormType, FORMS
+from config.table_config import TABLES
+from config.page_config import PAGES
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager
@@ -41,34 +41,18 @@ class HomePage(QMainWindow):
         self.page_manager.register_data_loader(PageType.CAMPAIGNS, self._load_table_data)
         self.page_manager.register_data_loader(PageType.MANAGEMENT, self._load_table_data)
         self.page_manager.register_data_loader(PageType.REQUIREMENTS, self._load_table_data)
-        self.page_manager.register_data_loader(PageType.ASSETS, self._load_table_data)
+        self.page_manager.register_data_loader(PageType.ASSETS, self._load_table_data)    
         
-        self._register_table()
-        
-        self.table_manager.row_double_clicked.connect(self._handle_table_double_click)
-        self.table_manager.row_selected.connect(self._handle_table_selection_changed)
+        self._setup_tables()
         
         self.ui.tab_widget_management.currentChanged.connect(lambda index: self._load_table_data("management", index))
         self.ui.tab_widget_assets.currentChanged.connect(lambda index: self._load_table_data("assets", index))
 
-    def _register_table(self):
-        table_registrations = [
-            (self.ui.tbl_bugs, "bugs", TableSpecificConfig.BUGS_TABLE_CONFIG),
-            (self.ui.tbl_campaigns, "campaigns", TableSpecificConfig.CAMPAIGNS_TABLE_CONFIG),
-            (self.ui.tbl_cases, "cases", TableSpecificConfig.CASES_TABLE_CONFIG),
-            (self.ui.tbl_requirements, "requirements", TableSpecificConfig.REQUIREMENTS_TABLE_CONFIG),
-            (self.ui.tbl_emails, "emails", TableSpecificConfig.EMAILS_TABLE_CONFIG),
-            (self.ui.tbl_blocks, "blocks", TableSpecificConfig.BLOCKS_TABLE_CONFIG),
-            (self.ui.tbl_operators, "operators", TableSpecificConfig.OPERATORS_TABLE_CONFIG),
-            (self.ui.tbl_drones, "drones", TableSpecificConfig.DRONES_TABLE_CONFIG),
-            (self.ui.tbl_uas_zones, "uas_zones", TableSpecificConfig.ZONES_TABLE_CONFIG),
-            (self.ui.tbl_uhub_org, "uhub_orgs", TableSpecificConfig.ORGS_TABLE_CONFIG),
-            (self.ui.tbl_uhub_user, "uhub_users", TableSpecificConfig.USERS_TABLE_CONFIG),
-            (self.ui.tbl_uspaces, "uspaces", TableSpecificConfig.USPACES_TABLE_CONFIG),
-        ]
-        
-        for table, name, config in table_registrations:
-            self.table_manager.register_table(table, name, config)
+    def _setup_tables(self):
+        for name, table_info in TABLES.items():
+            table_widget = getattr(self.ui, table_info.widget_name)
+            data = self.db_manager.get_all_data(name)
+            self.table_manager.setup_table(table_widget, name, data, table_info.headers, register=True)
     
     def _connect_signals(self):
         self._connect_menu_actions()
@@ -89,10 +73,10 @@ class HomePage(QMainWindow):
         for action, page_type in view_actions:
             action.triggered.connect(lambda checked, pt=page_type: self.page_manager.change_page(pt))
 
-        config = AppConfig()
-        for form_key, form_config in config.FORMS_CONFIG.items():
-            if form_config.menu_action_attr:
-                action = getattr(self.ui, form_config.menu_action_attr, None)
+        for form_key, form_info in FORMS.items():
+            config = form_info["config"]
+            if config.menu_action_attr:
+                action = getattr(self.ui, config.menu_action_attr, None)
                 if action:
                     action.triggered.connect(lambda checked, fk=form_key: self.form_manager.open_form(fk))
     
@@ -119,18 +103,13 @@ class HomePage(QMainWindow):
     def _handle_form_action(self, edit_mode: bool = False, data: Optional[Any]=None):
         current_page = self.page_manager.current_page
         tab_index = self.page_manager.get_current_tab_index()
-        
-        config = AppConfig()
-        page_forms = config.PAGE_FORM_MAPPING.get(current_page, [])
-        
+        page_forms = PAGES.get(current_page, {}).get("forms", [])
         if not page_forms:
             return
-        
         if tab_index is not None and tab_index < len(page_forms):
             form_key = page_forms[tab_index]
         else:
             form_key = page_forms[0]
-        
         self.form_manager.open_form(form_key, edit_mode, data)
     
     def _handle_remove_button(self):
@@ -198,8 +177,8 @@ class HomePage(QMainWindow):
                 self.ui.tbl_operators, 
                 self.ui.tbl_drones,
                 self.ui.tbl_uas_zones,
-                self.ui.tbl_uhub_org,
-                self.ui.tbl_uhub_user,
+                self.ui.tbl_uhub_orgs,
+                self.ui.tbl_uhub_users,
                 self.ui.tbl_uspaces
             ]
             if 0 <= tab_index < len(tables):
@@ -229,40 +208,25 @@ class HomePage(QMainWindow):
         self.form_manager.register_form(form, "Execute campaign")
         form.show()
     
-    def _load_table_data(self, key:str, index:Optional[int]):
-        TABLE_CONFIG_MAPPING = {
-            "bugs": (self.ui.tbl_bugs, TableSpecificConfig.BUGS_TABLE_CONFIG),
-            "campaigns": (self.ui.tbl_campaigns, TableSpecificConfig.CAMPAIGNS_TABLE_CONFIG),
-            "cases": (self.ui.tbl_cases, TableSpecificConfig.CASES_TABLE_CONFIG),
-            "requirements": (self.ui.tbl_requirements, TableSpecificConfig.REQUIREMENTS_TABLE_CONFIG),
-            "emails": (self.ui.tbl_emails, TableSpecificConfig.EMAILS_TABLE_CONFIG),
-        }
-        
-        TAB_TABLE_CONFIG = {
-            "management": {
-                0: ("cases", self.ui.tbl_cases, TableSpecificConfig.CASES_TABLE_CONFIG),
-                1: ("blocks", self.ui.tbl_blocks, TableSpecificConfig.BLOCKS_TABLE_CONFIG)
-            },
-            "assets": {
-                0: ("emails", self.ui.tbl_emails, TableSpecificConfig.CASES_TABLE_CONFIG),
-                1: ("operators", self.ui.tbl_operators, TableSpecificConfig.OPERATORS_TABLE_CONFIG),
-                2: ("drones", self.ui.tbl_drones, TableSpecificConfig.DRONES_TABLE_CONFIG),
-                3: ("uas_zones", self.ui.tbl_uas_zones, TableSpecificConfig.ZONES_TABLE_CONFIG),
-                4: ("uhub_orgs", self.ui.tbl_uhub_org, TableSpecificConfig.ORGS_TABLE_CONFIG),
-                5: ("uhub_users", self.ui.tbl_uhub_user, TableSpecificConfig.USERS_TABLE_CONFIG),
-                6: ("uspaces", self.ui.tbl_uspaces, TableSpecificConfig.USPACES_TABLE_CONFIG),
-            }
-        }
-        
+    def _load_table_data(self, key: str, index: Optional[int]):
         if index is None:
-            table_widget, table_config = TABLE_CONFIG_MAPPING[key]
+            table_info = TABLES[key]
+            table_widget = getattr(self.ui, table_info.widget_name)
             data = self.db_manager.get_all_data(key)
-        else: 
-            name, table_widget, table_config = TAB_TABLE_CONFIG[key][index]
-            data = self.db_manager.get_all_data(name)
-            
-        self.table_manager.setup_table(table_widget, data, table_config.headers, table_config.__dict__)
-        
+            self.table_manager.setup_table(table_widget, key, data, table_info.headers, register=True)
+        else:
+            # Buscar la tabla correspondiente a la pestaña
+            # Suponemos que key es el nombre de la página (ej: 'management', 'assets')
+            tab_table = None
+            for tname, tinfo in TABLES.items():
+                if tinfo.page.lower() == key.lower() and tinfo.tab == index:
+                    tab_table = (tname, tinfo)
+                    break
+            if tab_table:
+                subkey, table_info = tab_table
+                table_widget = getattr(self.ui, table_info.widget_name)
+                data = self.db_manager.get_all_data(subkey)
+                self.table_manager.setup_table(table_widget, subkey, data, table_info.headers, register=True)
         self._update_button_states()
 
     def closeEvent(self, event):

@@ -3,7 +3,7 @@ import sqlite3
 
 DB_NAME = "uat_tool.db"
     
-TABLE_CONFIGS = {
+TABLE_DB_CONFIGS = {
     'bugs': {
         'table': 'bugs',
         'columns': '''status, system, version, creation_time, last_update,
@@ -84,7 +84,7 @@ def init_db():
 class DatabaseManager:
     
     def __init__(self):
-        self.table_configs = TABLE_CONFIGS
+        self.table_configs = TABLE_DB_CONFIGS
     
     def get_all_data(self, key, custom_columns=None):
         
