@@ -1,19 +1,22 @@
-from .forms_config import FormType, PageType
-
 PAGES = {
-    PageType.BUGS: {
+    "bugs": {
+        "index": 0,
         "forms": ["bug"]
     },
-    PageType.CAMPAIGNS: {
+    "campaigns": {
+        "index": 1,
         "forms": ["campaign"]
     },
-    PageType.MANAGEMENT: {
+    "management": {
+        "index": 2,
         "forms": ["cases", "blocks"]
     },
-    PageType.REQUIREMENTS: {
+    "requirements": {
+        "index": 3,
         "forms": ["requirement"]
     },
-    PageType.ASSETS: {
+    "assets": {
+        "index": 4,
         "forms": [
             "emails", "operators", "drones",
             "uas_zones", "uhub_orgs", "uhub_users", "uspaces"

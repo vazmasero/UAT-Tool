@@ -9,7 +9,7 @@ class FormManager:
 
     def __init__(self):
         self.active_forms: Dict[str, QWidget] = {}
-        self.config = AppConfig()
+        self.config = FORMS
 
     def open_form(self, form_key: str, edit_mode: bool = False, data: Optional[Any] = None) -> Optional[QWidget]:
         """Opens a form based on its configuration key."""

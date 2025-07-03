@@ -29,7 +29,7 @@ TABLES = {
             "Definition", "Urgency", "Impact", "Comments"
         ],
         widget_name="tbl_bugs",
-        page="BUGS",
+        page="bugs",
         tab=None
     ),
     "campaigns": TableConfig(
@@ -39,77 +39,77 @@ TABLES = {
             "Success", "Creation Time", "Start date", "End date", "Last Update"
         ],
         widget_name="tbl_campaigns",
-        page="CAMPAIGNS",
+        page="campaigns",
         tab=None
     ),
     "cases": TableConfig(
         db_table="cases",
         headers=["Id", "Name", "System", "Assets", "Steps"],
         widget_name="tbl_cases",
-        page="MANAGEMENT",
+        page="management",
         tab=0
     ),
     "blocks": TableConfig(
         db_table="blocks",
         headers=["Id", "Name", "System", "Cases", "Comments"],
         widget_name="tbl_blocks",
-        page="MANAGEMENT",
+        page="management",
         tab=1
     ),
     "requirements": TableConfig(
         db_table="requirements",
         headers=["Id", "System", "Section", "Definition", "Creation date", "Last update"],
         widget_name="tbl_requirements",
-        page="REQUIREMENTS",
+        page="requirements",
         tab=None
     ),
     "emails": TableConfig(
         db_table="emails",
         headers=["Name", "Email", "Password"],
         widget_name="tbl_emails",
-        page="ASSETS",
+        page="assets",
         tab=0
     ),
     "operators": TableConfig(
         db_table="operators",
         headers=["Name", "EASA ID", "Verification code", "Email", "Password", "Phone"],
         widget_name="tbl_operators",
-        page="ASSETS",
+        page="assets",
         tab=1
     ),
     "drones": TableConfig(
         db_table="drones",
         headers=["Operator", "Name", "SN", "Manufacturer", "Model", "Tracker", "Transponder Id"],
         widget_name="tbl_drones",
-        page="ASSETS",
+        page="assets",
         tab=2
     ),
     "uas_zones": TableConfig(
         db_table="uas_zones",
         headers=["Name", "Reason", "Cause", "Restriction type", "Activation time", "Authority"],
         widget_name="tbl_uas_zones",
-        page="ASSETS",
+        page="assets",
         tab=3
     ),
     "uhub_orgs": TableConfig(
         db_table="uhub_orgs",
         headers=["Name", "Role", "Jurisdiction", "AoI", "Email", "Phone"],
         widget_name="tbl_uhub_orgs",
-        page="ASSETS",
+        page="assets",
         tab=4
     ),
     "uhub_users": TableConfig(
         db_table="uhub_users",
         headers=["Username", "Email", "Password", "Organization", "Role", "Jurisdiction", "AoI"],
         widget_name="tbl_uhub_users",
-        page="ASSETS",
+        page="assets",
         tab=5
     ),
     "uspaces": TableConfig(
         db_table="uspaces",
         headers=["Id", "Name", "# of sectors", "File"],
         widget_name="tbl_uspaces",
-        page="ASSETS",
+        page="assets",
         tab=6
     )
 }

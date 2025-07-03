@@ -1,8 +1,7 @@
-from enum import Enum
 from typing import Dict, Callable, Optional
 from PySide6.QtCore import QObject, Signal
 from config.app_config import AppConfig
-from config.forms_config import PageType, FormType, FORMS
+from config.forms_config import FORMS
 from config.page_config import PAGES
 
 class PageManager(QObject):
@@ -13,52 +12,37 @@ class PageManager(QObject):
         super().__init__()
         self.stacked_widget = stacked_widget
         self.ui = ui
-        self.current_page = PageType.BUGS
-
-        # Index-page mapping
-        self.page_indices ={
-            PageType.BUGS: 0,
-            PageType.CAMPAIGNS: 1,
-            PageType.MANAGEMENT: 2,
-            PageType.REQUIREMENTS: 3,
-            PageType.ASSETS: 4
-        }
-        
-        # PageType to database key mapping
-        self.page_to_db_key = {
-            PageType.BUGS: "bugs",
-            PageType.CAMPAIGNS: "campaigns", 
-            PageType.MANAGEMENT: "cases",
-            PageType.REQUIREMENTS: "requirements",
-            PageType.ASSETS: "emails"
-        }
+        self.current_page = "bugs"
 
         # Page data loading callable
-        self.data_loaders: Dict[PageType, Callable] = {}
+        self.data_loaders: Dict[str, Callable] = {}
 
-    def register_data_loader(self, page_type: PageType, loader: Callable):
-        self.data_loaders[page_type] = loader
+    def register_data_loader(self, page_name: str, loader: Callable):
+        self.data_loaders[page_name] = loader
     
-    def change_page(self, page_type: PageType):      
-        if page_type not in self.page_indices:
+    def change_page(self, page_name: str):      
+        if page_name not in PAGES:
             return
         
-        index = self.page_indices[page_type]
+        index = PAGES.get(page_name, {}).get("index")
         self.stacked_widget.setCurrentIndex(index)
-        self.current_page = page_type
+        self.current_page = page_name
 
-        self.ui.btn_start.setVisible(page_type == PageType.CAMPAIGNS)
+        self.ui.btn_start.setVisible(page_name == "campaigns")
         
-        db_key = self.page_to_db_key[page_type]
+        # Buscar la primera tabla asociada a la página (si existe)
+        from config.table_config import TABLES
+        tablas_pagina = [key for key, tinfo in TABLES.items() if tinfo.page == page_name]
+        db_key = tablas_pagina[0] if tablas_pagina else None
         
-        if page_type in self.data_loaders:
-            self.data_loaders[page_type](db_key, None)
+        if page_name in self.data_loaders and db_key:
+            self.data_loaders[page_name](db_key, None)
         
         self.page_changed.emit(index)
 
     def get_current_tab_index(self) -> Optional[int]:
-        if self.current_page == PageType.MANAGEMENT:
+        if self.current_page == "management":
             return self.ui.tab_widget_management.currentIndex()
-        elif self.current_page == PageType.ASSETS:
+        elif self.current_page == "assets":
             return self.ui.tab_widget_assets.currentIndex()
         return None

@@ -6,17 +6,13 @@ from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
 from config.table_config import TableConfig, TABLES
 
 class TableManager(QObject):
-    
-    # Señales para comunicación con otros componentes
-    row_double_clicked = Signal(QTableView, int, list)  # tabla, fila, datos
-    row_selected = Signal(QTableView, list)  # tabla, filas seleccionadas
-    
+        
     def __init__(self):
         super().__init__()
         self.tables: Dict[str, QTableView] = {}
         self.table_configs: Dict[str, Dict] = {}
 
-    def setup_table(self, table: QTableView, name:str, data: List[List[Any]], headers: List[str], 
+    def setup_table(self, table: QTableView, key:str, data: List[List[Any]], headers: List[str], 
                    config: Optional[Dict] = None, register: bool=True):
         # Create and configure the model
         model = QStandardItemModel(0, len(headers))
@@ -36,13 +32,13 @@ class TableManager(QObject):
         
         # Register the table if required
         if register:
-            self.register_table(table, name, config)
+            self.register_table(table, key, config)
         
         
-    def register_table(self, table: QTableView, name: str, config: Optional[Dict] = None):
+    def register_table(self, table: QTableView, key: str, config: Optional[Dict] = None):
 
-        self.tables[name] = table
-        self.table_configs[name] = config or {}
+        self.tables[key] = table
+        self.table_configs[key] = config or {}
         
         table.doubleClicked.connect(
             lambda index: self._handle_double_click(table, index)
@@ -244,3 +240,14 @@ class TableManager(QObject):
         """Maneja el cambio de selección en una tabla."""
         selected_data = self.get_selected_rows_data(table)
         self.row_selected.emit(table, selected_data)
+    
+    def update_table_model(self, table_key: str, data: list):
+        table_widget = self.tables.get(table_key)
+        if not table_widget:
+            return
+        model = table_widget.model()
+        if model:
+            model.removeRows(0, model.rowCount())
+            for row_data in data:
+                items = [self._create_item(cell) for cell in row_data]
+                model.appendRow(items)

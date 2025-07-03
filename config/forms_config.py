@@ -20,24 +20,6 @@ class FormConfig:
     label_attr: Optional[str]
     menu_action_attr: Optional[str]
 
-class PageType(Enum):
-    BUGS = "bugs"
-    CAMPAIGNS = "campaigns"
-    MANAGEMENT = "management"
-    REQUIREMENTS = "requirements"
-    ASSETS = "assets"
-
-class FormType(Enum):
-    CASE = "cases"
-    BLOCK = "blocks"
-    EMAIL = "emails"
-    OPERATOR = "operators"
-    DRONE = "drones"
-    UAS_ZONE = "uas_zones"
-    UHUB_ORG = "uhub_orgs"
-    UHUB_USER = "uhub_users"
-    USPACE = "uspaces"
-
 FORMS = {
     "bug": {
         "config": FormConfig(

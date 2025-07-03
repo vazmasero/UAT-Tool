@@ -1,16 +1,15 @@
 from typing import Dict, Callable, Optional, Type, Any
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QMainWindow, QDialog, QTableView
-from PySide6.QtGui import QStandardItem, QStandardItemModel
 
 from ui.ui_main import Ui_main_window
 from pages.campaigns import ExecutionCampaign
 from pages.dialogs import Dialog
 from db import DatabaseManager
 
-from config.forms_config import PageType, FormType, FORMS
+from config.forms_config import FORMS
 from config.table_config import TABLES
-from config.page_config import PAGES
+from config.page_config import PAGES  # Quitamos PageType
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager
@@ -34,25 +33,21 @@ class HomePage(QMainWindow):
         
         self._update_button_states()
         
-        self.page_manager.change_page(PageType.BUGS)
+        self.page_manager.change_page("bugs")
 
     def _setup_managers(self):
-        self.page_manager.register_data_loader(PageType.BUGS, self._load_table_data)
-        self.page_manager.register_data_loader(PageType.CAMPAIGNS, self._load_table_data)
-        self.page_manager.register_data_loader(PageType.MANAGEMENT, self._load_table_data)
-        self.page_manager.register_data_loader(PageType.REQUIREMENTS, self._load_table_data)
-        self.page_manager.register_data_loader(PageType.ASSETS, self._load_table_data)    
         
         self._setup_tables()
-        
-        self.ui.tab_widget_management.currentChanged.connect(lambda index: self._load_table_data("management", index))
-        self.ui.tab_widget_assets.currentChanged.connect(lambda index: self._load_table_data("assets", index))
+        # Conectar el cambio de página y tabs directamente a la carga de datos
+        self.ui.stacked_main.currentChanged.connect(lambda _: self._load_table_data())
+        self.ui.tab_widget_management.currentChanged.connect(lambda _: self._load_table_data())
+        self.ui.tab_widget_assets.currentChanged.connect(lambda _: self._load_table_data())
 
     def _setup_tables(self):
-        for name, table_info in TABLES.items():
+        for key, table_info in TABLES.items():
             table_widget = getattr(self.ui, table_info.widget_name)
-            data = self.db_manager.get_all_data(name)
-            self.table_manager.setup_table(table_widget, name, data, table_info.headers, register=True)
+            data = self.db_manager.get_all_data(key)
+            self.table_manager.setup_table(table_widget, key, data, table_info.headers, register=True)
     
     def _connect_signals(self):
         self._connect_menu_actions()
@@ -63,11 +58,11 @@ class HomePage(QMainWindow):
     
     def _connect_menu_actions(self):
         view_actions = [
-            (self.ui.action_view_bugs, PageType.BUGS),
-            (self.ui.action_view_campaigns, PageType.CAMPAIGNS),
-            (self.ui.action_view_management, PageType.MANAGEMENT),
-            (self.ui.action_view_requirements, PageType.REQUIREMENTS),
-            (self.ui.action_view_assets, PageType.ASSETS),
+            (self.ui.action_view_bugs, "bugs"),
+            (self.ui.action_view_campaigns, "campaigns"),
+            (self.ui.action_view_management, "management"),
+            (self.ui.action_view_requirements, "requirements"),
+            (self.ui.action_view_assets, "assets"),
         ]
 
         for action, page_type in view_actions:
@@ -158,19 +153,19 @@ class HomePage(QMainWindow):
     def _get_current_table(self) -> Optional[QTableView]:
         current_page = self.page_manager.current_page
         
-        if current_page == PageType.BUGS:
+        if current_page == "bugs":
             return self.ui.tbl_bugs
-        elif current_page == PageType.CAMPAIGNS:
+        elif current_page == "campaigns":
             return self.ui.tbl_campaigns
-        elif current_page == PageType.REQUIREMENTS:
+        elif current_page == "requirements":
             return self.ui.tbl_requirements
-        elif current_page == PageType.MANAGEMENT:
+        elif current_page == "management":
             tab_index = self.ui.tab_widget_management.currentIndex()
             if tab_index == 0:
                 return self.ui.tbl_cases
             elif tab_index == 1:
                 return self.ui.tbl_blocks
-        elif current_page == PageType.ASSETS:
+        elif current_page == "assets":
             tab_index = self.ui.tab_widget_assets.currentIndex()
             tables = [
                 self.ui.tbl_emails,
@@ -208,25 +203,33 @@ class HomePage(QMainWindow):
         self.form_manager.register_form(form, "Execute campaign")
         form.show()
     
-    def _load_table_data(self, key: str, index: Optional[int]):
-        if index is None:
-            table_info = TABLES[key]
-            table_widget = getattr(self.ui, table_info.widget_name)
-            data = self.db_manager.get_all_data(key)
-            self.table_manager.setup_table(table_widget, key, data, table_info.headers, register=True)
-        else:
-            # Buscar la tabla correspondiente a la pestaña
-            # Suponemos que key es el nombre de la página (ej: 'management', 'assets')
-            tab_table = None
-            for tname, tinfo in TABLES.items():
-                if tinfo.page.lower() == key.lower() and tinfo.tab == index:
-                    tab_table = (tname, tinfo)
-                    break
-            if tab_table:
-                subkey, table_info = tab_table
-                table_widget = getattr(self.ui, table_info.widget_name)
-                data = self.db_manager.get_all_data(subkey)
-                self.table_manager.setup_table(table_widget, subkey, data, table_info.headers, register=True)
+    def _load_table_data(self):
+        # Obtener el índice de la página actual
+        page_index = self.ui.stacked_main.currentIndex()
+        # Buscar la clave de página correspondiente
+        page_key = None
+        for key, info in PAGES.items():
+            if info["index"] == page_index:
+                page_key = key
+                break
+        if not page_key:
+            return
+        # Si la página tiene tabs, obtener el índice de tab
+        tab_index = None
+        if page_key == "management":
+            tab_index = self.ui.tab_widget_management.currentIndex()
+        elif page_key == "assets":
+            tab_index = self.ui.tab_widget_assets.currentIndex()
+        # Buscar la tabla correspondiente
+        table_key = None
+        for tkey, tinfo in TABLES.items():
+            if tinfo.page == page_key and (tinfo.tab == tab_index or tinfo.tab is None):
+                table_key = tkey
+                break
+        if not table_key:
+            return
+        data = self.db_manager.get_all_data(table_key)
+        self.table_manager.update_table_model(table_key, data)
         self._update_button_states()
 
     def closeEvent(self, event):
