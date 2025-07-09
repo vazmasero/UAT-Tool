@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
+    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+    QVBoxLayout, QWidget)
 
 class Ui_form_requirement(object):
     def setupUi(self, form_requirement):
@@ -49,10 +49,12 @@ class Ui_form_requirement(object):
 
         self.hlayout_system.addWidget(self.lbl_system)
 
-        self.cb_system = QComboBox(form_requirement)
-        self.cb_system.setObjectName(u"cb_system")
+        self.lw_system = QListWidget(form_requirement)
+        self.lw_system.setObjectName(u"lw_system")
+        self.lw_system.setMinimumSize(QSize(200, 30))
+        self.lw_system.setMaximumSize(QSize(300, 50))
 
-        self.hlayout_system.addWidget(self.cb_system)
+        self.hlayout_system.addWidget(self.lw_system)
 
 
         self.verticalLayout.addLayout(self.hlayout_system)
@@ -64,10 +66,12 @@ class Ui_form_requirement(object):
 
         self.hlayout_section.addWidget(self.lbl_section)
 
-        self.cb_section = QComboBox(form_requirement)
-        self.cb_section.setObjectName(u"cb_section")
+        self.lw_section = QListWidget(form_requirement)
+        self.lw_section.setObjectName(u"lw_section")
+        self.lw_section.setMinimumSize(QSize(200, 40))
+        self.lw_section.setMaximumSize(QSize(300, 50))
 
-        self.hlayout_section.addWidget(self.cb_section)
+        self.hlayout_section.addWidget(self.lw_section)
 
 
         self.verticalLayout.addLayout(self.hlayout_section)

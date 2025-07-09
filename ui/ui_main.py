@@ -409,7 +409,7 @@ class Ui_main_window(object):
 
         self.stacked_main.setCurrentIndex(0)
         self.tab_widget_management.setCurrentIndex(0)
-        self.tab_widget_assets.setCurrentIndex(4)
+        self.tab_widget_assets.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(main_window)

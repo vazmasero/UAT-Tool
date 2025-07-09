@@ -1,35 +1,95 @@
 from typing import Dict, Optional, Type, Any
-from PySide6.QtWidgets import QWidget, QDialog
+from PySide6.QtWidgets import QWidget, QMessageBox
+from PySide6.QtCore import Qt, Signal
 
-from config.app_config import AppConfig
-from config.forms_config import FormConfig, FORMS
+from config.form_config import FORMS
 
-class FormManager:
-    """Forms centralized management"""
+class BaseForm(QWidget):
+    """Clase base para formularios, centraliza lógica común."""
+    operation_completed = Signal()
 
+    def __init__(self, db_manager, ui):
+        super().__init__()
+        self.db_manager = db_manager
+        self.ui = ui
+        self._setup_buttons()
+
+    def _setup_buttons(self):
+        """Conecta botones comunes como aceptar y cancelar."""
+        self.ui.btn_accept.clicked.connect(self._handle_db_register)
+        self.ui.btn_cancel.clicked.connect(self.close)
+
+    def _handle_db_register(self):
+        """Maneja el registro o edición en la base de datos."""
+        data = self._obtain_form_data()
+        errors = self.validate_form(data)
+        if errors:
+            self.show_errors(errors)
+            return
+        try:
+            self.save_data(data)
+            self.operation_completed.emit()
+            self.close()
+        except Exception as e:
+            self.show_critical(str(e))
+
+    def validate_form(self, data):
+        """Valida los datos del formulario. Implementar en subclases."""
+        return []
+
+    def _obtain_form_data(self):
+        """Obtiene los datos del formulario. Implementar en subclases."""
+        return {}
+
+    def save_data(self, data):
+        """Guarda los datos en la base de datos. Implementar en subclases."""
+        pass
+
+    def show_errors(self, errors):
+        """Muestra errores de validación."""
+        QMessageBox.warning(self, "Errores de validación", "\n".join(errors))
+
+    def show_critical(self, msg):
+        """Muestra errores críticos."""
+        QMessageBox.critical(self, "Error", msg)
+
+class FormRegistry:
+    """Gestiona formularios activos."""
     def __init__(self):
-        self.active_forms: Dict[str, QWidget] = {}
-        self.config = FORMS
+        self.active_forms = {}
 
-    def open_form(self, form_key: str, edit_mode: bool = False, data: Optional[Any] = None) -> Optional[QWidget]:
-        """Opens a form based on its configuration key."""
-        config = FORMS.get(form_key, {}).get("config")
+    def register_form(self, form, key):
+        self.active_forms[key] = form
+        form.destroyed.connect(lambda: self._on_form_destroyed(key))
+
+    def _on_form_destroyed(self, key):
+        self.active_forms.pop(key, None)
+
+class FormOpener:
+    """Abre formularios basados en configuración."""
+    def __init__(self, registry, config):
+        self.registry = registry
+        self.config = config
+
+    def open_form(self, form_key, edit_mode=False, data=None):
+        config = self.config.get(form_key, {}).get("config")
         if not config:
-            print(f"Configuration not founded for form: {form_key}")
+            print(f"Configuration not found for form: {form_key}")
             return None
-        
+
         title = config.edit_title if edit_mode else config.add_title
 
-        #Brings form up front if already open
-        if title in self.active_forms:
-            form = self.active_forms[title]
+        # Brings form up front if already open
+        if title in self.registry.active_forms:
+            form = self.registry.active_forms[title]
             form.raise_()
             form.activateWindow()
             return form
-        
-        # Creates new form
+
+        # If not open, creates new form
         form = config.form_class()
         form.setWindowTitle(title)
+        form.setAttribute(Qt.WA_DeleteOnClose)  # Deletes form when closed as well
 
         # Configures label if necessary
         if config.label_attr and hasattr(form.ui, config.label_attr):
@@ -37,27 +97,13 @@ class FormManager:
             if label_text:
                 getattr(form.ui, config.label_attr).setText(label_text)
 
-        # Loads data if available
-        if data and hasattr(form, 'load_data'):
-            form.load_data(data)
+        # Loads data if on edit mode and if data available
+        if edit_mode:
+            if data and hasattr(form, 'load_data'):
+                form.load_data(data)
 
         # Registers form
-        self.register_form(form, title)
+        self.registry.register_form(form, title)
         form.show()
 
         return form
-    
-    def register_form(self, form: QWidget, key: str):
-        """Registers a form in the manager"""
-        self.active_forms[key] = form
-        form.destroyed.connect(lambda: self.active_forms.pop(key, None))
-
-    def close_form(self, key: str):
-        """Closes a specific form"""
-        if key in self.active_forms:
-            self.active_forms[key].close()
-
-    def close_all_forms(self):
-        """Closes all active forms"""
-        for form in list(self.active_forms.values()):
-            form.close()

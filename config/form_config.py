@@ -21,7 +21,7 @@ class FormConfig:
     menu_action_attr: Optional[str]
 
 FORMS = {
-    "bug": {
+    "bugs": {
         "config": FormConfig(
             form_class=FormBug,
             add_title="Add bug",
@@ -32,7 +32,7 @@ FORMS = {
             menu_action_attr="action_add_bug"
         )
     },
-    "campaign": {
+    "campaigns": {
         "config": FormConfig(
             form_class=FormCampaign,
             add_title="Add campaign",
@@ -43,7 +43,7 @@ FORMS = {
             menu_action_attr="action_new_campaign"
         )
     },
-    "requirement": {
+    "requirements": {
         "config": FormConfig(
             form_class=FormRequirement,
             add_title="Add requirement",

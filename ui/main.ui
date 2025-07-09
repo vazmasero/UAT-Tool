@@ -344,7 +344,7 @@
         <item>
          <widget class="QTabWidget" name="tab_widget_assets">
           <property name="currentIndex">
-           <number>4</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_email">
            <attribute name="title">
