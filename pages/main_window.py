@@ -14,21 +14,13 @@ from managers.form_manager import FormRegistry, FormOpener
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager
 
-class HomePage(QMainWindow):
+class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.ui = Ui_main_window()
         self.ui.setupUi(self)
 
-        self.form_registry = FormRegistry()
-        self.form_opener = FormOpener(self.form_registry, FORMS)
-
-        self.page_manager = PageManager(self.ui.stacked_main, self.ui)
-        self.table_manager = TableManager()
-        self.db_manager = DatabaseManager()
-    
-        
         self._setup_managers()
         self._setup_buttons()
         
@@ -37,6 +29,13 @@ class HomePage(QMainWindow):
         self.page_manager.change_page("bugs")
 
     def _setup_managers(self):
+        """Inicializa los managers y configura la interacción entre ellos."""
+        self.form_registry = FormRegistry()
+        self.form_opener = FormOpener(self.form_registry, FORMS)
+        self.page_manager = PageManager(self.ui.stacked_main, self.ui)
+        self.table_manager = TableManager()
+        self.db_manager = DatabaseManager()
+    
         
         self._setup_tables()
 
@@ -48,11 +47,13 @@ class HomePage(QMainWindow):
             self.table_manager.setup_table(table_widget, key, data, register=True)
     
     def _connect_signals(self):
-        
+        """Conecta señales entre managers y la vista."""
         self.ui.btn_add.clicked.connect(self._handle_add_button)
         self.ui.btn_edit.clicked.connect(self._handle_edit_button)
         self.ui.btn_remove.clicked.connect(self._handle_remove_button)
         self.ui.btn_start.clicked.connect(self._execute_campaign)
+        
+        self.table_manager.table_updated.connect(lambda: self.page_manager.refresh_page("bugs"))
         
         self._connect_menu_actions()
         
@@ -80,6 +81,10 @@ class HomePage(QMainWindow):
                     action.triggered.connect(lambda _, fk=form_key: self.form_manager.open_form(fk))
     
     def _setup_buttons(self):
+        """Conecta botones principales de la interfaz."""
+        self.ui.btn_add_bug.clicked.connect(lambda: self.form_opener.open_form("bugs"))
+        self.ui.btn_add_campaign.clicked.connect(lambda: self.form_opener.open_form("campaigns"))
+
         # Initially, both edit and delete buttons are disabled
         self.ui.btn_edit.setEnabled(False)
         self.ui.btn_remove.setEnabled(False)

@@ -1,7 +1,5 @@
-from typing import Dict, Callable, Optional
-from PySide6.QtCore import QObject, Signal
-from config.app_config import AppConfig
-from config.form_config import FORMS
+from typing import Optional
+from PySide6.QtCore import QObject
 from config.page_config import PAGES
 
 class PageManager(QObject):

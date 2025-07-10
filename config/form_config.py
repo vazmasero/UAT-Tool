@@ -1,7 +1,6 @@
 from PySide6.QtWidgets import QWidget
 from dataclasses import dataclass
-from typing import Type, Optional, Dict
-from enum import Enum
+from typing import Type, Optional
 
 from pages.campaigns import FormCampaign
 from pages.bugs import FormBug
@@ -9,9 +8,11 @@ from pages.test_management import FormCase, FormBlock
 from pages.requirements import FormRequirement
 from pages.assets import (FormDrone, FormEmail, FormOperator,
                    FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
+from managers.form_manager import FormManager
 
 @dataclass
 class FormConfig:
+    """Common configuration for forms."""
     form_class: Type[QWidget]
     add_title: str
     edit_title: str
@@ -20,6 +21,10 @@ class FormConfig:
     label_attr: Optional[str]
     menu_action_attr: Optional[str]
 
+form_manager = FormManager()
+
+# Dictionary to hold form configurations for different entities
+# Each key corresponds to a specific entity type, and the value is a FormConfig instance
 FORMS = {
     "bugs": {
         "config": FormConfig(
@@ -30,7 +35,8 @@ FORMS = {
             edit_label="Edit bug",
             label_attr="lbl_bug",
             menu_action_attr="action_add_bug"
-        )
+        ),
+        "manager": form_manager
     },
     "campaigns": {
         "config": FormConfig(
@@ -40,8 +46,9 @@ FORMS = {
             add_label="New campaign",
             edit_label="Edit campaign",
             label_attr="lbl_campaign",
-            menu_action_attr="action_new_campaign"
-        )
+            menu_action_attr="action_add_campaign"
+        ),
+        "manager": form_manager
     },
     "requirements": {
         "config": FormConfig(

@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication
 
-from pages.home import HomePage
+from pages.main_window import HomePage
 from db.db import init_db
 
 if __name__ == "__main__":

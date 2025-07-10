@@ -4,7 +4,7 @@ from PySide6.QtCore import QObject, Signal, QModelIndex, Qt
 from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QMenu, QApplication
 from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
 
-from config.table_config import TABLES
+from config.table_config import TABLES, TableCommonConfig
 from config.page_config import PAGES
 
 class TableManager(QObject):
@@ -18,39 +18,20 @@ class TableManager(QObject):
         self.tables: Dict[str, QTableView] = {}
         self.table_configs: Dict[str, Dict] = {}
 
-    def setup_table(self, table: QTableView, key:str, data: List[Dict[str, Any]], 
-                   config: Optional[Dict] = None, register: bool=True):
-        # Obtener la configuración de la tabla desde TABLES
-        table_config = TABLES.get(key, {}).get("config")
-        if table_config:
-            # Combinar la configuración de TABLES con la configuración adicional
-            merged_config = {
-                'column_map': table_config.column_map,
-                **(config or {})
-            }
-        else:
-            merged_config = config or {}
+    def setup_table(self, table: QTableView, key: str, data: List[Dict[str, Any]], config: Optional[Dict] = None):
+        table_config = TABLES.get(key, {}).get("config", {})
+        generic_config = TableCommonConfig.get_generic_table_config()
+        merged_config = {**generic_config, **table_config, **(config or {})}
 
-        # Create and configure the model
-        headers = table_config.headers
+        headers = merged_config.get("headers", [])
         model = QStandardItemModel(0, len(headers))
         model.setHorizontalHeaderLabels(headers)
-        
-        # Populate with data
+
         self._populate_model(key, model, data)
-
-        # Assign model to the table
         table.setModel(model)
-        
-        # Configure table properties
-        self._configure_table_properties(table, merged_config)
-
-        # Configure headers
-        self._configure_headers(table, merged_config)
-        
-        # Register the table after model is set
-        if register:
-            self.register_table(table, key, merged_config)
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setAlternatingRowColors(merged_config.get("alternating_row_colors", False))
+        table.setSortingEnabled(merged_config.get("sort_enabled", False))
     
     def register_table(self, table: QTableView, key: str, config: Optional[Dict] = None):
         """Registra una tabla y configura sus signals."""

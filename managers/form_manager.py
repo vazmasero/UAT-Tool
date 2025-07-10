@@ -35,7 +35,7 @@ class BaseForm(QWidget):
 
     def validate_form(self, data):
         """Valida los datos del formulario. Implementar en subclases."""
-        return []
+        raise NotImplementedError("Subclasses must implement validate_form")
 
     def _obtain_form_data(self):
         """Obtiene los datos del formulario. Implementar en subclases."""
@@ -43,15 +43,15 @@ class BaseForm(QWidget):
 
     def save_data(self, data):
         """Guarda los datos en la base de datos. Implementar en subclases."""
-        pass
+        raise NotImplementedError("Subclasses must implement save_data")
 
     def show_errors(self, errors):
-        """Muestra errores de validación."""
-        QMessageBox.warning(self, "Errores de validación", "\n".join(errors))
+        """Muestra errores en un QMessageBox."""
+        QMessageBox.warning(self, "Validation Errors", "\n".join(errors))
 
-    def show_critical(self, msg):
-        """Muestra errores críticos."""
-        QMessageBox.critical(self, "Error", msg)
+    def show_critical(self, message):
+        """Muestra errores críticos en un QMessageBox."""
+        QMessageBox.critical(self, "Critical Error", message)
 
 class FormRegistry:
     """Gestiona formularios activos."""
@@ -107,3 +107,23 @@ class FormOpener:
         form.show()
 
         return form
+
+class FormManager:
+    """Gestor de formularios, maneja apertura y cierre."""
+    def __init__(self):
+        self.active_forms = {}
+
+    def open_form(self, form_key, mode, data=None):
+        """Abre un formulario basado en su clave y modo (agregar/editar)."""
+        form_config = FORMS[form_key]['config']
+        form_instance = form_config.form_class()
+        if mode == 'edit':
+            form_instance.load_data(data)
+        form_instance.show()
+        self.active_forms[form_key] = form_instance
+
+    def close_form(self, form_key):
+        """Cierra un formulario y lo elimina de los formularios activos."""
+        if form_key in self.active_forms:
+            self.active_forms[form_key].close()
+            del self.active_forms[form_key]

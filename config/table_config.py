@@ -4,6 +4,7 @@ from typing import List, Optional, Dict
 
 @dataclass
 class TableConfig:
+    """Common configuration for tables."""
     db_table: str
     headers: List[str]
     widget_name: str
@@ -12,6 +13,7 @@ class TableConfig:
     column_map: Dict[str, str] = field(default_factory=dict)  
     
 class TableCommonConfig:
+    """Common configuration for all tables."""
     @staticmethod
     def get_generic_table_config():
         return {
@@ -21,6 +23,8 @@ class TableCommonConfig:
             'max_section_size': 250
         }
 
+# Dictionary to hold table configurations for different entities
+# Each key corresponds to a specific entity type, and the value is a TableConfig instance
 TABLES = {
     "bugs": {
         "config": TableConfig(
@@ -36,18 +40,17 @@ TABLES = {
                 "Version": "version",
                 "Creation Time": "creation_time",
                 "Last Update": "last_update",
-                "ServiceNow ID": "service_now_id",
+                "ServiceNow ID": "servicenow_id",
                 "Campaign": "campaign",
                 "Requirements": "requirements",
-                "Short Description": "short_desc",
+                "Short Description": "short_description",
                 "Definition": "definition",
                 "Urgency": "urgency",
                 "Impact": "impact",
                 "Comments": "comments"
             },
-            widget_name="tbl_bugs",
-            page="bugs",
-            tab=None
+            widget_name="table_bugs",
+            page="bugs"
         )
     },
     "campaigns": {

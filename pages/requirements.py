@@ -19,13 +19,11 @@ class FormRequirement(BaseForm):
         super().__init__(db_manager=db_manager, ui=Ui_form_requirement())
         self.service = RequirementService(db_manager)
 
-        # Obtaining systems and sections (req) from DB
-        systems = self.db_manager.get_all_data('systems')
-        sections = self.db_manager.get_all_data('sections')
-        
-        # Setup for list widgets
-        self._setup_cb(self.ui.lw_system, [s['name'] for s in systems])
-        self._setup_cb(self.ui.lw_section, [s['name'] for s in sections])
+        systems = self.service.get_systems()
+        sections = self.service.get_sections()
+
+        self._setup_cb(self.ui.lw_system, systems)
+        self._setup_cb(self.ui.lw_section, sections)
         
         self._setup_buttons()
         
