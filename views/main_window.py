@@ -3,16 +3,13 @@ from PySide6.QtCore import Slot, QObject
 from PySide6.QtWidgets import QMainWindow, QDialog, QTableView
 
 from ui.ui_main import Ui_main_window
-from pages.campaigns import ExecutionCampaign
-from pages.dialogs import Dialog
-from db.db import DatabaseManager
+from views.campaigns import ExecutionCampaign
+from views.dialogs import Dialog
 
 from config.form_config import FORMS
-from config.table_config import TABLES
 from config.page_config import PAGES
-from managers.form_manager import FormRegistry, FormOpener
-from managers.page_manager import PageManager
-from managers.table_manager import TableManager
+
+from controllers.main_controller import MainController
 
 class MainWindow(QMainWindow):
 
@@ -20,46 +17,31 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_main_window()
         self.ui.setupUi(self)
-
-        self._setup_managers()
-        self._setup_buttons()
         
-        self._connect_signals()
-        
-        self.page_manager.change_page("bugs")
-
-    def _setup_managers(self):
-        """Inicializa los managers y configura la interacción entre ellos."""
-        self.form_registry = FormRegistry()
-        self.form_opener = FormOpener(self.form_registry, FORMS)
-        self.page_manager = PageManager(self.ui.stacked_main, self.ui)
-        self.table_manager = TableManager()
-        self.db_manager = DatabaseManager()
-    
+        self._setup_controller()
         
         self._setup_tables()
+        self._setup_buttons()
 
+        self._connect_signals()
+        
+        self.controller._change_page("bugs")
+        
+    def _setup_controller(self):
+        """Initializes controller"""
+        self.controller = MainController(self.ui)
+          
     def _setup_tables(self):
-        for key, table_dict in TABLES.items():
-            table_info = table_dict["config"]
-            table_widget = getattr(self.ui, table_info.widget_name)
-            data = self.db_manager.get_all_data(key)
-            self.table_manager.setup_table(table_widget, key, data, register=True)
-    
+        self.controller.setup_tables()
+
     def _connect_signals(self):
-        """Conecta señales entre managers y la vista."""
-        self.ui.btn_add.clicked.connect(self._handle_add_button)
+        """Connects signals between managers and the view."""
+        self._connect_menu_actions() # Menu bar actions
+        
+        self.ui.btn_add.clicked.connect(self.controller.handle_add_button)
         self.ui.btn_edit.clicked.connect(self._handle_edit_button)
         self.ui.btn_remove.clicked.connect(self._handle_remove_button)
         self.ui.btn_start.clicked.connect(self._execute_campaign)
-        
-        self.table_manager.table_updated.connect(lambda: self.page_manager.refresh_page("bugs"))
-        
-        self._connect_menu_actions()
-        
-        self.table_manager.table_double_clicked.connect(lambda data: self._handle_form_action(edit_mode=True, data=data))
-        self.table_manager.selection_changed.connect(lambda table, data: self._update_button_states(table, data))
-        self.table_manager.table_updated.connect(self._refresh_table)
         
     def _connect_menu_actions(self):
         view_actions = [
@@ -71,38 +53,21 @@ class MainWindow(QMainWindow):
         ]
 
         for action, page_type in view_actions:
-            action.triggered.connect(lambda _, pt=page_type: self.page_manager.change_page(pt))
+            action.triggered.connect(lambda _, pt=page_type: self.controller._change_page(pt))
 
         for form_key, form_info in FORMS.items():
             config = form_info["config"]
             if config.menu_action_attr:
                 action = getattr(self.ui, config.menu_action_attr, None)
                 if action:
-                    action.triggered.connect(lambda _, fk=form_key: self.form_manager.open_form(fk))
+                    action.triggered.connect(lambda _, fk=form_key: self.handle.open_form(fk))
     
     def _setup_buttons(self):
-        """Conecta botones principales de la interfaz."""
-        self.ui.btn_add_bug.clicked.connect(lambda: self.form_opener.open_form("bugs"))
-        self.ui.btn_add_campaign.clicked.connect(lambda: self.form_opener.open_form("campaigns"))
+        """Sets up view's buttons (Add, Edit and Remove)."""
 
         # Initially, both edit and delete buttons are disabled
         self.ui.btn_edit.setEnabled(False)
         self.ui.btn_remove.setEnabled(False)
-
-    def _handle_add_button(self):
-        tab_index = self.page_manager.get_current_tab_index()
-        current_page = self.page_manager.current_page
-        page_config = PAGES[current_page]["config"]
-        page_forms = page_config.forms
-        if not page_forms:
-            print("The page you are currently visiting does not have any form associated to it")
-            return
-
-        if tab_index is not None and tab_index < len(page_forms):
-            form_key = page_forms[tab_index]
-        else:
-            form_key = page_forms[0]
-        self.form_opener.open_form(form_key, edit_mode=False)
     
     def _handle_edit_button(self):
         tab_index = self.page_manager.get_current_tab_index()
@@ -117,22 +82,6 @@ class MainWindow(QMainWindow):
             return
         
         self._handle_form_action(edit_mode=True, data=selected_data[0])
-
-    @Slot()
-    def _handle_form_action(self, edit_mode: bool = False, data: Optional[Any]=None):
-        current_page = self.page_manager.current_page
-        tab_index = self.page_manager.get_current_tab_index()
-        page_config = PAGES[current_page]["config"]
-        page_forms = page_config.forms
-        if not page_forms:
-            print("The page you are currently visiting does not have any form associated to it")
-            return
-        
-        if tab_index is not None and tab_index < len(page_forms):
-            form_key = page_forms[tab_index]
-        else:
-            form_key = page_forms[0]
-        self.form_manager.open_form(form_key, edit_mode, data)
     
     def _handle_remove_button(self):
         current_table = self._get_current_table()

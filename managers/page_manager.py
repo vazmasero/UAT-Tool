@@ -1,16 +1,19 @@
 from typing import Optional
 from PySide6.QtCore import QObject
+
+from config.app_config import BaseUI
 from config.page_config import PAGES
 
 class PageManager(QObject):
 
-    def __init__(self, stacked_widget, ui):
+    def __init__(self, stacked_widget, ui: BaseUI):
         super().__init__()
         self.stacked_widget = stacked_widget
         self.ui = ui
     
     def change_page(self, page_name: str):      
         if page_name not in PAGES:
+            # Pending: error display management
             return
         
         index = PAGES[page_name]["config"].index

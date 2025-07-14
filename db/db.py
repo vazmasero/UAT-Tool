@@ -11,14 +11,17 @@ DATABASE_URL = f"sqlite:///{DB_NAME}"
 # Create SQLAlchemy engine
 engine = create_engine(DATABASE_URL, echo=False)
 
+# Defines SQLAlchemy Session object
 Session = scoped_session(sessionmaker(bind=engine))
 
 def init_db():
     
+    # Creates all tables defined in models.py
     Base.metadata.create_all(engine)
     
+    # Instantiates session
     session = Session()
-    try: 
+    try:
         load_initial_data(session)
     finally:
         session.close()

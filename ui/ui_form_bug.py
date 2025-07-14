@@ -245,7 +245,7 @@ class Ui_form_bug(object):
 
     def retranslateUi(self, form_bug):
         form_bug.setWindowTitle(QCoreApplication.translate("form_bug", u"Form", None))
-        self.lbl_bug.setText(QCoreApplication.translate("form_bug", u"[New/Edit bug]", None))
+        self.lbl_bug.setText(QCoreApplication.translate("form_bug", u"New bug", None))
         self.lbl_status.setText(QCoreApplication.translate("form_bug", u"Status:", None))
         self.cb_status.setItemText(0, QCoreApplication.translate("form_bug", u"IN PROGRESS", None))
         self.cb_status.setItemText(1, QCoreApplication.translate("form_bug", u"PENDING", None))

@@ -18,9 +18,9 @@ class TableCommonConfig:
     def get_generic_table_config():
         return {
             'context_menu': False,
-            'alternating_row_colors': True,
+            'alternating_row_colors': False,
             'sort_enabled': True,
-            'max_section_size': 250
+            #'max_section_size': 250
         }
 
 # Dictionary to hold table configurations for different entities
@@ -49,7 +49,7 @@ TABLES = {
                 "Impact": "impact",
                 "Comments": "comments"
             },
-            widget_name="table_bugs",
+            widget_name="tbl_bugs",
             page="bugs"
         )
     },

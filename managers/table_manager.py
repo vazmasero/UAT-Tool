@@ -4,12 +4,16 @@ from PySide6.QtCore import QObject, Signal, QModelIndex, Qt
 from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QMenu, QApplication
 from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
 
-from config.table_config import TABLES, TableCommonConfig
+from config.table_config import TABLES
 from config.page_config import PAGES
+
+from services.table_service import TableService
+
+from utils.dict_utils import get_base_table_config
 
 class TableManager(QObject):
     
-    table_double_clicked = Signal(object)
+    table_double_clicked = Signal(str,object)
     selection_changed = Signal(object, object)
     table_updated = Signal()
         
@@ -18,42 +22,36 @@ class TableManager(QObject):
         self.tables: Dict[str, QTableView] = {}
         self.table_configs: Dict[str, Dict] = {}
 
-    def setup_table(self, table: QTableView, key: str, data: List[Dict[str, Any]], config: Optional[Dict] = None):
-        table_config = TABLES.get(key, {}).get("config", {})
-        generic_config = TableCommonConfig.get_generic_table_config()
-        merged_config = {**generic_config, **table_config, **(config or {})}
+    def setup_table(self, table: QTableView, name: str, data: List[Dict[str, Any]], config: Optional[Dict] = None, register=False):
+        
+        """Creates and associates models to a particular TableView object. If needed, the table is registered when created."""
+        
+        merged_config = TableService.merge_table_config(name, config)
 
         headers = merged_config.get("headers", [])
         model = QStandardItemModel(0, len(headers))
         model.setHorizontalHeaderLabels(headers)
 
-        self._populate_model(key, model, data)
+        self._populate_model(name, model, data)
         table.setModel(model)
+        
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setAlternatingRowColors(merged_config.get("alternating_row_colors", False))
         table.setSortingEnabled(merged_config.get("sort_enabled", False))
-    
-    def register_table(self, table: QTableView, key: str, config: Optional[Dict] = None):
-        """Registra una tabla y configura sus signals."""
-        self.tables[key] = table
-        self.table_configs[key] = config or {}
+        table.setSelectionMode(QAbstractItemView.SingleSelection)
+        table.setSelectionBehavior(QAbstractItemView.SelectRows)
         
-        # Conectar signals después de que el modelo está establecido
-        table.doubleClicked.connect(
-            lambda index: self._handle_double_click(table, index)
-        )
-        
-        if table.selectionModel():
-            table.selectionModel().selectionChanged.connect(
-                lambda selected, deselected, t=table: self._handle_selection_changed(t)
-                
-            )
+        if register:
+            self._register_table(table, name, config)
     
-    def _populate_model(self, key: str, model: QStandardItemModel, data: List[Dict[str, Any]]):
+    def _populate_model(self, name: str, model: QStandardItemModel, data: List[Dict[str, Any]]):
+        
+        """Populates the model associated to a table with the elements obtained from the database"""
+        
         if not data:
             return
 
-        config = TABLES.get(key, {}).get("config")
+        config = get_base_table_config(name)
         column_map = config.column_map
         headers = [model.headerData(col, Qt.Orientation.Horizontal) for col in range(model.columnCount())]
         
@@ -68,15 +66,17 @@ class TableManager(QObject):
                 model.appendRow(items)
     
     def _create_item(self, value: Any, config: Optional[Dict], column_index: int) -> QStandardItem:
-
+        """Creates a new item for a certain mode"""
+        
         if value is None:
             value = ""
         elif isinstance(value, datetime):
+            # Converts a datetime object to a string so it can be displayed on the table
             value = value.strftime(("%Y-%m-%d %H:%M:%S"))
         
         item = QStandardItem(str(value))
         
-        # Guardar el valor original como datos del item
+        # Saves the original value as item data
         item.setData(value, Qt.ItemDataRole.UserRole)
         
         if config and hasattr(config, 'column_config'):
@@ -89,21 +89,39 @@ class TableManager(QObject):
         
         return item
     
+    def _register_table(self, table: QTableView, name: str, config: Optional[Dict] = None) -> bool:
+        """Registers a table and sets up its signals."""
+        if name in self.tables:
+            raise ValueError(f"The table named '{name} is already registered")
+        
+        self.tables[name] = table
+        self.table_configs[name] = config or {}
+        
+        # Connect signals after the model is established
+        table.doubleClicked.connect(
+            lambda index: self._handle_double_click(name, table, index)
+        )
+        
+        if table.selectionModel():
+            table.selectionModel().selectionChanged.connect(
+                lambda selected, deselected, t=table: self._handle_selection_changed(name, t)
+                
+            )
+        
+        # Table registered successfully
+        return True
+    
     def _apply_item_config(self, item: QStandardItem, col_config: Dict):
         
-        # Alineación
         if 'alignment' in col_config:
             item.setTextAlignment(col_config['alignment'])
         
-        # Color de fondo
         if 'background_color' in col_config:
             item.setBackground(col_config['background_color'])
         
-        # Color de texto
         if 'text_color' in col_config:
             item.setForeground(col_config['text_color'])
         
-        # Tooltip
         if 'tooltip' in col_config:
             item.setToolTip(col_config['tooltip'])
     
@@ -154,19 +172,14 @@ class TableManager(QObject):
                     )
                     horizontal_header.resizeSection(i, width)
     
-    def get_row_data(self, table: QTableView, row: int) -> Dict[str, Any]:
-        """Obtiene los datos de una fila como un diccionario usando los nombres de columna de la BD."""
+    def get_row_data(self, name: str, table: QTableView, row: int) -> Dict[str, Any]:
+        """Obtains data from a row as a dictionary using the DB column names."""
         model = table.model()
         if not model or row < 0 or row >= model.rowCount():
             return {}
-        
-        # Buscar la tabla en la configuración para obtener el mapeo
-        table_key = next((k for k, v in self.tables.items() if v == table), None)
-        if not table_key:
-            return {}
             
         # Obtener el mapeo de columnas
-        config = self.table_configs.get(table_key, {})
+        config = self.table_configs.get(name, {})
         column_map = config.get('column_map', {})
         
         row_data = {}
@@ -186,7 +199,7 @@ class TableManager(QObject):
         
         return row_data
     
-    def get_selected_rows_data(self, table: QTableView) -> List[List[Any]]:
+    def get_selected_rows_data(self, name: str, table: QTableView) -> List[List[Any]]:
 
         selection_model = table.selectionModel()
         if not selection_model or not selection_model.hasSelection():
@@ -196,7 +209,7 @@ class TableManager(QObject):
         for index in selection_model.selectedIndexes():
             selected_rows.add(index.row())
         
-        return [self.get_row_data(table, row) for row in sorted(selected_rows)]
+        return [self.get_row_data(name, table, row) for row in sorted(selected_rows)]
     
     def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None):
 
@@ -261,17 +274,17 @@ class TableManager(QObject):
         if model:
             model.clear()
     
-    def _handle_double_click(self, table: QTableView, index: QModelIndex):
+    def _handle_double_click(self, name: str, table:QTableView, index: QModelIndex):
         """Handles the double click on a table item event."""
         if index.isValid():
-            row_data = self.get_row_data(table, index.row())  
-            self.table_double_clicked.emit(row_data)
+            row_data = self.get_row_data(name, table, index.row())  
+            self.table_double_clicked.emit(name,row_data)
         else:
             return
             
-    def _handle_selection_changed(self, table: QTableView):
+    def _handle_selection_changed(self, name : str,  table: QTableView):
         """Hndles the selection change on a table event."""
-        selected_data = self.get_selected_rows_data(table)
+        selected_data = self.get_selected_rows_data(name, table)
         self.selection_changed.emit(table, selected_data)
     
     def update_table_model(self, table_key: str, data: list):

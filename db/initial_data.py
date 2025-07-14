@@ -2,10 +2,12 @@ from sqlalchemy.orm import Session
 from db.models import System, Section
 
 def load_initial_data(session: Session):
+    """Method that populates tables with predefined data when the program is launched"""
+    
     # Predefined systems
     systems = ["USSP", "CISP", "AUDI", "EXCHANGE", "NA"]
     
-    # Predefined sections 
+    # Predefined requirement sections
     sections = [
         "General", "Regulation", "Testing environment", "HMI", "GCS API",
         "User management", "NID", "Geo-awareness", "UAS flight authorization",
@@ -15,7 +17,8 @@ def load_initial_data(session: Session):
     ]
     
     for system_name in systems: 
-        if not session.query(System).filter_by(name=system_name).first():
+        # Add items only if they don't already exist
+        if not session.query(System).filter_by(name=system_name).first(): 
             session.add(System(name=system_name))
     
     for section_name in sections: 

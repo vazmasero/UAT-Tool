@@ -25,7 +25,7 @@
      <number>30</number>
     </property>
     <item>
-     <widget class="QStackedWidget" name="stacked_main">
+     <widget class="QStackedWidget" name="stacked_widget">
       <property name="currentIndex">
        <number>0</number>
       </property>

@@ -68,8 +68,8 @@ class Ui_main_window(object):
         self.verticalLayout = QVBoxLayout(self.central_main)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(30, 10, 30, -1)
-        self.stacked_main = QStackedWidget(self.central_main)
-        self.stacked_main.setObjectName(u"stacked_main")
+        self.stacked_widget = QStackedWidget(self.central_main)
+        self.stacked_widget.setObjectName(u"stacked_widget")
         self.pg_bugs = QWidget()
         self.pg_bugs.setObjectName(u"pg_bugs")
         self.verticalLayout_2 = QVBoxLayout(self.pg_bugs)
@@ -129,7 +129,7 @@ class Ui_main_window(object):
 
         self.verticalLayout_2.addWidget(self.tbl_bugs)
 
-        self.stacked_main.addWidget(self.pg_bugs)
+        self.stacked_widget.addWidget(self.pg_bugs)
         self.pg_campaigns = QWidget()
         self.pg_campaigns.setObjectName(u"pg_campaigns")
         self.verticalLayout_3 = QVBoxLayout(self.pg_campaigns)
@@ -147,7 +147,7 @@ class Ui_main_window(object):
 
         self.verticalLayout_3.addWidget(self.tbl_campaigns)
 
-        self.stacked_main.addWidget(self.pg_campaigns)
+        self.stacked_widget.addWidget(self.pg_campaigns)
         self.pg_test_management = QWidget()
         self.pg_test_management.setObjectName(u"pg_test_management")
         self.verticalLayout_12 = QVBoxLayout(self.pg_test_management)
@@ -187,7 +187,7 @@ class Ui_main_window(object):
 
         self.verticalLayout_12.addWidget(self.tab_widget_management)
 
-        self.stacked_main.addWidget(self.pg_test_management)
+        self.stacked_widget.addWidget(self.pg_test_management)
         self.pg_requirements = QWidget()
         self.pg_requirements.setObjectName(u"pg_requirements")
         self.verticalLayout_4 = QVBoxLayout(self.pg_requirements)
@@ -227,7 +227,7 @@ class Ui_main_window(object):
 
         self.verticalLayout_4.addWidget(self.tbl_requirements)
 
-        self.stacked_main.addWidget(self.pg_requirements)
+        self.stacked_widget.addWidget(self.pg_requirements)
         self.pg_assets = QWidget()
         self.pg_assets.setObjectName(u"pg_assets")
         self.verticalLayout_5 = QVBoxLayout(self.pg_assets)
@@ -324,9 +324,9 @@ class Ui_main_window(object):
 
         self.verticalLayout_5.addWidget(self.tab_widget_assets)
 
-        self.stacked_main.addWidget(self.pg_assets)
+        self.stacked_widget.addWidget(self.pg_assets)
 
-        self.verticalLayout.addWidget(self.stacked_main)
+        self.verticalLayout.addWidget(self.stacked_widget)
 
         self.hlayout_btn = QHBoxLayout()
         self.hlayout_btn.setObjectName(u"hlayout_btn")
@@ -407,7 +407,7 @@ class Ui_main_window(object):
 
         self.retranslateUi(main_window)
 
-        self.stacked_main.setCurrentIndex(0)
+        self.stacked_widget.setCurrentIndex(0)
         self.tab_widget_management.setCurrentIndex(0)
         self.tab_widget_assets.setCurrentIndex(0)
 

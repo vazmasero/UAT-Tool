@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication
 
-from pages.main_window import HomePage
+from views.main_window import MainWindow
 from db.db import init_db
 
 if __name__ == "__main__":
@@ -9,6 +9,6 @@ if __name__ == "__main__":
 
     init_db()
 
-    home_page = HomePage()
-    home_page.show()
+    main_window = MainWindow()
+    main_window.show()
     sys.exit(app.exec())

@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
 
-# Tablas de relación muchos-a-muchos (ajusta según tus relaciones reales)
+# Many - to - many relationships
 requirement_systems = Table(
     'requirement_systems',
     Base.metadata,
