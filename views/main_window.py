@@ -2,14 +2,18 @@ from typing import Dict, Callable, Optional, Type, Any, List
 from PySide6.QtCore import Slot, QObject
 from PySide6.QtWidgets import QMainWindow, QDialog, QTableView
 
+from managers.form_manager import FormManager
+from managers.page_manager import PageManager
+from managers.table_manager import TableManager
 from ui.ui_main import Ui_main_window
 from views.campaigns import ExecutionCampaign
 from views.dialogs import Dialog
 
-from config.form_config import FORMS
 from config.page_config import PAGES
 
 from controllers.main_controller import MainController
+from db.db import DatabaseManager
+
 
 class MainWindow(QMainWindow):
 
@@ -17,8 +21,21 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_main_window()
         self.ui.setupUi(self)
-        
-        self._setup_controller()
+
+        # Create managers
+        db_manager = DatabaseManager()
+        page_manager = PageManager(self.ui.stacked_widget, self.ui)
+        form_manager = FormManager()
+        table_manager = TableManager()
+
+        # Insert dependencies to the controller
+        self.controller = MainController(
+            ui=self.ui,
+            page_manager=page_manager,
+            form_manager=form_manager, 
+            table_manager=table_manager,
+            db_manager=db_manager
+        )
         
         self._setup_tables()
         self._setup_buttons()
@@ -26,10 +43,6 @@ class MainWindow(QMainWindow):
         self._connect_signals()
         
         self.controller._change_page("bugs")
-        
-    def _setup_controller(self):
-        """Initializes controller"""
-        self.controller = MainController(self.ui)
           
     def _setup_tables(self):
         self.controller.setup_tables()
@@ -38,33 +51,28 @@ class MainWindow(QMainWindow):
         """Connects signals between managers and the view."""
         self._connect_menu_actions() # Menu bar actions
         
-        self.ui.btn_add.clicked.connect(self.controller.handle_add_button)
-        self.ui.btn_edit.clicked.connect(self._handle_edit_button)
+        self.ui.btn_add.clicked.connect(lambda _:self.controller.handle_new_form(edit=False))
+        self.ui.btn_edit.clicked.connect(lambda _:self.controller.handle_new_form(edit=True))
         self.ui.btn_remove.clicked.connect(self._handle_remove_button)
         self.ui.btn_start.clicked.connect(self._execute_campaign)
         
     def _connect_menu_actions(self):
-        view_actions = [
-            (self.ui.action_view_bugs, "bugs"),
-            (self.ui.action_view_campaigns, "campaigns"),
-            (self.ui.action_view_management, "management"),
-            (self.ui.action_view_requirements, "requirements"),
-            (self.ui.action_view_assets, "assets"),
-        ]
 
-        for action, page_type in view_actions:
-            action.triggered.connect(lambda _, pt=page_type: self.controller._change_page(pt))
-
-        for form_key, form_info in FORMS.items():
-            config = form_info["config"]
-            if config.menu_action_attr:
-                action = getattr(self.ui, config.menu_action_attr, None)
-                if action:
-                    action.triggered.connect(lambda _, fk=form_key: self.handle.open_form(fk))
+        for attr_name in dir(self.ui):
+            if attr_name.startswith('action_view_'):
+                action = getattr(self.ui, attr_name)
+                page_type = attr_name.replace('action_view_', '')
+                action.triggered.connect(
+                lambda checked, pt=page_type: self.controller._change_page(pt)
+            )
+            elif attr_name.startswith("action_add_"):
+                action = getattr(self.ui, attr_name)
+                action.triggered.connect(
+                    lambda _: self.controller.handle_new_form(edit=False)
+                )
     
     def _setup_buttons(self):
         """Sets up view's buttons (Add, Edit and Remove)."""
-
         # Initially, both edit and delete buttons are disabled
         self.ui.btn_edit.setEnabled(False)
         self.ui.btn_remove.setEnabled(False)

@@ -1,9 +1,10 @@
-from typing import Dict, Optional, Type, Any
+from typing import Dict, Optional, Type, Any, List
 from PySide6.QtWidgets import QWidget, QMessageBox
 from PySide6.QtCore import Qt, Signal
 
 from config.form_config import FORMS
 from config.page_config import PAGES
+from utils.form_mode import FormMode
 
 class BaseForm(QWidget):
     """Clase base para formularios, centraliza lógica común."""
@@ -59,12 +60,18 @@ class FormManager:
     def __init__(self):
         self.active_forms = {}
 
-    def open_form(self, form_key, mode, data=None):
+    def open_form(self, form_key:str, edit:bool, data:Optional[List]):
         """Abre un formulario basado en su clave y modo (agregar/editar)."""
         form_config = FORMS[form_key]['config']
-        form_instance = form_config.form_class()
-        if mode == 'edit':
+
+        form_instance = form_config.form_class(
+            mode=FormMode.EDIT if edit else FormMode.CREATE,
+            requirement_id=data.get('id') if data else None
+        )
+
+        if edit and data:
             form_instance.load_data(data)
+
         form_instance.show()
         self.active_forms[form_key] = form_instance
 

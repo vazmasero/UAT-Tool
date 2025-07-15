@@ -199,12 +199,15 @@ class TableManager(QObject):
         
         return row_data
     
-    def get_selected_rows_data(self, name: str, table: QTableView) -> List[List[Any]]:
+    def get_selected_rows_data(self, name: str) -> List[List[Any]]:
 
+        table = self.tables.get(name)
+        if not table:
+            return None
         selection_model = table.selectionModel()
         if not selection_model or not selection_model.hasSelection():
-            return []
-        
+            return None
+
         selected_rows = set()
         for index in selection_model.selectedIndexes():
             selected_rows.add(index.row())
