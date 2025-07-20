@@ -80,20 +80,20 @@ class Requirement(Base):
     last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     
     # Relationships
-    systems = relationship('System', secondary='requirement_systems', back_populates='requirements')
-    sections = relationship('Section', secondary='requirement_sections', back_populates='requirements')
+    systems = relationship('System', secondary=requirement_systems, back_populates='requirements')
+    sections = relationship('Section', secondary=requirement_sections, back_populates='requirements')
 
 class System(Base):
     __tablename__ = 'systems'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
-    requirements = relationship('Requirement', secondary='requirement_systems', back_populates='systems')
+    requirements = relationship('Requirement', secondary=requirement_systems, back_populates='systems')
 
 class Section(Base):
     __tablename__ = 'sections'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
-    requirements = relationship('Requirement', secondary='requirement_sections', back_populates='sections')
+    requirements = relationship('Requirement', secondary=requirement_sections, back_populates='sections')
 
 class Email(Base):
     __tablename__ = 'emails'

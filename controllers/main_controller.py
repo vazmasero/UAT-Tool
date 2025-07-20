@@ -13,7 +13,6 @@ from managers.page_manager import PageManager
 from managers.form_manager import FormManager
 from services.form_service import FormRegistry, FormOpener
 from managers.table_manager import TableManager
-from utils.dict_utils import get_form_key
 
 
 class MainController:
@@ -34,9 +33,10 @@ class MainController:
     def _connect_signals(self):
         
         # Connect signals coming from TableManager
-        self.table_manager.table_double_clicked.connect(self.handle_table_double_click)
+        self.table_manager.table_double_clicked.connect(self.handle_new_form)
         self.table_manager.selection_changed.connect(self.handle_selection_changed)
         #self.table_manager.table_updated.connect(self.handle_table_updated)
+        
         
     def _change_page(self, page_name:str):
         if self.page_manager:
@@ -53,19 +53,9 @@ class MainController:
                 continue
             data = self.db_manager.get_all_data(table_info.db_table)
             self.table_manager.setup_table(table_widget, table_name, data, register=True)
-    
-    @Slot()
-    def handle_table_double_click(self, edit_mode: bool = True, data: Optional[Any]=None):
-        current_page = self.page_manager.current_page
-        tab_index = self.page_manager.get_current_tab_index()
-        form_key = self.form_manager.get_form_key(current_page, tab_index)
-        
-        if not form_key:
-            return
-        self.form_manager.open_form(form_key, edit_mode, data)
         
     @Slot()
-    def handle_selection_changed(self, table:Optional[QTableView], data:Optional[List[List]]):
+    def handle_selection_changed(self, table:Optional[QTableView]):
         
         if table:
             if table.selectionModel().hasSelection():
@@ -76,6 +66,30 @@ class MainController:
                 self.ui.btn_remove.setEnabled(False)
         
         self.ui.btn_add.setEnabled(True)
+      
+    @Slot()  
+    def _handle_remove_button(self):
+        
+        current_page = self.page_manager.current_page
+        tab_index = self.page_manager.get_current_tab_index()
+        
+        form_key = self.form_manager.get_form_key(current_page, tab_index)
+        if not form_key:
+            return
+    
+        record_id = None 
+        
+        table_name = PAGES[current_page]["config"].tables[tab_index or 0]
+        record_id = self.table_manager.get_selected_record_id(table_name)
+        if not record_id:
+            return
+        
+        try:
+            self.db_manager.delete_register(table_name, record_id)
+            self.refresh_table_data(table_name)
+            
+        except Exception as e:
+            print(f"Error deleting register {record_id} from table '{table_name}': {e}")
         
     @Slot()
     def handle_new_form(self, edit: bool):
@@ -87,13 +101,43 @@ class MainController:
             return
         
         data = None
+        record_id = None 
+        
         if edit:
             table_name = PAGES[current_page]["config"].tables[tab_index or 0]
-            selected_data = self.table_manager.get_selected_rows_data(table_name)
-            if not selected_data:
+            # Obtain real Id from database
+            record_id = self.table_manager.get_selected_record_id(table_name)
+            if not record_id:
                 return
             
-        self.form_manager.open_form(form_key, edit, data)
-    
+            # Obtain full data from db
+            data = self.db_manager.get_by_id(table_name, record_id)
+            if not data: 
+                return
+            
+        form_instace = self.form_manager.open_form(form_key, edit, data)
+        
+        if form_instace and hasattr(form_instace, 'data_updated'):
+            form_instace.data_updated.connect(self.refresh_table_data)
+            
+    @Slot()
+    def handle_menu_add(self, form_key: str, edit: bool, data: Optional[List]=None):
+        form_instace = self.form_manager.open_form(form_key, edit, data)
+        
+        if form_instace and hasattr(form_instace, 'data_updated'):
+            form_instace.data_updated.connect(self.refresh_table_data)
+            
+    @Slot()
+    def refresh_table_data(self, table_name: str):
+        try:
+            new_data = self.db_manager.get_all_data(table_name)
+            
+            self.table_manager.update_table_model(table_name, new_data)
+            print(f"Table '{table_name}' updated successfully")
+        except Exception as e:
+            print(f"Error updating table '{table_name}': {e}")
+            
+    def close_program(self):
+        self.form_manager.close_all_forms()
             
             

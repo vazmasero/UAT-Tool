@@ -27,8 +27,8 @@ class Ui_main_window(object):
         if not main_window.objectName():
             main_window.setObjectName(u"main_window")
         main_window.resize(876, 634)
-        self.action_add_bug = QAction(main_window)
-        self.action_add_bug.setObjectName(u"action_add_bug")
+        self.action_new_bug = QAction(main_window)
+        self.action_new_bug.setObjectName(u"action_new_bug")
         self.action_view_bugs = QAction(main_window)
         self.action_view_bugs.setObjectName(u"action_view_bugs")
         self.action_new_campaign = QAction(main_window)
@@ -357,7 +357,7 @@ class Ui_main_window(object):
         main_window.setCentralWidget(self.central_main)
         self.menu_bar_main = QMenuBar(main_window)
         self.menu_bar_main.setObjectName(u"menu_bar_main")
-        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 33))
+        self.menu_bar_main.setGeometry(QRect(0, 0, 876, 17))
         self.menu_bugs = QMenu(self.menu_bar_main)
         self.menu_bugs.setObjectName(u"menu_bugs")
         self.menu_campaigns = QMenu(self.menu_bar_main)
@@ -385,7 +385,7 @@ class Ui_main_window(object):
         self.menu_bar_main.addAction(self.menu_requirements.menuAction())
         self.menu_bar_main.addAction(self.menu_assets.menuAction())
         self.menu_bar_main.addAction(self.menu_statistics.menuAction())
-        self.menu_bugs.addAction(self.action_add_bug)
+        self.menu_bugs.addAction(self.action_new_bug)
         self.menu_bugs.addAction(self.action_view_bugs)
         self.menu_campaigns.addAction(self.action_new_campaign)
         self.menu_campaigns.addAction(self.action_view_campaigns)
@@ -417,7 +417,7 @@ class Ui_main_window(object):
 
     def retranslateUi(self, main_window):
         main_window.setWindowTitle(QCoreApplication.translate("main_window", u"UAT Tool", None))
-        self.action_add_bug.setText(QCoreApplication.translate("main_window", u"New bug", None))
+        self.action_new_bug.setText(QCoreApplication.translate("main_window", u"New bug", None))
         self.action_view_bugs.setText(QCoreApplication.translate("main_window", u"View bugs", None))
         self.action_new_campaign.setText(QCoreApplication.translate("main_window", u"New campaign", None))
         self.action_view_campaigns.setText(QCoreApplication.translate("main_window", u"View campaigns", None))

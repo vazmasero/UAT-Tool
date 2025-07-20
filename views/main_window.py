@@ -1,5 +1,5 @@
 from typing import Dict, Callable, Optional, Type, Any, List
-from PySide6.QtCore import Slot, QObject
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QMainWindow, QDialog, QTableView
 
 from managers.form_manager import FormManager
@@ -10,10 +10,10 @@ from views.campaigns import ExecutionCampaign
 from views.dialogs import Dialog
 
 from config.page_config import PAGES
+from config.form_config import FORMS
 
 from controllers.main_controller import MainController
 from db.db import DatabaseManager
-
 
 class MainWindow(QMainWindow):
 
@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
         
         self.ui.btn_add.clicked.connect(lambda _:self.controller.handle_new_form(edit=False))
         self.ui.btn_edit.clicked.connect(lambda _:self.controller.handle_new_form(edit=True))
-        self.ui.btn_remove.clicked.connect(self._handle_remove_button)
+        self.ui.btn_remove.clicked.connect(lambda _:self.controller._handle_remove_button())
         self.ui.btn_start.clicked.connect(self._execute_campaign)
         
     def _connect_menu_actions(self):
@@ -65,49 +65,27 @@ class MainWindow(QMainWindow):
                 action.triggered.connect(
                 lambda checked, pt=page_type: self.controller._change_page(pt)
             )
-            elif attr_name.startswith("action_add_"):
+            elif attr_name.startswith("action_new_"):
                 action = getattr(self.ui, attr_name)
-                action.triggered.connect(
-                    lambda _: self.controller.handle_new_form(edit=False)
+                form_name = self._find_form_key_for_action(attr_name)
+                if form_name:
+                    action.triggered.connect(
+                        lambda _, fn=form_name: self.controller.handle_menu_add(fn, edit=False, data=None)
                 )
-    
+                
+    def _find_form_key_for_action(self, action_name: str) -> Optional[str]:
+        """Encuentra el form_key correspondiente a una acción del menú"""
+        for form_key, form_info in FORMS.items():
+            form_config = form_info.get('config')
+            if form_config and form_config.menu_action_attr == action_name:
+                return form_key
+        return None
+                
     def _setup_buttons(self):
         """Sets up view's buttons (Add, Edit and Remove)."""
         # Initially, both edit and delete buttons are disabled
         self.ui.btn_edit.setEnabled(False)
         self.ui.btn_remove.setEnabled(False)
-    
-    def _handle_edit_button(self):
-        tab_index = self.page_manager.get_current_tab_index()
-        current_page = self.page_manager.current_page
-        current_table = self.table_manager.get_current_table(current_page, tab_index)
-        
-        if not current_table:
-            return
-        
-        selected_data = self.table_manager.get_selected_rows_data(current_table)
-        if not selected_data:
-            return
-        
-        self._handle_form_action(edit_mode=True, data=selected_data[0])
-    
-    def _handle_remove_button(self):
-        current_table = self._get_current_table()
-        if not current_table:
-            return
-        
-        selected_rows = self.table_manager.get_selected_row_indices(current_table)
-        if not selected_rows:
-            return
-        
-        
-        dialog = Dialog()
-        dialog.ui.lbl_dialog.setText("Are you sure you want to delete {len(selected_rows)} item(s)? Changes will not be reversible.")
-        dialog.setWindowTitle("Confirmation")
-        
-        if dialog.exec_() == QDialog.accepted:
-            # Implementar aquí la lógica de la eliminación de registro (PENDIENTE).
-            return
     
     @Slot()
     def _update_button_states(self, table=Optional[QTableView], data=Optional[List[List]]):
@@ -152,11 +130,8 @@ class MainWindow(QMainWindow):
         data = self.db_manager.get_all_data(table_key)
         self.table_manager.update_table_model(table_key, data)
         self._update_button_states(self.table_manager.tables[table_key], None)
-
-    def _refresh_table(self, table_key):
-        data = self.db_manager.get_all_data(table_key)
-        self.table_manager.update_table_model(table_key, data)
-
+        
     def closeEvent(self, event):
-        self.form_manager.close_all_forms()
+        self.controller.close_program()
         super().closeEvent(event)
+            

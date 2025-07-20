@@ -1,8 +1,8 @@
 from datetime import datetime
-from typing import List, Optional, Any, Dict, Callable
-from PySide6.QtCore import QObject, Signal, QModelIndex, Qt
-from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QMenu, QApplication
-from PySide6.QtGui import QStandardItem, QStandardItemModel, QAction
+from typing import List, Optional, Any, Dict
+from PySide6.QtCore import QObject, Signal, QModelIndex, Qt, QSortFilterProxyModel
+from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView
+from PySide6.QtGui import QStandardItem, QStandardItemModel
 
 from config.table_config import TABLES
 from config.page_config import PAGES
@@ -14,7 +14,7 @@ from utils.dict_utils import get_base_table_config
 class TableManager(QObject):
     
     table_double_clicked = Signal(str,object)
-    selection_changed = Signal(object, object)
+    selection_changed = Signal(object)
     table_updated = Signal()
         
     def __init__(self):
@@ -28,16 +28,30 @@ class TableManager(QObject):
         
         merged_config = TableService.merge_table_config(name, config)
 
+        # Provisional: determine the model according to name provided
         headers = merged_config.get("headers", [])
         model = QStandardItemModel(0, len(headers))
         model.setHorizontalHeaderLabels(headers)
-
         self._populate_model(name, model, data)
-        table.setModel(model)
+            
+        # Setup proxy model for filtering and sorting
+        proxy_model = QSortFilterProxyModel()
+        proxy_model.setSourceModel(model)
+        table.setModel(proxy_model)
         
+        headers = merged_config.get("headers", [])
+        for i, header in enumerate(headers):
+            proxy_model.setHeaderData(i, Qt.Horizontal, header)
+            
+        # Hide ID if there is a column named "Id" or "ID"
+        for i, header in enumerate(headers):
+            if header.lower() in ['id']:
+                table.setColumnHidden(i, True)
+                break
+            
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setAlternatingRowColors(merged_config.get("alternating_row_colors", False))
-        table.setSortingEnabled(merged_config.get("sort_enabled", False))
+        # table.setSortingEnabled(merged_config.get("sort_enabled", False))
         table.setSelectionMode(QAbstractItemView.SingleSelection)
         table.setSelectionBehavior(QAbstractItemView.SelectRows)
         
@@ -60,7 +74,13 @@ class TableManager(QObject):
             for col, header in enumerate(headers):
                 db_column = column_map.get(header, header)
                 value = row_data.get(db_column)
-                items.append(self._create_item(value, config, col))
+                item = self._create_item(value, config, col)
+                
+                # Save DB Id in the first column as UserRole
+                if col == 0: 
+                    item.setData(row_data.get('id'), Qt.ItemDataRole.UserRole +1)
+                
+                items.append(item)
             
             if items:
                 model.appendRow(items)
@@ -104,7 +124,7 @@ class TableManager(QObject):
         
         if table.selectionModel():
             table.selectionModel().selectionChanged.connect(
-                lambda selected, deselected, t=table: self._handle_selection_changed(name, t)
+                lambda selected, deselected: self._handle_selection_changed(name)
                 
             )
         
@@ -199,20 +219,66 @@ class TableManager(QObject):
         
         return row_data
     
-    def get_selected_rows_data(self, name: str) -> List[List[Any]]:
+    def get_selected_rows_data(self, name: str) -> Optional[dict]:
 
         table = self.tables.get(name)
         if not table:
             return None
-        selection_model = table.selectionModel()
-        if not selection_model or not selection_model.hasSelection():
-            return None
-
-        selected_rows = set()
-        for index in selection_model.selectedIndexes():
-            selected_rows.add(index.row())
         
-        return [self.get_row_data(name, table, row) for row in sorted(selected_rows)]
+        selection_model = table.selectionModel()
+        proxy_indices = selection_model.selectedRows()
+        if not proxy_indices:
+            return None
+        
+        proxy_index = proxy_indices[0]
+        
+        record_id = self.get_selected_record_id(name)
+        if not record_id:
+            return None
+        
+        row_data = self.get_row_data(name, table, proxy_index.row())
+        
+        row_data['id'] = record_id
+        
+        return row_data
+    
+    def get_selected_record_id(self, table_name:str) -> Optional[int]:
+        
+        table = self.tables.get(table_name)
+        if not table or not table.selectionModel().hasSelection():
+            return None
+        
+        selection_model = table.selectionModel()
+        proxy_indices = selection_model.selectedRows()
+        if not proxy_indices:
+            return None
+        
+        # Obtain selected index in proxy model
+        proxy_index = proxy_indices[0]
+        
+        # Map to index source if there is proxy model
+        if hasattr(table.model(), 'mapToSource'):
+            source_index = table.model().mapToSource(proxy_index)
+            source_model = table.model().sourceModel()
+            # Obtain Id stored in first colum
+            first_item = source_model.item(source_index.row(), 0)
+            if first_item:
+                return first_item.data(Qt.ItemDataRole.UserRole + 1)
+            
+        else:
+            #If there is no proxy model, user model directly
+            first_item = table.model().item(proxy_index.row(), 0)
+            if first_item:
+                return first_item.data(Qt.ItemDataRole.UserRole + 1)
+            
+        return None
+    
+    def get_selected_row_indices(self, table:QTableView) -> List[int]:
+        if not table or not table.selectionModel():
+            return[]
+        
+        indices = table.selectionModel.selectedRows()
+        return [index.row() for index in indices]
     
     def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None):
 
@@ -285,20 +351,38 @@ class TableManager(QObject):
         else:
             return
             
-    def _handle_selection_changed(self, name : str,  table: QTableView):
-        """Hndles the selection change on a table event."""
-        selected_data = self.get_selected_rows_data(name, table)
-        self.selection_changed.emit(table, selected_data)
+    def _handle_selection_changed(self, name : str):
+        """Handles the selection change on a table event."""
+        table = self.tables[name]
+        self.selection_changed.emit(table)
     
-    def update_table_model(self, table_key: str, data: list):
-        table_widget = self.tables.get(table_key)
+    def update_table_model(self, table_name: str, new_data: list):
+        table_widget = self.tables.get(table_name)
         if not table_widget:
+            print(f"Table '{table_name}' not found in registered tables")
             return
+        
         model = table_widget.model()
-        if model:
-            model.removeRows(0, model.rowCount())
-            self._populate_model(table_key, model, data)
-        self.table_updated.emit()
+        source_model = model
+        
+        if hasattr(model, 'sourceModel'):
+            source_model = model.sourceModel()
+        
+        source_model.clear()
+        
+        config = get_base_table_config(table_name)
+        headers = config.headers if hasattr(config, 'headers') else []
+        if headers:
+            source_model.setHorizontalHeaderLabels(headers)
+        
+        self._populate_model(table_name, source_model, new_data)
+        
+        for i, header in enumerate(headers):
+            if header.lower() in ['id']:
+                table_widget.setColumnHidden(i, True)
+                break
+        
+        print(f"Table model '{table_name}' updated with {len(new_data)} records")
     
     def get_current_table(self, page_key: str, tab_index:int=None)->Optional[QTableView]:
         page_config = PAGES.get(page_key, {}).get("config")

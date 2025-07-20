@@ -1,7 +1,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget, QListWidget, QListWidgetItem, QCheckBox
 from ui.ui_form_requirements import Ui_form_requirement
-from typing import List
+from typing import List,Optional
 
 from db.db import DatabaseManager
 from utils.form_mode import FormMode
@@ -10,15 +10,15 @@ from services.requirement_service import RequirementService
 
 # Page to manage the creation or edition of bugs
 class FormRequirement(QWidget):
-    operation_completed = Signal()
+    data_updated = Signal(str)
 
-    def __init__(self, mode:FormMode, requirement_id: int | None = None):
+    def __init__(self, mode:FormMode, db_id: Optional[int]):
         super().__init__()
         self.ui = Ui_form_requirement()
         self.ui.setupUi(self)
 
         self.mode = mode
-        self.requirement_id = requirement_id
+        self.db_id = db_id
 
         title = "Edit requirement" if mode == FormMode.EDIT else "Add requirement"
         self.setWindowTitle(title)
@@ -54,8 +54,8 @@ class FormRequirement(QWidget):
             return
             
         try:
-            self.controller.handle_form_submission(data, self.requirement_id)
-            self.operation_completed.emit()
+            self.controller.handle_form_submission(data, self.db_id)
+            self.data_updated.emit("requirements")
             self.close()
         except Exception as e:
             self.show_critical(str(e)) 
@@ -101,17 +101,16 @@ class FormRequirement(QWidget):
         return errors
     
     def save_data(self, data):
-        if self.windowTitle() == "Add requirement":
+        if self.mode == FormMode.CREATE:
             self.service.create_requirement(data)
-        else:
-            requirement_id = getattr(self, 'requirement_id', 0)
-            self.service.edit_requirement(requirement_id, data)
+        elif self.mode == FormMode.EDIT:
+            self.service.edit_requirement(data)            
     
     # Función que cargue los datos al formulario obteniendolos de la variable data que viene de open form (si existe, si no return).
     def load_data(self, data):
         """Loads data into the form."""
         formatted_data = self.controller.prepare_form_data(data)
-        if not data:
+        if not formatted_data:
             return
         
         # Load basic data

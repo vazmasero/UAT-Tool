@@ -31,7 +31,7 @@ FORMS = {
             add_label="New bug",
             edit_label="Edit bug",
             label_attr="lbl_bug",
-            menu_action_attr="action_add_bug"
+            menu_action_attr="action_new_bug"
         ),
     },
     "campaigns": {
@@ -42,7 +42,7 @@ FORMS = {
             add_label="New campaign",
             edit_label="Edit campaign",
             label_attr="lbl_campaign",
-            menu_action_attr="action_add_campaign"
+            menu_action_attr="action_new_campaign"
         ),
     },
     "requirements": {

@@ -1,4 +1,3 @@
-from PySide6.QtCore import Qt
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict
 
@@ -114,9 +113,10 @@ TABLES = {
     "requirements": {
         "config": TableConfig(
             db_table="requirements",
-            headers=["Id", "System(s)", "Section(s)", "Definition", "Creation date", "Last update"],
+            headers=["Id", "Assigned code", "System(s)", "Section(s)", "Definition", "Creation date", "Last update"],
             column_map={
-                "Id": "code",
+                "Id": "id",
+                "Assigned code": "code",
                 "System(s)": "systems",
                 "Section(s)": "sections",
                 "Definition": "definition",

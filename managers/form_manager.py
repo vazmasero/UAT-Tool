@@ -7,8 +7,6 @@ from config.page_config import PAGES
 from utils.form_mode import FormMode
 
 class BaseForm(QWidget):
-    """Clase base para formularios, centraliza lógica común."""
-    operation_completed = Signal()
 
     def __init__(self, db_manager, ui):
         super().__init__()
@@ -30,7 +28,6 @@ class BaseForm(QWidget):
             return
         try:
             self.save_data(data)
-            self.operation_completed.emit()
             self.close()
         except Exception as e:
             self.show_critical(str(e))
@@ -57,6 +54,8 @@ class BaseForm(QWidget):
 
 class FormManager:
     """Gestor de formularios, maneja apertura y cierre."""
+    data_updated = Signal(str)
+    
     def __init__(self):
         self.active_forms = {}
 
@@ -66,7 +65,7 @@ class FormManager:
 
         form_instance = form_config.form_class(
             mode=FormMode.EDIT if edit else FormMode.CREATE,
-            requirement_id=data.get('id') if data else None
+            db_id = data.get('id', None) if data else None
         )
 
         if edit and data:
@@ -74,12 +73,27 @@ class FormManager:
 
         form_instance.show()
         self.active_forms[form_key] = form_instance
+        
+        return form_instance
 
     def close_form(self, form_key):
         """Cierra un formulario y lo elimina de los formularios activos."""
         if form_key in self.active_forms:
             self.active_forms[form_key].close()
             del self.active_forms[form_key]
+    
+    def close_all_forms(self):
+        """Cierra todos los formularios activos."""
+        # Crear una copia de las claves para evitar modificar el diccionario durante la iteración
+        form_keys = list(self.active_forms.keys())
+        
+        for form_key in form_keys:
+            form_instance = self.active_forms[form_key]
+            if form_instance:
+                form_instance.close()
+        
+        # Limpiar el diccionario de formularios activos
+        self.active_forms.clear()
             
     def get_form_key(self, current_page: str, tab_index: Optional[int]) -> Optional[str]:
         page_config = PAGES.get(current_page, {}).get("config")

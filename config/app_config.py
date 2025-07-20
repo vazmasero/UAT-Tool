@@ -10,7 +10,5 @@ class BaseUI(Protocol):
     tab_widget_management: QTabWidget
     tab_widget_assets: QTabWidget
 
-
-
 class AppConfig:
     """Centralized configuration for the application. """

@@ -555,14 +555,14 @@
      <x>0</x>
      <y>0</y>
      <width>876</width>
-     <height>33</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_bugs">
     <property name="title">
      <string>Bugs</string>
     </property>
-    <addaction name="action_add_bug"/>
+    <addaction name="action_new_bug"/>
     <addaction name="action_view_bugs"/>
    </widget>
    <widget class="QMenu" name="menu_campaigns">
@@ -625,7 +625,7 @@
    <addaction name="menu_statistics"/>
   </widget>
   <widget class="QStatusBar" name="status_bar"/>
-  <action name="action_add_bug">
+  <action name="action_new_bug">
    <property name="text">
     <string>New bug</string>
    </property>

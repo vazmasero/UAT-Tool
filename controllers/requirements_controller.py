@@ -1,8 +1,9 @@
 from services.requirement_service import RequirementService
 from config.model_domains import Requirement
+from typing import Optional, Dict
 
 class RequirementsController:
-    def __init__(self, service: RequirementService):
+    def __init__(self, service):
             self.service = service
 
     def get_lw_data(self):
@@ -13,9 +14,9 @@ class RequirementsController:
             "sections": sections
         }
     
-    def handle_form_submission(self, form_data: dict, requirement_id: int | None = None) -> None:
+    def handle_form_submission(self, form_data: Dict, db_id: Optional[int]) -> None:
         requirement = Requirement(
-            id=requirement_id,
+            id=db_id,
             code=form_data['code'],
             definition=form_data['definition'],
             systems=form_data['systems'],
