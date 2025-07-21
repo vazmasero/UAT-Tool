@@ -82,6 +82,9 @@ class Ui_form_drone(object):
         self.hlayout_manufacturer.addWidget(self.lbl_manufacturer)
 
         self.cb_manufacturer = QComboBox(form_drone)
+        self.cb_manufacturer.addItem("")
+        self.cb_manufacturer.addItem("")
+        self.cb_manufacturer.addItem("")
         self.cb_manufacturer.setObjectName(u"cb_manufacturer")
 
         self.hlayout_manufacturer.addWidget(self.cb_manufacturer)
@@ -92,6 +95,9 @@ class Ui_form_drone(object):
         self.hlayout_manufacturer.addWidget(self.lbl_model)
 
         self.cb_model = QComboBox(form_drone)
+        self.cb_model.addItem("")
+        self.cb_model.addItem("")
+        self.cb_model.addItem("")
         self.cb_model.setObjectName(u"cb_model")
 
         self.hlayout_manufacturer.addWidget(self.cb_model)
@@ -108,6 +114,9 @@ class Ui_form_drone(object):
         self.hlayout_tracker.addWidget(self.lbl_tracker)
 
         self.cb_tracker = QComboBox(form_drone)
+        self.cb_tracker.addItem("")
+        self.cb_tracker.addItem("")
+        self.cb_tracker.addItem("")
         self.cb_tracker.setObjectName(u"cb_tracker")
 
         self.hlayout_tracker.addWidget(self.cb_tracker)
@@ -153,8 +162,20 @@ class Ui_form_drone(object):
         self.lbl_name.setText(QCoreApplication.translate("form_drone", u"Name:", None))
         self.lbl_sn.setText(QCoreApplication.translate("form_drone", u"Serial Number:", None))
         self.lbl_manufacturer.setText(QCoreApplication.translate("form_drone", u"Manufacturer:", None))
+        self.cb_manufacturer.setItemText(0, QCoreApplication.translate("form_drone", u"DJI", None))
+        self.cb_manufacturer.setItemText(1, QCoreApplication.translate("form_drone", u"Custom", None))
+        self.cb_manufacturer.setItemText(2, QCoreApplication.translate("form_drone", u"Other", None))
+
         self.lbl_model.setText(QCoreApplication.translate("form_drone", u"Model:", None))
+        self.cb_model.setItemText(0, QCoreApplication.translate("form_drone", u"Matrice 600", None))
+        self.cb_model.setItemText(1, QCoreApplication.translate("form_drone", u"Phantom 4", None))
+        self.cb_model.setItemText(2, QCoreApplication.translate("form_drone", u"Other", None))
+
         self.lbl_tracker.setText(QCoreApplication.translate("form_drone", u"Tracker type:", None))
+        self.cb_tracker.setItemText(0, QCoreApplication.translate("form_drone", u"BLIP", None))
+        self.cb_tracker.setItemText(1, QCoreApplication.translate("form_drone", u"GCS-API", None))
+        self.cb_tracker.setItemText(2, QCoreApplication.translate("form_drone", u"Other", None))
+
         self.lbl_transponder.setText(QCoreApplication.translate("form_drone", u"Transponder ID:", None))
         self.btn_accept.setText(QCoreApplication.translate("form_drone", u"Accept", None))
         self.cancel_btn.setText(QCoreApplication.translate("form_drone", u"Cancel", None))

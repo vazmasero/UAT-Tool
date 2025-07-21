@@ -62,7 +62,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_id"/>
+      <widget class="QLineEdit" name="le_easa_id"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_verification">
@@ -75,7 +75,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_verification"/>
+      <widget class="QLineEdit" name="le_verification_code"/>
      </item>
     </layout>
    </item>

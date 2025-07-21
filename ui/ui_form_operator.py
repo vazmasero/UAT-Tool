@@ -53,10 +53,10 @@ class Ui_form_operator(object):
 
         self.hlayout_id.addWidget(self.lbl_id)
 
-        self.le_id = QLineEdit(form_operator)
-        self.le_id.setObjectName(u"le_id")
+        self.le_easa_id = QLineEdit(form_operator)
+        self.le_easa_id.setObjectName(u"le_easa_id")
 
-        self.hlayout_id.addWidget(self.le_id)
+        self.hlayout_id.addWidget(self.le_easa_id)
 
         self.lbl_verification = QLabel(form_operator)
         self.lbl_verification.setObjectName(u"lbl_verification")
@@ -64,10 +64,10 @@ class Ui_form_operator(object):
 
         self.hlayout_id.addWidget(self.lbl_verification)
 
-        self.le_verification = QLineEdit(form_operator)
-        self.le_verification.setObjectName(u"le_verification")
+        self.le_verification_code = QLineEdit(form_operator)
+        self.le_verification_code.setObjectName(u"le_verification_code")
 
-        self.hlayout_id.addWidget(self.le_verification)
+        self.hlayout_id.addWidget(self.le_verification_code)
 
 
         self.verticalLayout.addLayout(self.hlayout_id)

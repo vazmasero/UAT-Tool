@@ -34,15 +34,11 @@ class BaseAssetForm(BaseForm):
             widget_name = f"le_{field}"
             
             # Manejar casos especiales de nombres de widgets
-            if field == 'serial_number':
-                widget_name = "le_sn"
-            elif field == 'tracker_type':
+            if field == 'tracker_type':
                 widget_name = "cb_tracker"
             elif field == 'operator':
                 widget_name = "cb_operator"
-            elif field == 'transponder_id':
-                widget_name = "le_transponder"
-            
+
             if hasattr(self.ui, widget_name):
                 widget = getattr(self.ui, widget_name)
                 if hasattr(widget, 'text'):

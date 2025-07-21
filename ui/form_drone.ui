@@ -95,7 +95,23 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_manufacturer"/>
+      <widget class="QComboBox" name="cb_manufacturer">
+       <item>
+        <property name="text">
+         <string>DJI</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Custom</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Other</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbl_model">
@@ -105,7 +121,23 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_model"/>
+      <widget class="QComboBox" name="cb_model">
+       <item>
+        <property name="text">
+         <string>Matrice 600</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Phantom 4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Other</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
@@ -125,7 +157,23 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_tracker"/>
+      <widget class="QComboBox" name="cb_tracker">
+       <item>
+        <property name="text">
+         <string>BLIP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>GCS-API</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Other</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbl_transponder">

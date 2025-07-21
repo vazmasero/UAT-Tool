@@ -13,7 +13,7 @@ class AssetConfig:
 ASSET_CONFIGS = {
     "emails": AssetConfig(
         table_name="emails",
-        ui_module="ui.ui_form_email",    # Nombre exacto del archivo
+        ui_module="ui.ui_form_email",
         ui_class="Ui_form_email",
         fields=["name", "email", "password"],
         validation_rules={
@@ -42,7 +42,7 @@ ASSET_CONFIGS = {
         table_name="drones",
         ui_module="ui.ui_form_drone",
         ui_class="Ui_form_drone",
-        fields=["name", "serial_number", "manufacturer", "model", "operator", "tracker_type", "transponder_id"],
+        fields=["name", "sn", "manufacturer", "model", "operator", "tracker", "transponder"],
         validation_rules={
             "name": "Writing a name is mandatory",
             "serial_number": "Writing a serial number is mandatory"
@@ -53,10 +53,40 @@ ASSET_CONFIGS = {
         table_name="uas_zones", 
         ui_module="ui.ui_form_uas_zone",
         ui_class="Ui_form_uas_zone",
-        fields=["name", "description"],
+        fields=["name", "reason", "cause", "restriction", "authority", "activation", "description"],
         validation_rules={
             "name": "Writing a name is mandatory"
         },
         form_key="uas_zones"
+    ),
+    "uhub_orgs": AssetConfig(
+        table_name="uhub_orgs", 
+        ui_module="ui.ui_form_uhub_org",
+        ui_class="Ui_form_uhub_org",
+        fields=["name", "email", "phone", "role", "jurisdiction", "aoi"],
+        validation_rules={
+            "name": "Writing a name is mandatory"
+        },
+        form_key="uhub_orgs"
+    ),
+    "uhub_users": AssetConfig(
+        table_name="uhub_users", 
+        ui_module="ui.ui_form_uhub_user",
+        ui_class="Ui_form_uhub_user",
+        fields=["username", "email", "password", "organization", "role", "jurisdiction", "aoi"],
+        validation_rules={
+            "name": "Writing a name is mandatory"
+        },
+        form_key="uhub_users"
+    ),
+    "uspaces": AssetConfig(
+        table_name="uspaces", 
+        ui_module="ui.ui_form_uspace",
+        ui_class="Ui_form_uspace",
+        fields=["identification", "name", "password", "sectors_number", "file"],
+        validation_rules={
+            "name": "Writing a name is mandatory"
+        },
+        form_key="uspaces"
     )
 }
