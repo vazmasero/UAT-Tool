@@ -1,51 +1,31 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QVBoxLayout, QDialog
-from ui.ui_form_email import Ui_form_email
-from ui.ui_form_drone import Ui_form_drone
-from ui.ui_form_operator import Ui_form_operator
-from ui.ui_form_uas_zone import Ui_form_uas_zone
-from ui.ui_form_uhub_org import Ui_form_uhub_org
-from ui.ui_form_uhub_user import Ui_form_uhub_user_form
-from ui.ui_form_uspace import Ui_form_uspace
+from base.base_asset_form import BaseAssetForm
+from utils.form_mode import FormMode
+from typing import Optional
 
-class FormEmail(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_email()
-        self.ui.setupUi(self)
+class FormEmail(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("emails", mode, db_id)
 
-class FormDrone(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_drone()
-        self.ui.setupUi(self)
+class FormOperator(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("operators", mode, db_id)
 
+class FormDrone(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("drones", mode, db_id)
 
-class FormOperator(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_operator()
-        self.ui.setupUi(self)
+class FormUASZone(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("uas_zones", mode, db_id)
 
-class FormUASZone(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_uas_zone()
-        self.ui.setupUi(self)
+class FormUhubOrg(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("uhub_orgs", mode, db_id)
 
-class FormUhubOrg(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_uhub_org()
-        self.ui.setupUi(self)
+class FormUhubUser(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("uhub_users", mode, db_id)
 
-class FormUhubUser(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_uhub_user_form()
-        self.ui.setupUi(self)
-
-class FormUspace(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_form_uspace()
-        self.ui.setupUi(self)
+class FormUspace(BaseAssetForm):
+    def __init__(self, mode: FormMode, db_id: Optional[int] = None):
+        super().__init__("uspaces", mode, db_id)

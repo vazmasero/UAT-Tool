@@ -9,13 +9,10 @@ class Requirement:
     systems: list[str]
     sections: list[str]
 
-    @classmethod
-    def from_db_dict(cls, data: dict) -> 'Requirement':
-        return cls(
-            id=data.get('id'),
-            code=data['code'],
-            definition=data['definition'],
-            systems=data.get('systems', []),
-            sections=data.get('sections', [])
-        )   
+@dataclass
+class Email:
+    id: int | None
+    name: str
+    email: str
+    password: str
 

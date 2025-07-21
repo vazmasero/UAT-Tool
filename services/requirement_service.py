@@ -8,8 +8,8 @@ class RequirementService:
         self.table_manager = table_manager
 
     def get_requirement(self, requirement_id: int) -> Requirement:
-        data = self.db_manager.get_register("requirements", requirement_id)
-        return Requirement.from_db_dict(data)
+        data = self.db_manager.get_by_id("requirements", requirement_id)
+        return data
 
     def save_requirement(self, requirement: Requirement) -> None:
         data = {

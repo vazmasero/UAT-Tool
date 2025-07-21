@@ -3,7 +3,7 @@ from config.model_domains import Requirement
 from typing import Optional, Dict
 
 class RequirementsController:
-    def __init__(self, service):
+    def __init__(self, service: RequirementService):
             self.service = service
 
     def get_lw_data(self):
@@ -38,6 +38,10 @@ class RequirementsController:
             self.service.edit_requirement(requirement_id, new_data)
         except ValueError as e:
             return f"Error: {str(e)}"
+
+    def get_item_by_id(self, db_id):
+        """Fetches a requirement item by its ID."""
+        return self.service.get_requirement(db_id)
 
     def get_all_requirements(self):
         """Fetches all requirements."""

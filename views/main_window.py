@@ -41,9 +41,23 @@ class MainWindow(QMainWindow):
         self._setup_buttons()
 
         self._connect_signals()
+
+        # Provisional: disables search bars and filters until they are implemented
+        self._disable_search_bars()
         
         self.controller._change_page("bugs")
-          
+    
+    def _disable_search_bars(self):
+        # Search bars are disabled until implemented
+        self.ui.le_search_bug.setDisabled(True)
+        self.ui.le_search_requirement.setDisabled(True)
+
+        # Filters are disabled until implemented
+        self.ui.cb_filter_status.setDisabled(True)
+        self.ui.cb_filter_system.setDisabled(True)
+        self.ui.cb_search_bug.setDisabled(True)
+        self.ui.cb_system.setDisabled(True)
+
     def _setup_tables(self):
         self.controller.setup_tables()
 
