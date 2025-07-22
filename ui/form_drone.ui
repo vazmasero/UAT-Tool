@@ -24,7 +24,7 @@
     <number>30</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_operator" stretch="5,20">
+    <layout class="QHBoxLayout" name="hlayout_operator" stretch="5,0">
      <property name="spacing">
       <number>3</number>
      </property>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_operator"/>
+      <widget class="QLineEdit" name="le_operator"/>
      </item>
     </layout>
    </item>
@@ -95,23 +95,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_manufacturer">
-       <item>
-        <property name="text">
-         <string>DJI</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Custom</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Other</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="le_manufacturer"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_model">
@@ -121,23 +105,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_model">
-       <item>
-        <property name="text">
-         <string>Matrice 600</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Phantom 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Other</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="le_model"/>
      </item>
     </layout>
    </item>
@@ -150,40 +118,24 @@
       <number>150</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_tracker">
+      <widget class="QLabel" name="lbl_tracker_type">
        <property name="text">
         <string>Tracker type:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_tracker">
-       <item>
-        <property name="text">
-         <string>BLIP</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>GCS-API</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Other</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="le_tracker_type"/>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_transponder">
+      <widget class="QLabel" name="lbl_transponder_id">
        <property name="text">
         <string>Transponder ID:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_transponder"/>
+      <widget class="QLineEdit" name="le_transponder_id"/>
      </item>
     </layout>
    </item>
@@ -200,7 +152,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel_btn">
+      <widget class="QPushButton" name="btn_cancel">
        <property name="text">
         <string>Cancel</string>
        </property>

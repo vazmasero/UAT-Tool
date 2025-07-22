@@ -295,54 +295,6 @@ class TableManager(QObject):
         else:
             model.insertRow(position, items)
     
-    def remove_selected_rows(self, table: QTableView) -> bool:
-
-        selected_rows = self.get_selected_row_indices(table)
-        if not selected_rows:
-            return False
-        
-        model = table.model()
-        if not model:
-            return False
-        
-        # Eliminar de mayor a menor índice para evitar problemas de reindexación
-        for row in reversed(selected_rows):
-            model.removeRow(row)
-        
-        return True
-    
-    def update_row(self, table: QTableView, row: int, row_data: List[Any]) -> bool:
-
-        model = table.model()
-        if not model or row < 0 or row >= model.rowCount():
-            return False
-        
-        for column, data in enumerate(row_data):
-            if column < model.columnCount():
-                index = model.index(row, column)
-                model.setData(index, str(data) if data is not None else "")
-        
-        return True
-    
-    def filter_table(self, table: QTableView, column: int, text: str):
-
-        # Nota: Para filtrado más avanzado, considerar usar QSortFilterProxyModel
-        model = table.model()
-        if not model:
-            return
-        
-        for row in range(model.rowCount()):
-            index = model.index(row, column)
-            cell_data = model.data(index, Qt.ItemDataRole.DisplayRole) or ""
-            should_hide = text.lower() not in cell_data.lower() if text else False
-            table.setRowHidden(row, should_hide)
-    
-    def clear_table(self, table: QTableView):
-        """Limpia todos los datos de la tabla."""
-        model = table.model()
-        if model:
-            model.clear()
-    
     def _handle_double_click(self, name: str, table:QTableView, index: QModelIndex):
         """Handles the double click on a table item event."""
         if index.isValid():

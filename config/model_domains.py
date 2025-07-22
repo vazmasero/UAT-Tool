@@ -15,4 +15,3 @@ class Email:
     name: str
     email: str
     password: str
-

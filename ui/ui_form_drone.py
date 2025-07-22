@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form_drone.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_form_drone(object):
     def setupUi(self, form_drone):
@@ -36,13 +35,12 @@ class Ui_form_drone(object):
 
         self.hlayout_operator.addWidget(self.lbl_operator)
 
-        self.cb_operator = QComboBox(form_drone)
-        self.cb_operator.setObjectName(u"cb_operator")
+        self.le_operator = QLineEdit(form_drone)
+        self.le_operator.setObjectName(u"le_operator")
 
-        self.hlayout_operator.addWidget(self.cb_operator)
+        self.hlayout_operator.addWidget(self.le_operator)
 
         self.hlayout_operator.setStretch(0, 5)
-        self.hlayout_operator.setStretch(1, 20)
 
         self.verticalLayout.addLayout(self.hlayout_operator)
 
@@ -81,26 +79,20 @@ class Ui_form_drone(object):
 
         self.hlayout_manufacturer.addWidget(self.lbl_manufacturer)
 
-        self.cb_manufacturer = QComboBox(form_drone)
-        self.cb_manufacturer.addItem("")
-        self.cb_manufacturer.addItem("")
-        self.cb_manufacturer.addItem("")
-        self.cb_manufacturer.setObjectName(u"cb_manufacturer")
+        self.le_manufacturer = QLineEdit(form_drone)
+        self.le_manufacturer.setObjectName(u"le_manufacturer")
 
-        self.hlayout_manufacturer.addWidget(self.cb_manufacturer)
+        self.hlayout_manufacturer.addWidget(self.le_manufacturer)
 
         self.lbl_model = QLabel(form_drone)
         self.lbl_model.setObjectName(u"lbl_model")
 
         self.hlayout_manufacturer.addWidget(self.lbl_model)
 
-        self.cb_model = QComboBox(form_drone)
-        self.cb_model.addItem("")
-        self.cb_model.addItem("")
-        self.cb_model.addItem("")
-        self.cb_model.setObjectName(u"cb_model")
+        self.le_model = QLineEdit(form_drone)
+        self.le_model.setObjectName(u"le_model")
 
-        self.hlayout_manufacturer.addWidget(self.cb_model)
+        self.hlayout_manufacturer.addWidget(self.le_model)
 
 
         self.verticalLayout.addLayout(self.hlayout_manufacturer)
@@ -108,28 +100,25 @@ class Ui_form_drone(object):
         self.hlayout_tracker = QHBoxLayout()
         self.hlayout_tracker.setObjectName(u"hlayout_tracker")
         self.hlayout_tracker.setContentsMargins(5, -1, 150, -1)
-        self.lbl_tracker = QLabel(form_drone)
-        self.lbl_tracker.setObjectName(u"lbl_tracker")
+        self.lbl_tracker_type = QLabel(form_drone)
+        self.lbl_tracker_type.setObjectName(u"lbl_tracker_type")
 
-        self.hlayout_tracker.addWidget(self.lbl_tracker)
+        self.hlayout_tracker.addWidget(self.lbl_tracker_type)
 
-        self.cb_tracker = QComboBox(form_drone)
-        self.cb_tracker.addItem("")
-        self.cb_tracker.addItem("")
-        self.cb_tracker.addItem("")
-        self.cb_tracker.setObjectName(u"cb_tracker")
+        self.le_tracker_type = QLineEdit(form_drone)
+        self.le_tracker_type.setObjectName(u"le_tracker_type")
 
-        self.hlayout_tracker.addWidget(self.cb_tracker)
+        self.hlayout_tracker.addWidget(self.le_tracker_type)
 
-        self.lbl_transponder = QLabel(form_drone)
-        self.lbl_transponder.setObjectName(u"lbl_transponder")
+        self.lbl_transponder_id = QLabel(form_drone)
+        self.lbl_transponder_id.setObjectName(u"lbl_transponder_id")
 
-        self.hlayout_tracker.addWidget(self.lbl_transponder)
+        self.hlayout_tracker.addWidget(self.lbl_transponder_id)
 
-        self.le_transponder = QLineEdit(form_drone)
-        self.le_transponder.setObjectName(u"le_transponder")
+        self.le_transponder_id = QLineEdit(form_drone)
+        self.le_transponder_id.setObjectName(u"le_transponder_id")
 
-        self.hlayout_tracker.addWidget(self.le_transponder)
+        self.hlayout_tracker.addWidget(self.le_transponder_id)
 
 
         self.verticalLayout.addLayout(self.hlayout_tracker)
@@ -142,10 +131,10 @@ class Ui_form_drone(object):
 
         self.hlayout_btn_drone.addWidget(self.btn_accept)
 
-        self.cancel_btn = QPushButton(form_drone)
-        self.cancel_btn.setObjectName(u"cancel_btn")
+        self.btn_cancel = QPushButton(form_drone)
+        self.btn_cancel.setObjectName(u"btn_cancel")
 
-        self.hlayout_btn_drone.addWidget(self.cancel_btn)
+        self.hlayout_btn_drone.addWidget(self.btn_cancel)
 
 
         self.verticalLayout.addLayout(self.hlayout_btn_drone)
@@ -162,22 +151,10 @@ class Ui_form_drone(object):
         self.lbl_name.setText(QCoreApplication.translate("form_drone", u"Name:", None))
         self.lbl_sn.setText(QCoreApplication.translate("form_drone", u"Serial Number:", None))
         self.lbl_manufacturer.setText(QCoreApplication.translate("form_drone", u"Manufacturer:", None))
-        self.cb_manufacturer.setItemText(0, QCoreApplication.translate("form_drone", u"DJI", None))
-        self.cb_manufacturer.setItemText(1, QCoreApplication.translate("form_drone", u"Custom", None))
-        self.cb_manufacturer.setItemText(2, QCoreApplication.translate("form_drone", u"Other", None))
-
         self.lbl_model.setText(QCoreApplication.translate("form_drone", u"Model:", None))
-        self.cb_model.setItemText(0, QCoreApplication.translate("form_drone", u"Matrice 600", None))
-        self.cb_model.setItemText(1, QCoreApplication.translate("form_drone", u"Phantom 4", None))
-        self.cb_model.setItemText(2, QCoreApplication.translate("form_drone", u"Other", None))
-
-        self.lbl_tracker.setText(QCoreApplication.translate("form_drone", u"Tracker type:", None))
-        self.cb_tracker.setItemText(0, QCoreApplication.translate("form_drone", u"BLIP", None))
-        self.cb_tracker.setItemText(1, QCoreApplication.translate("form_drone", u"GCS-API", None))
-        self.cb_tracker.setItemText(2, QCoreApplication.translate("form_drone", u"Other", None))
-
-        self.lbl_transponder.setText(QCoreApplication.translate("form_drone", u"Transponder ID:", None))
+        self.lbl_tracker_type.setText(QCoreApplication.translate("form_drone", u"Tracker type:", None))
+        self.lbl_transponder_id.setText(QCoreApplication.translate("form_drone", u"Transponder ID:", None))
         self.btn_accept.setText(QCoreApplication.translate("form_drone", u"Accept", None))
-        self.cancel_btn.setText(QCoreApplication.translate("form_drone", u"Cancel", None))
+        self.btn_cancel.setText(QCoreApplication.translate("form_drone", u"Cancel", None))
     # retranslateUi
 

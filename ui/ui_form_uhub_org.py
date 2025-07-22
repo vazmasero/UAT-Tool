@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form_uhub_org.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_form_uhub_org(object):
     def setupUi(self, form_uhub_org):
@@ -72,10 +71,10 @@ class Ui_form_uhub_org(object):
 
         self.hlayout_role.addWidget(self.lbl_role)
 
-        self.cb_role = QComboBox(form_uhub_org)
-        self.cb_role.setObjectName(u"cb_role")
+        self.le_role = QLineEdit(form_uhub_org)
+        self.le_role.setObjectName(u"le_role")
 
-        self.hlayout_role.addWidget(self.cb_role)
+        self.hlayout_role.addWidget(self.le_role)
 
         self.lbl_jurisdiction = QLabel(form_uhub_org)
         self.lbl_jurisdiction.setObjectName(u"lbl_jurisdiction")
@@ -83,20 +82,20 @@ class Ui_form_uhub_org(object):
 
         self.hlayout_role.addWidget(self.lbl_jurisdiction)
 
-        self.cb_jurisdiction = QComboBox(form_uhub_org)
-        self.cb_jurisdiction.setObjectName(u"cb_jurisdiction")
+        self.le_jurisdiction = QLineEdit(form_uhub_org)
+        self.le_jurisdiction.setObjectName(u"le_jurisdiction")
 
-        self.hlayout_role.addWidget(self.cb_jurisdiction)
+        self.hlayout_role.addWidget(self.le_jurisdiction)
 
         self.lbl_aoi = QLabel(form_uhub_org)
         self.lbl_aoi.setObjectName(u"lbl_aoi")
 
         self.hlayout_role.addWidget(self.lbl_aoi)
 
-        self.cb_aoi = QComboBox(form_uhub_org)
-        self.cb_aoi.setObjectName(u"cb_aoi")
+        self.le_aoi = QLineEdit(form_uhub_org)
+        self.le_aoi.setObjectName(u"le_aoi")
 
-        self.hlayout_role.addWidget(self.cb_aoi)
+        self.hlayout_role.addWidget(self.le_aoi)
 
 
         self.verticalLayout.addLayout(self.hlayout_role)

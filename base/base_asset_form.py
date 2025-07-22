@@ -1,3 +1,5 @@
+import os
+from PySide6.QtWidgets import QFileDialog
 from base.base_form import BaseForm
 from controllers.assets_controller import AssetsController
 from services.assets_service import AssetsService
@@ -26,25 +28,50 @@ class BaseAssetForm(BaseForm):
         
         # Setup form
         self.setup_form(ui_class, controller)
-    
+
+        # Setup file browsers
+        self._setup_file_browsers()
+
+    def _setup_file_browsers(self):
+        if hasattr(self.ui, 'btn_browse_file'):
+            self.ui.btn_browse_file.clicked.connect(self._browse_file)
+
+    def _browse_file(self):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, 
+            "Select File",
+            "",
+            "JSON Files (*.json);;All Files (*)"
+        )
+        if file_path:
+            self.ui.le_file_path.setText(file_path)
+
     def _obtain_form_data(self) -> Dict[str, Any]:
         """Obtiene datos del formulario basado en la configuración"""
         data = {}
         for field in self.asset_config.fields:
-            widget_name = f"le_{field}"
+            if field == 'file':
+                if hasattr(self.ui, 'le_file_path'):
+                    file_path = self.ui.le_file_path.text()
+                    if file_path:
+                        # Read file content
+                        try:
+                            with open(file_path, 'r', encoding='utf-8') as f:
+                                data[field] = f.read()
+                        except Exception as e:
+                            print(f"Error reading file: {e}")
+                            data[field] = ""
+                    else:
+                        data[field] = ""
+            else:
+                widget_name = f"le_{field}"
             
-            # Manejar casos especiales de nombres de widgets
-            if field == 'tracker_type':
-                widget_name = "cb_tracker"
-            elif field == 'operator':
-                widget_name = "cb_operator"
-
-            if hasattr(self.ui, widget_name):
-                widget = getattr(self.ui, widget_name)
-                if hasattr(widget, 'text'):
-                    data[field] = widget.text()
-                elif hasattr(widget, 'currentText'):  # Para comboboxes
-                    data[field] = widget.currentText()
+                if hasattr(self.ui, widget_name):
+                    widget = getattr(self.ui, widget_name)
+                    if hasattr(widget, 'text'):
+                        data[field] = widget.text()
+                    elif hasattr(widget, 'currentText'):  # For comboboxes
+                        data[field] = widget.currentText()
         
         return data
     
@@ -52,8 +79,17 @@ class BaseAssetForm(BaseForm):
         """Valida usando las reglas de configuración"""
         errors = []
         for field, error_message in self.asset_config.validation_rules.items():
-            if not data.get(field):
-                errors.append(error_message)
+            if field == 'file':
+                file_path = self.ui.le_file_path.text() if hasattr(self.ui, 'le_file_path') else ""
+                if not file_path:
+                    errors.append(error_message)
+                elif not os.path.exists(file_path):
+                    errors.append("Selected file does not exist")
+                elif not file_path.lower().endswith('.json'):
+                    errors.append("File must be a JSON file")
+            else:
+                if not data.get(field):
+                    errors.append(error_message)
         return errors
     
     def load_data(self, data: Dict[str, Any]):
@@ -63,23 +99,18 @@ class BaseAssetForm(BaseForm):
             return
         
         for field in self.asset_config.fields:
-            widget_name = f"le_{field}"
+            if field == 'file':
+                file_content = formatted_data.get(field, "")
+                if file_content and hasattr(self.ui, 'le_file_path'):
+                    self.ui.le_file_path.setText("[File loaded from database]")
+            else:
+                widget_name = f"le_{field}"
             
-            # Manejar casos especiales
-            if field == 'serial_number':
-                widget_name = "le_sn"
-            elif field == 'tracker_type':
-                widget_name = "cb_tracker"
-            elif field == 'operator':
-                widget_name = "cb_operator"
-            elif field == 'transponder_id':
-                widget_name = "le_transponder"
-            
-            if hasattr(self.ui, widget_name):
-                widget = getattr(self.ui, widget_name)
-                value = formatted_data.get(field, "")
+                if hasattr(self.ui, widget_name):
+                    widget = getattr(self.ui, widget_name)
+                    value = formatted_data.get(field, "")
                 
-                if hasattr(widget, 'setText'):
-                    widget.setText(str(value))
-                elif hasattr(widget, 'setCurrentText'):  # Para comboboxes
-                    widget.setCurrentText(str(value))
+                    if hasattr(widget, 'setText'):
+                        widget.setText(str(value))
+                    elif hasattr(widget, 'setCurrentText'):  # For comboboxes
+                        widget.setCurrentText(str(value))

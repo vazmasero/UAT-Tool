@@ -82,7 +82,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_role"/>
+      <widget class="QLineEdit" name="le_role"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_jurisdiction">
@@ -95,7 +95,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_jurisdiction"/>
+      <widget class="QLineEdit" name="le_jurisdiction"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_aoi">
@@ -105,7 +105,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_aoi"/>
+      <widget class="QLineEdit" name="le_aoi"/>
      </item>
     </layout>
    </item>

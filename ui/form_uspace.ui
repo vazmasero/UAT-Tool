@@ -39,7 +39,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_id"/>
+      <widget class="QLineEdit" name="le_identification"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_name">
@@ -72,7 +72,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_sectors"/>
+      <widget class="QLineEdit" name="le_sectors_number"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_file">
@@ -82,7 +82,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_file"/>
+      <layout class="QHBoxLayout" name="hlayout_file">
+       <item>
+        <widget class="QLineEdit" name="le_file_path">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="placeholderText">
+          <string>No file selected</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_browse_file">
+         <property name="text">
+          <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

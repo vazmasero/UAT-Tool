@@ -57,7 +57,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_cause" stretch="0,5,0,5">
+    <layout class="QHBoxLayout" name="hlayout_cause" stretch="0,0,0,0">
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -72,10 +72,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_cause"/>
+      <widget class="QLineEdit" name="le_cause"/>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_restriction">
+      <widget class="QLabel" name="lbl_restriction_type">
        <property name="text">
         <string>Restriction type:</string>
        </property>
@@ -85,12 +85,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_restriction"/>
+      <widget class="QLineEdit" name="le_restriction_type"/>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_authority" stretch="0,5,0,5">
+    <layout class="QHBoxLayout" name="hlayout_authority" stretch="0,0,0,0">
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -105,17 +105,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_authority"/>
+      <widget class="QLineEdit" name="le_authority"/>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_activation">
+      <widget class="QLabel" name="lbl_activation_time">
        <property name="text">
         <string>Activation time:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_activation"/>
+      <widget class="QLineEdit" name="le_activation_time"/>
      </item>
     </layout>
    </item>

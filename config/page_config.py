@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from typing import List
-from config.form_config import FormConfig
 
 @dataclass
 class PageConfig:

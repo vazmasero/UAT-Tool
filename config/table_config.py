@@ -131,8 +131,9 @@ TABLES = {
     "emails": {
         "config": TableConfig(
             db_table="emails",
-            headers=["Name", "Email", "Password"],
+            headers=["Id", "Name", "Email", "Password"],
             column_map={
+                "Id": "id",
                 "Name": "name",
                 "Email": "email",
                 "Password": "password"
@@ -145,8 +146,9 @@ TABLES = {
     "operators": {
         "config": TableConfig(
             db_table="operators",
-            headers=["Name", "EASA ID", "Verification code", "Email", "Password", "Phone"],
+            headers=["Id", "Name", "EASA ID", "Verification code", "Email", "Password", "Phone"],
             column_map={
+                "Id": "id",
                 "Name": "name",
                 "EASA ID": "easa_id",
                 "Verification code": "verification_code",
@@ -162,8 +164,9 @@ TABLES = {
     "drones": {
         "config": TableConfig(
             db_table="drones",
-            headers=["Operator", "Name", "SN", "Manufacturer", "Model", "Tracker", "Transponder Id"],
+            headers=["Id", "Operator", "Name", "SN", "Manufacturer", "Model", "Tracker", "Transponder Id"],
             column_map={
+                "Id": "id",
                 "Operator": "operator",
                 "Name": "name",
                 "SN": "sn",
@@ -180,8 +183,9 @@ TABLES = {
     "uas_zones": {
         "config": TableConfig(
             db_table="uas_zones",
-            headers=["Name", "Reason", "Cause", "Restriction type", "Activation time", "Authority"],
+            headers=["Id", "Name", "Reason", "Cause", "Restriction type", "Activation time", "Authority"],
             column_map={
+                "Id": "id",
                 "Name": "name",
                 "Reason": "reason",
                 "Cause": "cause",
@@ -197,8 +201,9 @@ TABLES = {
     "uhub_orgs": {
         "config": TableConfig(
             db_table="uhub_orgs",
-            headers=["Name", "Role", "Jurisdiction", "AoI", "Email", "Phone"],
+            headers=["Id", "Name", "Role", "Jurisdiction", "AoI", "Email", "Phone"],
             column_map={
+                "Id": "id",
                 "Name": "name",
                 "Role": "role",
                 "Jurisdiction": "jurisdiction",
@@ -214,8 +219,9 @@ TABLES = {
     "uhub_users": {
         "config": TableConfig(
             db_table="uhub_users",
-            headers=["Username", "Email", "Password", "Organization", "Role", "Jurisdiction", "AoI"],
+            headers=["Id", "Username", "Email", "Password", "Organization", "Role", "Jurisdiction", "AoI"],
             column_map={
+                "Id": "id",
                 "Username": "username",
                 "Email": "email",
                 "Password": "password",
@@ -232,9 +238,10 @@ TABLES = {
     "uspaces": {
         "config": TableConfig(
             db_table="uspaces",
-            headers=["Id", "Name", "# of sectors", "File"],
+            headers=["Id", "Code", "Name", "# of sectors", "File"],
             column_map={
-                "Id": "identification",
+                "Id": "id",
+                "Code": "identification",
                 "Name": "name",
                 "# of sectors": "sectors_number",
                 "File": "file"

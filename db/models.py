@@ -156,8 +156,8 @@ class UhubUser(Base):
 
 class Uspace(Base):
     __tablename__ = 'uspaces'
-    id = Column(Integer, primary_key=True)
-    identification = Column(String)
-    name = Column(String)
-    sectors_number = Column(String)
-    file = Column(String)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    identification = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    sectors_number = Column(String, nullable=False)
+    file = Column(Text, nullable=True)

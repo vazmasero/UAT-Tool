@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>form_uhub_user_form</class>
- <widget class="QWidget" name="form_uhub_user_form">
+ <class>form_uhub_user</class>
+ <widget class="QWidget" name="form_uhub_user">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>408</height>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,14 +75,14 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_org">
+      <widget class="QLabel" name="lbl_organization">
        <property name="text">
         <string>Organization</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_org"/>
+      <widget class="QLineEdit" name="le_organization"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_role">
@@ -92,7 +92,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_role"/>
+      <widget class="QLineEdit" name="le_role"/>
      </item>
     </layout>
    </item>
@@ -109,7 +109,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_jurisdiction"/>
+      <widget class="QLineEdit" name="le_jurisdiction"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_aoi">
@@ -119,7 +119,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_aoi"/>
+      <widget class="QLineEdit" name="le_aoi"/>
      </item>
     </layout>
    </item>

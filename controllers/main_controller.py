@@ -11,7 +11,6 @@ from db.db import DatabaseManager
 from managers.table_manager import TableManager
 from managers.page_manager import PageManager
 from managers.form_manager import FormManager
-from services.form_service import FormRegistry, FormOpener
 from managers.table_manager import TableManager
 
 

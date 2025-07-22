@@ -42,10 +42,10 @@ ASSET_CONFIGS = {
         table_name="drones",
         ui_module="ui.ui_form_drone",
         ui_class="Ui_form_drone",
-        fields=["name", "sn", "manufacturer", "model", "operator", "tracker", "transponder"],
+        fields=["name", "sn", "manufacturer", "model", "operator", "tracker_type", "transponder_id"],
         validation_rules={
             "name": "Writing a name is mandatory",
-            "serial_number": "Writing a serial number is mandatory"
+            "sn": "Writing a serial number is mandatory"
         },
         form_key="drones"
     ),
@@ -53,7 +53,7 @@ ASSET_CONFIGS = {
         table_name="uas_zones", 
         ui_module="ui.ui_form_uas_zone",
         ui_class="Ui_form_uas_zone",
-        fields=["name", "reason", "cause", "restriction", "authority", "activation", "description"],
+        fields=["name", "reason", "cause", "restriction_type", "authority", "activation_time"],
         validation_rules={
             "name": "Writing a name is mandatory"
         },
@@ -75,7 +75,7 @@ ASSET_CONFIGS = {
         ui_class="Ui_form_uhub_user",
         fields=["username", "email", "password", "organization", "role", "jurisdiction", "aoi"],
         validation_rules={
-            "name": "Writing a name is mandatory"
+            "username": "Writing a username is mandatory"
         },
         form_key="uhub_users"
     ),
@@ -83,10 +83,13 @@ ASSET_CONFIGS = {
         table_name="uspaces", 
         ui_module="ui.ui_form_uspace",
         ui_class="Ui_form_uspace",
-        fields=["identification", "name", "password", "sectors_number", "file"],
+        fields=["identification", "name", "sectors_number", "file"],
         validation_rules={
-            "name": "Writing a name is mandatory"
+            "identification": "Writing an identification is mandatory",
+            "name": "Writing a name is mandatory", 
+            "sectors_number": "Writing number of sectors is mandatory",
+            "file": "Selecting a JSON file is mandatory"
         },
         form_key="uspaces"
-    )
+    ),
 }

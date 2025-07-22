@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form_uas_zone.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_form_uas_zone(object):
     def setupUi(self, form_uas_zone):
@@ -62,24 +61,22 @@ class Ui_form_uas_zone(object):
 
         self.hlayout_cause.addWidget(self.lbl_cause)
 
-        self.cb_cause = QComboBox(form_uas_zone)
-        self.cb_cause.setObjectName(u"cb_cause")
+        self.le_cause = QLineEdit(form_uas_zone)
+        self.le_cause.setObjectName(u"le_cause")
 
-        self.hlayout_cause.addWidget(self.cb_cause)
+        self.hlayout_cause.addWidget(self.le_cause)
 
-        self.lbl_restriction = QLabel(form_uas_zone)
-        self.lbl_restriction.setObjectName(u"lbl_restriction")
-        self.lbl_restriction.setWordWrap(False)
+        self.lbl_restriction_type = QLabel(form_uas_zone)
+        self.lbl_restriction_type.setObjectName(u"lbl_restriction_type")
+        self.lbl_restriction_type.setWordWrap(False)
 
-        self.hlayout_cause.addWidget(self.lbl_restriction)
+        self.hlayout_cause.addWidget(self.lbl_restriction_type)
 
-        self.cb_restriction = QComboBox(form_uas_zone)
-        self.cb_restriction.setObjectName(u"cb_restriction")
+        self.le_restriction_type = QLineEdit(form_uas_zone)
+        self.le_restriction_type.setObjectName(u"le_restriction_type")
 
-        self.hlayout_cause.addWidget(self.cb_restriction)
+        self.hlayout_cause.addWidget(self.le_restriction_type)
 
-        self.hlayout_cause.setStretch(1, 5)
-        self.hlayout_cause.setStretch(3, 5)
 
         self.verticalLayout.addLayout(self.hlayout_cause)
 
@@ -91,23 +88,21 @@ class Ui_form_uas_zone(object):
 
         self.hlayout_authority.addWidget(self.lbl_authority)
 
-        self.cb_authority = QComboBox(form_uas_zone)
-        self.cb_authority.setObjectName(u"cb_authority")
+        self.le_authority = QLineEdit(form_uas_zone)
+        self.le_authority.setObjectName(u"le_authority")
 
-        self.hlayout_authority.addWidget(self.cb_authority)
+        self.hlayout_authority.addWidget(self.le_authority)
 
-        self.lbl_activation = QLabel(form_uas_zone)
-        self.lbl_activation.setObjectName(u"lbl_activation")
+        self.lbl_activation_time = QLabel(form_uas_zone)
+        self.lbl_activation_time.setObjectName(u"lbl_activation_time")
 
-        self.hlayout_authority.addWidget(self.lbl_activation)
+        self.hlayout_authority.addWidget(self.lbl_activation_time)
 
-        self.cb_activation = QComboBox(form_uas_zone)
-        self.cb_activation.setObjectName(u"cb_activation")
+        self.le_activation_time = QLineEdit(form_uas_zone)
+        self.le_activation_time.setObjectName(u"le_activation_time")
 
-        self.hlayout_authority.addWidget(self.cb_activation)
+        self.hlayout_authority.addWidget(self.le_activation_time)
 
-        self.hlayout_authority.setStretch(1, 5)
-        self.hlayout_authority.setStretch(3, 5)
 
         self.verticalLayout.addLayout(self.hlayout_authority)
 
@@ -138,9 +133,9 @@ class Ui_form_uas_zone(object):
         self.lbl_name.setText(QCoreApplication.translate("form_uas_zone", u"Name:", None))
         self.lbl_reason.setText(QCoreApplication.translate("form_uas_zone", u"Reason:", None))
         self.lbl_cause.setText(QCoreApplication.translate("form_uas_zone", u"Cause:", None))
-        self.lbl_restriction.setText(QCoreApplication.translate("form_uas_zone", u"Restriction type:", None))
+        self.lbl_restriction_type.setText(QCoreApplication.translate("form_uas_zone", u"Restriction type:", None))
         self.lbl_authority.setText(QCoreApplication.translate("form_uas_zone", u"Authority:", None))
-        self.lbl_activation.setText(QCoreApplication.translate("form_uas_zone", u"Activation time:", None))
+        self.lbl_activation_time.setText(QCoreApplication.translate("form_uas_zone", u"Activation time:", None))
         self.btn_accept.setText(QCoreApplication.translate("form_uas_zone", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_uas_zone", u"Cancel", None))
     # retranslateUi

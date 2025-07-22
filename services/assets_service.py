@@ -45,7 +45,7 @@ class AssetsService:
             'Name': 'name', 
             'Email': 'email',
             'Password': 'password',
-            'Serial Number': 'serial_number',
+            'Serial Number': 'sn',
             'Manufacturer': 'manufacturer',
             'Model': 'model',
             'Operator': 'operator',
@@ -54,7 +54,10 @@ class AssetsService:
             'EASA ID': 'easa_id',
             'Verification Code': 'verification_code',
             'Phone': 'phone',
-            'Description': 'description'
+            'Description': 'description',
+            'Identification': 'identification',
+            'Sectors Number': 'sectors_number',
+            'File': 'file'
         }
         
         for key, value in raw_data.items():
@@ -63,7 +66,11 @@ class AssetsService:
         
         result = {}
         for field in config.fields:
-            result[field] = formatted_data.get(field, "")
+            if field == 'file':
+                file_content = formatted_data.get(field, "")
+                result[field] = bool(file_content)
+            else:
+                result[field] = formatted_data.get(field, "")
         
         return result
             

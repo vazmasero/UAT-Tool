@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form_uspace.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -34,10 +34,10 @@ class Ui_form_uspace(object):
 
         self.hlayout_id.addWidget(self.lbl_id)
 
-        self.le_id = QLineEdit(form_uspace)
-        self.le_id.setObjectName(u"le_id")
+        self.le_identification = QLineEdit(form_uspace)
+        self.le_identification.setObjectName(u"le_identification")
 
-        self.hlayout_id.addWidget(self.le_id)
+        self.hlayout_id.addWidget(self.le_identification)
 
         self.lbl_name = QLabel(form_uspace)
         self.lbl_name.setObjectName(u"lbl_name")
@@ -63,20 +63,31 @@ class Ui_form_uspace(object):
 
         self.hlayout_sectors.addWidget(self.lbl_sectors)
 
-        self.le_sectors = QLineEdit(form_uspace)
-        self.le_sectors.setObjectName(u"le_sectors")
+        self.le_sectors_number = QLineEdit(form_uspace)
+        self.le_sectors_number.setObjectName(u"le_sectors_number")
 
-        self.hlayout_sectors.addWidget(self.le_sectors)
+        self.hlayout_sectors.addWidget(self.le_sectors_number)
 
         self.lbl_file = QLabel(form_uspace)
         self.lbl_file.setObjectName(u"lbl_file")
 
         self.hlayout_sectors.addWidget(self.lbl_file)
 
-        self.le_file = QLineEdit(form_uspace)
-        self.le_file.setObjectName(u"le_file")
+        self.hlayout_file = QHBoxLayout()
+        self.hlayout_file.setObjectName(u"hlayout_file")
+        self.le_file_path = QLineEdit(form_uspace)
+        self.le_file_path.setObjectName(u"le_file_path")
+        self.le_file_path.setReadOnly(True)
 
-        self.hlayout_sectors.addWidget(self.le_file)
+        self.hlayout_file.addWidget(self.le_file_path)
+
+        self.btn_browse_file = QPushButton(form_uspace)
+        self.btn_browse_file.setObjectName(u"btn_browse_file")
+
+        self.hlayout_file.addWidget(self.btn_browse_file)
+
+
+        self.hlayout_sectors.addLayout(self.hlayout_file)
 
 
         self.verticalLayout.addLayout(self.hlayout_sectors)
@@ -109,6 +120,8 @@ class Ui_form_uspace(object):
         self.lbl_name.setText(QCoreApplication.translate("form_uspace", u"Name:", None))
         self.lbl_sectors.setText(QCoreApplication.translate("form_uspace", u"# of sectors", None))
         self.lbl_file.setText(QCoreApplication.translate("form_uspace", u"File:", None))
+        self.le_file_path.setPlaceholderText(QCoreApplication.translate("form_uspace", u"No file selected", None))
+        self.btn_browse_file.setText(QCoreApplication.translate("form_uspace", u"Browse...", None))
         self.btn_accept.setText(QCoreApplication.translate("form_uspace", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_uspace", u"Cancel", None))
     # retranslateUi
