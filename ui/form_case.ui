@@ -44,7 +44,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget_case">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_info">
       <attribute name="title">
@@ -73,7 +73,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="le_id">
+          <widget class="QLineEdit" name="le_identification">
            <property name="text">
             <string/>
            </property>
@@ -105,80 +105,124 @@
          <item>
           <widget class="QLabel" name="lbl_system">
            <property name="text">
-            <string>System:</string>
+            <string>System(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cb_system"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="hlayout_date">
-         <property name="rightMargin">
-          <number>200</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbl_creation">
-           <property name="text">
-            <string>Creation time:</string>
+          <widget class="QListWidget" name="lw_system">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>40</height>
+            </size>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="le_creation">
+          <widget class="QLabel" name="lbl_sections">
            <property name="text">
-            <string/>
-           </property>
-           <property name="placeholderText">
-            <string>[Creation time]</string>
+            <string>Section(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_update">
-           <property name="text">
-            <string>Last update:</string>
+          <widget class="QListWidget" name="lw_section">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="le_update">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="placeholderText">
-            <string>[Update time]</string>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>40</height>
+            </size>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="hlayout_operator" stretch="0,5,0,5">
+        <layout class="QHBoxLayout" name="hlayout_operator" stretch="0,0,0,0,0,0">
          <property name="rightMargin">
-          <number>200</number>
+          <number>50</number>
          </property>
          <item>
           <widget class="QLabel" name="lbl_operator">
            <property name="text">
-            <string>Operator:</string>
+            <string>Operator(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cb_operator"/>
+          <widget class="QListWidget" name="lw_operator">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="lbl_drone">
            <property name="text">
-            <string>Drone:</string>
+            <string>Drone(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cb_drone"/>
+          <widget class="QListWidget" name="lw_drone">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_uhub_user">
+           <property name="text">
+            <string>U-hub User(s)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="lw_uhub_user">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

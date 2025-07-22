@@ -4,7 +4,9 @@ from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
 
-# Many - to - many relationships
+"""Many - to - many relationships"""
+
+# Requirements
 requirement_systems = Table(
     'requirement_systems',
     Base.metadata,
@@ -17,6 +19,50 @@ requirement_sections = Table(
     Base.metadata,
     Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True),
     Column('section_id', Integer, ForeignKey('sections.id'), primary_key=True)
+)
+
+# Cases
+case_systems = Table(
+    'case_systems',
+    Base.metadata,
+    Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
+    Column('system_id', Integer, ForeignKey('systems.id'), primary_key=True)
+)
+
+case_sections = Table(
+    'case_sections',
+    Base.metadata,
+    Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
+    Column('section_id', Integer, ForeignKey('sections.id'), primary_key=True)
+)
+
+case_operators = Table(
+    'case_operators',
+    Base.metadata,
+    Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
+    Column('operator_id', Integer, ForeignKey('operators.id'), primary_key=True)
+)
+
+case_drones = Table(
+    'case_drones',
+    Base.metadata,
+    Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
+    Column('drone_id', Integer, ForeignKey('drones.id'), primary_key=True)
+)
+
+case_uhub_users = Table(
+    'case_uhub_users',
+    Base.metadata,
+    Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
+    Column('uhub_user_id', Integer, ForeignKey('uhub_users.id'), primary_key=True)
+)
+
+# Steps
+step_requirements = Table(
+    'step_requirements',
+    Base.metadata,
+    Column('step_id', Integer, ForeignKey('steps.id'), primary_key=True),
+    Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True)
 )
 
 class Bug(Base):
@@ -38,7 +84,7 @@ class Bug(Base):
 
 class Campaign(Base):
     __tablename__ = 'campaigns'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     identifier = Column(String)
     description = Column(Text)
     system = Column(String)
@@ -52,14 +98,35 @@ class Campaign(Base):
     last_update = Column(String)
     comments = Column(Text)
 
+class Step(Base):
+    __tablename__ = 'steps'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    action = Column(Text)
+    expected_result = Column(Text)
+    comments = Column(Text)
+
+    # Foreign key to Case
+    case_id = Column(Integer, ForeignKey('cases.id'))
+    case = relationship('Case', back_populates='steps')
+
+    affected_requirements = relationship('Requirement', secondary=step_requirements, back_populates='steps')
+
 class Case(Base):
     __tablename__ = 'cases'
-    id = Column(Integer, primary_key=True)
-    identifier = Column(String)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    identification = Column(String)
     name = Column(String)
-    system = Column(String)
-    assets = Column(String)
-    steps = Column(String)
+    comments = Column(Text)
+
+    # Relationships many to many
+    systems = relationship('System', secondary=case_systems, back_populates='cases')
+    operators = relationship('Operator', secondary=case_operators, back_populates='cases')
+    drones = relationship('Drone', secondary=case_drones, back_populates='cases')
+    uhub_users = relationship('UhubUser', secondary=case_uhub_users, back_populates='cases')
+    sections = relationship('Section', secondary=case_sections, back_populates='cases')
+
+    # Relationship one to many
+    steps = relationship('Step', back_populates='case', cascade='all, delete-orphan')
 
 class Block(Base):
     __tablename__ = 'blocks'
@@ -82,18 +149,21 @@ class Requirement(Base):
     # Relationships
     systems = relationship('System', secondary=requirement_systems, back_populates='requirements')
     sections = relationship('Section', secondary=requirement_sections, back_populates='requirements')
+    steps = relationship('Step', secondary=step_requirements, back_populates='affected_requirements')
 
 class System(Base):
     __tablename__ = 'systems'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     requirements = relationship('Requirement', secondary=requirement_systems, back_populates='systems')
+    cases = relationship('Case', secondary=case_systems, back_populates='systems')
 
 class Section(Base):
     __tablename__ = 'sections'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     requirements = relationship('Requirement', secondary=requirement_sections, back_populates='sections')
+    cases = relationship('Case', secondary=case_sections, back_populates='sections')
 
 class Email(Base):
     __tablename__ = 'emails'
@@ -112,6 +182,9 @@ class Operator(Base):
     password = Column(String)
     phone = Column(String)
 
+    # Relationships
+    cases = relationship('Case', secondary=case_operators, back_populates='operators')
+
 class Drone(Base):
     __tablename__ = 'drones'
     id = Column(Integer, primary_key=True)
@@ -122,6 +195,9 @@ class Drone(Base):
     model = Column(String)
     tracker_type = Column(String)
     transponder_id = Column(String)
+
+    # Relationships
+    cases = relationship('Case', secondary=case_drones, back_populates='drones')
 
 class UasZone(Base):
     __tablename__ = 'uas_zones'
@@ -153,6 +229,9 @@ class UhubUser(Base):
     role = Column(String)
     jurisdiction = Column(String)
     aoi = Column(String)
+
+    # Relationships
+    cases = relationship('Case', secondary=case_uhub_users, back_populates='uhub_users')
 
 class Uspace(Base):
     __tablename__ = 'uspaces'

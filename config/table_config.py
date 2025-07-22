@@ -81,12 +81,16 @@ TABLES = {
     "cases": {
         "config": TableConfig(
             db_table="cases",
-            headers=["Id", "Name", "System", "Assets", "Steps"],
+            headers=["Id", "Identification", "Name", "System(s)", "Section(s)", "Operator(s)", "Drone(s)", "U-hub user(s)", "Steps"],
             column_map={
-                "Id": "identifier",
+                "Id": "id",
+                "Identification": "identification",
                 "Name": "name",
-                "System": "system",
-                "Assets": "assets",
+                "System(s)": "systems",
+                "Section(s)": "sections",
+                "Operator(s)": "operators",
+                "Drone(s)": "drones",
+                "U-hub user(s)": "uhub_users",
                 "Steps": "steps"
             },
             widget_name="tbl_cases",

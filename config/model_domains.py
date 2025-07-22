@@ -10,8 +10,9 @@ class Requirement:
     sections: list[str]
 
 @dataclass
-class Email:
+class Case:
     id: int | None
-    name: str
-    email: str
-    password: str
+    code: str
+    definition: str
+    systems: list[str]
+    sections: list[str]

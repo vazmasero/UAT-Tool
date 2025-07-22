@@ -52,24 +52,24 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_expected">
+      <widget class="QLabel" name="lbl_expected_result">
        <property name="text">
         <string>Expected result:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_expected"/>
+      <widget class="QLineEdit" name="le_expected_result"/>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_requirement" stretch="0,30">
+    <layout class="QHBoxLayout" name="hlayout_requirement" stretch="0,0">
      <property name="leftMargin">
       <number>5</number>
      </property>
      <property name="rightMargin">
-      <number>300</number>
+      <number>250</number>
      </property>
      <item>
       <widget class="QLabel" name="b_requirement">
@@ -79,7 +79,26 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_requirement"/>
+      <widget class="QListWidget" name="lw_requirements">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>40</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -92,14 +111,14 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_comment">
+      <widget class="QLabel" name="lbl_comments">
        <property name="text">
         <string>Comments:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_comment"/>
+      <widget class="QLineEdit" name="le_comments"/>
      </item>
     </layout>
    </item>

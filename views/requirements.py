@@ -1,6 +1,6 @@
 from base.base_form import BaseForm
 from ui.ui_form_requirements import Ui_form_requirement
-from controllers.requirements_controller import RequirementsController
+from controllers.requirements_controller import RequirementController
 from services.requirement_service import RequirementService
 from db.db import DatabaseManager
 from utils.form_mode import FormMode
@@ -15,7 +15,7 @@ class FormRequirement(BaseForm):
         # Create managers and controller
         db_manager = DatabaseManager()
         service = RequirementService(db_manager)
-        controller = RequirementsController(service)
+        controller = RequirementController(service)
 
         # Setup form
         self.setup_form(Ui_form_requirement, controller)

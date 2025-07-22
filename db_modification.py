@@ -17,6 +17,8 @@ def open_db_shell():
     print("  tables - Ver todas las tablas")
     print("  schema <tabla> - Ver estructura de tabla")
     print("  drop uspaces - Eliminar tabla uspaces")
+    print("  drop cases - Eliminar tabla cases")
+    print("  drop all - Eliminar todas las tablas")
     print("  create uspaces - Crear tabla uspaces")
     print("  exit - Salir")
     
@@ -49,6 +51,27 @@ def open_db_shell():
                 conn.execute("DROP TABLE IF EXISTS uspaces")
                 conn.commit()
                 print("Tabla uspaces eliminada")
+            elif command == "drop cases":
+                conn.execute("DROP TABLE IF EXISTS cases")
+                conn.commit()
+                print("Tabla cases eliminada")
+            elif command == "drop all":
+                # Obtener todas las tablas
+                cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
+                tables = cursor.fetchall()
+                
+                if not tables:
+                    print("No hay tablas para eliminar")
+                else:
+                    confirm = input(f"¿Estás seguro de que quieres eliminar todas las {len(tables)} tablas? (y/N): ").strip().lower()
+                    if confirm in ['y', 'yes', 'si', 's']:
+                        for table in tables:
+                            conn.execute(f"DROP TABLE IF EXISTS {table[0]}")
+                            print(f"  - Tabla {table[0]} eliminada")
+                        conn.commit()
+                        print("Todas las tablas han sido eliminadas")
+                    else:
+                        print("Operación cancelada")
             elif command == "create uspaces":
                 conn.execute("""
                     CREATE TABLE uspaces (

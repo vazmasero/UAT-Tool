@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
+    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+    QVBoxLayout, QWidget)
 
 class Ui_form_requirement(object):
     def setupUi(self, form_requirement):
@@ -46,48 +46,54 @@ class Ui_form_requirement(object):
         self.hlayout_expected = QHBoxLayout()
         self.hlayout_expected.setObjectName(u"hlayout_expected")
         self.hlayout_expected.setContentsMargins(5, -1, 5, -1)
-        self.lbl_expected = QLabel(form_requirement)
-        self.lbl_expected.setObjectName(u"lbl_expected")
+        self.lbl_expected_result = QLabel(form_requirement)
+        self.lbl_expected_result.setObjectName(u"lbl_expected_result")
 
-        self.hlayout_expected.addWidget(self.lbl_expected)
+        self.hlayout_expected.addWidget(self.lbl_expected_result)
 
-        self.le_expected = QLineEdit(form_requirement)
-        self.le_expected.setObjectName(u"le_expected")
+        self.le_expected_result = QLineEdit(form_requirement)
+        self.le_expected_result.setObjectName(u"le_expected_result")
 
-        self.hlayout_expected.addWidget(self.le_expected)
+        self.hlayout_expected.addWidget(self.le_expected_result)
 
 
         self.verticalLayout.addLayout(self.hlayout_expected)
 
         self.hlayout_requirement = QHBoxLayout()
         self.hlayout_requirement.setObjectName(u"hlayout_requirement")
-        self.hlayout_requirement.setContentsMargins(5, -1, 300, -1)
+        self.hlayout_requirement.setContentsMargins(5, -1, 250, -1)
         self.b_requirement = QLabel(form_requirement)
         self.b_requirement.setObjectName(u"b_requirement")
 
         self.hlayout_requirement.addWidget(self.b_requirement)
 
-        self.cb_requirement = QComboBox(form_requirement)
-        self.cb_requirement.setObjectName(u"cb_requirement")
+        self.lw_requirements = QListWidget(form_requirement)
+        self.lw_requirements.setObjectName(u"lw_requirements")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lw_requirements.sizePolicy().hasHeightForWidth())
+        self.lw_requirements.setSizePolicy(sizePolicy)
+        self.lw_requirements.setMinimumSize(QSize(150, 25))
+        self.lw_requirements.setMaximumSize(QSize(300, 40))
 
-        self.hlayout_requirement.addWidget(self.cb_requirement)
+        self.hlayout_requirement.addWidget(self.lw_requirements)
 
-        self.hlayout_requirement.setStretch(1, 30)
 
         self.verticalLayout.addLayout(self.hlayout_requirement)
 
         self.hlayout_comment = QHBoxLayout()
         self.hlayout_comment.setObjectName(u"hlayout_comment")
         self.hlayout_comment.setContentsMargins(5, -1, 5, -1)
-        self.lbl_comment = QLabel(form_requirement)
-        self.lbl_comment.setObjectName(u"lbl_comment")
+        self.lbl_comments = QLabel(form_requirement)
+        self.lbl_comments.setObjectName(u"lbl_comments")
 
-        self.hlayout_comment.addWidget(self.lbl_comment)
+        self.hlayout_comment.addWidget(self.lbl_comments)
 
-        self.le_comment = QLineEdit(form_requirement)
-        self.le_comment.setObjectName(u"le_comment")
+        self.le_comments = QLineEdit(form_requirement)
+        self.le_comments.setObjectName(u"le_comments")
 
-        self.hlayout_comment.addWidget(self.le_comment)
+        self.hlayout_comment.addWidget(self.le_comments)
 
 
         self.verticalLayout.addLayout(self.hlayout_comment)
@@ -117,9 +123,9 @@ class Ui_form_requirement(object):
     def retranslateUi(self, form_requirement):
         form_requirement.setWindowTitle(QCoreApplication.translate("form_requirement", u"Form", None))
         self.lbl_action.setText(QCoreApplication.translate("form_requirement", u"Action:", None))
-        self.lbl_expected.setText(QCoreApplication.translate("form_requirement", u"Expected result:", None))
+        self.lbl_expected_result.setText(QCoreApplication.translate("form_requirement", u"Expected result:", None))
         self.b_requirement.setText(QCoreApplication.translate("form_requirement", u"Affected requirements:", None))
-        self.lbl_comment.setText(QCoreApplication.translate("form_requirement", u"Comments:", None))
+        self.lbl_comments.setText(QCoreApplication.translate("form_requirement", u"Comments:", None))
         self.btn_add_step.setText(QCoreApplication.translate("form_requirement", u"Add", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_requirement", u"Cancel", None))
     # retranslateUi

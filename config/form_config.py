@@ -4,7 +4,8 @@ from typing import Type, Optional
 
 from views.campaigns import FormCampaign
 from views.bugs import FormBug
-from views.test_management import FormCase, FormBlock
+from views.cases import FormCase
+from views.blocks import FormBlock
 from views.requirements import FormRequirement
 from views.assets import (FormEmail, FormDrone, FormOperator,
                    FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)

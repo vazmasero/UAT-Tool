@@ -1,5 +1,4 @@
 from db.db import DatabaseManager
-from config.model_domains import Email
 from typing import Dict, Any, List, Optional
 from config.assets_config import AssetConfig
 

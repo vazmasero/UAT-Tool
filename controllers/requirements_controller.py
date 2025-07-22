@@ -2,7 +2,7 @@ from services.requirement_service import RequirementService
 from config.model_domains import Requirement
 from typing import Optional, Dict
 
-class RequirementsController:
+class RequirementController:
     def __init__(self, service: RequirementService):
             self.service = service
 
