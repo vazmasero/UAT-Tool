@@ -12,7 +12,20 @@ class Requirement:
 @dataclass
 class Case:
     id: int | None
-    code: str
-    definition: str
+    identification: str
+    name: str
     systems: list[str]
     sections: list[str]
+    operators: list[str]
+    drones: list[str]
+    uhub_users: list[str]
+    comments: str
+    
+@dataclass
+class Step:
+    id: int | None
+    action: str
+    expected_result: str
+    affected_requirements: list[str]
+    comments: str
+    case_id: int | None

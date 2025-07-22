@@ -36,8 +36,12 @@ class BaseForm(QWidget):
 
     def _setup_window_title(self):
         """Sets the window title based on the form mode."""
-        from config.form_config import FORMS
-        config = FORMS[self.form_key]['config']
+        if self.form_key == 'steps':
+            from config.step_form_config import STEP_FORMS
+            config = STEP_FORMS[self.form_key]['config']
+        else:
+            from config.form_config import FORMS
+            config = FORMS[self.form_key]['config']
         title = config.edit_title if self.mode == FormMode.EDIT else config.add_title
         self.setWindowTitle(title)
 

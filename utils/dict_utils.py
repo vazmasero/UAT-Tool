@@ -1,13 +1,17 @@
 from typing import Optional, Dict
 from config.page_config import PAGES
-from config.form_config import FORMS
 from config.table_config import TABLES
+from config.case_table_config import CASE_TABLES
 
 def get_index_from_page(page_name):
     return PAGES[page_name]["config"].index
 
 def get_base_table_config(name: str) -> Optional[Dict]:
-    return TABLES.get(name, {}).get("config", {})
+    if name == 'steps':
+        base_config = CASE_TABLES.get(name, {}).get("config", {})
+    else:
+        base_config = TABLES.get(name, {}).get("config", {})
+    return  base_config
 
 def get_form_key(current_page: str, tab_index: Optional[int]) -> Optional[str]:
         page_config = PAGES.get(current_page, {}).get("config")

@@ -1,6 +1,6 @@
 from typing import Dict, Callable, Optional, Type, Any, List
 from PySide6.QtCore import Slot
-from PySide6.QtWidgets import QMainWindow, QDialog, QTableView
+from PySide6.QtWidgets import QMainWindow, QTableView
 
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager

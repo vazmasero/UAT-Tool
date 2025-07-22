@@ -4,7 +4,8 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker, scoped_session
 from PySide6.QtSql import QSqlDatabase, QSqlQuery
 
-from .models import Base, Bug, Campaign, Case, Block, Requirement, System, Section, Email, Operator, Drone, UasZone, UhubOrg, UhubUser, Uspace
+from .models import (Base, Bug, Campaign, Case, Block, Requirement, System, Step,
+                    Section, Email, Operator, Drone, UasZone, UhubOrg, UhubUser, Uspace)
 from .initial_data import load_initial_data
 
 DB_NAME = "uat_tool.db"
@@ -43,6 +44,7 @@ class DatabaseManager:
             'requirements': Requirement,
             'systems': System,
             'sections': Section,
+            'steps': Step,
             'emails': Email,
             'operators': Operator,
             'drones': Drone,

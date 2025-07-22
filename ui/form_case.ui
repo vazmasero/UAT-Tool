@@ -44,7 +44,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget_case">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_info">
       <attribute name="title">
@@ -126,7 +126,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_sections">
+          <widget class="QLabel" name="lbl_section">
            <property name="text">
             <string>Section(s):</string>
            </property>
@@ -267,35 +267,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTableWidget" name="tbl_steps">
-         <property name="rowCount">
-          <number>4</number>
-         </property>
-         <row/>
-         <row/>
-         <row/>
-         <row/>
-         <column>
-          <property name="text">
-           <string>Action</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Expected result</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Affected requirements</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Comments</string>
-          </property>
-         </column>
-        </widget>
+        <widget class="QTableView" name="tbl_steps"/>
        </item>
        <item>
         <layout class="QVBoxLayout" name="vlayout_btn_steps">

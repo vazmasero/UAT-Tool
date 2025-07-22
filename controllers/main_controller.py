@@ -114,17 +114,17 @@ class MainController:
             if not data: 
                 return
             
-        form_instace = self.form_manager.open_form(form_key, edit, data)
+        form_instance = self.form_manager.open_form(form_key, edit, data)
         
-        if form_instace and hasattr(form_instace, 'data_updated'):
-            form_instace.data_updated.connect(self.refresh_table_data)
+        if form_instance and hasattr(form_instance, 'data_updated'):
+            form_instance.data_updated.connect(self.refresh_table_data)
             
     @Slot()
     def handle_menu_add(self, form_key: str, edit: bool, data: Optional[List]=None):
-        form_instace = self.form_manager.open_form(form_key, edit, data)
+        form_instance = self.form_manager.open_form(form_key, edit, data)
         
-        if form_instace and hasattr(form_instace, 'data_updated'):
-            form_instace.data_updated.connect(self.refresh_table_data)
+        if form_instance and hasattr(form_instance, 'data_updated'):
+            form_instance.data_updated.connect(self.refresh_table_data)
             
     @Slot()
     def refresh_table_data(self, table_name: str):

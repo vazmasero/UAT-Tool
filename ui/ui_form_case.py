@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'form_case.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLabel,
     QLineEdit, QListWidget, QListWidgetItem, QPushButton,
-    QSizePolicy, QTabWidget, QTableWidget, QTableWidgetItem,
-    QVBoxLayout, QWidget)
+    QSizePolicy, QTabWidget, QTableView, QVBoxLayout,
+    QWidget)
 
 class Ui_form_case(object):
     def setupUi(self, form_case):
@@ -84,10 +84,10 @@ class Ui_form_case(object):
 
         self.hlayout_id.addWidget(self.lw_system)
 
-        self.lbl_sections = QLabel(self.tab_info)
-        self.lbl_sections.setObjectName(u"lbl_sections")
+        self.lbl_section = QLabel(self.tab_info)
+        self.lbl_section.setObjectName(u"lbl_section")
 
-        self.hlayout_id.addWidget(self.lbl_sections)
+        self.hlayout_id.addWidget(self.lbl_section)
 
         self.lw_section = QListWidget(self.tab_info)
         self.lw_section.setObjectName(u"lw_section")
@@ -166,21 +166,8 @@ class Ui_form_case(object):
         self.horizontalLayout = QHBoxLayout(self.tab_steps)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.tbl_steps = QTableWidget(self.tab_steps)
-        if (self.tbl_steps.columnCount() < 4):
-            self.tbl_steps.setColumnCount(4)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.tbl_steps.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.tbl_steps.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.tbl_steps.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.tbl_steps.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        if (self.tbl_steps.rowCount() < 4):
-            self.tbl_steps.setRowCount(4)
+        self.tbl_steps = QTableView(self.tab_steps)
         self.tbl_steps.setObjectName(u"tbl_steps")
-        self.tbl_steps.setRowCount(4)
 
         self.horizontalLayout.addWidget(self.tbl_steps)
 
@@ -224,7 +211,7 @@ class Ui_form_case(object):
 
         self.retranslateUi(form_case)
 
-        self.tab_widget_case.setCurrentIndex(0)
+        self.tab_widget_case.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(form_case)
@@ -240,7 +227,7 @@ class Ui_form_case(object):
         self.le_name.setText("")
         self.le_name.setPlaceholderText(QCoreApplication.translate("form_case", u"[Name]", None))
         self.lbl_system.setText(QCoreApplication.translate("form_case", u"System(s):", None))
-        self.lbl_sections.setText(QCoreApplication.translate("form_case", u"Section(s):", None))
+        self.lbl_section.setText(QCoreApplication.translate("form_case", u"Section(s):", None))
         self.lbl_operator.setText(QCoreApplication.translate("form_case", u"Operator(s):", None))
         self.lbl_drone.setText(QCoreApplication.translate("form_case", u"Drone(s):", None))
         self.lbl_uhub_user.setText(QCoreApplication.translate("form_case", u"U-hub User(s)", None))
@@ -248,14 +235,6 @@ class Ui_form_case(object):
         self.le_comment.setText("")
         self.le_comment.setPlaceholderText(QCoreApplication.translate("form_case", u"[Comments]", None))
         self.tab_widget_case.setTabText(self.tab_widget_case.indexOf(self.tab_info), QCoreApplication.translate("form_case", u"Case info", None))
-        ___qtablewidgetitem = self.tbl_steps.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("form_case", u"Action", None));
-        ___qtablewidgetitem1 = self.tbl_steps.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("form_case", u"Expected result", None));
-        ___qtablewidgetitem2 = self.tbl_steps.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("form_case", u"Affected requirements", None));
-        ___qtablewidgetitem3 = self.tbl_steps.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("form_case", u"Comments", None));
         self.btn_add_step.setText(QCoreApplication.translate("form_case", u"+", None))
         self.btn_remove_step.setText(QCoreApplication.translate("form_case", u"-", None))
         self.tab_widget_case.setTabText(self.tab_widget_case.indexOf(self.tab_steps), QCoreApplication.translate("form_case", u"Steps", None))
