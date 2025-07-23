@@ -28,4 +28,3 @@ class Step:
     expected_result: str
     affected_requirements: list[str]
     comments: str
-    case_id: int | None

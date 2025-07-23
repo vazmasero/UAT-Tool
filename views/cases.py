@@ -22,7 +22,7 @@ class FormCase(BaseForm):
         db_manager = DatabaseManager()
         table_manager = StepTableManager()
         service = CaseService(db_manager, table_manager)
-        controller = CaseController(service)
+        controller = CaseController(service, table_manager)
 
         # Setup form
         self.setup_form(Ui_form_case, controller)
@@ -35,8 +35,8 @@ class FormCase(BaseForm):
         
     def _connect_signals(self):
         self.ui.btn_add_step.clicked.connect(lambda _:self.controller.handle_new_step())
-        self.ui.btn_remove_step.clicked.connect(lambda _:self.controller._handle_remove_step())       
-    
+        self.ui.btn_remove_step.clicked.connect(lambda _:self.controller._handle_remove_step())
+
     def _setup_tables(self):
         self.controller.setup_tables(self.ui)
 

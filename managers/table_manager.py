@@ -1,5 +1,6 @@
 from datetime import datetime
-from typing import List, Optional, Any, Dict
+from turtle import position
+from typing import List, Optional, Any, Dict, List
 from PySide6.QtCore import QObject, Signal, QModelIndex, Qt, QSortFilterProxyModel
 from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView
 from PySide6.QtGui import QStandardItem, QStandardItemModel
@@ -281,19 +282,87 @@ class TableManager(QObject):
         return [index.row() for index in indices]
     
     def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None):
-
         model = table.model()
         if not model:
             return
-        
-        items = [QStandardItem(str(data) if data is not None else "") for data in row_data]
-        for item in items:
+            
+        source_model = model
+        if hasattr(model, 'sourceModel'):
+            source_model = model.sourceModel()
+            
+        processed_items = []
+            
+        if isinstance(row_data, dict):
+            # Obtener headers del modelo
+            headers = []
+            for col in range(source_model.columnCount()):
+                header = source_model.headerData(col, Qt.Orientation.Horizontal)
+                headers.append(header)
+                
+            # Buscar configuración en CASE_TABLES
+            config = None
+            table_name = None
+                
+            from config.case_table_config import CASE_TABLES
+            for name, table_config in CASE_TABLES.items():
+                if hasattr(table, 'objectName') and table.objectName() == table_config["config"].widget_name:
+                    config = table_config["config"]  # Obtener el objeto config, no el dict
+                    table_name = name
+                    break
+                
+            # Convertir diccionario a lista ordenada según headers
+            ordered_data = []
+            for header in headers:
+                if config and hasattr(config, 'column_map') and config.column_map:
+                    db_column = config.column_map.get(header, header.lower().replace(" ", "_"))
+                else:
+                    db_column = header.lower().replace(" ", "_")
+                    
+                # Si es la columna Id, agregar None ya que no tenemos ID para nuevos registros
+                if header.lower() == "id":
+                    ordered_data.append(None)
+                else:
+                    value = row_data.get(db_column, "")
+                    ordered_data.append(value)
+                
+            row_data = ordered_data
+            
+        # Procesar cada elemento de la fila (ahora row_data es una lista)
+        for i, data in enumerate(row_data):
+            # Handle None values
+            if data is None:
+                data = ""
+                
+            # Handle many-to-many data (lists or comma-separated strings)
+            if isinstance(data, list):
+                # Convert list to comma-separated string for display
+                display_value = ", ".join(str(item) for item in data)
+            elif isinstance(data, str) and "," in data:
+                # It's already a comma-separated string, keep as is for display
+                display_value = data
+            else:
+                # Regular single value
+                display_value = str(data)
+                
+            # Create the item
+            item = QStandardItem(display_value)
             item.setEditable(False)
-        
+                
+            # Store original data for later retrieval
+            # This preserves the original format (list, string, etc.)
+            item.setData(data, Qt.ItemDataRole.UserRole)
+                
+            # For the first column (Id), no need to store numeric ID since it's None for new records
+            # The ID will be assigned when saved to database
+                
+            processed_items.append(item)
+            
+        # Add to source model (not proxy model)
         if position is None:
-            model.appendRow(items)
+            source_model.appendRow(processed_items)
         else:
-            model.insertRow(position, items)
+            source_model.insertRow(position, processed_items)
+
     
     def _handle_double_click(self, name: str, table:QTableView, index: QModelIndex):
         """Handles the double click on a table item event."""

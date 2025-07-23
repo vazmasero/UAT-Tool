@@ -6,4 +6,3 @@ class StepTableManager(TableManager):
     
     def __init__(self):
         super().__init__()
-        self.temp_steps = [] #Provisional steps

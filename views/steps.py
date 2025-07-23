@@ -1,4 +1,5 @@
 from base.base_form import BaseForm
+from managers.steps_table_manager import StepTableManager
 from ui.ui_add_step import Ui_add_step
 from controllers.step_controller import StepController
 from services.step_service import StepService
@@ -9,13 +10,13 @@ from typing import Optional, Dict, Any, List
 
 class FormStep(BaseForm):
 
-    def __init__(self, mode:FormMode, db_id: Optional[int]):
+    def __init__(self, mode:FormMode, db_id: Optional[int], table_manager: StepTableManager = None):
         super().__init__("steps", mode, db_id)
 
         # Create managers and controller
         db_manager = DatabaseManager()
         service = StepService(db_manager)
-        controller = StepController(service)
+        controller = StepController(service, table_manager)
 
         # Setup form
         self.setup_form(Ui_add_step, controller)    
@@ -38,7 +39,7 @@ class FormStep(BaseForm):
         
         if not data['action']: 
             errors.append("Defining an action is mandatory")
-        if not data['expected result']: 
+        if not data['expected_result']: 
             errors.append("Writing an expected result for the step is mandatory")
         if not data['affected_requirements']: 
             errors.append("Choosing (at least) one affected requirement is mandatory")

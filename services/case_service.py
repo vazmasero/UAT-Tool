@@ -1,21 +1,16 @@
 from db.db import DatabaseManager
-from PySide6.QtCore import Signal
 from config.model_domains import Case
 from config.case_table_config import CASE_TABLES
 from config.step_form_config import STEP_FORMS
 from utils.form_mode import FormMode
-from managers.steps_table_manager import StepTableManager
-from base.base_form import BaseForm
 from typing import Dict, Optional, List
 
 class CaseService:
     
-    data_updated = Signal(str)
-    
-    def __init__(self, db_manager: DatabaseManager, table_manager:StepTableManager):
+    def __init__(self, db_manager: DatabaseManager, table_manager=None):
         self.db_manager = db_manager
         self.table_manager = table_manager
-        self.active_forms: Dict[str, BaseForm] = {}
+        self.active_forms = {}
 
     def get_systems(self):
         systems = self.db_manager.get_all_data("systems")
@@ -37,7 +32,7 @@ class CaseService:
         uhub_users = self.db_manager.get_all_data('uhub_users')
         return [uhub_user["username"] for uhub_user in uhub_users] if uhub_users else []
     
-    def save_requirement(self, case: Case) -> None:
+    def save_case(self, case: Case) -> None:
         data = {
             'identification': case.identification,
             'name': case.name,
@@ -74,7 +69,7 @@ class CaseService:
         mode = FormMode.EDIT if edit else FormMode.CREATE
         db_id = data.get('id', None) if data and edit else None
         
-        form_instance = form_config.form_class(mode=mode, db_id=db_id)
+        form_instance = form_config.form_class(mode=mode, db_id=db_id, table_manager=self.table_manager)
 
         #form_instance.data_updated.connect(self.data_updated.emit)
         form_instance.destroyed.connect(lambda: self._on_form_closed(form_key))
@@ -86,5 +81,6 @@ class CaseService:
     
     def _on_form_closed(self, form_key: str):
         self.active_forms.pop(form_key, None)
-            
-        
+
+    def refresh_table_data(self, table):
+        pass
