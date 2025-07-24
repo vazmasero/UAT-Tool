@@ -19,23 +19,13 @@ class MainController:
                  ui: BaseUI,
                  page_manager: Optional[PageManager],
                  form_manager: FormManager,
-                 table_manager: TableManager,
+             table_manager: TableManager,
                  db_manager: DatabaseManager):
         self.ui = ui
         self.page_manager = page_manager
         self.form_manager = form_manager
         self.table_manager = table_manager
         self.db_manager = db_manager
-
-        self._connect_signals()
-        
-    def _connect_signals(self):
-        
-        # Connect signals coming from TableManager
-        self.table_manager.table_double_clicked.connect(self.handle_new_form)
-        self.table_manager.selection_changed.connect(self.handle_selection_changed)
-        #self.table_manager.table_updated.connect(self.handle_table_updated)
-        
         
     def _change_page(self, page_name:str):
         if self.page_manager:
@@ -111,11 +101,14 @@ class MainController:
             
             # Obtain full data from db
             data = self.db_manager.get_by_id(table_name, record_id)
-            if not data: 
+            if not data:
                 return
-            
-        form_instance = self.form_manager.open_form(form_key, edit, data)
         
+        # Opens the form using FormManager and returns the form instance
+        form_instance = self.form_manager.open_form(form_key, edit, data)
+
+        # Returned form instance is used to handle event of updated data in db 
+        # (to refresh the appropriate table)
         if form_instance and hasattr(form_instance, 'data_updated'):
             form_instance.data_updated.connect(self.refresh_table_data)
             

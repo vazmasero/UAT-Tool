@@ -13,23 +13,31 @@ class FormManager(QObject):
         super().__init__()
         self.active_forms: Dict[str, BaseForm] = {}
 
-    def open_form(self, form_key:str, edit:bool, data:Optional[List]):
-        """Abre un formulario basado en su clave y modo (agregar/editar)."""
+    def open_form(self, form_key:str, edit:bool, data:Optional[List], data_instead_id: bool = False):
+        """Opens a form based on its key and mode (create/edit)."""
 
+        # Closes previous form if opened
         if form_key in self.active_forms:
             self.active_forms[form_key].close()
             self.active_forms.pop(form_key, None)
-            
+        
+        # Obtain form configuration
         form_config = FORMS[form_key]['config']
 
+        # Determine form mode and databse ID if editing and item
         mode = FormMode.EDIT if edit else FormMode.CREATE
-        db_id = data.get('id', None) if data and edit else None
 
-        form_instance = form_config.form_class(mode=mode, db_id=db_id)
+        # Handle if the form wants id or full data
+        if data_instead_id:
+            form_instance = form_config.form_class(mode=mode, data=data)
+        else:
+            db_id = data.get('id', None) if data else None
+            form_instance = form_config.form_class(mode=mode, db_id=db_id)
 
-        form_instance.data_updated.connect(self.data_updated.emit)
+        # Connects signals for event handling (in particular, a form being closed)
         form_instance.destroyed.connect(lambda: self._on_form_closed(form_key))
 
+        # Shows the form and store it in active forms
         form_instance.show()
         self.active_forms[form_key] = form_instance
         

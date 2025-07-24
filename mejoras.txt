@@ -1,6 +1,26 @@
-Filtros y barras de búsqueda funcionando
-Titulos en los forms de assets 
-Boton de edit y remove deshabilitandose con el cambio de tabla
-Deselección al pulsar fuera de la tabla
-Vínculo entre assets mediante base de datos (uso de checkboxes y list widgets con tablas intermedias)
-Añadir creation y last update a los assets
+
+
+Main Window: 
+	- Implementar filtros y barras de búsqueda.
+	- Los botones de edit y remove deben deshabilitarse de nuevo con el cambio de tabla.
+
+
+Formularios: 
+	- Los formularios deben mostrar el título correcto.
+	- En open_form, cambiar la lógica de Form repetido (active_forms) para que el formulario se 
+	ponga en primer plano si ya está abierto en lugar de cerrarlo y abrir uno nuevo.
+
+
+
+Tablas: 
+	- Deselección al pulsar fuera de la tabla.
+	- Añadir columnas de "Creation date" y "Last update" a todas las tablas. 
+
+
+Assets: 
+	- Víncular assets entre sí (cuando aplique) mediante base de datos
+	(uso de checkboxes y list widgets con tablas intermedias).
+
+Steps: 
+	- Arreglar la importación de form manager para poder usar una instancia general al abrir 
+	el formulario de steps (probar singleton)

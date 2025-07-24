@@ -1,12 +1,10 @@
 from services.step_service import StepService
 from config.model_domains import Step
-from managers.steps_table_manager import StepTableManager
 from typing import Optional, Dict
 
 class StepController:
-    def __init__(self, service: StepService, table_manager: StepTableManager = None):
+    def __init__(self, service: StepService):
             self.service = service
-            self.table_manager = table_manager or StepTableManager()
 
     def get_lw_data(self):
         requirements = self.service.get_requirements()

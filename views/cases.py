@@ -1,14 +1,12 @@
 from typing import Dict, Callable, Optional, Type, Any, List
 from PySide6.QtCore import Slot, Signal
 
-from managers.steps_table_manager import StepTableManager
-
 from base.base_form import BaseForm
+from managers.table_manager import TableManager
 from ui.ui_form_case import Ui_form_case
 from controllers.case_controller import CaseController
 from services.case_service import CaseService
 from utils.form_mode import FormMode
-from views.dialogs import Dialog
 
 from db.db import DatabaseManager
 
@@ -19,26 +17,25 @@ class FormCase(BaseForm):
         self.ui = Ui_form_case()
 
         # Create managers and controller
-        db_manager = DatabaseManager()
-        table_manager = StepTableManager()
-        service = CaseService(db_manager, table_manager)
-        controller = CaseController(service, table_manager)
+        self.db_manager = DatabaseManager()
+        self.table_manager = TableManager()
+
+        self.service = CaseService(self.db_manager)
+        self.controller = CaseController(self.service, self.table_manager)
 
         # Setup form
-        self.setup_form(Ui_form_case, controller)
-        
-        # Setup case table
-        self._setup_tables()
-        
-        # Setup signals
+        self.setup_form(Ui_form_case, self.controller)
+        self.controller.setup_tables(self.ui, self.mode, self.db_id)
         self._connect_signals()
         
     def _connect_signals(self):
-        self.ui.btn_add_step.clicked.connect(lambda _:self.controller.handle_new_step())
-        self.ui.btn_remove_step.clicked.connect(lambda _:self.controller._handle_remove_step())
+        # Ui buttons
+        self.ui.btn_add_step.clicked.connect(lambda _:self.controller.handle_new_step(edit=False, table_name="steps", row_data=None))
+        #self.ui.btn_remove_step.clicked.connect(lambda _:self.controller._handle_remove_step())
 
-    def _setup_tables(self):
-        self.controller.setup_tables(self.ui)
+        # Table signals
+        self.table_manager.table_double_clicked.connect(lambda table_name, row_data: self.controller.handle_new_step(edit=True, table_name=table_name, row_data=row_data))
+        #self.table_manager.selection_changed.connect(self.controller.handle_selection_changed())
 
     def _setup_custom_widgets(self):
         lw_data = self.controller.get_lw_data()

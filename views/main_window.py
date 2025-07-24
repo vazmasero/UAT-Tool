@@ -7,7 +7,6 @@ from managers.page_manager import PageManager
 from managers.table_manager import TableManager
 from ui.ui_main import Ui_main_window
 from views.campaigns import ExecutionCampaign
-from views.dialogs import Dialog
 
 from config.page_config import PAGES
 from config.form_config import FORMS
@@ -23,20 +22,21 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # Create managers
-        db_manager = DatabaseManager()
-        page_manager = PageManager(self.ui.stacked_widget, self.ui)
-        form_manager = FormManager()
-        table_manager = TableManager()
+        self.db_manager = DatabaseManager()
+        self.page_manager = PageManager(self.ui.stacked_widget, self.ui)
+        self.form_manager = FormManager()
+        self.table_manager = TableManager()
 
         # Insert dependencies to the controller
         self.controller = MainController(
             ui=self.ui,
-            page_manager=page_manager,
-            form_manager=form_manager, 
-            table_manager=table_manager,
-            db_manager=db_manager
+            page_manager=self.page_manager,
+            form_manager=self.form_manager,
+            table_manager=self.table_manager,
+            db_manager=self.db_manager
         )
         
+        # Initial view setup
         self._setup_tables()
         self._setup_buttons()
 
@@ -65,10 +65,15 @@ class MainWindow(QMainWindow):
         """Connects signals between managers and the view."""
         self._connect_menu_actions() # Menu bar actions
         
+        # Ui buttons
         self.ui.btn_add.clicked.connect(lambda _:self.controller.handle_new_form(edit=False))
         self.ui.btn_edit.clicked.connect(lambda _:self.controller.handle_new_form(edit=True))
         self.ui.btn_remove.clicked.connect(lambda _:self.controller._handle_remove_button())
         self.ui.btn_start.clicked.connect(self._execute_campaign)
+
+        # Table signals
+        self.table_manager.table_double_clicked.connect(self.controller.handle_new_form)
+        self.table_manager.selection_changed.connect(self.controller.handle_selection_changed)
         
     def _connect_menu_actions(self):
 

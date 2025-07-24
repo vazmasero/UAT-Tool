@@ -9,6 +9,7 @@ from views.blocks import FormBlock
 from views.requirements import FormRequirement
 from views.assets import (FormEmail, FormDrone, FormOperator,
                    FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
+from views.steps import FormStep
 
 @dataclass
 class FormConfig:
@@ -154,6 +155,17 @@ FORMS = {
             edit_label=None,
             label_attr=None,
             menu_action_attr="action_new_uspace"
+        )
+    },
+    "steps": {
+        "config": FormConfig(
+            form_class=FormStep,
+            add_title="Add step",
+            edit_title="Edit step",
+            add_label=None,
+            edit_label=None,
+            label_attr=None,
+            menu_action_attr=None
         )
     },
 }

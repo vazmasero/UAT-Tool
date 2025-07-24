@@ -7,9 +7,8 @@ from typing import Dict, Optional, List
 
 class CaseService:
     
-    def __init__(self, db_manager: DatabaseManager, table_manager=None):
+    def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
-        self.table_manager = table_manager
         self.active_forms = {}
 
     def get_systems(self):
@@ -84,3 +83,8 @@ class CaseService:
 
     def refresh_table_data(self, table):
         pass
+
+    def get_steps_by_case_id(self, db_id):
+        # PENDIENTE: Hay que filtrar los pasos por el caso actual
+        # Asumiendo que el caso actual está almacenado en algún lugar
+        return self.db_manager.get_all_data("steps")

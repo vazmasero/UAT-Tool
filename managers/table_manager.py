@@ -29,7 +29,7 @@ class TableManager(QObject):
         
         merged_config = TableService.merge_table_config(name, config)
 
-        # Provisional: determine the model according to name provided
+        # Configure source model
         headers = merged_config.get("headers", [])
         model = QStandardItemModel(0, len(headers))
         model.setHorizontalHeaderLabels(headers)
@@ -39,20 +39,16 @@ class TableManager(QObject):
         proxy_model = QSortFilterProxyModel()
         proxy_model.setSourceModel(model)
         table.setModel(proxy_model)
-        
-        headers = merged_config.get("headers", [])
-        for i, header in enumerate(headers):
-            proxy_model.setHeaderData(i, Qt.Horizontal, header)
             
         # Hide ID if there is a column named "Id" or "ID"
         for i, header in enumerate(headers):
             if header.lower() in ['id']:
                 table.setColumnHidden(i, True)
                 break
-            
+        
+        # Configure table properties
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setAlternatingRowColors(merged_config.get("alternating_row_colors", False))
-        # table.setSortingEnabled(merged_config.get("sort_enabled", False))
         table.setSelectionMode(QAbstractItemView.SingleSelection)
         table.setSelectionBehavior(QAbstractItemView.SelectRows)
         
@@ -76,10 +72,6 @@ class TableManager(QObject):
                 db_column = column_map.get(header, header)
                 value = row_data.get(db_column)
                 item = self._create_item(value, config, col)
-                
-                # Save DB Id in the first column as UserRole
-                if col == 0: 
-                    item.setData(row_data.get('id'), Qt.ItemDataRole.UserRole +1)
                 
                 items.append(item)
             
@@ -264,13 +256,12 @@ class TableManager(QObject):
             # Obtain Id stored in first colum
             first_item = source_model.item(source_index.row(), 0)
             if first_item:
-                return first_item.data(Qt.ItemDataRole.UserRole + 1)
-            
+                return first_item.data(Qt.ItemDataRole.UserRole) 
         else:
             #If there is no proxy model, user model directly
             first_item = table.model().item(proxy_index.row(), 0)
             if first_item:
-                return first_item.data(Qt.ItemDataRole.UserRole + 1)
+                return first_item.data(Qt.ItemDataRole.UserRole)
             
         return None
     
