@@ -13,7 +13,7 @@ class FormManager(QObject):
         super().__init__()
         self.active_forms: Dict[str, BaseForm] = {}
 
-    def open_form(self, form_key:str, edit:bool, data:Optional[List], data_instead_id: bool = False):
+    def open_form(self, form_key:str, edit:bool, data:Optional[List], data_instead_id: bool = False, row_index: Optional[int] = None):
         """Opens a form based on its key and mode (create/edit)."""
 
         # Closes previous form if opened
@@ -29,7 +29,7 @@ class FormManager(QObject):
 
         # Handle if the form wants id or full data
         if data_instead_id:
-            form_instance = form_config.form_class(mode=mode, data=data)
+            form_instance = form_config.form_class(mode=mode, data=data, row_index=row_index)
         else:
             db_id = data.get('id', None) if data else None
             form_instance = form_config.form_class(mode=mode, db_id=db_id)

@@ -1,5 +1,6 @@
 from typing import Dict, Callable, Optional, Type, Any, List
 from PySide6.QtCore import Slot, Signal
+from PySide6.QtWidgets import QTableView
 
 from base.base_form import BaseForm
 from managers.table_manager import TableManager
@@ -31,11 +32,11 @@ class FormCase(BaseForm):
     def _connect_signals(self):
         # Ui buttons
         self.ui.btn_add_step.clicked.connect(lambda _:self.controller.handle_new_step(edit=False, table_name="steps", row_data=None))
-        #self.ui.btn_remove_step.clicked.connect(lambda _:self.controller._handle_remove_step())
+        self.ui.btn_remove_step.clicked.connect(lambda _:self.controller._handle_remove_step())
 
         # Table signals
         self.table_manager.table_double_clicked.connect(lambda table_name, row_data: self.controller.handle_new_step(edit=True, table_name=table_name, row_data=row_data))
-        #self.table_manager.selection_changed.connect(self.controller.handle_selection_changed())
+        self.table_manager.selection_changed.connect(self.handle_selection_changed)
 
     def _setup_custom_widgets(self):
         lw_data = self.controller.get_lw_data()
@@ -44,6 +45,25 @@ class FormCase(BaseForm):
         self.setup_checkbox_list(self.ui.lw_operator, lw_data["operators"])
         self.setup_checkbox_list(self.ui.lw_drone, lw_data["drones"])
         self.setup_checkbox_list(self.ui.lw_uhub_user, lw_data["uhub_users"])
+
+    def _setup_buttons(self):
+        """Sets up view's buttons (Add Step and Remove Step)."""
+        # Initially, remove button is disabled
+        self.ui.btn_remove_step.setEnabled(False)
+
+        # Connect accept and cancel buttons to their respective handlers
+        if hasattr(self.ui, 'btn_accept'):
+            self.ui.btn_accept.clicked.connect(self._handle_submit)
+        if hasattr(self.ui, 'btn_cancel'):
+            self.ui.btn_cancel.clicked.connect(self.close)
+
+    def handle_selection_changed(self, table: QTableView):
+        """Handles selection changes in the table."""
+        if table:
+            if table.selectionModel().hasSelection():
+                self.ui.btn_remove_step.setEnabled(True)
+            else:
+                self.ui.btn_remove_step.setEnabled(False)
 
     def load_data(self, data):
         """Loads data into the form."""
@@ -65,7 +85,7 @@ class FormCase(BaseForm):
             'operators':self.get_checked_items(self.ui.lw_operator),
             'drones':self.get_checked_items(self.ui.lw_drone),
             'uhub_users':self.get_checked_items(self.ui.lw_uhub_user),
-            'comments':self.get_checked_items(self.ui.le_comment)
+            'comments':self.ui.le_comment.text(),
         }
         
     def validate_form(self, data):
@@ -82,3 +102,20 @@ class FormCase(BaseForm):
             errors.append("Choosing (at least) one associated section is mandatory")
             
         return errors
+    
+    def _handle_submit(self):
+        """Handles form submission for Case, including steps."""
+        try:
+            data = self._obtain_form_data()
+            errors = self.validate_form(data)
+
+            if errors:
+                self.show_errors(errors)
+                return
+
+            steps_table = self.ui.tbl_steps
+            self.controller.handle_form_submission(data, self.db_id, steps_table)
+            self.data_updated.emit(self.form_key)
+            self.close()
+        except Exception as e:
+            self.show_critical(f"Error submitting form: {str(e)}")

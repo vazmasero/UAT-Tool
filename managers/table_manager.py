@@ -117,8 +117,7 @@ class TableManager(QObject):
         
         if table.selectionModel():
             table.selectionModel().selectionChanged.connect(
-                lambda selected, deselected: self._handle_selection_changed(name)
-                
+                lambda selected, deselected: self._handle_selection_changed(name)    
             )
         
         # Table registered successfully
@@ -267,10 +266,26 @@ class TableManager(QObject):
     
     def get_selected_row_indices(self, table:QTableView) -> List[int]:
         if not table or not table.selectionModel():
-            return[]
-        
-        indices = table.selectionModel.selectedRows()
+            return []
+
+        indices = table.selectionModel().selectedRows()
         return [index.row() for index in indices]
+    
+    def get_table_data(self, table: QTableView) -> List[Dict[str, Any]]:
+        """Obtains all table data"""
+        model = table.model()
+        source_model = model.sourceModel() if hasattr(model, 'sourceModel') else model
+        rows = []
+        for row in range(source_model.rowCount()):
+            row_data = {}
+            for col in range(source_model.columnCount()):
+                index = source_model.index(row, col)
+                header = source_model.headerData(col, Qt.Orientation.Horizontal)
+                value = source_model.data(index, Qt.ItemDataRole.UserRole)
+                row_data[header] = value 
+            rows.append(row_data)
+
+        return rows
     
     def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None):
         model = table.model()
@@ -354,7 +369,101 @@ class TableManager(QObject):
         else:
             source_model.insertRow(position, processed_items)
 
+    def update_row(self, table:QTableView, row_data: Dict[str, Any], row_index: int):
+        """Updates an existing row in the table with new data."""
+        model = table.model()
+        if not model:
+            print("No model found for the table")
+            return False
+        
+        source_model = model
+        if hasattr(model, 'sourceModel'):
+            source_model = model.sourceModel()
+
+        # Check if the row index is valid
+        if row_index < 0 or row_index >= source_model.rowCount():
+            print(f"Invalid row index: {row_index}")
+            return False
+        
+        # Obtain headers from the model
+        headers = []
+        for col in range(source_model.columnCount()):
+            header = source_model.headerData(col, Qt.Orientation.Horizontal)
+            headers.append(header)
+        
+        # Find the configuration for the table
+        config = None
+        table_name = None
+
+        from config.case_table_config import CASE_TABLES
+        for name, table_config in CASE_TABLES.items():
+            if hasattr(table, 'objectName') and table.objectName() == table_config["config"].widget_name:
+                config = table_config["config"]
+                table_name = name
+                break
+
+        # Update each column in the row
+        for col, header in enumerate(headers):
+            if config and hasattr(config, 'column_map') and config.column_map:
+                db_column = config.column_map.get(header, header.lower().replace(" ", "_"))
+            else:
+                db_column = header.lower().replace(" ", "_")
+
+            # Obtain the value from data dict
+            if header.lower() == "id":
+                # Maintain existing Id
+                continue
+            else:
+                value = row_data.get(db_column, "")
+
+            # Process value according to its type
+            if value is None:
+                display_value = ""
+            elif isinstance(value, list):
+                display_value = ", ".join(str(item) for item in value)
+            elif isinstance(value, str) and "," in value:
+                display_value = value
+            else:
+                display_value = str(value)
+
+            # Actualizar el item en el modelo
+            index = source_model.index(row_index, col)
+            item = source_model.itemFromIndex(index)
+
+            if item:
+                item.setText(display_value)
+                item.setData(value, Qt.ItemDataRole.UserRole)
+
+            else:
+                # If item does not exist, create a new one
+                new_item = QStandardItem(display_value)
+                new_item.setEditable(False)
+                new_item.setData(value, Qt.ItemDataRole.UserRole)
+                source_model.setItem(row_index, col, new_item)
+
+                
+        print(f"Row {row_index} updated successfully in table '{table_name}'")
+        return True
     
+    def delete_row(self, table: QTableView, row_index: int):
+        """Deletes a row from the model given the row index."""
+        model = table.model()
+        if not model:
+            print("No model found for the table")
+            return False
+        
+        source_model = model
+        if hasattr(model, 'sourceModel'):
+            source_model = model.sourceModel()
+
+        if row_index < 0 or row_index >= source_model.rowCount():
+            print(f"Invalid row index: {row_index}")
+            return False
+        
+        source_model.removeRow(row_index)
+        print(f"Row {row_index} deleted successfully")
+        return True
+
     def _handle_double_click(self, name: str, table:QTableView, index: QModelIndex):
         """Handles the double click on a table item event."""
         if index.isValid():

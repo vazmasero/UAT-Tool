@@ -2,7 +2,6 @@ from managers.table_manager import TableManager
 from services.case_service import CaseService
 from config.model_domains import Case
 from config.case_table_config import CASE_TABLES
-from config.step_form_config import STEP_FORMS
 from typing import Optional, Dict
 
 from utils.form_mode import FormMode
@@ -40,10 +39,11 @@ class CaseController:
             "uhub_users": uhub_users
         }
         
-    def handle_form_submission(self, form_data: Dict, db_id: Optional[int]) -> None:
+    def handle_form_submission(self, form_data: Dict, db_id: Optional[int], steps_table=None) -> None:
+        # Creates the case and obtain de new id
         case = Case(
             id=db_id,
-            code=form_data['identification'],
+            identification=form_data['identification'],
             name=form_data['name'],
             systems=form_data['systems'],
             sections=form_data['sections'],
@@ -53,17 +53,38 @@ class CaseController:
             comments=form_data['comments']
         )
         
-        self.service.save_case(case)
+        new_case_id = self.service.save_case(case)
+
+        # Save associated steps
+        if steps_table is not None:
+            table = self.table_manager.tables.get('steps')
+            steps_data = self.table_manager.get_table_data(table)
+            column_map = CASE_TABLES['steps']['config'].column_map
+            for step in steps_data:
+                db_step = {}
+                for header, value in step.items():
+                    db_column = column_map.get(header, header)
+                    if db_column == 'affected_requirements' and isinstance(value, str):
+                        db_step[db_column] = [v.strip() for v in value.split(', ') if v.strip()]
+                    else:
+                        db_step[db_column] = value
+                db_step['case_id'] = new_case_id
+                self.service.save_step(db_step)
 
     def handle_new_step(self, edit: bool, table_name: str, row_data: Dict):
         from managers.form_manager import FormManager
 
         form_manager = FormManager()
-
         form_key = table_name
 
+        # Obtain row index if editing
+        row_index = None
+        if edit and row_data and 'steps' in self.table_manager.tables:
+            steps_table = self.table_manager.tables['steps']
+            row_index = self.table_manager.get_selected_row_indices(steps_table)
+
         # Opens the form using FormManager and returns the form instance
-        form_instance = form_manager.open_form(form_key, edit, row_data, data_instead_id=True)
+        form_instance = form_manager.open_form(form_key, edit, row_data, data_instead_id=True, row_index=row_index)
 
         # Returned form instance is used to handle event of updated data in db 
         # (to refresh the appropriate table)
@@ -79,11 +100,10 @@ class CaseController:
 
         formatted_data = self._format_step_for_table(step_data)
 
-        if 'id' in step_data:
-            pass
-            #self.table_manager.update_row(steps_table, formatted_data, step_data['id'])
+        if 'id' in step_data and 'row_index' in step_data:
+            self.table_manager.update_row(steps_table, formatted_data, step_data['row_index'])
         else:
-        # Creación: añadir nueva fila
+            # CREATE: add new row
             self.table_manager.add_row(steps_table, formatted_data)
 
     def _format_step_for_table(self, step_data:Dict) -> Dict:
@@ -94,5 +114,26 @@ class CaseController:
             'comments': step_data.get('comments', '')
         }
     
+    def _handle_remove_step(self):   
+        """Handles the removal of a step from the table."""   
+        table = self.table_manager.tables.get('steps') 
+        row_index = self.table_manager.get_selected_row_indices(table)
+        if not row_index:
+            return
+        
+        try:
+            self.table_manager.delete_row(table, row_index[0])
+
+        except Exception as e:
+            print(f"Error deleting register {row_index} from table: {e}")
+
+    def get_item_by_id(self, db_id):
+        """Fetches a case item by its ID."""
+        return self.service.get_case(db_id)
+
+    def get_steps_by_case_id(self, case_id):
+        """Fetches all steps associated with a case ID."""
+        return self.service.get_steps_by_case_id(case_id)
+
     def refresh_table_data(self, table):
         self.service.refresh_table_data(table)

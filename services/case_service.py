@@ -1,9 +1,7 @@
 from db.db import DatabaseManager
-from config.model_domains import Case
+from config.model_domains import Case, Step
 from config.case_table_config import CASE_TABLES
-from config.step_form_config import STEP_FORMS
-from utils.form_mode import FormMode
-from typing import Dict, Optional, List
+from typing import Any, Dict, Optional, List
 
 class CaseService:
     
@@ -46,7 +44,21 @@ class CaseService:
         if case.id:
             self.db_manager.edit_register("cases", case.id, data)
         else:
-            self.db_manager.create_register("cases", data)
+            case_id = self.db_manager.create_register("cases", data)
+
+        return case_id
+    
+    def save_step(self, step_data: Dict[str, Any]) -> int:
+        step_fields = {
+            'action': step_data.get('action'),
+            'expected_result': step_data.get('expected_result'),
+            'affected_requirements': step_data.get('affected_requirements'),
+            'comments': step_data.get('comments'),
+            'case_id': step_data.get('case_id')
+        }
+
+        step_id = self.db_manager.create_register("steps", step_fields)
+        return step_id
             
     def setup_tables(self, ui):
         for table_name, table_dict in CASE_TABLES.items():
@@ -57,32 +69,14 @@ class CaseService:
                 continue
             data = self.db_manager.get_all_data(table_info.db_table)
             self.table_manager.setup_table(table_widget, table_name, data, register=True)
-            
-    def open_step_form(self, form_key:str, edit:bool, data:Optional[List]):
-        if form_key in self.active_forms:
-            self.active_forms[form_key].close()
-            self.active_forms.pop(form_key, None)
-            
-        form_config = STEP_FORMS[form_key]['config']
-        
-        mode = FormMode.EDIT if edit else FormMode.CREATE
-        db_id = data.get('id', None) if data and edit else None
-        
-        form_instance = form_config.form_class(mode=mode, db_id=db_id, table_manager=self.table_manager)
-
-        #form_instance.data_updated.connect(self.data_updated.emit)
-        form_instance.destroyed.connect(lambda: self._on_form_closed(form_key))
-
-        form_instance.show()
-        self.active_forms[form_key] = form_instance
-        
-        return form_instance
     
     def _on_form_closed(self, form_key: str):
         self.active_forms.pop(form_key, None)
 
-    def refresh_table_data(self, table):
-        pass
+    def get_case(self, case_id: int) -> Case:
+        data = self.db_manager.get_by_id("cases", case_id)
+        return data
+
 
     def get_steps_by_case_id(self, db_id):
         # PENDIENTE: Hay que filtrar los pasos por el caso actual

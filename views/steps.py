@@ -11,12 +11,13 @@ class FormStep(BaseForm):
 
     new_step_data = Signal(dict)
 
-    def __init__(self, mode:FormMode, db_id: Optional[int]=None, data: Optional[Dict]=None):
+    def __init__(self, mode:FormMode, db_id: Optional[int]=None, data: Optional[Dict]=None, row_index: Optional[int]=None):
         if data and not db_id:
             db_id = data.get('Id')
 
         super().__init__("steps", mode, db_id)
         self.initial_data = data
+        self.row_index = row_index
 
         # Create managers and controller
         db_manager = DatabaseManager()
@@ -24,7 +25,23 @@ class FormStep(BaseForm):
         controller = StepController(service)
 
         # Setup form
-        self.setup_form(Ui_add_step, controller)  
+        self.setup_form(Ui_add_step, controller)
+
+    def _setup_initial_data(self):
+        """Sets up initial data for the form if edit mode."""
+        if self.mode == FormMode.EDIT:
+            if self.initial_data:
+                # Usar datos pasados directamente (desde tabla)
+                self.load_data(self.initial_data)
+            elif self.db_id:
+                # Cargar desde BD (comportamiento original)
+                data = self.controller.get_item_by_id(self.db_id)
+                if data:
+                    self.load_data(data)
+
+    def _setup_custom_widgets(self):
+        lw_data = self.controller.get_lw_data()
+        self.setup_checkbox_list(self.ui.lw_requirements, lw_data["requirements"])
 
     def _setup_initial_data(self):
         """Sets up initial data for the form if edit mode."""
@@ -51,16 +68,17 @@ class FormStep(BaseForm):
             if errors:
                 self.show_errors(errors)
                 return
-            
+
             if self.mode == FormMode.CREATE:
                 self.new_step_data.emit(data)
             else:
                 data['id'] = self.db_id
+                data['row_index'] = self.row_index[0]
                 self.new_step_data.emit(data)
 
             self.close()
         except Exception as e:
-            self.show_critical(f"Error submitting form: {str(e)}")
+            self.show_critical(f"Error submitting form: {str(e)}") 
 
     def _obtain_form_data(self) -> Dict[str, Any]:
         return {

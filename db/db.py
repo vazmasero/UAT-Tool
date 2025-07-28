@@ -1,5 +1,6 @@
 import os
 import datetime
+from typing import Any, Dict
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker, scoped_session
 from PySide6.QtSql import QSqlDatabase, QSqlQuery
@@ -74,6 +75,19 @@ class DatabaseManager:
                         item_dict['systems'] = ", ".join([sys.name for sys in item.systems])
                     if hasattr(item, 'sections'):
                         item_dict['sections'] = ", ".join([sec.name for sec in item.sections])
+                elif key == 'cases':
+                    if hasattr(item, 'systems'):
+                        item_dict['systems'] = ", ".join([sys.name for sys in item.systems])
+                    if hasattr(item, 'sections'):
+                        item_dict['sections'] = ", ".join([sec.name for sec in item.sections])
+                    if hasattr(item, 'operators'):
+                        item_dict['operators'] = ", ".join([op.name for op in item.operators])
+                    if hasattr(item, 'drones'):
+                        item_dict['drones'] = ", ".join([drone.name for drone in item.drones])
+                    if hasattr(item, 'uhub_users'):
+                        item_dict['uhub_users'] = ", ".join([user.username for user in item.uhub_users])
+                    if hasattr(item, 'steps'):
+                        item_dict['steps'] = len(item.steps)
                 
                 results.append(item_dict)
                 
@@ -85,46 +99,107 @@ class DatabaseManager:
             return []
 
      
-    def create_register(self, key:str, data:dict):
-
+    def create_register(self, key: str, data: Dict[str, Any]) -> int:
         if key not in self._model_map:
             available_keys = ', '.join(self._model_map.keys())
             raise ValueError(f"Key '{key}' not found. Available keys: {available_keys}")
-
+    
         model = self._model_map[key]
-        
-        try: 
-            with self.session.no_autoflush:
-                if key == 'requirements':
+    
+        # --- Caso especial para requirements ---
+        if key == 'requirements':
+            try:
+                with self.session.no_autoflush:
                     requirement = model(
-                        code=data['code'],
-                        definition=data['definition']
+                        code=data.get('code'),
+                        definition=data.get('definition')
                     )
                     self.session.add(requirement)
                     self.session.flush()
-                    
+    
+                    # Many-to-many: systems
                     if 'systems' in data and data['systems']:
                         systems = self.session.query(System).filter(
                             System.name.in_(data['systems'])
                         ).all()
                         requirement.systems = systems
-                        
+    
+                    # Many-to-many: sections
                     if 'sections' in data and data['sections']:
                         sections = self.session.query(Section).filter(
                             Section.name.in_(data['sections'])
                         ).all()
                         requirement.sections = sections
-                
-                    self.session.add(requirement)
-                else:
-                    new_record = model(**data)
-                    self.session.add(new_record)
-                
-                self.session.commit()
-            
-        except Exception as e:
-            self.session.rollback()
-            raise e
+    
+                    self.session.commit()
+                    return requirement.id
+            except Exception as e:
+                self.session.rollback()
+                raise e
+    
+        # --- Caso general para el resto de modelos ---
+        obj = model()
+        for field, value in data.items():
+            if field in ("systems", "sections", "operators", "drones", "uhub_users", "affected_requirements"):
+                continue
+            if hasattr(obj, field):
+                setattr(obj, field, value)
+    
+        self.session.add(obj)
+        self.session.commit()
+        obj_id = obj.id
+    
+        # Relaciones para CASES
+        if key == "cases":
+            # Systems
+            if "systems" in data and data["systems"]:
+                obj.systems.clear()
+                for system_name in data["systems"]:
+                    system = self.session.query(System).filter_by(name=system_name).first()
+                    if system:
+                        obj.systems.append(system)
+            # Sections
+            if "sections" in data and data["sections"]:
+                obj.sections.clear()
+                for section_name in data["sections"]:
+                    section = self.session.query(Section).filter_by(name=section_name).first()
+                    if section:
+                        obj.sections.append(section)
+            # Operators
+            if "operators" in data and data["operators"]:
+                obj.operators.clear()
+                for operator_name in data["operators"]:
+                    operator = self.session.query(Operator).filter_by(name=operator_name).first()
+                    if operator:
+                        obj.operators.append(operator)
+            # Drones
+            if "drones" in data and data["drones"]:
+                obj.drones.clear()
+                for drone_name in data["drones"]:
+                    drone = self.session.query(Drone).filter_by(name=drone_name).first()
+                    if drone:
+                        obj.drones.append(drone)
+            # Uhub users
+            if "uhub_users" in data and data["uhub_users"]:
+                obj.uhub_users.clear()
+                for user_name in data["uhub_users"]:
+                    user = self.session.query(UhubUser).filter_by(username=user_name).first()
+                    if user:
+                        obj.uhub_users.append(user)
+            self.session.commit()
+    
+        # Relaciones para STEPS (many-to-many con requirements)
+        if key == "steps" and "affected_requirements" in data and data["affected_requirements"]:
+            obj.affected_requirements.clear()
+            for req_code in data["affected_requirements"]:
+                requirement = self.session.query(Requirement).filter_by(code=req_code).first()
+                if requirement:
+                    obj.affected_requirements.append(requirement)
+            self.session.commit()
+    
+        return obj_id
+
+        
         
     def edit_register(self, key, id, data):
         """Edita un registro existente en la tabla especificada."""
@@ -235,6 +310,36 @@ class DatabaseManager:
                     result['systems'] = [sys.name for sys in record.systems]
                 if hasattr(record, 'sections'):
                     result['sections'] = [sec.name for sec in record.sections]
+
+            elif key == 'cases':
+                # Systems
+                if hasattr(record, 'systems'):
+                    result['systems'] = [sys.name for sys in record.systems]
+                # Sections
+                if hasattr(record, 'sections'):
+                    result['sections'] = [sec.name for sec in record.sections]
+                # Operators
+                if hasattr(record, 'operators'):
+                    result['operators'] = [op.name for op in record.operators]
+                # Drones
+                if hasattr(record, 'drones'):
+                    result['drones'] = [drone.name for drone in record.drones]
+                # Uhub users
+                if hasattr(record, 'uhub_users'):
+                    result['uhub_users'] = [user.username for user in record.uhub_users]
+                
+                # Associated steps
+                if hasattr(record, 'steps'):
+                    result['steps'] = []
+                for step in record.steps:
+                    step_dict = {
+                        'id': step.id,
+                        'action': step.action,
+                        'expected_result': step.expected_result,
+                        'comments': step.comments,
+                        'affected_requirements': [req.code for req in step.affected_requirements] if hasattr(step, 'affected_requirements') else []
+                    }
+                    result['steps'].append(step_dict)
             
             return result
             
