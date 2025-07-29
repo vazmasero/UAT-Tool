@@ -198,8 +198,6 @@ class DatabaseManager:
             self.session.commit()
     
         return obj_id
-
-        
         
     def edit_register(self, key, id, data):
         """Edita un registro existente en la tabla especificada."""
@@ -221,7 +219,7 @@ class DatabaseManager:
                 column_names = [c.key for c in inspector.columns]
                 data = dict(zip(column_names[1:], data[1:]))  # Excluimos el ID
     
-            # Manejar relaciones muchos-a-muchos especiales
+            # --- REQUIREMENTS ---
             if key == 'requirements':
                 # Actualizar campos básicos (excluyendo relaciones)
                 basic_fields = ['code', 'definition', 'last_update']
@@ -264,6 +262,106 @@ class DatabaseManager:
                             section = self.session.query(Section).filter_by(name=section_name).first()
                             if section:
                                 record.sections.append(section)
+
+            # --- CASES ---
+            if key == 'cases':
+                basic_fields = ['identification', 'name', 'comments']
+                for field in basic_fields:
+                    if field in data:
+                        setattr(record, field, data[field])
+            
+            # Many-to-many: systems
+            if 'systems' in data: 
+                record.systems.clear()
+                if data['systems']:
+                    system_names = data['systems'] if isinstance(data['systems'], list) else [s.strip() for s in data['systems'].split(',')]
+                    for system_name in system_names:
+                        system = self.session.query(System).filter_by(name=system_name).first()
+                        if system:
+                            record.systems.append(system)
+
+            # Many-to-many: sections
+            if 'sections' in data:
+                record.sections.clear()
+                if data['sections']:
+                    section_names = data['sections'] if isinstance(data['sections'], list) else [s.strip() for s in data['sections'].split(',')]
+                    for section_name in section_names:
+                        section = self.session.query(Section).filter_by(name=section_name).first()
+                        if section:
+                            record.sections.append(section)
+
+            # Many-to-many: operators
+            if 'operators' in data:
+                record.operators.clear()
+                if data['operators']:
+                    operator_names = data['operators'] if isinstance(data['operators'], list) else [o.strip() for o in data['operators'].split(',')]
+                    for operator_name in operator_names:
+                        operator = self.session.query(Operator).filter_by(name=operator_name).first()
+                        if operator:
+                            record.operators.append(operator)
+
+            # Many-to-many: drones
+            if 'drones' in data:
+                record.drones.clear()
+                if data['drones']:
+                    drone_names = data['drones'] if isinstance(data['drones'], list) else [d.strip() for d in data['drones'].split(',')]
+                    for drone_name in drone_names:
+                        drone = self.session.query(Drone).filter_by(name=drone_name).first()
+                        if drone:
+                            record.drones.append(drone)
+
+            # Many-to-many: uhub_users
+            if 'uhub_users' in data:
+                record.uhub_users.clear()
+                if data['uhub_users']:
+                    user_names = data['uhub_users'] if isinstance(data['uhub_users'], list) else [u.strip() for u in data['uhub_users'].split(',')]
+                    for user_name in user_names:
+                        user = self.session.query(UhubUser).filter_by(username=user_name).first()
+                        if user:
+                            record.uhub_users.append(user)
+
+            # --- STEPS ---
+            if 'steps' in data:
+                existing_steps = {step.id: step for step in record.steps}
+                updated_step_ids = set()
+
+                for step_data in data['steps']:
+                    step_id = step_data.get('id')
+                    if step_id and step_id in existing_steps:
+                        # Actualizar step existente
+                        step = existing_steps[step_id]
+                        step.action = step_data.get('action', step.action)
+                        step.expected_result = step_data.get('expected_result', step.expected_result)
+                        step.comments = step_data.get('comments', step.comments)
+                        # Actualizar requirements asociados
+                        if 'affected_requirements' in step_data:
+                            step.affected_requirements.clear()
+                            for req_code in step_data['affected_requirements']:
+                                req = self.session.query(Requirement).filter_by(code=req_code).first()
+                                if req:
+                                    step.affected_requirements.append(req)
+                        updated_step_ids.add(step_id)
+
+                    else:
+                        # Nuevo step
+                        new_step = Step(
+                            action=step_data.get('action'),
+                            expected_result=step_data.get('expected_result'),
+                            comments=step_data.get('comments'),
+                            case=record
+                        )
+                        self.session.add(new_step)
+                        # Asociar requirements
+                        if 'affected_requirements' in step_data:
+                            for req_code in step_data['affected_requirements']:
+                                req = self.session.query(Requirement).filter_by(code=req_code).first()
+                                if req:
+                                    new_step.affected_requirements.append(req)
+
+                # Eliminar steps que ya no están
+                for step_id, step in existing_steps.items():
+                    if step_id not in updated_step_ids:
+                        self.session.delete(step)
             
             else:
                 # Para otros modelos, actualizar campos normalmente

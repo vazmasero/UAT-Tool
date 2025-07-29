@@ -70,12 +70,17 @@ class FormCase(BaseForm):
         formatted_data = self.controller.prepare_form_data(data)
         if not formatted_data:
             return
-        
-        self.ui.le_id.setText(formatted_data['code'])
-        self.ui.le_definition.setText(formatted_data['definition'])
+
+        # Set the form fields with the formatted data
+        self.ui.le_identification.setText(formatted_data['identification'])
+        self.ui.le_name.setText(formatted_data['name'])
         self.set_checked_items(self.ui.lw_system, formatted_data['systems'])
         self.set_checked_items(self.ui.lw_section, formatted_data['sections'])
-        
+        self.set_checked_items(self.ui.lw_operator, formatted_data['operators'])
+        self.set_checked_items(self.ui.lw_drone, formatted_data['drones'])
+        self.set_checked_items(self.ui.lw_uhub_user, formatted_data['uhub_users'])
+        self.ui.le_comment.setText(formatted_data['comments'])
+
     def _obtain_form_data(self) -> Dict[str, Any]:
         return {
             'identification': self.ui.le_identification.text(),

@@ -44,7 +44,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget_block">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_cases">
       <attribute name="title">
@@ -112,44 +112,6 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="hlayout_date">
-         <item>
-          <widget class="QLabel" name="lbl_creation">
-           <property name="text">
-            <string>Creation time:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="le_creation">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="placeholderText">
-            <string>[Creation time]</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lbl_update">
-           <property name="text">
-            <string>Last update:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="le_update">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="placeholderText">
-            <string>[Update time]</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
         <layout class="QHBoxLayout" name="hlayout_comments">
          <item>
           <widget class="QLabel" name="lbl_comments">
@@ -190,45 +152,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTableWidget" name="tbl_cases">
-         <property name="rowCount">
-          <number>4</number>
-         </property>
-         <row/>
-         <row/>
-         <row/>
-         <row/>
-         <column>
-          <property name="text">
-           <string>Name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Id</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Assets</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Comments</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Added</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Last updated</string>
-          </property>
-         </column>
-        </widget>
+        <widget class="QListView" name="tbl_cases"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="hlayout_btn_case">

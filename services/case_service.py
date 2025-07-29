@@ -77,8 +77,27 @@ class CaseService:
         data = self.db_manager.get_by_id("cases", case_id)
         return data
 
+    def save_case_and_steps(self, case: Case, steps_data: List[Dict[str, Any]]) -> None:
+        """ Saves a case and updates/creates/eliminates the associated steps"""
 
-    def get_steps_by_case_id(self, db_id):
-        # PENDIENTE: Hay que filtrar los pasos por el caso actual
-        # Asumiendo que el caso actual está almacenado en algún lugar
-        return self.db_manager.get_all_data("steps")
+        data = {
+            'identification': case.identification,
+            'name': case.name,
+            'systems': case.systems,
+            'sections': case.sections,
+            'operators': case.operators,
+            'drones': case.drones,
+            'uhub_users': case.uhub_users,
+            'comments': case.comments,
+            'steps': steps_data 
+        }
+
+        if case.id: 
+            # Edit case and associated steps
+            self.db_manager.edit_register("cases", case.id, data)
+        else:
+            # Crear caso y steps asociados
+            case_id = self.db_manager.create_register("cases", data)
+            for step in steps_data:
+                step['case_id'] = case_id
+                self.save_step(step)

@@ -21,7 +21,10 @@ class CaseController:
 
         data = []
         if mode == FormMode.EDIT and db_id is not None:
-            data = self.service.get_steps_by_case_id(db_id)
+            data = self.get_item_by_id(db_id)['steps']
+            for step in data:
+                if isinstance(step.get('affected_requirements'), list):
+                    step['affected_requirements'] = ', '.join(step['affected_requirements'])
 
         self.table_manager.setup_table(table_widget, table_name, data, register=True)
 
@@ -53,14 +56,13 @@ class CaseController:
             comments=form_data['comments']
         )
         
-        new_case_id = self.service.save_case(case)
-
-        # Save associated steps
+        # Obtain steps from the table
+        steps_data = []
         if steps_table is not None:
             table = self.table_manager.tables.get('steps')
-            steps_data = self.table_manager.get_table_data(table)
+            raw_steps = self.table_manager.get_table_data(table)
             column_map = CASE_TABLES['steps']['config'].column_map
-            for step in steps_data:
+            for step in raw_steps:
                 db_step = {}
                 for header, value in step.items():
                     db_column = column_map.get(header, header)
@@ -68,6 +70,16 @@ class CaseController:
                         db_step[db_column] = [v.strip() for v in value.split(', ') if v.strip()]
                     else:
                         db_step[db_column] = value
+                steps_data.append(db_step)
+
+        # Save the case and steps (new or edition)
+        if db_id:
+            # EDIT: update case and steps
+            self.service.save_case_and_steps(case, steps_data)
+        else:
+            # CREATE: create case and steps
+            new_case_id = self.service.save_case(case)
+            for db_step in steps_data:
                 db_step['case_id'] = new_case_id
                 self.service.save_step(db_step)
 
@@ -134,6 +146,24 @@ class CaseController:
     def get_steps_by_case_id(self, case_id):
         """Fetches all steps associated with a case ID."""
         return self.service.get_steps_by_case_id(case_id)
+    
+    def prepare_form_data(self, data: Dict) -> Dict:
+        if not data:
+            return None
+        
+        if 'Id' in data:
+            # Header as key:
+            return {
+                'id': data['Id'],
+                'identification': data['Identification'],
+                'name': data['Name'],
+                'systems': [s.strip() for s in data['System(s)'].split(',')] if data['System(s)'] else [],
+                'sections': [s.strip() for s in data['Section(s)'].split(',')] if data['Section(s)'] else [],
+                'operators': [o.strip() for o in data['Operator(s)'].split(',')] if data['Operator(s)'] else [],
+                'drones': [d.strip() for d in data['Drone(s)'].split(',')] if data['Drone(s)'] else [],
+                'uhub_users': [u.strip() for u in data['U-hub user(s)'].split(',')] if data['U-hub user(s)'] else [],
+            }
+        else:
+            return data
+    
 
-    def refresh_table_data(self, table):
-        self.service.refresh_table_data(table)
