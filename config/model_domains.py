@@ -10,6 +10,14 @@ class Requirement:
     sections: list[str]
 
 @dataclass
+class Block:
+    id: int | None
+    identification: str
+    name: str
+    system: str
+    comments: str
+
+@dataclass
 class Case:
     id: int | None
     identification: str

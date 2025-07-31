@@ -1,152 +1,142 @@
 from typing import Dict, Callable, Optional, Type, Any, List
-from PySide6.QtCore import Slot
-from PySide6.QtWidgets import QWidget, QDialog, QTableView
+from PySide6.QtCore import Slot, Signal, Qt
+from PySide6.QtWidgets import QTableView, QListWidgetItem
 
-"""from managers.form_manager import FormManager
-from managers.page_manager import PageManager
-from managers.table_manager import TableManager"""
+from base.base_form import BaseForm
+from managers.table_manager import TableManager
 from ui.ui_form_block import Ui_form_block
-"""
-from views.campaigns import ExecutionCampaign
-from views.dialogs import Dialog
+from controllers.block_controller import BlockController
+from services.block_service import BlockService
+from utils.form_mode import FormMode
 
-from config.page_config import PAGES
-from config.form_config import FORMS
+from db.db import DatabaseManager
 
-from controllers.main_controller import MainController
-from db.db import DatabaseManager"""
+class FormBlock(BaseForm):
 
-class FormBlock(QWidget):
-
-    def __init__(self):
-        super().__init__()
+    def __init__(self, mode:FormMode, db_id: Optional[int]):
+        super().__init__("blocks", mode, db_id)
         self.ui = Ui_form_block()
-        self.ui.setupUi(self)
 
-        """# Create managers
-        db_manager = DatabaseManager()
-        page_manager = PageManager(self.ui.stacked_widget, self.ui)
-        form_manager = FormManager()
-        table_manager = TableManager()
+        # Create managers and controller
+        self.db_manager = DatabaseManager()
+        self.table_manager = TableManager()
 
-        # Insert dependencies to the controller
-        self.controller = MainController(
-            ui=self.ui,
-            page_manager=page_manager,
-            form_manager=form_manager, 
-            table_manager=table_manager,
-            db_manager=db_manager
-        )
-        
-        self._setup_tables()
-        self._setup_buttons()
+        self.service = BlockService(self.db_manager)
+        self.controller = BlockController(self.service, self.table_manager)
 
+        self.selected_case_ids = set()
+
+        # Setup form
+        self.setup_form(Ui_form_block, self.controller)
         self._connect_signals()
-
-        # Provisional: disables search bars and filters until they are implemented
-        self._disable_search_bars()
         
-        self.controller._change_page("bugs")
-    
-    def _disable_search_bars(self):
-        # Search bars are disabled until implemented
-        self.ui.le_search_bug.setDisabled(True)
-        self.ui.le_search_requirement.setDisabled(True)
-
-        # Filters are disabled until implemented
-        self.ui.cb_filter_status.setDisabled(True)
-        self.ui.cb_filter_system.setDisabled(True)
-        self.ui.cb_search_bug.setDisabled(True)
-        self.ui.cb_system.setDisabled(True)
-
-    def _setup_tables(self):
-        self.controller.setup_tables()
-
     def _connect_signals(self):
-        Connects signals between managers and the view.
-        self._connect_menu_actions() # Menu bar actions
-        
-        self.ui.btn_add.clicked.connect(lambda _:self.controller.handle_new_form(edit=False))
-        self.ui.btn_edit.clicked.connect(lambda _:self.controller.handle_new_form(edit=True))
-        self.ui.btn_remove.clicked.connect(lambda _:self.controller._handle_remove_button())
-        self.ui.btn_start.clicked.connect(self._execute_campaign)
-        
-    def _connect_menu_actions(self):
+        pass
 
-        for attr_name in dir(self.ui):
-            if attr_name.startswith('action_view_'):
-                action = getattr(self.ui, attr_name)
-                page_type = attr_name.replace('action_view_', '')
-                action.triggered.connect(
-                lambda checked, pt=page_type: self.controller._change_page(pt)
-            )
-            elif attr_name.startswith("action_new_"):
-                action = getattr(self.ui, attr_name)
-                form_name = self._find_form_key_for_action(attr_name)
-                if form_name:
-                    action.triggered.connect(
-                        lambda _, fn=form_name: self.controller.handle_menu_add(fn, edit=False, data=None)
-                )
-                
-    def _find_form_key_for_action(self, action_name: str) -> Optional[str]:
-        Encuentra el form_key correspondiente a una acción del menú
-        for form_key, form_info in FORMS.items():
-            form_config = form_info.get('config')
-            if form_config and form_config.menu_action_attr == action_name:
-                return form_key
-        return None
-                
-    def _setup_buttons(self):
-        Sets up view's buttons (Add, Edit and Remove).
-        # Initially, both edit and delete buttons are disabled
-        self.ui.btn_edit.setEnabled(False)
-        self.ui.btn_remove.setEnabled(False)
-    
-    @Slot()
-    def _update_button_states(self, table=Optional[QTableView], data=Optional[List[List]]):
-        
-        if table:
-            if table.selectionModel().hasSelection():
-                self.ui.btn_edit.setEnabled(True)
-                self.ui.btn_remove.setEnabled(True)
+    def _setup_custom_widgets(self):
+        self.controller.setup_tables(self.ui, self.mode, self.db_id)
+        self.ui.cb_system.currentTextChanged.connect(self._on_system_changed)
+        self.ui.lw_cases.itemChanged.connect(self._handle_case_checkbox_changed)
+        if self.mode != FormMode.EDIT:
+            self._update_cases_list()
+
+    def _on_system_changed(self):
+            self.selected_case_ids = set()
+            self._update_cases_list()
+
+    def _handle_case_checkbox_changed(self, item: QListWidgetItem):
+        case_id = item.data(Qt.UserRole)
+        checked = item.checkState() == Qt.Checked
+
+        case_data = self.controller.get_case_by_id(case_id)
+
+        if checked:
+            if not self.controller.is_case_in_table(case_id):
+                self.controller.add_case_to_table(case_data)
+        else:
+            self.controller.remove_case_from_table(case_id)
+
+    def _update_cases_list(self):
+        self._clear_cases_table()
+        system_name = self.ui.cb_system.currentText()
+        cases = self.controller.get_cases_by_system(system_name)
+        self.ui.lw_cases.clear()
+
+        for case in cases:
+            item = QListWidgetItem(f"{case['identification']} - {case['name']}")
+            item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
+            item.setData(Qt.UserRole, case.get("id"))
+            if case.get("id") in self.selected_case_ids:
+                item.setCheckState(Qt.Checked)
+                self.controller.add_case_to_table(case)
             else:
-                self.ui.btn_edit.setEnabled(False)
-                self.ui.btn_remove.setEnabled(False)
-        
-        self.ui.btn_add.setEnabled(True)
+                item.setCheckState(Qt.Unchecked)
+            self.ui.lw_cases.addItem(item)
 
-    @Slot()
-    def _execute_campaign(self):
-        form = ExecutionCampaign()
-        form.setWindowTitle("Execute campaign")
-        self.form_manager.register_form(form, "Execute campaign")
-        form.show()
+    def _clear_cases_table(self):
+        """Limpia todas las filas de la tabla de casos."""
+        model = self.ui.tbl_cases.model()
+        if model:
+            while model.rowCount() > 0:
+                model.removeRow(0)
+
+    def load_data(self, data):
+        """Loads data into the form."""
+        formatted_data = self.controller.prepare_form_data(data)
+        if not formatted_data:
+            return
+        self.ui.le_identification.setText(formatted_data['identification'])
+        self.ui.le_name.setText(formatted_data['name'])
+        self.ui.le_comments.setText(formatted_data['comments'])
+        self.ui.cb_system.setCurrentText(formatted_data['system'])
+        self.selected_case_ids = set(case.get("id") for case in formatted_data.get("cases", []))
+        self._update_cases_list()
+
+
+    def _obtain_form_data(self) -> Dict[str, Any]:
+        return {
+            'identification': self.ui.le_identification.text(),
+            'name': self.ui.le_name.text(),
+            'system': self.ui.cb_system.currentText(),
+            'comments': self.ui.le_comments.text(),
+            'cases': self.get_checked_case_ids()
+        }
     
-    @Slot()
-    def _load_table_data(self, index):
+    def get_checked_case_ids(self):
+        checked_ids = []
+        for i in range(self.ui.lw_cases.count()):
+            item = self.ui.lw_cases.item(i)
+            if item.checkState() == Qt.Checked:
+                checked_ids.append(item.data(Qt.UserRole))
+
+        return checked_ids
+
+    def validate_form(self, data):
+        """Valida los datos del formulario."""
+        errors = []
         
-        # Sender identifies which widget sent the signal. 
-        sender = self.sender()
-        
-        if sender.objectName() == "stacked_main":
-            # If sender is stacked_main, index is page index
-            page_key = next(
-                (key for key, info in PAGES.items() if info["config"].index == index), None
-            )
-            table_key = PAGES[page_key]["config"].tables[0]
-        elif sender.objectName() == "tab_widget_management":
-            # If sender is any of the tabs, index is the new tab
-            page_key = "management"
-            table_key = PAGES[page_key]["config"].tables[index]
-        elif sender.objectName() == "tab_widget_assets":
-            page_key = "assets"
-            table_key = PAGES[page_key]["config"].tables[index]
-        
-        data = self.db_manager.get_all_data(table_key)
-        self.table_manager.update_table_model(table_key, data)
-        self._update_button_states(self.table_manager.tables[table_key], None)
-        
-    def closeEvent(self, event):
-        self.controller.close_program()
-        super().closeEvent(event)"""
-            
+        if not data['identification']: 
+            errors.append("Defining an identification is mandatory")
+        if not data['name']: 
+            errors.append("Writing a name for the case is mandatory")
+        if not data['system']:
+            errors.append("Choosing one associated system is mandatory")
+
+        return errors
+    
+    def _handle_submit(self):
+        """Handles form submission for Block, including cases."""
+        try:
+            data = self._obtain_form_data()
+            errors = self.validate_form(data)
+
+            if errors:
+                self.show_errors(errors)
+                return
+
+            cases_table = self.ui.tbl_cases
+            self.controller.handle_form_submission(data, self.db_id, cases_table)
+            self.data_updated.emit(self.form_key)
+            self.close()
+        except Exception as e:
+            self.show_critical(f"Error submitting form: {str(e)}")

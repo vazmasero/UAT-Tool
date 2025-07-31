@@ -101,9 +101,10 @@ TABLES = {
     "blocks": {
         "config": TableConfig(
             db_table="blocks",
-            headers=["Id", "Name", "System", "Cases", "Comments"],
+            headers=["Id", "Identification", "Name", "System", "Cases", "Comments"],
             column_map={
-                "Id": "identifier",
+                "Id": "id",
+                "Identification": "identification",
                 "Name": "name",
                 "System": "system",
                 "Cases": "cases",

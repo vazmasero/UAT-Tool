@@ -11,10 +11,12 @@ Formularios:
 	ponga en primer plano si ya está abierto en lugar de cerrarlo y abrir uno nuevo.
 
 
-
 Tablas: 
 	- Deselección al pulsar fuera de la tabla.
 	- Añadir columnas de "Creation date" y "Last update" a todas las tablas. 
+	- Recargar TODAS las tablas siempre y cuando haya un cambio en un item que tenga relaciones
+	otros. Ej: se cambia el nombre de un dron, que cascadee a todas las tablas la actualización del nombre o 
+	su eliminación. 
 
 
 Assets: 

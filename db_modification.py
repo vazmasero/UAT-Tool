@@ -18,6 +18,7 @@ def open_db_shell():
     print("  schema <tabla> - Ver estructura de tabla")
     print("  drop uspaces - Eliminar tabla uspaces")
     print("  drop cases - Eliminar tabla cases")
+    print("  drop blocks - Eliminar tabla blocks")
     print("  drop all - Eliminar todas las tablas")
     print("  create uspaces - Crear tabla uspaces")
     print("  exit - Salir")
@@ -55,6 +56,10 @@ def open_db_shell():
                 conn.execute("DROP TABLE IF EXISTS cases")
                 conn.commit()
                 print("Tabla cases eliminada")
+            elif command == "drop blocks":
+                conn.execute("DROP TABLE IF EXISTS blocks")
+                conn.commit()
+                print("Tabla blocks eliminada")
             elif command == "drop all":
                 # Obtener todas las tablas
                 cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table'")

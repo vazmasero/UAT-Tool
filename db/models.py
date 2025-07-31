@@ -65,6 +65,14 @@ step_requirements = Table(
     Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True)
 )
 
+# Tabla intermedia para la relación many-to-many Block <-> Case
+block_cases = Table(
+    'block_cases',
+    Base.metadata,
+    Column('block_id', Integer, ForeignKey('blocks.id'), primary_key=True),
+    Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True)
+)
+
 class Bug(Base):
     __tablename__ = 'bugs'
     id = Column(Integer, primary_key=True)
@@ -128,14 +136,19 @@ class Case(Base):
     # Relationship one to many
     steps = relationship('Step', back_populates='case', cascade='all, delete-orphan')
 
+    # Relación inversa many-to-many con Block
+    blocks = relationship('Block', secondary=block_cases, back_populates='cases')
+
 class Block(Base):
     __tablename__ = 'blocks'
     id = Column(Integer, primary_key=True)
-    identifier = Column(String)
+    identification = Column(String)
     name = Column(String)
     system = Column(String)
-    cases = Column(String)
     comments = Column(Text)
+
+    # Relación many-to-many con Case
+    cases = relationship('Case', secondary=block_cases, back_populates='blocks')
 
 class Requirement(Base):
     __tablename__ = 'requirements'

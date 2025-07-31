@@ -287,7 +287,7 @@ class TableManager(QObject):
 
         return rows
     
-    def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None):
+    def add_row(self, table: QTableView, row_data: List[Any], position: Optional[int] = None, config_module=None):
         model = table.model()
         if not model:
             return
@@ -308,12 +308,22 @@ class TableManager(QObject):
             # Buscar configuración en CASE_TABLES
             config = None
             table_name = None
-                
-            from config.case_table_config import CASE_TABLES
-            for name, table_config in CASE_TABLES.items():
-                if hasattr(table, 'objectName') and table.objectName() == table_config["config"].widget_name:
-                    config = table_config["config"]  # Obtener el objeto config, no el dict
-                    table_name = name
+
+            config_modules = []
+            if config_module:
+                config_modules.append(config_module)
+            else:
+                from config.case_table_config import CASE_TABLES
+                from config.block_table_config import BLOCK_TABLES
+                config_modules = [CASE_TABLES, BLOCK_TABLES]
+
+            for tables in config_modules:
+                for name, table_config in tables.items():
+                    if hasattr(table, 'objectName') and table.objectName() == table_config["config"].widget_name:
+                        config = table_config["config"]
+                        table_name = name
+                        break
+                if config:
                     break
                 
             # Convertir diccionario a lista ordenada según headers
@@ -326,7 +336,8 @@ class TableManager(QObject):
                     
                 # Si es la columna Id, agregar None ya que no tenemos ID para nuevos registros
                 if header.lower() == "id":
-                    ordered_data.append(None)
+                    value = row_data.get(db_column,None)
+                    ordered_data.append(value)
                 else:
                     value = row_data.get(db_column, "")
                     ordered_data.append(value)
