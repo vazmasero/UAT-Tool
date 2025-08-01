@@ -29,24 +29,26 @@ TABLES = {
         "config": TableConfig(
             db_table="bugs",
             headers=[
-                "Status", "System", "Version", "Creation Time", "Last Update",
+                "Id", "Status", "System", "Version", "Creation Time", "Last Update",
                 "ServiceNow ID", "Campaign", "Requirements", "Short Description",
-                "Definition", "Urgency", "Impact", "Comments"
+                "Definition", "Urgency", "Impact", "Comments", "Associated files"
             ],
             column_map={
+                "Id": "id",
                 "Status": "status",
-                "System": "system",
+                "System": "system_id",
                 "Version": "version",
                 "Creation Time": "creation_time",
                 "Last Update": "last_update",
-                "ServiceNow ID": "servicenow_id",
-                "Campaign": "campaign",
+                "ServiceNow ID": "service_now_id",
+                "Campaign": "campaign_id",
                 "Requirements": "requirements",
-                "Short Description": "short_description",
+                "Short Description": "short_desc",
                 "Definition": "definition",
                 "Urgency": "urgency",
                 "Impact": "impact",
-                "Comments": "comments"
+                "Comments": "comments",
+                "Associated files": "file"
             },
             widget_name="tbl_bugs",
             page="bugs"

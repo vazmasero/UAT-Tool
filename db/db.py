@@ -108,6 +108,53 @@ class DatabaseManager:
             raise ValueError(f"Key '{key}' not found. Available keys: {available_keys}")
     
         model = self._model_map[key]
+
+        # --- Bugs ---
+        if key == 'bugs':
+            try:
+                with self.session.no_autoflush:
+
+                    system = None
+                    if 'system_id' in data and data['system_id']:
+                        system = self.session.query(System).filter_by(name=data['system_id']).first()
+                    campaign = None
+                    if 'campaign_id' in data and data['campaign_id']:
+                        campaign = self.session.query(Campaign).filter_by(id=data['campaign_id']).first()
+                    requirements = []
+                    if 'requirements' in data and data['requirements']:
+                        requirements = self.session.query(Requirement).filter(
+                            Requirement.code.in_(data['requirements'])
+                        ).all()
+
+                    bug = model(
+                        status=data.get('status'),
+                        system=system,
+                        campaign=campaign,
+                        version=data.get('version'),
+                        creation_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        last_update=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        service_now_id=data.get('service_now_id'),
+                        short_desc=data.get('short_desc'),
+                        definition=data.get('definition'),
+                        urgency=data.get('urgency'),
+                        impact=data.get('impact'),
+                        comments=data.get('comments'),
+                        file=data.get('file')
+                    )
+                    self.session.add(bug)
+                    self.session.flush()
+    
+                    # Many-to-many: requirements
+                    bug.requirements = requirements
+
+                    # History log
+                    bug.log = self.append_bug_log("", "Bug created")
+    
+                    self.session.commit()
+                    return bug.id
+            except Exception as e:
+                self.session.rollback()
+                raise e
     
         # --- Caso especial para requirements ---
         if key == 'requirements':
@@ -249,9 +296,37 @@ class DatabaseManager:
                 inspector = inspect(model)
                 column_names = [c.key for c in inspector.columns]
                 data = dict(zip(column_names[1:], data[1:]))  # Excluimos el ID
-    
+
+            # --- BUGS ---
+            if key == 'bugs':
+                basic_fields = [
+                'status', 'version', 'service_now_id', 'short_desc', 'definition',
+                'urgency', 'impact', 'comments', 'file'
+                ]
+                for field in basic_fields:
+                    if field in data:
+                        setattr(record, field, data[field])
+
+                # Actualizar relaciones
+                if 'system' in data and data['system']:
+                    system = self.session.query(System).filter_by(name=data['system']).first()
+                    record.system = system
+
+                if 'campaign' in data and data['campaign']:
+                    campaign = self.session.query(Campaign).filter_by(identifier=data['campaign']).first()
+                    record.campaign = campaign
+
+                if 'requirements' in data and data['requirements']:
+                    requirements = self.session.query(Requirement).filter(
+                        Requirement.code.in_(data['requirements'])
+                    ).all()
+                    record.requirements = requirements
+
+                # History log
+                record.log = self.append_bug_log(record.log, f"Bug edited (status: {record.status})")
+
             # --- REQUIREMENTS ---
-            if key == 'requirements':
+            elif key == 'requirements':
                 basic_fields = ['code', 'definition', 'last_update']
                 for field in basic_fields:
                     if field in data:
@@ -410,6 +485,15 @@ class DatabaseManager:
             self.session.rollback()
             print(f"Error editing register: {e}")
             return False
+        
+    @staticmethod
+    def append_bug_log(existing_log: str, action: str) -> str:
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        entry = f"{action} at {now}"
+        if existing_log:
+            return existing_log + "\n" + entry
+        else:   
+            return entry
 
 
     def get_by_id(self, key, id):

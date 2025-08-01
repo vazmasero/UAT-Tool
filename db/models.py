@@ -6,6 +6,14 @@ Base = declarative_base()
 
 """Many - to - many relationships"""
 
+# Bug-requirement
+bug_requirements = Table(
+    'bug_requirements',
+    Base.metadata,
+    Column('bug_id', Integer, ForeignKey('bugs.id'), primary_key=True),
+    Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True)
+)
+
 # Requirements
 requirement_systems = Table(
     'requirement_systems',
@@ -57,7 +65,7 @@ case_uhub_users = Table(
     Column('uhub_user_id', Integer, ForeignKey('uhub_users.id'), primary_key=True)
 )
 
-# Steps
+# Step-requirements
 step_requirements = Table(
     'step_requirements',
     Base.metadata,
@@ -77,18 +85,24 @@ class Bug(Base):
     __tablename__ = 'bugs'
     id = Column(Integer, primary_key=True)
     status = Column(String)
-    system = Column(String)
+    system_id = Column(Integer, ForeignKey('systems.id'))
+    campaign_id = Column(Integer, ForeignKey('campaigns.id'), unique=True)
     version = Column(String)
     creation_time = Column(String)
     last_update = Column(String)
     service_now_id = Column(String)
-    campaign = Column(String)
-    requirements = Column(String)
     short_desc = Column(String)
     definition = Column(Text)
     urgency = Column(String)
     impact = Column(String)
     comments = Column(Text)
+    file = Column(Text, nullable=True)
+    log = Column(Text)
+
+    # Relationships
+    requirements = relationship('Requirement', secondary=bug_requirements, back_populates='bugs')
+    system = relationship('System', back_populates='bugs')
+    campaign = relationship('Campaign', back_populates='bug', uselist=False)
 
 class Campaign(Base):
     __tablename__ = 'campaigns'
@@ -105,6 +119,9 @@ class Campaign(Base):
     end_date = Column(String)
     last_update = Column(String)
     comments = Column(Text)
+
+    # Relationships
+    bug = relationship('Bug', back_populates='campaign', uselist=False)
 
 class Step(Base):
     __tablename__ = 'steps'
@@ -163,6 +180,7 @@ class Requirement(Base):
     systems = relationship('System', secondary=requirement_systems, back_populates='requirements')
     sections = relationship('Section', secondary=requirement_sections, back_populates='requirements')
     steps = relationship('Step', secondary=step_requirements, back_populates='affected_requirements')
+    bugs = relationship('Bug', secondary=bug_requirements, back_populates='requirements')
 
 class System(Base):
     __tablename__ = 'systems'
@@ -170,6 +188,7 @@ class System(Base):
     name = Column(String, unique=True, nullable=False)
     requirements = relationship('Requirement', secondary=requirement_systems, back_populates='systems')
     cases = relationship('Case', secondary=case_systems, back_populates='systems')
+    bugs = relationship('Bug', back_populates='system')
 
 class Section(Base):
     __tablename__ = 'sections'

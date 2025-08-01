@@ -16,6 +16,7 @@ def open_db_shell():
     print("Comandos disponibles:")
     print("  tables - Ver todas las tablas")
     print("  schema <tabla> - Ver estructura de tabla")
+    print("  drop bugs - Eliminar tabla bugs")
     print("  drop uspaces - Eliminar tabla uspaces")
     print("  drop cases - Eliminar tabla cases")
     print("  drop blocks - Eliminar tabla blocks")
@@ -48,6 +49,10 @@ def open_db_shell():
                         print(f"Tabla '{table}' no encontrada")
                 else:
                     print("Uso: schema <nombre_tabla>")
+            elif command == "drop bugs":
+                conn.execute("DROP TABLE IF EXISTS bugs")
+                conn.commit()
+                print("Tabla bugs eliminada")
             elif command == "drop uspaces":
                 conn.execute("DROP TABLE IF EXISTS uspaces")
                 conn.commit()

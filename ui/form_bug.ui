@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>info_bug</class>
- <widget class="QWidget" name="info_bug">
+ <class>form_bug</class>
+ <widget class="QWidget" name="form_bug">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -110,33 +110,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cb_system">
-           <item>
-            <property name="text">
-             <string>USSP</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>CISP</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>AUDI</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>EXCHANGE</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>NA</string>
-            </property>
-           </item>
-          </widget>
+          <widget class="QComboBox" name="cb_system"/>
          </item>
          <item>
           <widget class="QLabel" name="lbl_version">
@@ -156,14 +130,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_identification">
+          <widget class="QLabel" name="lbl_service_now_id">
            <property name="text">
             <string>Service now ID:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="le_identification">
+          <widget class="QLineEdit" name="le_service_now_id">
            <property name="text">
             <string/>
            </property>
@@ -200,7 +174,20 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cb_requirements"/>
+          <widget class="QListWidget" name="lw_requirements">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -263,14 +250,14 @@
        <item>
         <layout class="QHBoxLayout" name="hlayout_description">
          <item>
-          <widget class="QLabel" name="lbl_description">
+          <widget class="QLabel" name="lbl_short_desc">
            <property name="text">
             <string>Short description: </string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="le_description">
+          <widget class="QLineEdit" name="le_short_desc">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -392,7 +379,7 @@
      <item>
       <widget class="QPushButton" name="btn_cancel">
        <property name="text">
-        <string>Back</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>

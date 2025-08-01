@@ -18,6 +18,21 @@ class Block:
     comments: str
 
 @dataclass
+class Bug:
+    id : int | None
+    status: str
+    system_id: str
+    campaign_id: str
+    requirements: list[str]
+    version: str
+    service_now_id: str
+    short_desc: str
+    definition: str
+    urgency: str
+    impact: str
+    file: str
+
+@dataclass
 class Case:
     id: int | None
     identification: str

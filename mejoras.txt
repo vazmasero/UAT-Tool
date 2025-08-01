@@ -26,3 +26,6 @@ Assets:
 Steps: 
 	- Arreglar la importación de form manager para poder usar una instancia general al abrir 
 	el formulario de steps (probar singleton)
+
+Blocks:
+	- Los sistemas se almacenan como string y no como un vinculo a un sistema de BBDD

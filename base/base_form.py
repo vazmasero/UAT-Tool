@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any, List
-from PySide6.QtWidgets import QWidget, QMessageBox, QListWidget, QCheckBox, QListWidgetItem
+from PySide6.QtWidgets import QWidget, QMessageBox, QListWidget, QCheckBox, QListWidgetItem, QComboBox
 from PySide6.QtCore import Signal
 from utils.form_mode import FormMode
 
@@ -101,6 +101,15 @@ class BaseForm(QWidget):
             item = QListWidgetItem(list_widget)
             checkbox = QCheckBox(option)
             list_widget.setItemWidget(item, checkbox)
+
+    def setup_cb(self, combo_widget: QComboBox, options: List[str]):
+        """Sets up a QComboBox with options."""
+        combo_widget.clear()
+        opts = list(options) if options else []
+        if "NA" not in opts:
+            opts.append("NA")
+        for option in opts:
+            combo_widget.addItem(option)
 
     def get_checked_items(self, list_widget: QListWidget) -> List[str]:
         """Returns a list of checked items from a QListWidget."""
