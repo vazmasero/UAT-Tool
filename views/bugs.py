@@ -58,6 +58,24 @@ class FormBug(BaseForm):
 
     def load_data(self, data):
 
+        # Load data
+        formatted_data = self.controller.prepare_form_data(data)
+        if not formatted_data:
+            return
+
+        self.ui.cb_status.setCurrentText(formatted_data['status'])
+        self.ui.cb_system.setCurrentText(formatted_data['system_id'])
+        self.ui.le_version.setText(formatted_data['version'])
+        self.ui.le_service_now_id.setText(formatted_data['service_now_id'])
+        self.ui.cb_campaign.setCurrentText(formatted_data['campaign_id'])
+        self.set_checked_items(self.ui.lw_requirements, formatted_data['requirements'])
+        self.ui.cb_urgency.setCurrentText(formatted_data['urgency'])
+        self.ui.cb_impact.setCurrentText(formatted_data['impact'])
+        self.ui.le_short_desc.setText(formatted_data['short_desc'])
+        self.ui.le_definition.setText(formatted_data['definition'])
+        file_content = formatted_data.get('file', "")
+        if file_content:
+            self.ui.le_files.setText("[File loaded from database]")
 
         # Load bug history
         log = data.get("log", "")

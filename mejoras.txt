@@ -29,3 +29,7 @@ Steps:
 
 Blocks:
 	- Los sistemas se almacenan como string y no como un vinculo a un sistema de BBDD
+
+Bugs y U-space:
+	- Arreglar el tema de los archivos adjuntos. Por un lado, que al hacer click se puedan descargar y, por otro
+	

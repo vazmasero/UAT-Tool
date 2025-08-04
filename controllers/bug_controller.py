@@ -98,13 +98,9 @@ class BugController:
             print(f"Error deleting register {row_index} from table: {e}")
 
     def get_item_by_id(self, db_id):
-        """Fetches a case item by its ID."""
-        return self.service.get_case(db_id)
+        """Fetches a bug item by its ID."""
+        return self.service.get_bug(db_id)
 
-    def get_steps_by_case_id(self, case_id):
-        """Fetches all steps associated with a case ID."""
-        return self.service.get_steps_by_case_id(case_id)
-    
     def prepare_form_data(self, data: Dict) -> Dict:
         if not data:
             return None
@@ -113,14 +109,19 @@ class BugController:
             # Header as key:
             return {
                 'id': data['Id'],
-                'identification': data['Identification'],
-                'name': data['Name'],
-                'systems': [s.strip() for s in data['System(s)'].split(',')] if data['System(s)'] else [],
-                'sections': [s.strip() for s in data['Section(s)'].split(',')] if data['Section(s)'] else [],
-                'operators': [o.strip() for o in data['Operator(s)'].split(',')] if data['Operator(s)'] else [],
-                'drones': [d.strip() for d in data['Drone(s)'].split(',')] if data['Drone(s)'] else [],
-                'uhub_users': [u.strip() for u in data['U-hub user(s)'].split(',')] if data['U-hub user(s)'] else [],
+                'status': data['Status'],
+                'system': data['System'],
+                'version': data['Version'],
+                'service_now_id': data['ServiceNow ID'],
+                'campaign_id': data['Campaign'],
+                'requirements': [r.strip() for r in data[''].split(',')] if data['Requirements'] else [],
+                'short_desc': data['Short Description'],
+                'definition': data['Definition'],
+                'urgency': data['Urgency'],
+                'impact': data['Impact'],
+                'file': data['Associated files'],
             }
+        
         else:
             return data
     

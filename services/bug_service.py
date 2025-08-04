@@ -37,10 +37,13 @@ class BugService:
 
         if bug.id:
             self.db_manager.edit_register("bugs", bug.id, data)
+            return None
         else:
             bug_id = self.db_manager.create_register("bugs", data)
-
-        return bug_id
+            return bug_id
     
+    def get_bug(self, db_id: int):
+        return self.db_manager.get_by_id("bugs", db_id)
+
     def _on_form_closed(self, form_key: str):
         self.active_forms.pop(form_key, None)

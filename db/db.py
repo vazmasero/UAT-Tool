@@ -91,7 +91,19 @@ class DatabaseManager:
                 elif key == 'blocks':
                     if hasattr(item, 'cases'):
                         item_dict['cases'] = len(item.cases)
-                
+                elif key == 'bugs':
+                    if hasattr(item, 'system') and item.system:
+                        item_dict['system_id'] = item.system.name
+                    else:
+                        item_dict['system_id'] = ""
+                    if hasattr(item, 'campaign') and item.campaign:
+                        item_dict['campaign_id'] = item.campaign.identifier
+                    else:
+                        item_dict['campaign_id'] = "NA"
+                    if hasattr(item, 'requirements'):
+                        item_dict['requirements'] = ", ".join([req.code for req in item.requirements])
+                    else:
+                        item_dict['requirements'] = ""
                 results.append(item_dict)
                 
             return results
@@ -101,7 +113,6 @@ class DatabaseManager:
             print(f"Error obtaining data from {key}: {e}")
             return []
 
-     
     def create_register(self, key: str, data: Dict[str, Any]) -> int:
         if key not in self._model_map:
             available_keys = ', '.join(self._model_map.keys())
@@ -119,7 +130,7 @@ class DatabaseManager:
                         system = self.session.query(System).filter_by(name=data['system_id']).first()
                     campaign = None
                     if 'campaign_id' in data and data['campaign_id']:
-                        campaign = self.session.query(Campaign).filter_by(id=data['campaign_id']).first()
+                        campaign = self.session.query(Campaign).filter_by(identifier=data['campaign_id']).first()
                     requirements = []
                     if 'requirements' in data and data['requirements']:
                         requirements = self.session.query(Requirement).filter(
@@ -308,12 +319,12 @@ class DatabaseManager:
                         setattr(record, field, data[field])
 
                 # Actualizar relaciones
-                if 'system' in data and data['system']:
-                    system = self.session.query(System).filter_by(name=data['system']).first()
+                if 'system_id' in data and data['system_id']:
+                    system = self.session.query(System).filter_by(name=data['system_id']).first()
                     record.system = system
 
-                if 'campaign' in data and data['campaign']:
-                    campaign = self.session.query(Campaign).filter_by(identifier=data['campaign']).first()
+                if 'campaign_id' in data and data['campaign_id']:
+                    campaign = self.session.query(Campaign).filter_by(identifier=data['campaign_id']).first()
                     record.campaign = campaign
 
                 if 'requirements' in data and data['requirements']:
@@ -565,6 +576,23 @@ class DatabaseManager:
                         'comments': case.comments
                     }
                     result['cases'].append(case_dict)
+
+            elif key == 'bugs':
+                # System (uno-a-muchos)
+                if hasattr(record, 'system') and record.system:
+                    result['system_id'] = record.system.name
+                else:
+                    result['system_id'] = ""
+                # Campaign (uno-a-uno)
+                if hasattr(record, 'campaign') and record.campaign:
+                    result['campaign_id'] = record.campaign.identifier
+                else:
+                    result['campaign_id'] = "NA"
+                # Requirements (muchos-a-muchos)
+                if hasattr(record, 'requirements'):
+                    result['requirements'] = [req.code for req in record.requirements]
+                else:
+                    result['requirements'] = []
 
             return result
             
