@@ -1,15 +1,11 @@
-
-
 Main Window: 
 	- Implementar filtros y barras de búsqueda.
 	- Los botones de edit y remove deben deshabilitarse de nuevo con el cambio de tabla.
-
 
 Formularios: 
 	- Los formularios deben mostrar el título correcto.
 	- En open_form, cambiar la lógica de Form repetido (active_forms) para que el formulario se 
 	ponga en primer plano si ya está abierto en lugar de cerrarlo y abrir uno nuevo.
-
 
 Tablas: 
 	- Deselección al pulsar fuera de la tabla.
@@ -17,7 +13,6 @@ Tablas:
 	- Recargar TODAS las tablas siempre y cuando haya un cambio en un item que tenga relaciones
 	otros. Ej: se cambia el nombre de un dron, que cascadee a todas las tablas la actualización del nombre o 
 	su eliminación. 
-
 
 Assets: 
 	- Víncular assets entre sí (cuando aplique) mediante base de datos
@@ -31,5 +26,6 @@ Blocks:
 	- Los sistemas se almacenan como string y no como un vinculo a un sistema de BBDD
 
 Bugs y U-space:
-	- Arreglar el tema de los archivos adjuntos. Por un lado, que al hacer click se puedan descargar y, por otro
+	- Arreglar el tema de los archivos adjuntos. Por un lado, que al hacer click se puedan descargar y, 
+	por otro, que al cargar de la tabla y volver a editar se guarde correctamente
 	

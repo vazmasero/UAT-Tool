@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from db.models import System, Section
 
+# USADO
 def load_initial_data(session: Session):
     """Method that populates tables with predefined data when the program is launched"""
     

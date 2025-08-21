@@ -23,6 +23,7 @@ class TableManager(QObject):
         self.tables: Dict[str, QTableView] = {}
         self.table_configs: Dict[str, Dict] = {}
 
+    # USADA
     def setup_table(self, table: QTableView, name: str, data: List[Dict[str, Any]], config: Optional[Dict] = None, register=False):
         
         """Creates and associates models to a particular TableView object. If needed, the table is registered when created."""
@@ -55,6 +56,7 @@ class TableManager(QObject):
         if register:
             self._register_table(table, name, config)
     
+    # USADA
     def _populate_model(self, name: str, model: QStandardItemModel, data: List[Dict[str, Any]]):
         
         """Populates the model associated to a table with the elements obtained from the database"""
@@ -78,6 +80,7 @@ class TableManager(QObject):
             if items:
                 model.appendRow(items)
     
+    # USADA
     def _create_item(self, value: Any, config: Optional[Dict], column_index: int) -> QStandardItem:
         """Creates a new item for a certain mode"""
         

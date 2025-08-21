@@ -1,18 +1,15 @@
-from typing import Optional, Any, List
+from typing import Optional, List
 
 from PySide6.QtWidgets import QTableView
-from PySide6.QtCore import Slot, QItemSelectionModel
+from PySide6.QtCore import Slot
 
 from config.app_config import BaseUI
 from config.table_config import TABLES
-from config.form_config import FORMS
 from config.page_config import PAGES
 from db.db import DatabaseManager
 from managers.table_manager import TableManager
 from managers.page_manager import PageManager
 from managers.form_manager import FormManager
-from managers.table_manager import TableManager
-
 
 class MainController:
     def __init__(self, 

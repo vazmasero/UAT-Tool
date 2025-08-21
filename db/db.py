@@ -1,9 +1,7 @@
-import os
 import datetime
 from typing import Any, Dict
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker, scoped_session
-from PySide6.QtSql import QSqlDatabase, QSqlQuery
 
 from .models import (Base, Bug, Campaign, Case, Block, Requirement, System, Step,
                     Section, Email, Operator, Drone, UasZone, UhubOrg, UhubUser, Uspace)
@@ -30,10 +28,6 @@ def init_db():
     finally:
         session.close()
         
-def get_session():
-    """Devuelve una nueva sesión de base de datos."""
-    return Session()
-
 class DatabaseManager:
     
     def __init__(self):
