@@ -8,7 +8,8 @@ class BaseForm(QWidget):
     """Unified base class for forms, providing common functionality."""
     data_updated = Signal(str)
 
-    def __init__(self, form_key: str, mode: FormMode, db_id: Optional[int]=None):
+    def __init__(self, form_key: str, mode: FormMode,
+                 db_id: Optional[int] = None):
         super().__init__()
         self.form_key = form_key
         self.db_id = db_id
@@ -32,7 +33,6 @@ class BaseForm(QWidget):
 
     def _setup_custom_widgets(self):
         """Override this method in subclasses to set up custom widgets."""
-        pass
 
     def _setup_window_title(self):
         """Sets the window title based on the form mode."""
@@ -67,7 +67,7 @@ class BaseForm(QWidget):
             if errors:
                 self.show_errors(errors)
                 return
-            
+
             self.controller.handle_form_submission(data, self.db_id)
             self.data_updated.emit(self.form_key)
             self.close()
@@ -78,13 +78,14 @@ class BaseForm(QWidget):
     def _obtain_form_data(self) -> Dict[str, Any]:
         """Abstract method to obtain form data."""
         raise NotImplementedError("Subclasses must implement this method.")
+
     def validate_form(self, data: Dict[str, Any]) -> List[str]:
         """Validates form data."""
-        return [] # No errors by default
-    
+        _ = data
+        return []  # No errors by default
+
     def load_data(self, data: Dict[str, Any]):
         """Loads data into the form fields."""
-        pass 
 
     # Utility methods
     def show_errors(self, errors: List[str]):
@@ -95,7 +96,8 @@ class BaseForm(QWidget):
         """Displays a critical error message."""
         QMessageBox.critical(self, "Critical Error", message)
 
-    def setup_checkbox_list(self, list_widget: QListWidget, options: List[str]):
+    def setup_checkbox_list(
+            self, list_widget: QListWidget, options: List[str]):
         """Sets up a QListWidget with checkboxes."""
         for option in options:
             item = QListWidgetItem(list_widget)
@@ -120,7 +122,7 @@ class BaseForm(QWidget):
             if checkbox and checkbox.isChecked():
                 checked_items.append(checkbox.text())
         return checked_items
-    
+
     def set_checked_items(self, list_widget: QListWidget, items: List[str]):
         """Sets the checked state of items in a QListWidget."""
         for i in range(list_widget.count()):

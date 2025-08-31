@@ -1,10 +1,11 @@
 from db.db import DatabaseManager
-from config.model_domains import Case, Step
+from config.model_domains import Case
 from config.case_table_config import CASE_TABLES
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List
+
 
 class CaseService:
-    
+
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.active_forms = {}
@@ -19,7 +20,8 @@ class CaseService:
 
     def get_operators(self):
         operators = self.db_manager.get_all_data("operators")
-        return [operator["name"] for operator in operators] if operators else []
+        return [operator["name"]
+                for operator in operators] if operators else []
 
     def get_drones(self):
         drones = self.db_manager.get_all_data("drones")
@@ -27,8 +29,9 @@ class CaseService:
 
     def get_uhub_users(self):
         uhub_users = self.db_manager.get_all_data('uhub_users')
-        return [uhub_user["username"] for uhub_user in uhub_users] if uhub_users else []
-    
+        return [uhub_user["username"]
+                for uhub_user in uhub_users] if uhub_users else []
+
     def save_case(self, case: Case) -> None:
         data = {
             'identification': case.identification,
@@ -41,13 +44,14 @@ class CaseService:
             'comments': case.comments
         }
 
+        case_id=case.id
         if case.id:
             self.db_manager.edit_register("cases", case.id, data)
         else:
             case_id = self.db_manager.create_register("cases", data)
 
         return case_id
-    
+
     def save_step(self, step_data: Dict[str, Any]) -> int:
         step_fields = {
             'action': step_data.get('action'),
@@ -59,7 +63,7 @@ class CaseService:
 
         step_id = self.db_manager.create_register("steps", step_fields)
         return step_id
-            
+
     def setup_tables(self, ui):
         for table_name, table_dict in CASE_TABLES.items():
             table_info = table_dict["config"]
@@ -68,8 +72,9 @@ class CaseService:
                 print(f"Widget for table '{table_name}' not found. ")
                 continue
             data = self.db_manager.get_all_data(table_info.db_table)
-            self.table_manager.setup_table(table_widget, table_name, data, register=True)
-    
+            self.table_manager.setup_table(
+                table_widget, table_name, data, register=True)
+
     def _on_form_closed(self, form_key: str):
         self.active_forms.pop(form_key, None)
 
@@ -77,7 +82,8 @@ class CaseService:
         data = self.db_manager.get_by_id("cases", case_id)
         return data
 
-    def save_case_and_steps(self, case: Case, steps_data: List[Dict[str, Any]]) -> None:
+    def save_case_and_steps(
+            self, case: Case, steps_data: List[Dict[str, Any]]) -> None:
         """ Saves a case and updates/creates/eliminates the associated steps"""
 
         data = {
@@ -89,10 +95,10 @@ class CaseService:
             'drones': case.drones,
             'uhub_users': case.uhub_users,
             'comments': case.comments,
-            'steps': steps_data 
+            'steps': steps_data
         }
 
-        if case.id: 
+        if case.id:
             # Edit case and associated steps
             self.db_manager.edit_register("cases", case.id, data)
         else:

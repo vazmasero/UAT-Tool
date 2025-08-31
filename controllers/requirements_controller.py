@@ -2,9 +2,16 @@ from services.requirement_service import RequirementService
 from config.model_domains import Requirement
 from typing import Optional, Dict
 
+
 class RequirementController:
+    
     def __init__(self, service: RequirementService):
-            self.service = service
+        """Initizializes the requirements page controller.
+        
+        It communicates the users inputs with the actions performed by the service on
+        the database.
+        """
+        self.service = service
 
     def get_lw_data(self):
         systems = self.service.get_systems()
@@ -13,8 +20,9 @@ class RequirementController:
             "systems": systems,
             "sections": sections
         }
-    
-    def handle_form_submission(self, form_data: Dict, db_id: Optional[int]) -> None:
+
+    def handle_form_submission(self, form_data: Dict,
+                               db_id: Optional[int]) -> None:
         requirement = Requirement(
             id=db_id,
             code=form_data['code'],
@@ -22,7 +30,7 @@ class RequirementController:
             systems=form_data['systems'],
             sections=form_data['sections']
         )
-        
+
         self.service.save_requirement(requirement)
 
     def prepare_form_data(self, data):
@@ -36,8 +44,9 @@ class RequirementController:
         """Handles editing a requirement."""
         try:
             self.service.edit_requirement(requirement_id, new_data)
+            return {"success": True, "message": "Requirement updated successfully"}
         except ValueError as e:
-            return f"Error: {str(e)}"
+            return {"success": False, "message": str(e)}
 
     def get_item_by_id(self, db_id):
         """Fetches a requirement item by its ID."""

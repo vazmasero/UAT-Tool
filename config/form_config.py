@@ -8,8 +8,9 @@ from views.cases import FormCase
 from views.blocks import FormBlock
 from views.requirements import FormRequirement
 from views.assets import (FormEmail, FormDrone, FormOperator,
-                   FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
+                          FormUASZone, FormUhubOrg, FormUhubUser, FormUspace)
 from views.steps import FormStep
+
 
 @dataclass
 class FormConfig:
@@ -22,8 +23,10 @@ class FormConfig:
     label_attr: Optional[str]
     menu_action_attr: Optional[str]
 
+
 # Dictionary to hold form configurations for different entities
-# Each key corresponds to a specific entity type, and the value is a FormConfig instance
+# Each key corresponds to a specific entity type, and the value is a
+# FormConfig instance
 FORMS = {
     "bugs": {
         "config": FormConfig(

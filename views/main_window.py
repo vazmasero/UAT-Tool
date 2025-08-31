@@ -31,16 +31,20 @@ class MainWindow(QMainWindow):
             table_manager=self.table_manager,
             db_manager=self.db_manager
         )
-        
+
         # Initial view setup
         self.controller.setup_tables()
         self._setup_buttons()
 
         self._connect_signals()
 
-        # Provisional: disables search bars and filters until they are implemented
+        # Provisional: disables search bars and filters until they are
+        # implemented
         self._disable_search_bars()
-    
+        
+        # Initially at bugs page
+        self.controller.change_page("bugs")
+        
     def _disable_search_bars(self):
         # Search bars are disabled until implemented
         self.ui.le_search_bug.setDisabled(True)
@@ -54,18 +58,24 @@ class MainWindow(QMainWindow):
 
     def _connect_signals(self):
         """Connects signals between managers and the view."""
-        self._connect_menu_actions() # Menu bar actions
-        
+        self._connect_menu_actions()  # Menu bar actions
+
         # Ui buttons
-        self.ui.btn_add.clicked.connect(lambda _:self.controller.handle_new_form(edit=False))
-        self.ui.btn_edit.clicked.connect(lambda _:self.controller.handle_new_form(edit=True))
-        self.ui.btn_remove.clicked.connect(lambda _:self.controller._handle_remove_button())
-        #self.ui.btn_start.clicked.connect(self._execute_campaign)
+        self.ui.btn_add.clicked.connect(
+            lambda _: self.controller.handle_new_form(
+                edit=False))
+        self.ui.btn_edit.clicked.connect(
+            lambda _: self.controller.handle_new_form(edit=True))
+        self.ui.btn_remove.clicked.connect(
+            lambda _: self.controller.handle_remove_button())
+        # self.ui.btn_start.clicked.connect(self._execute_campaign)
 
         # Table signals
-        self.table_manager.table_double_clicked.connect(self.controller.handle_new_form)
-        self.table_manager.selection_changed.connect(self.controller.handle_selection_changed)
-        
+        self.table_manager.table_double_clicked.connect(
+            self.controller.handle_new_form)
+        self.table_manager.selection_changed.connect(
+            self.controller.handle_selection_changed)
+
     def _connect_menu_actions(self):
 
         for attr_name in dir(self.ui):
@@ -73,16 +83,18 @@ class MainWindow(QMainWindow):
                 action = getattr(self.ui, attr_name)
                 page_type = attr_name.replace('action_view_', '')
                 action.triggered.connect(
-                lambda checked, pt=page_type: self.controller._change_page(pt)
-            )
+                    lambda _, pt=page_type: self.controller.change_page(
+                        pt)
+                )
             elif attr_name.startswith("action_new_"):
                 action = getattr(self.ui, attr_name)
                 form_name = self._find_form_key_for_action(attr_name)
                 if form_name:
                     action.triggered.connect(
-                        lambda _, fn=form_name: self.controller.handle_menu_add(fn, edit=False, data=None)
-                )
-                
+                        lambda _, fn=form_name: self.controller.handle_menu_add(
+                            fn, edit=False, data=None)
+                    )
+
     def _find_form_key_for_action(self, action_name: str) -> Optional[str]:
         """Encuentra el form_key correspondiente a una acción del menú"""
         for form_key, form_info in FORMS.items():
@@ -90,14 +102,13 @@ class MainWindow(QMainWindow):
             if form_config and form_config.menu_action_attr == action_name:
                 return form_key
         return None
-                
+
     def _setup_buttons(self):
         """Sets up view's buttons (Add, Edit and Remove)."""
         # Initially, both edit and delete buttons are disabled
         self.ui.btn_edit.setEnabled(False)
         self.ui.btn_remove.setEnabled(False)
-        
+
     def closeEvent(self, event):
         self.controller.close_program()
         super().closeEvent(event)
-            

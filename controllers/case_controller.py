@@ -6,8 +6,10 @@ from typing import Optional, Dict
 
 from utils.form_mode import FormMode
 
+
 class CaseController:
-    def __init__(self, service: CaseService, table_manager: TableManager = None):
+    def __init__(self, service: CaseService,
+                 table_manager: TableManager = None):
         self.service = service
         self.table_manager = table_manager
 
@@ -24,9 +26,11 @@ class CaseController:
             data = self.get_item_by_id(db_id)['steps']
             for step in data:
                 if isinstance(step.get('affected_requirements'), list):
-                    step['affected_requirements'] = ', '.join(step['affected_requirements'])
+                    step['affected_requirements'] = ', '.join(
+                        step['affected_requirements'])
 
-        self.table_manager.setup_table(table_widget, table_name, data, register=True)
+        self.table_manager.setup_table(
+            table_widget, table_name, data, register=True)
 
     def get_lw_data(self):
         systems = self.service.get_systems()
@@ -41,8 +45,9 @@ class CaseController:
             "drones": drones,
             "uhub_users": uhub_users
         }
-        
-    def handle_form_submission(self, form_data: Dict, db_id: Optional[int], steps_table=None) -> None:
+
+    def handle_form_submission(
+            self, form_data: Dict, db_id: Optional[int], steps_table=None) -> None:
         # Creates the case and obtain de new id
         case = Case(
             id=db_id,
@@ -55,7 +60,7 @@ class CaseController:
             uhub_users=form_data['uhub_users'],
             comments=form_data['comments']
         )
-        
+
         # Obtain steps from the table
         steps_data = []
         if steps_table is not None:
@@ -66,8 +71,10 @@ class CaseController:
                 db_step = {}
                 for header, value in step.items():
                     db_column = column_map.get(header, header)
-                    if db_column == 'affected_requirements' and isinstance(value, str):
-                        db_step[db_column] = [v.strip() for v in value.split(', ') if v.strip()]
+                    if db_column == 'affected_requirements' and isinstance(
+                            value, str):
+                        db_step[db_column] = [
+                            v.strip() for v in value.split(', ') if v.strip()]
                     else:
                         db_step[db_column] = value
                 steps_data.append(db_step)
@@ -93,17 +100,19 @@ class CaseController:
         row_index = None
         if edit and row_data and 'steps' in self.table_manager.tables:
             steps_table = self.table_manager.tables['steps']
-            row_index = self.table_manager.get_selected_row_indices(steps_table)
+            row_index = self.table_manager.get_selected_row_indices(
+                steps_table)
 
         # Opens the form using FormManager and returns the form instance
-        form_instance = form_manager.open_form(form_key, edit, row_data, data_instead_id=True, row_index=row_index)
+        form_instance = form_manager.open_form(
+            form_key, edit, row_data, data_instead_id=True, row_index=row_index)
 
-        # Returned form instance is used to handle event of updated data in db 
+        # Returned form instance is used to handle event of updated data in db
         # (to refresh the appropriate table)
         if form_instance and hasattr(form_instance, 'new_step_data'):
             form_instance.new_step_data.connect(self._handle_new_step_data)
-            
-    def _handle_new_step_data(self, step_data:Dict):
+
+    def _handle_new_step_data(self, step_data: Dict):
         if not self.table_manager or 'steps' not in self.table_manager.tables:
             print("Error: Steps table not available")
             return
@@ -113,26 +122,27 @@ class CaseController:
         formatted_data = self._format_step_for_table(step_data)
 
         if 'id' in step_data and 'row_index' in step_data:
-            self.table_manager.update_row(steps_table, formatted_data, step_data['row_index'])
+            self.table_manager.update_row(
+                steps_table, formatted_data, step_data['row_index'])
         else:
             # CREATE: add new row
             self.table_manager.add_row(steps_table, formatted_data)
 
-    def _format_step_for_table(self, step_data:Dict) -> Dict:
+    def _format_step_for_table(self, step_data: Dict) -> Dict:
         return {
             'action': step_data.get('action', ''),
             'expected_result': step_data.get('expected_result', ''),
             'affected_requirements': ', '.join(step_data.get('affected_requirements', [])),
             'comments': step_data.get('comments', '')
         }
-    
-    def _handle_remove_step(self):   
-        """Handles the removal of a step from the table."""   
-        table = self.table_manager.tables.get('steps') 
+
+    def handle_remove_step(self):
+        """Handles the removal of a step from the table."""
+        table = self.table_manager.tables.get('steps')
         row_index = self.table_manager.get_selected_row_indices(table)
         if not row_index:
             return
-        
+
         try:
             self.table_manager.delete_row(table, row_index[0])
 
@@ -146,11 +156,11 @@ class CaseController:
     def get_steps_by_case_id(self, case_id):
         """Fetches all steps associated with a case ID."""
         return self.service.get_steps_by_case_id(case_id)
-    
+
     def prepare_form_data(self, data: Dict) -> Dict:
         if not data:
             return None
-        
+
         if 'Id' in data:
             # Header as key:
             return {
@@ -163,7 +173,4 @@ class CaseController:
                 'drones': [d.strip() for d in data['Drone(s)'].split(',')] if data['Drone(s)'] else [],
                 'uhub_users': [u.strip() for u in data['U-hub user(s)'].split(',')] if data['U-hub user(s)'] else [],
             }
-        else:
-            return data
-    
-
+        return data

@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Optional, Dict
+from typing import List, Dict
+
 
 @dataclass
 class TableConfig:
@@ -7,8 +8,9 @@ class TableConfig:
     db_table: str
     headers: List[str]
     widget_name: str
-    column_map: Dict[str, str] = field(default_factory=dict)  
-    
+    column_map: Dict[str, str] = field(default_factory=dict)
+
+
 class TableCommonConfig:
     """Common configuration for all tables."""
     @staticmethod
@@ -17,15 +19,24 @@ class TableCommonConfig:
             'context_menu': False,
             'alternating_row_colors': False,
             'sort_enabled': True,
-            #'max_section_size': 250
+            # 'max_section_size': 250
         }
+
 
 # Dictionary to hold table configurations for different entities
 BLOCK_TABLES = {
     "cases": {
         "config": TableConfig(
             db_table="cases",
-            headers=["Id", "Identification", "Name", "Section(s)", "Operator(s)", "Drone(s)", "U-hub user(s)", "Steps"],
+            headers=[
+                "Id",
+                "Identification",
+                "Name",
+                "Section(s)",
+                "Operator(s)",
+                "Drone(s)",
+                "U-hub user(s)",
+                "Steps"],
             column_map={
                 "Id": "id",
                 "Identification": "identification",

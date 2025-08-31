@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'form_case.ui'
+##########################################################################
+# Form generated from reading UI file 'form_case.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+# Created by: Qt User Interface Compiler version 6.9.0
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+# WARNING! All changes made in this file will be lost when recompiling UI file!
+##########################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLabel,
-    QLineEdit, QListWidget, QListWidgetItem, QPushButton,
-    QSizePolicy, QTabWidget, QTableView, QVBoxLayout,
-    QWidget)
+                               QLineEdit, QListWidget, QListWidgetItem, QPushButton,
+                               QSizePolicy, QTabWidget, QTableView, QVBoxLayout,
+                               QWidget)
+
 
 class Ui_form_case(object):
     def setupUi(self, form_case):
@@ -75,10 +76,13 @@ class Ui_form_case(object):
 
         self.lw_system = QListWidget(self.tab_info)
         self.lw_system.setObjectName(u"lw_system")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Policy.Maximum,
+            QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lw_system.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_system.sizePolicy().hasHeightForWidth())
         self.lw_system.setSizePolicy(sizePolicy)
         self.lw_system.setMaximumSize(QSize(200, 40))
 
@@ -91,12 +95,12 @@ class Ui_form_case(object):
 
         self.lw_section = QListWidget(self.tab_info)
         self.lw_section.setObjectName(u"lw_section")
-        sizePolicy.setHeightForWidth(self.lw_section.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_section.sizePolicy().hasHeightForWidth())
         self.lw_section.setSizePolicy(sizePolicy)
         self.lw_section.setMaximumSize(QSize(200, 40))
 
         self.hlayout_id.addWidget(self.lw_section)
-
 
         self.verticalLayout.addLayout(self.hlayout_id)
 
@@ -110,7 +114,8 @@ class Ui_form_case(object):
 
         self.lw_operator = QListWidget(self.tab_info)
         self.lw_operator.setObjectName(u"lw_operator")
-        sizePolicy.setHeightForWidth(self.lw_operator.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_operator.sizePolicy().hasHeightForWidth())
         self.lw_operator.setSizePolicy(sizePolicy)
         self.lw_operator.setMaximumSize(QSize(250, 40))
 
@@ -123,7 +128,8 @@ class Ui_form_case(object):
 
         self.lw_drone = QListWidget(self.tab_info)
         self.lw_drone.setObjectName(u"lw_drone")
-        sizePolicy.setHeightForWidth(self.lw_drone.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_drone.sizePolicy().hasHeightForWidth())
         self.lw_drone.setSizePolicy(sizePolicy)
         self.lw_drone.setMaximumSize(QSize(250, 40))
 
@@ -136,12 +142,12 @@ class Ui_form_case(object):
 
         self.lw_uhub_user = QListWidget(self.tab_info)
         self.lw_uhub_user.setObjectName(u"lw_uhub_user")
-        sizePolicy.setHeightForWidth(self.lw_uhub_user.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_uhub_user.sizePolicy().hasHeightForWidth())
         self.lw_uhub_user.setSizePolicy(sizePolicy)
         self.lw_uhub_user.setMaximumSize(QSize(250, 40))
 
         self.hlayout_operator.addWidget(self.lw_uhub_user)
-
 
         self.verticalLayout.addLayout(self.hlayout_operator)
 
@@ -156,7 +162,6 @@ class Ui_form_case(object):
         self.le_comment.setObjectName(u"le_comment")
 
         self.hlayout_comment.addWidget(self.le_comment)
-
 
         self.verticalLayout.addLayout(self.hlayout_comment)
 
@@ -185,7 +190,6 @@ class Ui_form_case(object):
 
         self.vlayout_btn_steps.addWidget(self.btn_remove_step)
 
-
         self.horizontalLayout.addLayout(self.vlayout_btn_steps)
 
         self.tab_widget_case.addTab(self.tab_steps, "")
@@ -205,40 +209,77 @@ class Ui_form_case(object):
 
         self.hlayout_btn_case.addWidget(self.btn_cancel)
 
-
         self.verticalLayout_2.addLayout(self.hlayout_btn_case)
-
 
         self.retranslateUi(form_case)
 
         self.tab_widget_case.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(form_case)
     # setupUi
 
     def retranslateUi(self, form_case):
-        form_case.setWindowTitle(QCoreApplication.translate("form_case", u"Form", None))
-        self.lbl_case.setText(QCoreApplication.translate("form_case", u"[New/Test Case #]", None))
-        self.lbl_id.setText(QCoreApplication.translate("form_case", u"Id:", None))
+        form_case.setWindowTitle(
+            QCoreApplication.translate(
+                "form_case", u"Form", None))
+        self.lbl_case.setText(
+            QCoreApplication.translate(
+                "form_case",
+                u"[New/Test Case #]",
+                None))
+        self.lbl_id.setText(
+            QCoreApplication.translate(
+                "form_case", u"Id:", None))
         self.le_identification.setText("")
-        self.le_identification.setPlaceholderText(QCoreApplication.translate("form_case", u"[Id]", None))
-        self.lbl_name.setText(QCoreApplication.translate("form_case", u"Name:", None))
+        self.le_identification.setPlaceholderText(
+            QCoreApplication.translate("form_case", u"[Id]", None))
+        self.lbl_name.setText(
+            QCoreApplication.translate(
+                "form_case", u"Name:", None))
         self.le_name.setText("")
-        self.le_name.setPlaceholderText(QCoreApplication.translate("form_case", u"[Name]", None))
-        self.lbl_system.setText(QCoreApplication.translate("form_case", u"System(s):", None))
-        self.lbl_section.setText(QCoreApplication.translate("form_case", u"Section(s):", None))
-        self.lbl_operator.setText(QCoreApplication.translate("form_case", u"Operator(s):", None))
-        self.lbl_drone.setText(QCoreApplication.translate("form_case", u"Drone(s):", None))
-        self.lbl_uhub_user.setText(QCoreApplication.translate("form_case", u"U-hub User(s)", None))
-        self.lbl_comment.setText(QCoreApplication.translate("form_case", u"Comments:", None))
+        self.le_name.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_case", u"[Name]", None))
+        self.lbl_system.setText(
+            QCoreApplication.translate(
+                "form_case", u"System(s):", None))
+        self.lbl_section.setText(
+            QCoreApplication.translate(
+                "form_case", u"Section(s):", None))
+        self.lbl_operator.setText(
+            QCoreApplication.translate(
+                "form_case", u"Operator(s):", None))
+        self.lbl_drone.setText(
+            QCoreApplication.translate(
+                "form_case", u"Drone(s):", None))
+        self.lbl_uhub_user.setText(
+            QCoreApplication.translate(
+                "form_case", u"U-hub User(s)", None))
+        self.lbl_comment.setText(
+            QCoreApplication.translate(
+                "form_case", u"Comments:", None))
         self.le_comment.setText("")
-        self.le_comment.setPlaceholderText(QCoreApplication.translate("form_case", u"[Comments]", None))
-        self.tab_widget_case.setTabText(self.tab_widget_case.indexOf(self.tab_info), QCoreApplication.translate("form_case", u"Case info", None))
-        self.btn_add_step.setText(QCoreApplication.translate("form_case", u"+", None))
-        self.btn_remove_step.setText(QCoreApplication.translate("form_case", u"-", None))
-        self.tab_widget_case.setTabText(self.tab_widget_case.indexOf(self.tab_steps), QCoreApplication.translate("form_case", u"Steps", None))
-        self.btn_accept.setText(QCoreApplication.translate("form_case", u"Accept", None))
-        self.btn_cancel.setText(QCoreApplication.translate("form_case", u"Cancel", None))
+        self.le_comment.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_case", u"[Comments]", None))
+        self.tab_widget_case.setTabText(
+            self.tab_widget_case.indexOf(
+                self.tab_info), QCoreApplication.translate(
+                "form_case", u"Case info", None))
+        self.btn_add_step.setText(
+            QCoreApplication.translate(
+                "form_case", u"+", None))
+        self.btn_remove_step.setText(
+            QCoreApplication.translate(
+                "form_case", u"-", None))
+        self.tab_widget_case.setTabText(
+            self.tab_widget_case.indexOf(
+                self.tab_steps), QCoreApplication.translate(
+                "form_case", u"Steps", None))
+        self.btn_accept.setText(
+            QCoreApplication.translate(
+                "form_case", u"Accept", None))
+        self.btn_cancel.setText(
+            QCoreApplication.translate(
+                "form_case", u"Cancel", None))
     # retranslateUi
-

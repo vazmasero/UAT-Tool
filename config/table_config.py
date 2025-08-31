@@ -1,17 +1,22 @@
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict
 
+
 @dataclass
 class TableConfig:
+    
     """Common configuration for tables."""
+    
     db_table: str
     headers: List[str]
     widget_name: str
     page: str
     tab: Optional[int] = None
-    column_map: Dict[str, str] = field(default_factory=dict)  
-    
+    column_map: Dict[str, str] = field(default_factory=dict)
+
+
 class TableCommonConfig:
+    
     """Common configuration for all tables."""
     @staticmethod
     def get_generic_table_config():
@@ -19,11 +24,13 @@ class TableCommonConfig:
             'context_menu': False,
             'alternating_row_colors': False,
             'sort_enabled': True,
-            #'max_section_size': 250
+            # 'max_section_size': 250
         }
 
+
 # Dictionary to hold table configurations for different entities
-# Each key corresponds to a specific entity type, and the value is a TableConfig instance
+# Each key corresponds to a specific entity type, and the value is a
+# TableConfig instance
 TABLES = {
     "bugs": {
         "config": TableConfig(
@@ -58,18 +65,19 @@ TABLES = {
         "config": TableConfig(
             db_table="campaigns",
             headers=[
-                "Id", "Description", "System", "Version", "Test blocks", "Passed",
-                "Success", "Creation Time", "Start date", "End date", "Last Update", "Comments"
+                "Id", "Identification", "Description", "System", "Version", "Test blocks", "Passed",
+                "Success", "Creation Date", "Start date", "End date", "Last Update", "Comments"
             ],
             column_map={
-                "Id": "identifier",
+                "Id": "id",
+                "Identification": "identification",
                 "Description": "description",
                 "System": "system",
                 "Version": "version",
-                "Test blocks": "test_blocks",
+                "Test blocks": "blocks",
                 "Passed": "passed",
                 "Success": "success",
-                "Creation Time": "creation_time",
+                "Creation Date": "creation_date",
                 "Start date": "start_date",
                 "End date": "end_date",
                 "Last Update": "last_update",
@@ -83,7 +91,16 @@ TABLES = {
     "cases": {
         "config": TableConfig(
             db_table="cases",
-            headers=["Id", "Identification", "Name", "System(s)", "Section(s)", "Operator(s)", "Drone(s)", "U-hub user(s)", "Steps"],
+            headers=[
+                "Id",
+                "Identification",
+                "Name",
+                "System(s)",
+                "Section(s)",
+                "Operator(s)",
+                "Drone(s)",
+                "U-hub user(s)",
+                "Steps"],
             column_map={
                 "Id": "id",
                 "Identification": "identification",
@@ -103,7 +120,13 @@ TABLES = {
     "blocks": {
         "config": TableConfig(
             db_table="blocks",
-            headers=["Id", "Identification", "Name", "System", "Cases", "Comments"],
+            headers=[
+                "Id",
+                "Identification",
+                "Name",
+                "System",
+                "Cases",
+                "Comments"],
             column_map={
                 "Id": "id",
                 "Identification": "identification",
@@ -120,7 +143,14 @@ TABLES = {
     "requirements": {
         "config": TableConfig(
             db_table="requirements",
-            headers=["Id", "Assigned code", "System(s)", "Section(s)", "Definition", "Creation date", "Last update"],
+            headers=[
+                "Id",
+                "Assigned code",
+                "System(s)",
+                "Section(s)",
+                "Definition",
+                "Creation date",
+                "Last update"],
             column_map={
                 "Id": "id",
                 "Assigned code": "code",
@@ -153,7 +183,14 @@ TABLES = {
     "operators": {
         "config": TableConfig(
             db_table="operators",
-            headers=["Id", "Name", "EASA ID", "Verification code", "Email", "Password", "Phone"],
+            headers=[
+                "Id",
+                "Name",
+                "EASA ID",
+                "Verification code",
+                "Email",
+                "Password",
+                "Phone"],
             column_map={
                 "Id": "id",
                 "Name": "name",
@@ -171,7 +208,15 @@ TABLES = {
     "drones": {
         "config": TableConfig(
             db_table="drones",
-            headers=["Id", "Operator", "Name", "SN", "Manufacturer", "Model", "Tracker", "Transponder Id"],
+            headers=[
+                "Id",
+                "Operator",
+                "Name",
+                "SN",
+                "Manufacturer",
+                "Model",
+                "Tracker",
+                "Transponder Id"],
             column_map={
                 "Id": "id",
                 "Operator": "operator",
@@ -190,7 +235,14 @@ TABLES = {
     "uas_zones": {
         "config": TableConfig(
             db_table="uas_zones",
-            headers=["Id", "Name", "Reason", "Cause", "Restriction type", "Activation time", "Authority"],
+            headers=[
+                "Id",
+                "Name",
+                "Reason",
+                "Cause",
+                "Restriction type",
+                "Activation time",
+                "Authority"],
             column_map={
                 "Id": "id",
                 "Name": "name",
@@ -208,7 +260,14 @@ TABLES = {
     "uhub_orgs": {
         "config": TableConfig(
             db_table="uhub_orgs",
-            headers=["Id", "Name", "Role", "Jurisdiction", "AoI", "Email", "Phone"],
+            headers=[
+                "Id",
+                "Name",
+                "Role",
+                "Jurisdiction",
+                "AoI",
+                "Email",
+                "Phone"],
             column_map={
                 "Id": "id",
                 "Name": "name",
@@ -226,7 +285,15 @@ TABLES = {
     "uhub_users": {
         "config": TableConfig(
             db_table="uhub_users",
-            headers=["Id", "Username", "Email", "Password", "Organization", "Role", "Jurisdiction", "AoI"],
+            headers=[
+                "Id",
+                "Username",
+                "Email",
+                "Password",
+                "Organization",
+                "Role",
+                "Jurisdiction",
+                "AoI"],
             column_map={
                 "Id": "id",
                 "Username": "username",

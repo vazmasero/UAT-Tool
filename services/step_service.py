@@ -1,19 +1,21 @@
 from db.db import DatabaseManager
-from config.model_domains import Step
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any
+
 
 class StepService:
 
     def __init__(self, db_manager: DatabaseManager, table_manager=None):
         self.db_manager = db_manager
         self.table_manager = table_manager
-        
+
     def get_requirements(self):
         """Obtains all requirements for their selection in step"""
         requirements = self.db_manager.get_all_data("requirements")
-        return [requirement["code"] for requirement in requirements] if requirements else []
-    
-    def create_step_data(self, step_form_data: Dict[str, Any]) -> Dict[str, Any]:
+        return [requirement["code"]
+                for requirement in requirements] if requirements else []
+
+    def create_step_data(
+            self, step_form_data: Dict[str, Any]) -> Dict[str, Any]:
         return {
             'action': step_form_data.action,
             'expected_result': step_form_data.expected_result,
@@ -25,7 +27,7 @@ class StepService:
         """Formatea datos de step para display en tabla"""
         if not data:
             return None
-        
+
         if 'Id' in data:
             # Header as key (desde tabla):
             return {
@@ -37,5 +39,3 @@ class StepService:
             }
         else:
             return data
-            
-            

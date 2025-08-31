@@ -1,6 +1,7 @@
 from db.db import DatabaseManager
 from config.model_domains import Requirement
 
+
 class RequirementService:
 
     def __init__(self, db_manager: DatabaseManager, table_manager=None):
@@ -31,11 +32,11 @@ class RequirementService:
     def get_sections(self):
         sections = self.db_manager.get_all_data("sections")
         return [section["name"] for section in sections] if sections else []
-    
+
     def format_requirement_data(self, data):
         if not data:
             return None
-        
+
         if 'Id' in data:
             # Header as key:
             return {
@@ -45,7 +46,4 @@ class RequirementService:
                 'systems': [s.strip() for s in data['System(s)'].split(',')] if data['System(s)'] else [],
                 'sections': [s.strip() for s in data['Section(s)'].split(',')] if data['Section(s)'] else []
             }
-        else:
-            return data
-            
-            
+        return data

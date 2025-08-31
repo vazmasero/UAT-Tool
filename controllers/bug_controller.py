@@ -1,13 +1,11 @@
-from managers.table_manager import TableManager
 from services.bug_service import BugService
 from config.model_domains import Bug
-from config.case_table_config import CASE_TABLES
 from typing import Optional, Dict
 
-from utils.form_mode import FormMode
-
 class BugController:
+    
     def __init__(self, service: BugService):
+        
         self.service = service
 
     def get_lw_data(self):
@@ -20,8 +18,9 @@ class BugController:
             "campaigns": campaigns,
             "requirements": requirements,
         }
-        
-    def handle_form_submission(self, form_data: Dict, db_id: Optional[int]) -> None:
+
+    def handle_form_submission(self, form_data: Dict,
+                               db_id: Optional[int]) -> None:
         # Creates the bug and obtain de new id
         bug = Bug(
             id=db_id,
@@ -48,7 +47,7 @@ class BugController:
     def prepare_form_data(self, data: Dict) -> Dict:
         if not data:
             return None
-        
+
         if 'Id' in data:
             # Header as key:
             return {
@@ -65,8 +64,4 @@ class BugController:
                 'impact': data['Impact'],
                 'file': data['Associated files'],
             }
-        
-        else:
-            return data
-    
-
+        return data

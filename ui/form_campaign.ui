@@ -27,21 +27,6 @@
     <number>30</number>
    </property>
    <item>
-    <widget class="QLabel" name="lbl_campaign">
-     <property name="font">
-      <font>
-       <pointsize>28</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>[New/Edit campaign]</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="hlayout_id" stretch="0,0,0,50">
      <property name="leftMargin">
       <number>5</number>
@@ -50,14 +35,14 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_id">
+      <widget class="QLabel" name="lbl_identification">
        <property name="text">
         <string>Id:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_id">
+      <widget class="QLineEdit" name="le_identification">
        <property name="cursor">
         <cursorShape>ArrowCursor</cursorShape>
        </property>
@@ -105,9 +90,31 @@
      </item>
      <item>
       <widget class="QComboBox" name="cb_system">
-       <property name="placeholderText">
-        <string>[System]</string>
-       </property>
+       <item>
+        <property name="text">
+         <string>USSP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CISP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AUDI</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EXCHANGE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NA</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -119,6 +126,12 @@
      </item>
      <item>
       <widget class="QLineEdit" name="le_version">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -135,53 +148,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_blocks">
-       <property name="placeholderText">
-        <string>[Blocks]</string>
+      <widget class="QListWidget" name="lw_blocks">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="hlayout_creation">
-     <property name="leftMargin">
-      <number>5</number>
-     </property>
-     <property name="rightMargin">
-      <number>300</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="lbl_creation">
-       <property name="text">
-        <string>Creation time:</string>
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>40</height>
+        </size>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="le_creation">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="placeholderText">
-        <string>[Creation time]</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lbl_update">
-       <property name="text">
-        <string>Last update:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="le_update">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="placeholderText">
-        <string>[Last update]</string>
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -196,9 +180,9 @@
       <number>420</number>
      </property>
      <item>
-      <widget class="QPushButton" name="btn_create_campaign">
+      <widget class="QPushButton" name="btn_accept">
        <property name="text">
-        <string>Create campaign</string>
+        <string>Accept</string>
        </property>
       </widget>
      </item>

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
+
 @dataclass
 class PageConfig:
     """Common configuration for pages in the stacked widget of the main window."""
@@ -8,8 +9,10 @@ class PageConfig:
     forms: List[str]
     tables: List[str]
 
+
 # Dictionary to hold page configurations for different entities
-# Each key corresponds to a specific entity type, and the value is a PageConfig instance
+# Each key corresponds to a specific entity type, and the value is a
+# PageConfig instance
 PAGES = {
     "bugs": {
         "config": PageConfig(

@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'form_bug.ui'
+##########################################################################
+# Form generated from reading UI file 'form_bug.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+# Created by: Qt User Interface Compiler version 6.9.0
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+# WARNING! All changes made in this file will be lost when recompiling UI file!
+##########################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QListWidget, QListWidgetItem, QPushButton,
-    QSizePolicy, QTabWidget, QVBoxLayout, QWidget)
+                               QLineEdit, QListWidget, QListWidgetItem, QPushButton,
+                               QSizePolicy, QTabWidget, QVBoxLayout, QWidget)
+
 
 class Ui_form_bug(object):
     def setupUi(self, form_bug):
@@ -91,7 +92,6 @@ class Ui_form_bug(object):
 
         self.hlayout_status.addWidget(self.le_service_now_id)
 
-
         self.verticalLayout_2.addLayout(self.hlayout_status)
 
         self.hlayout_campaign = QHBoxLayout()
@@ -114,15 +114,17 @@ class Ui_form_bug(object):
 
         self.lw_requirements = QListWidget(self.tab_info)
         self.lw_requirements.setObjectName(u"lw_requirements")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Policy.Maximum,
+            QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lw_requirements.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_requirements.sizePolicy().hasHeightForWidth())
         self.lw_requirements.setSizePolicy(sizePolicy)
         self.lw_requirements.setMaximumSize(QSize(200, 40))
 
         self.hlayout_campaign.addWidget(self.lw_requirements)
-
 
         self.verticalLayout_2.addLayout(self.hlayout_campaign)
 
@@ -154,7 +156,6 @@ class Ui_form_bug(object):
 
         self.hlayout_urgency.addWidget(self.cb_impact)
 
-
         self.verticalLayout_2.addLayout(self.hlayout_urgency)
 
         self.hlayout_description = QHBoxLayout()
@@ -166,15 +167,18 @@ class Ui_form_bug(object):
 
         self.le_short_desc = QLineEdit(self.tab_info)
         self.le_short_desc.setObjectName(u"le_short_desc")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy1 = QSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.le_short_desc.sizePolicy().hasHeightForWidth())
+        sizePolicy1.setHeightForWidth(
+            self.le_short_desc.sizePolicy().hasHeightForWidth())
         self.le_short_desc.setSizePolicy(sizePolicy1)
-        self.le_short_desc.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
+        self.le_short_desc.setAlignment(
+            Qt.AlignmentFlag.AlignLeading | Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
 
         self.hlayout_description.addWidget(self.le_short_desc)
-
 
         self.verticalLayout_2.addLayout(self.hlayout_description)
 
@@ -187,10 +191,10 @@ class Ui_form_bug(object):
 
         self.le_definition = QLineEdit(self.tab_info)
         self.le_definition.setObjectName(u"le_definition")
-        self.le_definition.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
+        self.le_definition.setAlignment(
+            Qt.AlignmentFlag.AlignLeading | Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
 
         self.hlayout_definition.addWidget(self.le_definition)
-
 
         self.verticalLayout_2.addLayout(self.hlayout_definition)
 
@@ -211,7 +215,6 @@ class Ui_form_bug(object):
         self.btn_files.setMinimumSize(QSize(175, 0))
 
         self.hlayout_files.addWidget(self.btn_files)
-
 
         self.verticalLayout_2.addLayout(self.hlayout_files)
 
@@ -244,67 +247,141 @@ class Ui_form_bug(object):
 
         self.hlayout_btn_bug.addWidget(self.btn_cancel)
 
-
         self.verticalLayout.addLayout(self.hlayout_btn_bug)
-
 
         self.retranslateUi(form_bug)
 
         self.tab_widget_bug.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(form_bug)
     # setupUi
 
     def retranslateUi(self, form_bug):
-        form_bug.setWindowTitle(QCoreApplication.translate("form_bug", u"Form", None))
-        self.lbl_title.setText(QCoreApplication.translate("form_bug", u"[Bug name]", None))
-        self.lbl_status.setText(QCoreApplication.translate("form_bug", u"Status:", None))
-        self.cb_status.setItemText(0, QCoreApplication.translate("form_bug", u"IN PROGRESS", None))
-        self.cb_status.setItemText(1, QCoreApplication.translate("form_bug", u"OPEN", None))
-        self.cb_status.setItemText(2, QCoreApplication.translate("form_bug", u"CLOSED", None))
-        self.cb_status.setItemText(3, QCoreApplication.translate("form_bug", u"PENDING ACTION", None))
+        form_bug.setWindowTitle(
+            QCoreApplication.translate(
+                "form_bug", u"Form", None))
+        self.lbl_title.setText(
+            QCoreApplication.translate(
+                "form_bug", u"[Bug name]", None))
+        self.lbl_status.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Status:", None))
+        self.cb_status.setItemText(
+            0, QCoreApplication.translate(
+                "form_bug", u"IN PROGRESS", None))
+        self.cb_status.setItemText(
+            1, QCoreApplication.translate(
+                "form_bug", u"OPEN", None))
+        self.cb_status.setItemText(
+            2, QCoreApplication.translate(
+                "form_bug", u"CLOSED", None))
+        self.cb_status.setItemText(
+            3, QCoreApplication.translate(
+                "form_bug", u"PENDING ACTION", None))
 
-        self.lbl_system.setText(QCoreApplication.translate("form_bug", u"System:", None))
-        self.lbl_version.setText(QCoreApplication.translate("form_bug", u"System version:", None))
+        self.lbl_system.setText(
+            QCoreApplication.translate(
+                "form_bug", u"System:", None))
+        self.lbl_version.setText(
+            QCoreApplication.translate(
+                "form_bug", u"System version:", None))
         self.le_version.setText("")
-        self.le_version.setPlaceholderText(QCoreApplication.translate("form_bug", u"[System version]", None))
-        self.lbl_service_now_id.setText(QCoreApplication.translate("form_bug", u"Service now ID:", None))
+        self.le_version.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_bug", u"[System version]", None))
+        self.lbl_service_now_id.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Service now ID:", None))
         self.le_service_now_id.setText("")
-        self.le_service_now_id.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Service now ID]", None))
-        self.lbl_campaign.setText(QCoreApplication.translate("form_bug", u"Campaign:", None))
-        self.cb_campaign.setItemText(0, QCoreApplication.translate("form_bug", u"NA", None))
+        self.le_service_now_id.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_bug", u"[Service now ID]", None))
+        self.lbl_campaign.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Campaign:", None))
+        self.cb_campaign.setItemText(
+            0, QCoreApplication.translate(
+                "form_bug", u"NA", None))
 
-        self.lbl_campaign_2.setText(QCoreApplication.translate("form_bug", u"Requirements affected:", None))
-        self.lbl_urgency.setText(QCoreApplication.translate("form_bug", u"Urgency:", None))
-        self.cb_urgency.setItemText(0, QCoreApplication.translate("form_bug", u"Low (1)", None))
-        self.cb_urgency.setItemText(1, QCoreApplication.translate("form_bug", u"Medium (2)", None))
-        self.cb_urgency.setItemText(2, QCoreApplication.translate("form_bug", u"High (3)", None))
+        self.lbl_campaign_2.setText(
+            QCoreApplication.translate(
+                "form_bug",
+                u"Requirements affected:",
+                None))
+        self.lbl_urgency.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Urgency:", None))
+        self.cb_urgency.setItemText(
+            0, QCoreApplication.translate(
+                "form_bug", u"Low (1)", None))
+        self.cb_urgency.setItemText(
+            1, QCoreApplication.translate(
+                "form_bug", u"Medium (2)", None))
+        self.cb_urgency.setItemText(
+            2, QCoreApplication.translate(
+                "form_bug", u"High (3)", None))
 
-        self.lbl_impact.setText(QCoreApplication.translate("form_bug", u"Impact:", None))
-        self.cb_impact.setItemText(0, QCoreApplication.translate("form_bug", u"Low (1)", None))
-        self.cb_impact.setItemText(1, QCoreApplication.translate("form_bug", u"Medium (2)", None))
-        self.cb_impact.setItemText(2, QCoreApplication.translate("form_bug", u"High (3)", None))
+        self.lbl_impact.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Impact:", None))
+        self.cb_impact.setItemText(
+            0, QCoreApplication.translate(
+                "form_bug", u"Low (1)", None))
+        self.cb_impact.setItemText(
+            1, QCoreApplication.translate(
+                "form_bug", u"Medium (2)", None))
+        self.cb_impact.setItemText(
+            2, QCoreApplication.translate(
+                "form_bug", u"High (3)", None))
 
-        self.lbl_short_desc.setText(QCoreApplication.translate("form_bug", u"Short description: ", None))
+        self.lbl_short_desc.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Short description: ", None))
         self.le_short_desc.setText("")
-        self.le_short_desc.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Short decription]", None))
-        self.lbl_definition.setText(QCoreApplication.translate("form_bug", u"Definition:", None))
+        self.le_short_desc.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_bug", u"[Short decription]", None))
+        self.lbl_definition.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Definition:", None))
         self.le_definition.setText("")
-        self.le_definition.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Definition]", None))
-        self.lbl_files.setText(QCoreApplication.translate("form_bug", u"Additional files: ", None))
-        self.le_files.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Add associated files]", None))
-        self.btn_files.setText(QCoreApplication.translate("form_bug", u"Browse", None))
-        self.tab_widget_bug.setTabText(self.tab_widget_bug.indexOf(self.tab_info), QCoreApplication.translate("form_bug", u"Bug info", None))
+        self.le_definition.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_bug", u"[Definition]", None))
+        self.lbl_files.setText(
+            QCoreApplication.translate(
+                "form_bug",
+                u"Additional files: ",
+                None))
+        self.le_files.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_bug", u"[Add associated files]", None))
+        self.btn_files.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Browse", None))
+        self.tab_widget_bug.setTabText(
+            self.tab_widget_bug.indexOf(
+                self.tab_info), QCoreApplication.translate(
+                "form_bug", u"Bug info", None))
 
         __sortingEnabled = self.lw_history.isSortingEnabled()
         self.lw_history.setSortingEnabled(False)
         ___qlistwidgetitem = self.lw_history.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("form_bug", u"[Change in status:...]", None));
+        ___qlistwidgetitem.setText(
+            QCoreApplication.translate(
+                "form_bug",
+                u"[Change in status:...]",
+                None))
         self.lw_history.setSortingEnabled(__sortingEnabled)
 
-        self.tab_widget_bug.setTabText(self.tab_widget_bug.indexOf(self.tab_history), QCoreApplication.translate("form_bug", u"History", None))
-        self.btn_accept.setText(QCoreApplication.translate("form_bug", u"Accept", None))
-        self.btn_cancel.setText(QCoreApplication.translate("form_bug", u"Cancel", None))
+        self.tab_widget_bug.setTabText(
+            self.tab_widget_bug.indexOf(
+                self.tab_history), QCoreApplication.translate(
+                "form_bug", u"History", None))
+        self.btn_accept.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Accept", None))
+        self.btn_cancel.setText(
+            QCoreApplication.translate(
+                "form_bug", u"Cancel", None))
     # retranslateUi
-

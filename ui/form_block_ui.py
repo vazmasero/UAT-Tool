@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'form_block.ui'
+##########################################################################
+# Form generated from reading UI file 'form_block.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+# Created by: Qt User Interface Compiler version 6.9.0
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+# WARNING! All changes made in this file will be lost when recompiling UI file!
+##########################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QListWidget, QListWidgetItem,
-    QPushButton, QSizePolicy, QTabWidget, QTableView,
-    QVBoxLayout, QWidget)
+                               QLabel, QLineEdit, QListWidget, QListWidgetItem,
+                               QPushButton, QSizePolicy, QTabWidget, QTableView,
+                               QVBoxLayout, QWidget)
+
 
 class Ui_form_block(object):
     def setupUi(self, form_block):
@@ -83,7 +84,6 @@ class Ui_form_block(object):
 
         self.hlayout_id.addWidget(self.cb_system)
 
-
         self.verticalLayout_2.addLayout(self.hlayout_id)
 
         self.hlayout_comments = QHBoxLayout()
@@ -98,7 +98,6 @@ class Ui_form_block(object):
         self.le_comments.setObjectName(u"le_comments")
 
         self.hlayout_comments.addWidget(self.le_comments)
-
 
         self.verticalLayout_2.addLayout(self.hlayout_comments)
 
@@ -115,10 +114,13 @@ class Ui_form_block(object):
 
         self.lw_cases = QListWidget(self.tab_info)
         self.lw_cases.setObjectName(u"lw_cases")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lw_cases.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.lw_cases.sizePolicy().hasHeightForWidth())
         self.lw_cases.setSizePolicy(sizePolicy)
         self.lw_cases.setMinimumSize(QSize(600, 30))
         self.lw_cases.setMaximumSize(QSize(500, 40))
@@ -148,39 +150,75 @@ class Ui_form_block(object):
 
         self.hlayout_btn_block.addWidget(self.btn_cancel)
 
-
         self.verticalLayout.addLayout(self.hlayout_btn_block)
-
 
         self.retranslateUi(form_block)
 
         self.tab_widget_block.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(form_block)
     # setupUi
 
     def retranslateUi(self, form_block):
-        form_block.setWindowTitle(QCoreApplication.translate("form_block", u"Form", None))
-        self.lbl_block.setText(QCoreApplication.translate("form_block", u"[New/Test Block #]", None))
-        self.lbl_identification.setText(QCoreApplication.translate("form_block", u"Id:", None))
-        self.le_identification.setPlaceholderText(QCoreApplication.translate("form_block", u"[Identifier]", None))
-        self.lbl_name.setText(QCoreApplication.translate("form_block", u"Name:", None))
+        form_block.setWindowTitle(
+            QCoreApplication.translate(
+                "form_block", u"Form", None))
+        self.lbl_block.setText(
+            QCoreApplication.translate(
+                "form_block",
+                u"[New/Test Block #]",
+                None))
+        self.lbl_identification.setText(
+            QCoreApplication.translate(
+                "form_block", u"Id:", None))
+        self.le_identification.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_block", u"[Identifier]", None))
+        self.lbl_name.setText(
+            QCoreApplication.translate(
+                "form_block", u"Name:", None))
         self.le_name.setText("")
-        self.le_name.setPlaceholderText(QCoreApplication.translate("form_block", u"[Name]", None))
-        self.lbl_system.setText(QCoreApplication.translate("form_block", u"System:", None))
-        self.cb_system.setItemText(0, QCoreApplication.translate("form_block", u"USSP", None))
-        self.cb_system.setItemText(1, QCoreApplication.translate("form_block", u"CISP", None))
-        self.cb_system.setItemText(2, QCoreApplication.translate("form_block", u"AUDI", None))
-        self.cb_system.setItemText(3, QCoreApplication.translate("form_block", u"EXCHANGE", None))
-        self.cb_system.setItemText(4, QCoreApplication.translate("form_block", u"NA", None))
+        self.le_name.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_block", u"[Name]", None))
+        self.lbl_system.setText(
+            QCoreApplication.translate(
+                "form_block", u"System:", None))
+        self.cb_system.setItemText(
+            0, QCoreApplication.translate(
+                "form_block", u"USSP", None))
+        self.cb_system.setItemText(
+            1, QCoreApplication.translate(
+                "form_block", u"CISP", None))
+        self.cb_system.setItemText(
+            2, QCoreApplication.translate(
+                "form_block", u"AUDI", None))
+        self.cb_system.setItemText(
+            3, QCoreApplication.translate(
+                "form_block", u"EXCHANGE", None))
+        self.cb_system.setItemText(
+            4, QCoreApplication.translate(
+                "form_block", u"NA", None))
 
-        self.lbl_comments.setText(QCoreApplication.translate("form_block", u"Comments:", None))
+        self.lbl_comments.setText(
+            QCoreApplication.translate(
+                "form_block", u"Comments:", None))
         self.le_comments.setText("")
-        self.le_comments.setPlaceholderText(QCoreApplication.translate("form_block", u"[Comments]", None))
-        self.tab_widget_block.setTabText(self.tab_widget_block.indexOf(self.tab_cases), QCoreApplication.translate("form_block", u"Block Info", None))
-        self.tab_widget_block.setTabText(self.tab_widget_block.indexOf(self.tab_info), QCoreApplication.translate("form_block", u"Cases", None))
-        self.btn_accept.setText(QCoreApplication.translate("form_block", u"Accept", None))
-        self.btn_cancel.setText(QCoreApplication.translate("form_block", u"Cancel", None))
+        self.le_comments.setPlaceholderText(
+            QCoreApplication.translate(
+                "form_block", u"[Comments]", None))
+        self.tab_widget_block.setTabText(
+            self.tab_widget_block.indexOf(
+                self.tab_cases), QCoreApplication.translate(
+                "form_block", u"Block Info", None))
+        self.tab_widget_block.setTabText(
+            self.tab_widget_block.indexOf(
+                self.tab_info), QCoreApplication.translate(
+                "form_block", u"Cases", None))
+        self.btn_accept.setText(
+            QCoreApplication.translate(
+                "form_block", u"Accept", None))
+        self.btn_cancel.setText(
+            QCoreApplication.translate(
+                "form_block", u"Cancel", None))
     # retranslateUi
-

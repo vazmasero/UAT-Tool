@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'form_requirements.ui'
+##########################################################################
+# Form generated from reading UI file 'form_requirements.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+# Created by: Qt User Interface Compiler version 6.9.1
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+# WARNING! All changes made in this file will be lost when recompiling UI file!
+##########################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
-    QVBoxLayout, QWidget)
+                               QListWidget, QListWidgetItem, QPushButton, QSizePolicy,
+                               QVBoxLayout, QWidget)
+
 
 class Ui_form_requirement(object):
     def setupUi(self, form_requirement):
@@ -39,7 +40,6 @@ class Ui_form_requirement(object):
 
         self.hlayout_id.addWidget(self.le_id)
 
-
         self.verticalLayout.addLayout(self.hlayout_id)
 
         self.hlayout_system = QHBoxLayout()
@@ -55,7 +55,6 @@ class Ui_form_requirement(object):
         self.lw_system.setMaximumSize(QSize(300, 50))
 
         self.hlayout_system.addWidget(self.lw_system)
-
 
         self.verticalLayout.addLayout(self.hlayout_system)
 
@@ -73,7 +72,6 @@ class Ui_form_requirement(object):
 
         self.hlayout_section.addWidget(self.lw_section)
 
-
         self.verticalLayout.addLayout(self.hlayout_section)
 
         self.hlayout_definition = QHBoxLayout()
@@ -87,7 +85,6 @@ class Ui_form_requirement(object):
         self.le_definition.setObjectName(u"le_definition")
 
         self.hlayout_definition.addWidget(self.le_definition)
-
 
         self.verticalLayout.addLayout(self.hlayout_definition)
 
@@ -104,9 +101,7 @@ class Ui_form_requirement(object):
 
         self.hlayout_btn_requirement.addWidget(self.btn_cancel)
 
-
         self.verticalLayout.addLayout(self.hlayout_btn_requirement)
-
 
         self.retranslateUi(form_requirement)
 
@@ -114,12 +109,25 @@ class Ui_form_requirement(object):
     # setupUi
 
     def retranslateUi(self, form_requirement):
-        form_requirement.setWindowTitle(QCoreApplication.translate("form_requirement", u"Form", None))
-        self.lbl_id.setText(QCoreApplication.translate("form_requirement", u"ID:", None))
-        self.lbl_system.setText(QCoreApplication.translate("form_requirement", u"System:", None))
-        self.lbl_section.setText(QCoreApplication.translate("form_requirement", u"Section", None))
-        self.lbl_definition.setText(QCoreApplication.translate("form_requirement", u"Definition:", None))
-        self.btn_accept.setText(QCoreApplication.translate("form_requirement", u"Accept", None))
-        self.btn_cancel.setText(QCoreApplication.translate("form_requirement", u"Cancel", None))
+        form_requirement.setWindowTitle(
+            QCoreApplication.translate(
+                "form_requirement", u"Form", None))
+        self.lbl_id.setText(
+            QCoreApplication.translate(
+                "form_requirement", u"ID:", None))
+        self.lbl_system.setText(
+            QCoreApplication.translate(
+                "form_requirement", u"System:", None))
+        self.lbl_section.setText(
+            QCoreApplication.translate(
+                "form_requirement", u"Section", None))
+        self.lbl_definition.setText(
+            QCoreApplication.translate(
+                "form_requirement", u"Definition:", None))
+        self.btn_accept.setText(
+            QCoreApplication.translate(
+                "form_requirement", u"Accept", None))
+        self.btn_cancel.setText(
+            QCoreApplication.translate(
+                "form_requirement", u"Cancel", None))
     # retranslateUi
-

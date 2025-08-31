@@ -1,0 +1,37 @@
+output-format: html
+output-file: reports/prospector_report.html
+
+strictness: medium
+test-warnings: true
+doc-warnings: true
+
+ignore-paths:
+  - .venv/
+  - ui/
+
+ignore-patterns:
+  - (^|/)\..+
+
+pylint:
+  disable:
+    - missing-module-docstring
+    - missing-class-docstring
+    - missing-function-docstring
+
+pydocstyle:
+  disable:
+    - D213
+  enable:
+    - D212
+
+mccabe:
+  run: true
+  max-complexity: 10
+
+pep8:
+  full: true
+  disable:
+    - E501  
+
+pyflakes:
+  run: true

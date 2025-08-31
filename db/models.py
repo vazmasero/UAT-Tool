@@ -11,21 +11,33 @@ bug_requirements = Table(
     'bug_requirements',
     Base.metadata,
     Column('bug_id', Integer, ForeignKey('bugs.id'), primary_key=True),
-    Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True)
+    Column(
+        'requirement_id',
+        Integer,
+        ForeignKey('requirements.id'),
+        primary_key=True)
 )
 
 # Requirements
 requirement_systems = Table(
     'requirement_systems',
     Base.metadata,
-    Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True),
+    Column(
+        'requirement_id',
+        Integer,
+        ForeignKey('requirements.id'),
+        primary_key=True),
     Column('system_id', Integer, ForeignKey('systems.id'), primary_key=True)
 )
 
 requirement_sections = Table(
     'requirement_sections',
     Base.metadata,
-    Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True),
+    Column(
+        'requirement_id',
+        Integer,
+        ForeignKey('requirements.id'),
+        primary_key=True),
     Column('section_id', Integer, ForeignKey('sections.id'), primary_key=True)
 )
 
@@ -48,7 +60,11 @@ case_operators = Table(
     'case_operators',
     Base.metadata,
     Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
-    Column('operator_id', Integer, ForeignKey('operators.id'), primary_key=True)
+    Column(
+        'operator_id',
+        Integer,
+        ForeignKey('operators.id'),
+        primary_key=True)
 )
 
 case_drones = Table(
@@ -62,7 +78,11 @@ case_uhub_users = Table(
     'case_uhub_users',
     Base.metadata,
     Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True),
-    Column('uhub_user_id', Integer, ForeignKey('uhub_users.id'), primary_key=True)
+    Column(
+        'uhub_user_id',
+        Integer,
+        ForeignKey('uhub_users.id'),
+        primary_key=True)
 )
 
 # Step-requirements
@@ -70,7 +90,11 @@ step_requirements = Table(
     'step_requirements',
     Base.metadata,
     Column('step_id', Integer, ForeignKey('steps.id'), primary_key=True),
-    Column('requirement_id', Integer, ForeignKey('requirements.id'), primary_key=True)
+    Column(
+        'requirement_id',
+        Integer,
+        ForeignKey('requirements.id'),
+        primary_key=True)
 )
 
 # Tabla intermedia para la relación many-to-many Block <-> Case
@@ -80,6 +104,15 @@ block_cases = Table(
     Column('block_id', Integer, ForeignKey('blocks.id'), primary_key=True),
     Column('case_id', Integer, ForeignKey('cases.id'), primary_key=True)
 )
+
+# Campaigns - blocks
+campaign_blocks = Table(
+    'campaign_blocks',
+    Base.metadata,
+    Column('campaign_id', Integer, ForeignKey('campaigns.id'), primary_key=True),
+    Column('block_id', Integer, ForeignKey('blocks.id'), primary_key=True)
+)
+
 
 class Bug(Base):
     __tablename__ = 'bugs'
@@ -100,28 +133,39 @@ class Bug(Base):
     log = Column(Text)
 
     # Relationships
-    requirements = relationship('Requirement', secondary=bug_requirements, back_populates='bugs')
+    requirements = relationship(
+        'Requirement',
+        secondary=bug_requirements,
+        back_populates='bugs')
     system = relationship('System', back_populates='bugs')
-    campaign = relationship('Campaign', back_populates='bug', uselist=False)
+    campaign_id = Column(Integer, ForeignKey('campaigns.id'))
+    campaign = relationship('Campaign', back_populates='bugs')
+
 
 class Campaign(Base):
     __tablename__ = 'campaigns'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    identifier = Column(String)
+    identification = Column(String)
     description = Column(Text)
     system = Column(String)
     version = Column(String)
-    test_blocks = Column(String)
     passed = Column(String)
     success = Column(String)
-    creation_time = Column(String)
+    creation_date = Column(String)
     start_date = Column(String)
     end_date = Column(String)
     last_update = Column(String)
     comments = Column(Text)
 
     # Relationships
-    bug = relationship('Bug', back_populates='campaign', uselist=False)
+    bugs = relationship('Bug', back_populates='campaign')
+    
+    # Relación many-to-many con Block
+    blocks = relationship(
+        'Block',
+        secondary=campaign_blocks,
+        back_populates='campaigns')
+
 
 class Step(Base):
     __tablename__ = 'steps'
@@ -134,7 +178,11 @@ class Step(Base):
     case_id = Column(Integer, ForeignKey('cases.id'))
     case = relationship('Case', back_populates='steps')
 
-    affected_requirements = relationship('Requirement', secondary=step_requirements, back_populates='steps')
+    affected_requirements = relationship(
+        'Requirement',
+        secondary=step_requirements,
+        back_populates='steps')
+
 
 class Case(Base):
     __tablename__ = 'cases'
@@ -144,17 +192,39 @@ class Case(Base):
     comments = Column(Text)
 
     # Relationships many to many
-    systems = relationship('System', secondary=case_systems, back_populates='cases')
-    operators = relationship('Operator', secondary=case_operators, back_populates='cases')
-    drones = relationship('Drone', secondary=case_drones, back_populates='cases')
-    uhub_users = relationship('UhubUser', secondary=case_uhub_users, back_populates='cases')
-    sections = relationship('Section', secondary=case_sections, back_populates='cases')
+    systems = relationship(
+        'System',
+        secondary=case_systems,
+        back_populates='cases')
+    operators = relationship(
+        'Operator',
+        secondary=case_operators,
+        back_populates='cases')
+    drones = relationship(
+        'Drone',
+        secondary=case_drones,
+        back_populates='cases')
+    uhub_users = relationship(
+        'UhubUser',
+        secondary=case_uhub_users,
+        back_populates='cases')
+    sections = relationship(
+        'Section',
+        secondary=case_sections,
+        back_populates='cases')
 
     # Relationship one to many
-    steps = relationship('Step', back_populates='case', cascade='all, delete-orphan')
+    steps = relationship(
+        'Step',
+        back_populates='case',
+        cascade='all, delete-orphan')
 
     # Relación inversa many-to-many con Block
-    blocks = relationship('Block', secondary=block_cases, back_populates='cases')
+    blocks = relationship(
+        'Block',
+        secondary=block_cases,
+        back_populates='cases')
+
 
 class Block(Base):
     __tablename__ = 'blocks'
@@ -165,37 +235,74 @@ class Block(Base):
     comments = Column(Text)
 
     # Relación many-to-many con Case
-    cases = relationship('Case', secondary=block_cases, back_populates='blocks')
+    cases = relationship(
+        'Case',
+        secondary=block_cases,
+        back_populates='blocks')
+    
+    # Relación inversa many-to-many con Campaign
+    campaigns = relationship(
+        'Campaign',
+        secondary=campaign_blocks,
+        back_populates='blocks')
+
 
 class Requirement(Base):
     __tablename__ = 'requirements'
-    
+
     id = Column(Integer, primary_key=True)
     code = Column(String, unique=True, nullable=False)
     definition = Column(Text, nullable=False)
     creation_date = Column(DateTime, default=datetime.now)
     last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    
+
     # Relationships
-    systems = relationship('System', secondary=requirement_systems, back_populates='requirements')
-    sections = relationship('Section', secondary=requirement_sections, back_populates='requirements')
-    steps = relationship('Step', secondary=step_requirements, back_populates='affected_requirements')
-    bugs = relationship('Bug', secondary=bug_requirements, back_populates='requirements')
+    systems = relationship(
+        'System',
+        secondary=requirement_systems,
+        back_populates='requirements')
+    sections = relationship(
+        'Section',
+        secondary=requirement_sections,
+        back_populates='requirements')
+    steps = relationship(
+        'Step',
+        secondary=step_requirements,
+        back_populates='affected_requirements')
+    bugs = relationship(
+        'Bug',
+        secondary=bug_requirements,
+        back_populates='requirements')
+
 
 class System(Base):
     __tablename__ = 'systems'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
-    requirements = relationship('Requirement', secondary=requirement_systems, back_populates='systems')
-    cases = relationship('Case', secondary=case_systems, back_populates='systems')
+    requirements = relationship(
+        'Requirement',
+        secondary=requirement_systems,
+        back_populates='systems')
+    cases = relationship(
+        'Case',
+        secondary=case_systems,
+        back_populates='systems')
     bugs = relationship('Bug', back_populates='system')
+
 
 class Section(Base):
     __tablename__ = 'sections'
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
-    requirements = relationship('Requirement', secondary=requirement_sections, back_populates='sections')
-    cases = relationship('Case', secondary=case_sections, back_populates='sections')
+    requirements = relationship(
+        'Requirement',
+        secondary=requirement_sections,
+        back_populates='sections')
+    cases = relationship(
+        'Case',
+        secondary=case_sections,
+        back_populates='sections')
+
 
 class Email(Base):
     __tablename__ = 'emails'
@@ -203,6 +310,7 @@ class Email(Base):
     name = Column(String)
     email = Column(String)
     password = Column(String)
+
 
 class Operator(Base):
     __tablename__ = 'operators'
@@ -215,7 +323,11 @@ class Operator(Base):
     phone = Column(String)
 
     # Relationships
-    cases = relationship('Case', secondary=case_operators, back_populates='operators')
+    cases = relationship(
+        'Case',
+        secondary=case_operators,
+        back_populates='operators')
+
 
 class Drone(Base):
     __tablename__ = 'drones'
@@ -229,7 +341,11 @@ class Drone(Base):
     transponder_id = Column(String)
 
     # Relationships
-    cases = relationship('Case', secondary=case_drones, back_populates='drones')
+    cases = relationship(
+        'Case',
+        secondary=case_drones,
+        back_populates='drones')
+
 
 class UasZone(Base):
     __tablename__ = 'uas_zones'
@@ -241,6 +357,7 @@ class UasZone(Base):
     activation_time = Column(String)
     authority = Column(String)
 
+
 class UhubOrg(Base):
     __tablename__ = 'uhub_orgs'
     id = Column(Integer, primary_key=True)
@@ -250,6 +367,7 @@ class UhubOrg(Base):
     aoi = Column(String)
     email = Column(String)
     phone = Column(String)
+
 
 class UhubUser(Base):
     __tablename__ = 'uhub_users'
@@ -263,7 +381,11 @@ class UhubUser(Base):
     aoi = Column(String)
 
     # Relationships
-    cases = relationship('Case', secondary=case_uhub_users, back_populates='uhub_users')
+    cases = relationship(
+        'Case',
+        secondary=case_uhub_users,
+        back_populates='uhub_users')
+
 
 class Uspace(Base):
     __tablename__ = 'uspaces'

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from enum import Enum
+
 
 @dataclass
 class Requirement:
@@ -9,6 +9,7 @@ class Requirement:
     systems: list[str]
     sections: list[str]
 
+
 @dataclass
 class Block:
     id: int | None
@@ -17,9 +18,10 @@ class Block:
     system: str
     comments: str
 
+
 @dataclass
 class Bug:
-    id : int | None
+    id: int | None
     status: str
     system_id: str
     campaign_id: str
@@ -32,6 +34,7 @@ class Bug:
     impact: str
     file: str
 
+
 @dataclass
 class Case:
     id: int | None
@@ -43,7 +46,8 @@ class Case:
     drones: list[str]
     uhub_users: list[str]
     comments: str
-    
+
+
 @dataclass
 class Step:
     id: int | None
@@ -51,3 +55,12 @@ class Step:
     expected_result: str
     affected_requirements: list[str]
     comments: str
+    
+@dataclass
+class Campaign:
+    id: int | None
+    identification: str
+    description: str
+    system: list[str]
+    version: list[str]
+    blocks: list[str]

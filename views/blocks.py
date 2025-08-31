@@ -1,6 +1,6 @@
-from typing import Dict, Callable, Optional, Type, Any, List
-from PySide6.QtCore import Slot, Signal, Qt
-from PySide6.QtWidgets import QTableView, QListWidgetItem
+from typing import Dict, Optional, Any
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QListWidgetItem
 
 from base.base_form import BaseForm
 from managers.table_manager import TableManager
@@ -11,9 +11,10 @@ from utils.form_mode import FormMode
 
 from db.db import DatabaseManager
 
+
 class FormBlock(BaseForm):
 
-    def __init__(self, mode:FormMode, db_id: Optional[int]):
+    def __init__(self, mode: FormMode, db_id: Optional[int]):
         super().__init__("blocks", mode, db_id)
         self.ui = Ui_form_block()
 
@@ -29,20 +30,21 @@ class FormBlock(BaseForm):
         # Setup form
         self.setup_form(Ui_form_block, self.controller)
         self._connect_signals()
-        
+
     def _connect_signals(self):
         pass
 
     def _setup_custom_widgets(self):
         self.controller.setup_tables(self.ui, self.mode, self.db_id)
         self.ui.cb_system.currentTextChanged.connect(self._on_system_changed)
-        self.ui.lw_cases.itemChanged.connect(self._handle_case_checkbox_changed)
+        self.ui.lw_cases.itemChanged.connect(
+            self._handle_case_checkbox_changed)
         if self.mode != FormMode.EDIT:
             self._update_cases_list()
 
     def _on_system_changed(self):
-            self.selected_case_ids = set()
-            self._update_cases_list()
+        self.selected_case_ids = set()
+        self._update_cases_list()
 
     def _handle_case_checkbox_changed(self, item: QListWidgetItem):
         case_id = item.data(Qt.UserRole)
@@ -63,7 +65,8 @@ class FormBlock(BaseForm):
         self.ui.lw_cases.clear()
 
         for case in cases:
-            item = QListWidgetItem(f"{case['identification']} - {case['name']}")
+            item = QListWidgetItem(
+                f"{case['identification']} - {case['name']}")
             item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
             item.setData(Qt.UserRole, case.get("id"))
             if case.get("id") in self.selected_case_ids:
@@ -89,9 +92,9 @@ class FormBlock(BaseForm):
         self.ui.le_name.setText(formatted_data['name'])
         self.ui.le_comments.setText(formatted_data['comments'])
         self.ui.cb_system.setCurrentText(formatted_data['system'])
-        self.selected_case_ids = set(case.get("id") for case in formatted_data.get("cases", []))
+        self.selected_case_ids = set(case.get("id")
+                                     for case in formatted_data.get("cases", []))
         self._update_cases_list()
-
 
     def _obtain_form_data(self) -> Dict[str, Any]:
         return {
@@ -101,7 +104,7 @@ class FormBlock(BaseForm):
             'comments': self.ui.le_comments.text(),
             'cases': self.get_checked_case_ids()
         }
-    
+
     def get_checked_case_ids(self):
         checked_ids = []
         for i in range(self.ui.lw_cases.count()):
@@ -114,16 +117,16 @@ class FormBlock(BaseForm):
     def validate_form(self, data):
         """Valida los datos del formulario."""
         errors = []
-        
-        if not data['identification']: 
+
+        if not data['identification']:
             errors.append("Defining an identification is mandatory")
-        if not data['name']: 
+        if not data['name']:
             errors.append("Writing a name for the case is mandatory")
         if not data['system']:
             errors.append("Choosing one associated system is mandatory")
 
         return errors
-    
+
     def _handle_submit(self):
         """Handles form submission for Block, including cases."""
         try:
@@ -135,7 +138,8 @@ class FormBlock(BaseForm):
                 return
 
             cases_table = self.ui.tbl_cases
-            self.controller.handle_form_submission(data, self.db_id, cases_table)
+            self.controller.handle_form_submission(
+                data, self.db_id, cases_table)
             self.data_updated.emit(self.form_key)
             self.close()
         except Exception as e:

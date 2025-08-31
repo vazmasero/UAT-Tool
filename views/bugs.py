@@ -1,9 +1,7 @@
-from typing import Dict, Callable, Optional, Type, Any, List
-from PySide6.QtCore import Slot, Signal
+from typing import Dict, Optional, Any
 from PySide6.QtWidgets import QFileDialog
 
 from base.base_form import BaseForm
-from managers.table_manager import TableManager
 from ui.ui_form_bug import Ui_form_bug
 from controllers.bug_controller import BugController
 from services.bug_service import BugService
@@ -11,9 +9,24 @@ from utils.form_mode import FormMode
 
 from db.db import DatabaseManager
 
-# Page to manage the creation or edition of bugs
 class FormBug(BaseForm):
-    def __init__(self, mode:FormMode, db_id: Optional[int]):
+    def __init__(self, mode: FormMode, db_id: Optional[int]):
+        """Initializes bug management form.
+        
+        This form allows the creation and edition of bugs, including:
+        - Basic information about the bug
+        - Status and priority
+        - System and version affected
+        - Related requirements
+        - Attached files
+        - Change log
+        
+        Args
+        ----
+            mode (FormMode): form mode (create/edit)
+            db_id (Optional[int]): Database id for the bug if edit mode
+            
+        """
         super().__init__("bugs", mode, db_id)
         self.ui = Ui_form_bug()
 
@@ -29,13 +42,15 @@ class FormBug(BaseForm):
 
     def _setup_custom_widgets(self):
 
-        # Add file 
+        # Add file
         if hasattr(self.ui, 'btn_files'):
             self.ui.btn_files.clicked.connect(self._browse_file)
-        
+
         # Combo boxes and selectables
         lw_data = self.controller.get_lw_data()
-        self.setup_checkbox_list(self.ui.lw_requirements, lw_data["requirements"])
+        self.setup_checkbox_list(
+            self.ui.lw_requirements,
+            lw_data["requirements"])
         self.setup_cb(self.ui.cb_campaign, lw_data["campaigns"])
         self.setup_cb(self.ui.cb_system, lw_data["systems"])
 
@@ -45,7 +60,7 @@ class FormBug(BaseForm):
 
     def _browse_file(self):
         file_path, _ = QFileDialog.getOpenFileName(
-            self, 
+            self,
             "Select File",
             "",
             "JSON Files (*.json);;All Files (*)"
@@ -68,7 +83,9 @@ class FormBug(BaseForm):
         self.ui.le_version.setText(formatted_data['version'])
         self.ui.le_service_now_id.setText(formatted_data['service_now_id'])
         self.ui.cb_campaign.setCurrentText(formatted_data['campaign_id'])
-        self.set_checked_items(self.ui.lw_requirements, formatted_data['requirements'])
+        self.set_checked_items(
+            self.ui.lw_requirements,
+            formatted_data['requirements'])
         self.ui.cb_urgency.setCurrentText(formatted_data['urgency'])
         self.ui.cb_impact.setCurrentText(formatted_data['impact'])
         self.ui.le_short_desc.setText(formatted_data['short_desc'])
@@ -87,7 +104,7 @@ class FormBug(BaseForm):
                 self.ui.lw_history.addItem(entry)
 
     def _obtain_form_data(self) -> Dict[str, Any]:
-        data ={
+        data = {
             'status': self.ui.cb_status.currentText(),
             'system': self.ui.cb_system.currentText(),
             'version': self.ui.le_version.text(),
@@ -113,16 +130,16 @@ class FormBug(BaseForm):
             data['file'] = ""
 
         return data
-    
+
     def validate_form(self, data):
         """Valida los datos del formulario."""
         errors = []
-        
-        if not data['status']: 
+
+        if not data['status']:
             errors.append("Defining a status is mandatory")
-        if not data['system']: 
+        if not data['system']:
             errors.append("Chosing a system is mandatory")
-        if not data['version']: 
+        if not data['version']:
             errors.append("Typing in a system version is mandatory")
         if not data['campaign']:
             errors.append("Choosing one associated campaign is mandatory")
@@ -134,8 +151,5 @@ class FormBug(BaseForm):
             errors.append("Writing a short description is mandatory")
         if not data['definition']:
             errors.append("Writing a definition is mandatory")
-        
+
         return errors
-
-    
-
