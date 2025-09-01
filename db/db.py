@@ -8,20 +8,25 @@ from .models import (Base, Bug, Campaign, Case, Block, Requirement, System, Step
 from .initial_data import load_initial_data
 
 DB_NAME = "uat_tool.db"
-DATABASE_URL = f"sqlite:///{DB_NAME}"
+DB_URL = f"sqlite:///{DB_NAME}"
 
-# Create SQLAlchemy engine
-engine = create_engine(DATABASE_URL, echo=False)
+# Crea el motor SQLAlchemy
+engine = create_engine(DB_URL, echo=False)
 
-# Defines SQLAlchemy Session object
+# Define la fábrica de sesiones de SQLAlchemy.
+# scoped_session asegura la seguridad de los hilos al devolver una Session única por hilo/solicitud
 Session = scoped_session(sessionmaker(bind=engine))
 
 def init_db():
+    """Inicializa la base de datos.
 
-    # Creates all tables defined in models.py
+    Esta función crea la base de datos y todas las tablas definidas en los modelos y
+    la pobla con los datos iniciales.
+
+    """
+    # Crea todas las tablas definidas en models.py
     Base.metadata.create_all(engine)
 
-    # Instantiates session
     session = Session()
     try:
         load_initial_data(session)

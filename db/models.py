@@ -2,6 +2,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Table
 from sqlalchemy.orm import relationship, declarative_base
 
+
 Base = declarative_base()
 
 """Many - to - many relationships"""
