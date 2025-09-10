@@ -1,4 +1,3 @@
-from typing import Optional
 from PySide6.QtCore import QObject
 
 from config.app_config import BaseUI
@@ -6,7 +5,6 @@ from config.page_config import PAGES
 
 
 class PageManager(QObject):
-
     def __init__(self, stacked_widget, ui: BaseUI):
         super().__init__()
         self.stacked_widget = stacked_widget
@@ -30,7 +28,7 @@ class PageManager(QObject):
         elif page_name == "assets":
             self.ui.tab_widget_assets.setCurrentIndex(0)
 
-    def get_current_tab_index(self) -> Optional[int]:
+    def get_current_tab_index(self) -> int | None:
         if self.current_page == "management":
             return self.ui.tab_widget_management.currentIndex()
         if self.current_page == "assets":

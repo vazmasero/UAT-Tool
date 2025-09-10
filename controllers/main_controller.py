@@ -1,24 +1,24 @@
-from typing import Optional, List
-
-from PySide6.QtWidgets import QTableView
 from PySide6.QtCore import Slot
+from PySide6.QtWidgets import QTableView
 
 from config.app_config import BaseUI
-from config.table_config import TABLES
 from config.page_config import PAGES
+from config.table_config import TABLES
 from db.db import DatabaseManager
-from managers.table_manager import TableManager
-from managers.page_manager import PageManager
 from managers.form_manager import FormManager
+from managers.page_manager import PageManager
+from managers.table_manager import TableManager
 
 
 class MainController:
-    def __init__(self,
-                 ui: BaseUI,
-                 page_manager: Optional[PageManager],
-                 form_manager: FormManager,
-                 table_manager: TableManager,
-                 db_manager: DatabaseManager):
+    def __init__(
+        self,
+        ui: BaseUI,
+        page_manager: PageManager | None,
+        form_manager: FormManager,
+        table_manager: TableManager,
+        db_manager: DatabaseManager,
+    ):
         self.ui = ui
         self.page_manager = page_manager
         self.form_manager = form_manager
@@ -40,11 +40,11 @@ class MainController:
                 continue
             data = self.db_manager.get_all_data(table_info.db_table)
             self.table_manager.setup_table(
-                table_widget, table_name, data, register=True)
+                table_widget, table_name, data, register=True
+            )
 
     @Slot()
-    def handle_selection_changed(self, table: Optional[QTableView]):
-
+    def handle_selection_changed(self, table: QTableView | None):
         if table:
             if table.selectionModel().hasSelection():
                 self.ui.btn_edit.setEnabled(True)
@@ -57,7 +57,6 @@ class MainController:
 
     @Slot()
     def handle_remove_button(self):
-
         current_page = self.page_manager.current_page
         tab_index = self.page_manager.get_current_tab_index()
 
@@ -77,8 +76,7 @@ class MainController:
             self.refresh_table_data(table_name)
 
         except Exception as e:
-            print(
-                f"Error deleting register {record_id} from table '{table_name}': {e}")
+            print(f"Error deleting register {record_id} from table '{table_name}': {e}")
 
     @Slot()
     def handle_new_form(self, edit: bool):
@@ -109,15 +107,14 @@ class MainController:
 
         # Returned form instance is used to handle event of updated data in db
         # (to refresh the appropriate table)
-        if form_instance and hasattr(form_instance, 'data_updated'):
+        if form_instance and hasattr(form_instance, "data_updated"):
             form_instance.data_updated.connect(self.refresh_table_data)
 
     @Slot()
-    def handle_menu_add(self, form_key: str, edit: bool,
-                        data: Optional[List] = None):
+    def handle_menu_add(self, form_key: str, edit: bool, data: list | None = None):
         form_instance = self.form_manager.open_form(form_key, edit, data)
 
-        if form_instance and hasattr(form_instance, 'data_updated'):
+        if form_instance and hasattr(form_instance, "data_updated"):
             form_instance.data_updated.connect(self.refresh_table_data)
 
     @Slot()

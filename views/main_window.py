@@ -1,17 +1,15 @@
-from typing import Optional
 from PySide6.QtWidgets import QMainWindow
 
+from config.form_config import FORMS
+from controllers.main_controller import MainController
+from db.db import DatabaseManager
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager
 from ui.ui_main import Ui_main_window
 
-from config.form_config import FORMS
-from controllers.main_controller import MainController
-from db.db import DatabaseManager
 
 class MainWindow(QMainWindow):
-
     def __init__(self):
         super().__init__()
         self.ui = Ui_main_window()
@@ -29,7 +27,7 @@ class MainWindow(QMainWindow):
             page_manager=self.page_manager,
             form_manager=self.form_manager,
             table_manager=self.table_manager,
-            db_manager=self.db_manager
+            db_manager=self.db_manager,
         )
 
         # Initial view setup
@@ -41,10 +39,10 @@ class MainWindow(QMainWindow):
         # Provisional: disables search bars and filters until they are
         # implemented
         self._disable_search_bars()
-        
+
         # Initially at bugs page
         self.controller.change_page("bugs")
-        
+
     def _disable_search_bars(self):
         # Search bars are disabled until implemented
         self.ui.le_search_bug.setDisabled(True)
@@ -62,29 +60,29 @@ class MainWindow(QMainWindow):
 
         # Ui buttons
         self.ui.btn_add.clicked.connect(
-            lambda _: self.controller.handle_new_form(
-                edit=False))
+            lambda _: self.controller.handle_new_form(edit=False)
+        )
         self.ui.btn_edit.clicked.connect(
-            lambda _: self.controller.handle_new_form(edit=True))
+            lambda _: self.controller.handle_new_form(edit=True)
+        )
         self.ui.btn_remove.clicked.connect(
-            lambda _: self.controller.handle_remove_button())
+            lambda _: self.controller.handle_remove_button()
+        )
         # self.ui.btn_start.clicked.connect(self._execute_campaign)
 
         # Table signals
-        self.table_manager.table_double_clicked.connect(
-            self.controller.handle_new_form)
+        self.table_manager.table_double_clicked.connect(self.controller.handle_new_form)
         self.table_manager.selection_changed.connect(
-            self.controller.handle_selection_changed)
+            self.controller.handle_selection_changed
+        )
 
     def _connect_menu_actions(self):
-
         for attr_name in dir(self.ui):
-            if attr_name.startswith('action_view_'):
+            if attr_name.startswith("action_view_"):
                 action = getattr(self.ui, attr_name)
-                page_type = attr_name.replace('action_view_', '')
+                page_type = attr_name.replace("action_view_", "")
                 action.triggered.connect(
-                    lambda _, pt=page_type: self.controller.change_page(
-                        pt)
+                    lambda _, pt=page_type: self.controller.change_page(pt)
                 )
             elif attr_name.startswith("action_new_"):
                 action = getattr(self.ui, attr_name)
@@ -92,13 +90,14 @@ class MainWindow(QMainWindow):
                 if form_name:
                     action.triggered.connect(
                         lambda _, fn=form_name: self.controller.handle_menu_add(
-                            fn, edit=False, data=None)
+                            fn, edit=False, data=None
+                        )
                     )
 
-    def _find_form_key_for_action(self, action_name: str) -> Optional[str]:
+    def _find_form_key_for_action(self, action_name: str) -> str | None:
         """Encuentra el form_key correspondiente a una acción del menú"""
         for form_key, form_info in FORMS.items():
-            form_config = form_info.get('config')
+            form_config = form_info.get("config")
             if form_config and form_config.menu_action_attr == action_name:
                 return form_key
         return None

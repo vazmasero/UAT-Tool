@@ -1,11 +1,28 @@
 import datetime
-from typing import Any, Dict
-from sqlalchemy import create_engine, inspect
-from sqlalchemy.orm import sessionmaker, scoped_session
+from typing import Any
 
-from .models import (Base, Bug, Campaign, Case, Block, Requirement, System, Step,
-                     Section, Email, Operator, Drone, UasZone, UhubOrg, UhubUser, Uspace)
+from sqlalchemy import create_engine, inspect
+from sqlalchemy.orm import scoped_session, sessionmaker
+
 from .initial_data import load_initial_data
+from .models import (
+    Base,
+    Block,
+    Bug,
+    Campaign,
+    Case,
+    Drone,
+    Email,
+    Operator,
+    Requirement,
+    Section,
+    Step,
+    System,
+    UasZone,
+    UhubOrg,
+    UhubUser,
+    Uspace,
+)
 
 DB_NAME = "uat_tool.db"
 DB_URL = f"sqlite:///{DB_NAME}"
@@ -16,6 +33,7 @@ engine = create_engine(DB_URL, echo=False)
 # Define la fábrica de sesiones de SQLAlchemy.
 # scoped_session asegura la seguridad de los hilos al devolver una Session única por hilo/solicitud
 Session = scoped_session(sessionmaker(bind=engine))
+
 
 def init_db():
     """Inicializa la base de datos.
@@ -33,8 +51,8 @@ def init_db():
     finally:
         session.close()
 
-class DatabaseManager:
 
+class DatabaseManager:
     def __init__(self):
         """Initializes database manager.
 
@@ -42,21 +60,21 @@ class DatabaseManager:
         including register creation, read, update y deletion.
         """
         self._model_map = {
-            'bugs': Bug,
-            'campaigns': Campaign,
-            'cases': Case,
-            'blocks': Block,
-            'requirements': Requirement,
-            'systems': System,
-            'sections': Section,
-            'steps': Step,
-            'emails': Email,
-            'operators': Operator,
-            'drones': Drone,
-            'uas_zones': UasZone,
-            'uhub_orgs': UhubOrg,
-            'uhub_users': UhubUser,
-            'uspaces': Uspace
+            "bugs": Bug,
+            "campaigns": Campaign,
+            "cases": Case,
+            "blocks": Block,
+            "requirements": Requirement,
+            "systems": System,
+            "sections": Section,
+            "steps": Step,
+            "emails": Email,
+            "operators": Operator,
+            "drones": Drone,
+            "uas_zones": UasZone,
+            "uhub_orgs": UhubOrg,
+            "uhub_users": UhubUser,
+            "uspaces": Uspace,
         }
         self.session = Session()
 
@@ -71,55 +89,64 @@ class DatabaseManager:
             results = []
 
             for item in query.all():
-                item_dict = {c.name: getattr(item, c.name)
-                             for c in inspect(model_class).columns}
+                item_dict = {
+                    c.name: getattr(item, c.name) for c in inspect(model_class).columns
+                }
 
                 # Manejar relaciones muchos-a-muchos
-                if key == 'requirements':
-                    if hasattr(item, 'systems'):
-                        item_dict['systems'] = ", ".join(
-                            [sys.name for sys in item.systems])
-                    if hasattr(item, 'sections'):
-                        item_dict['sections'] = ", ".join(
-                            [sec.name for sec in item.sections])
-                elif key == 'cases':
-                    if hasattr(item, 'systems'):
-                        item_dict['systems'] = ", ".join(
-                            [sys.name for sys in item.systems])
-                    if hasattr(item, 'sections'):
-                        item_dict['sections'] = ", ".join(
-                            [sec.name for sec in item.sections])
-                    if hasattr(item, 'operators'):
-                        item_dict['operators'] = ", ".join(
-                            [op.name for op in item.operators])
-                    if hasattr(item, 'drones'):
-                        item_dict['drones'] = ", ".join(
-                            [drone.name for drone in item.drones])
-                    if hasattr(item, 'uhub_users'):
-                        item_dict['uhub_users'] = ", ".join(
-                            [user.username for user in item.uhub_users])
-                    if hasattr(item, 'steps'):
-                        item_dict['steps'] = len(item.steps)
-                elif key == 'blocks':
-                    if hasattr(item, 'cases'):
-                        item_dict['cases'] = len(item.cases)
-                elif key == 'campaigns':
-                    if hasattr(item, 'blocks'):
-                        item_dict['blocks'] = len(item.blocks)
-                elif key == 'bugs':
-                    if hasattr(item, 'system') and item.system:
-                        item_dict['system_id'] = item.system.name
+                if key == "requirements":
+                    if hasattr(item, "systems"):
+                        item_dict["systems"] = ", ".join(
+                            [sys.name for sys in item.systems]
+                        )
+                    if hasattr(item, "sections"):
+                        item_dict["sections"] = ", ".join(
+                            [sec.name for sec in item.sections]
+                        )
+                elif key == "cases":
+                    if hasattr(item, "systems"):
+                        item_dict["systems"] = ", ".join(
+                            [sys.name for sys in item.systems]
+                        )
+                    if hasattr(item, "sections"):
+                        item_dict["sections"] = ", ".join(
+                            [sec.name for sec in item.sections]
+                        )
+                    if hasattr(item, "operators"):
+                        item_dict["operators"] = ", ".join(
+                            [op.name for op in item.operators]
+                        )
+                    if hasattr(item, "drones"):
+                        item_dict["drones"] = ", ".join(
+                            [drone.name for drone in item.drones]
+                        )
+                    if hasattr(item, "uhub_users"):
+                        item_dict["uhub_users"] = ", ".join(
+                            [user.username for user in item.uhub_users]
+                        )
+                    if hasattr(item, "steps"):
+                        item_dict["steps"] = len(item.steps)
+                elif key == "blocks":
+                    if hasattr(item, "cases"):
+                        item_dict["cases"] = len(item.cases)
+                elif key == "campaigns":
+                    if hasattr(item, "blocks"):
+                        item_dict["blocks"] = len(item.blocks)
+                elif key == "bugs":
+                    if hasattr(item, "system") and item.system:
+                        item_dict["system_id"] = item.system.name
                     else:
-                        item_dict['system_id'] = ""
-                    if hasattr(item, 'campaign') and item.campaign:
-                        item_dict['campaign_id'] = item.campaign.identifier
+                        item_dict["system_id"] = ""
+                    if hasattr(item, "campaign") and item.campaign:
+                        item_dict["campaign_id"] = item.campaign.identifier
                     else:
-                        item_dict['campaign_id'] = "NA"
-                    if hasattr(item, 'requirements'):
-                        item_dict['requirements'] = ", ".join(
-                            [req.code for req in item.requirements])
+                        item_dict["campaign_id"] = "NA"
+                    if hasattr(item, "requirements"):
+                        item_dict["requirements"] = ", ".join(
+                            [req.code for req in item.requirements]
+                        )
                     else:
-                        item_dict['requirements'] = ""
+                        item_dict["requirements"] = ""
                 results.append(item_dict)
 
             return results
@@ -129,47 +156,57 @@ class DatabaseManager:
             print(f"Error obtaining data from {key}: {e}")
             return []
 
-    def create_register(self, key: str, data: Dict[str, Any]) -> int:
+    def create_register(self, key: str, data: dict[str, Any]) -> int:
         if key not in self._model_map:
-            available_keys = ', '.join(self._model_map.keys())
-            raise ValueError(
-                f"Key '{key}' not found. Available keys: {available_keys}")
+            available_keys = ", ".join(self._model_map.keys())
+            raise ValueError(f"Key '{key}' not found. Available keys: {available_keys}")
 
         model = self._model_map[key]
 
         # --- Bugs ---
-        if key == 'bugs':
+        if key == "bugs":
             try:
                 with self.session.no_autoflush:
-
                     system = None
-                    if 'system_id' in data and data['system_id']:
-                        system = self.session.query(System).filter_by(
-                            name=data['system_id']).first()
+                    if "system_id" in data and data["system_id"]:
+                        system = (
+                            self.session.query(System)
+                            .filter_by(name=data["system_id"])
+                            .first()
+                        )
                     campaign = None
-                    if 'campaign_id' in data and data['campaign_id']:
-                        campaign = self.session.query(Campaign).filter_by(
-                            identifier=data['campaign_id']).first()
+                    if "campaign_id" in data and data["campaign_id"]:
+                        campaign = (
+                            self.session.query(Campaign)
+                            .filter_by(identifier=data["campaign_id"])
+                            .first()
+                        )
                     requirements = []
-                    if 'requirements' in data and data['requirements']:
-                        requirements = self.session.query(Requirement).filter(
-                            Requirement.code.in_(data['requirements'])
-                        ).all()
+                    if "requirements" in data and data["requirements"]:
+                        requirements = (
+                            self.session.query(Requirement)
+                            .filter(Requirement.code.in_(data["requirements"]))
+                            .all()
+                        )
 
                     bug = model(
-                        status=data.get('status'),
+                        status=data.get("status"),
                         system=system,
                         campaign=campaign,
-                        version=data.get('version'),
-                        creation_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        last_update=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        service_now_id=data.get('service_now_id'),
-                        short_desc=data.get('short_desc'),
-                        definition=data.get('definition'),
-                        urgency=data.get('urgency'),
-                        impact=data.get('impact'),
-                        comments=data.get('comments'),
-                        file=data.get('file')
+                        version=data.get("version"),
+                        creation_time=datetime.datetime.now().strftime(
+                            "%Y-%m-%d %H:%M:%S"
+                        ),
+                        last_update=datetime.datetime.now().strftime(
+                            "%Y-%m-%d %H:%M:%S"
+                        ),
+                        service_now_id=data.get("service_now_id"),
+                        short_desc=data.get("short_desc"),
+                        definition=data.get("definition"),
+                        urgency=data.get("urgency"),
+                        impact=data.get("impact"),
+                        comments=data.get("comments"),
+                        file=data.get("file"),
                     )
                     self.session.add(bug)
                     self.session.flush()
@@ -187,28 +224,31 @@ class DatabaseManager:
                 raise e
 
         # --- Case for requirements ---
-        if key == 'requirements':
+        if key == "requirements":
             try:
                 with self.session.no_autoflush:
                     requirement = model(
-                        code=data.get('code'),
-                        definition=data.get('definition')
+                        code=data.get("code"), definition=data.get("definition")
                     )
                     self.session.add(requirement)
                     self.session.flush()
 
                     # Many-to-many: systems
-                    if 'systems' in data and data['systems']:
-                        systems = self.session.query(System).filter(
-                            System.name.in_(data['systems'])
-                        ).all()
+                    if "systems" in data and data["systems"]:
+                        systems = (
+                            self.session.query(System)
+                            .filter(System.name.in_(data["systems"]))
+                            .all()
+                        )
                         requirement.systems = systems
 
                     # Many-to-many: sections
-                    if 'sections' in data and data['sections']:
-                        sections = self.session.query(Section).filter(
-                            Section.name.in_(data['sections'])
-                        ).all()
+                    if "sections" in data and data["sections"]:
+                        sections = (
+                            self.session.query(Section)
+                            .filter(Section.name.in_(data["sections"]))
+                            .all()
+                        )
                         requirement.sections = sections
 
                     self.session.commit()
@@ -223,10 +263,10 @@ class DatabaseManager:
                 with self.session.no_autoflush:
                     # Crear el bloque con los campos básicos
                     block = model(
-                        identification=data.get('identification'),
-                        name=data.get('name'),
-                        system=data.get('system'),
-                        comments=data.get('comments')
+                        identification=data.get("identification"),
+                        name=data.get("name"),
+                        system=data.get("system"),
+                        comments=data.get("comments"),
                     )
                     self.session.add(block)
                     self.session.flush()  # Para obtener block.id
@@ -244,17 +284,17 @@ class DatabaseManager:
             except Exception as e:
                 self.session.rollback()
                 raise e
-            
+
         # --- Case for campaigns and blocks ---
         if key == "campaigns":
             try:
                 with self.session.no_autoflush:
                     # Crear el bloque con los campos básicos
                     campaign = model(
-                        identification=data.get('identification'),
-                        description=data.get('description'),
-                        system=data.get('system'),
-                        version=data.get('version')
+                        identification=data.get("identification"),
+                        description=data.get("description"),
+                        system=data.get("system"),
+                        version=data.get("version"),
                     )
                     self.session.add(campaign)
                     self.session.flush()  # Para obtener block.id
@@ -276,8 +316,14 @@ class DatabaseManager:
         # --- Caso general para el resto de modelos ---
         obj = model()
         for field, value in data.items():
-            if field in ("systems", "sections", "operators",
-                         "drones", "uhub_users", "affected_requirements"):
+            if field in (
+                "systems",
+                "sections",
+                "operators",
+                "drones",
+                "uhub_users",
+                "affected_requirements",
+            ):
                 continue
             if hasattr(obj, field):
                 setattr(obj, field, value)
@@ -292,50 +338,62 @@ class DatabaseManager:
             if "systems" in data and data["systems"]:
                 obj.systems.clear()
                 for system_name in data["systems"]:
-                    system = self.session.query(System).filter_by(
-                        name=system_name).first()
+                    system = (
+                        self.session.query(System).filter_by(name=system_name).first()
+                    )
                     if system:
                         obj.systems.append(system)
             # Sections
             if "sections" in data and data["sections"]:
                 obj.sections.clear()
                 for section_name in data["sections"]:
-                    section = self.session.query(Section).filter_by(
-                        name=section_name).first()
+                    section = (
+                        self.session.query(Section).filter_by(name=section_name).first()
+                    )
                     if section:
                         obj.sections.append(section)
             # Operators
             if "operators" in data and data["operators"]:
                 obj.operators.clear()
                 for operator_name in data["operators"]:
-                    operator = self.session.query(Operator).filter_by(
-                        name=operator_name).first()
+                    operator = (
+                        self.session.query(Operator)
+                        .filter_by(name=operator_name)
+                        .first()
+                    )
                     if operator:
                         obj.operators.append(operator)
             # Drones
             if "drones" in data and data["drones"]:
                 obj.drones.clear()
                 for drone_name in data["drones"]:
-                    drone = self.session.query(Drone).filter_by(
-                        name=drone_name).first()
+                    drone = self.session.query(Drone).filter_by(name=drone_name).first()
                     if drone:
                         obj.drones.append(drone)
             # Uhub users
             if "uhub_users" in data and data["uhub_users"]:
                 obj.uhub_users.clear()
                 for user_name in data["uhub_users"]:
-                    user = self.session.query(UhubUser).filter_by(
-                        username=user_name).first()
+                    user = (
+                        self.session.query(UhubUser)
+                        .filter_by(username=user_name)
+                        .first()
+                    )
                     if user:
                         obj.uhub_users.append(user)
             self.session.commit()
 
         # Relaciones para STEPS (many-to-many con requirements)
-        if key == "steps" and "affected_requirements" in data and data["affected_requirements"]:
+        if (
+            key == "steps"
+            and "affected_requirements" in data
+            and data["affected_requirements"]
+        ):
             obj.affected_requirements.clear()
             for req_code in data["affected_requirements"]:
-                requirement = self.session.query(
-                    Requirement).filter_by(code=req_code).first()
+                requirement = (
+                    self.session.query(Requirement).filter_by(code=req_code).first()
+                )
                 if requirement:
                     obj.affected_requirements.append(requirement)
             self.session.commit()
@@ -345,9 +403,10 @@ class DatabaseManager:
     def edit_register(self, table_name: str, register_id: int, data: dict):
         """Edita un registro existente en la tabla especificada."""
         if table_name not in self._model_map:
-            available_keys = ', '.join(self._model_map.keys())
+            available_keys = ", ".join(self._model_map.keys())
             raise ValueError(
-                f"Key '{table_name}' not found. Available keys: {available_keys}")
+                f"Key '{table_name}' not found. Available keys: {available_keys}"
+            )
 
         model = self._model_map[table_name]
         current_time = datetime.datetime.now()
@@ -361,73 +420,103 @@ class DatabaseManager:
             if isinstance(data, (list, tuple)):
                 inspector = inspect(model)
                 column_names = [c.key for c in inspector.columns]
-                data = dict(zip(column_names[1:], data[1:]))  # Excluimos el ID
+                data = dict(
+                    zip(column_names[1:], data[1:], strict=False)
+                )  # Excluimos el ID
 
             # --- BUGS ---
-            if table_name == 'bugs':
+            if table_name == "bugs":
                 basic_fields = [
-                    'status', 'version', 'service_now_id', 'short_desc', 'definition',
-                    'urgency', 'impact', 'comments', 'file'
+                    "status",
+                    "version",
+                    "service_now_id",
+                    "short_desc",
+                    "definition",
+                    "urgency",
+                    "impact",
+                    "comments",
+                    "file",
                 ]
                 for field in basic_fields:
                     if field in data:
                         setattr(record, field, data[field])
 
                 # Actualizar relaciones
-                if 'system_id' in data and data['system_id']:
-                    system = self.session.query(System).filter_by(
-                        name=data['system_id']).first()
+                if "system_id" in data and data["system_id"]:
+                    system = (
+                        self.session.query(System)
+                        .filter_by(name=data["system_id"])
+                        .first()
+                    )
                     record.system = system
 
-                if 'campaign_id' in data and data['campaign_id']:
-                    campaign = self.session.query(Campaign).filter_by(
-                        identifier=data['campaign_id']).first()
+                if "campaign_id" in data and data["campaign_id"]:
+                    campaign = (
+                        self.session.query(Campaign)
+                        .filter_by(identifier=data["campaign_id"])
+                        .first()
+                    )
                     record.campaign = campaign
 
-                if 'requirements' in data and data['requirements']:
-                    requirements = self.session.query(Requirement).filter(
-                        Requirement.code.in_(data['requirements'])
-                    ).all()
+                if "requirements" in data and data["requirements"]:
+                    requirements = (
+                        self.session.query(Requirement)
+                        .filter(Requirement.code.in_(data["requirements"]))
+                        .all()
+                    )
                     record.requirements = requirements
 
                 # History log
                 record.log = self.append_bug_log(
-                    record.log, f"Bug edited (status: {record.status})")
+                    record.log, f"Bug edited (status: {record.status})"
+                )
 
             # --- REQUIREMENTS ---
-            elif table_name == 'requirements':
-                basic_fields = ['code', 'definition', 'last_update']
+            elif table_name == "requirements":
+                basic_fields = ["code", "definition", "last_update"]
                 for field in basic_fields:
                     if field in data:
                         setattr(record, field, data[field])
 
                 # Many-to-many: systems
-                if 'systems' in data:
+                if "systems" in data:
                     record.systems.clear()
-                    if data['systems']:
-                        system_names = data['systems'] if isinstance(data['systems'], list) else [
-                            s.strip() for s in data['systems'].split(',')]
+                    if data["systems"]:
+                        system_names = (
+                            data["systems"]
+                            if isinstance(data["systems"], list)
+                            else [s.strip() for s in data["systems"].split(",")]
+                        )
                         for system_name in system_names:
-                            system = self.session.query(System).filter_by(
-                                name=system_name).first()
+                            system = (
+                                self.session.query(System)
+                                .filter_by(name=system_name)
+                                .first()
+                            )
                             if system:
                                 record.systems.append(system)
 
                 # Many-to-many: sections
-                if 'sections' in data:
+                if "sections" in data:
                     record.sections.clear()
-                    if data['sections']:
-                        section_names = data['sections'] if isinstance(data['sections'], list) else [
-                            s.strip() for s in data['sections'].split(',')]
+                    if data["sections"]:
+                        section_names = (
+                            data["sections"]
+                            if isinstance(data["sections"], list)
+                            else [s.strip() for s in data["sections"].split(",")]
+                        )
                         for section_name in section_names:
-                            section = self.session.query(Section).filter_by(
-                                name=section_name).first()
+                            section = (
+                                self.session.query(Section)
+                                .filter_by(name=section_name)
+                                .first()
+                            )
                             if section:
                                 record.sections.append(section)
 
             # --- BLOCKS ---
-            elif table_name == 'blocks':
-                basic_fields = ['identification', 'name', 'system', 'comments']
+            elif table_name == "blocks":
+                basic_fields = ["identification", "name", "system", "comments"]
                 for field in basic_fields:
                     if field in data:
                         setattr(record, field, data[field])
@@ -440,10 +529,10 @@ class DatabaseManager:
                             case = self.session.query(Case).get(case_id)
                             if case:
                                 record.cases.append(case)
-                                
+
             # --- CAMPAIGNS ---
-            elif table_name == 'campaigns':
-                basic_fields = ['identification', 'description', 'system', 'version']
+            elif table_name == "campaigns":
+                basic_fields = ["identification", "description", "system", "version"]
                 for field in basic_fields:
                     if field in data:
                         setattr(record, field, data[field])
@@ -458,93 +547,126 @@ class DatabaseManager:
                                 record.blocks.append(block)
 
             # --- CASES ---
-            elif table_name == 'cases':
-                basic_fields = ['identification', 'name', 'comments']
+            elif table_name == "cases":
+                basic_fields = ["identification", "name", "comments"]
                 for field in basic_fields:
                     if field in data:
                         setattr(record, field, data[field])
 
                 # Many-to-many: systems
-                if 'systems' in data:
+                if "systems" in data:
                     record.systems.clear()
-                    if data['systems']:
-                        system_names = data['systems'] if isinstance(data['systems'], list) else [
-                            s.strip() for s in data['systems'].split(',')]
+                    if data["systems"]:
+                        system_names = (
+                            data["systems"]
+                            if isinstance(data["systems"], list)
+                            else [s.strip() for s in data["systems"].split(",")]
+                        )
                         for system_name in system_names:
-                            system = self.session.query(System).filter_by(
-                                name=system_name).first()
+                            system = (
+                                self.session.query(System)
+                                .filter_by(name=system_name)
+                                .first()
+                            )
                             if system:
                                 record.systems.append(system)
 
                 # Many-to-many: sections
-                if 'sections' in data:
+                if "sections" in data:
                     record.sections.clear()
-                    if data['sections']:
-                        section_names = data['sections'] if isinstance(data['sections'], list) else [
-                            s.strip() for s in data['sections'].split(',')]
+                    if data["sections"]:
+                        section_names = (
+                            data["sections"]
+                            if isinstance(data["sections"], list)
+                            else [s.strip() for s in data["sections"].split(",")]
+                        )
                         for section_name in section_names:
-                            section = self.session.query(Section).filter_by(
-                                name=section_name).first()
+                            section = (
+                                self.session.query(Section)
+                                .filter_by(name=section_name)
+                                .first()
+                            )
                             if section:
                                 record.sections.append(section)
 
                 # Many-to-many: operators
-                if 'operators' in data:
+                if "operators" in data:
                     record.operators.clear()
-                    if data['operators']:
-                        operator_names = data['operators'] if isinstance(data['operators'], list) else [
-                            o.strip() for o in data['operators'].split(',')]
+                    if data["operators"]:
+                        operator_names = (
+                            data["operators"]
+                            if isinstance(data["operators"], list)
+                            else [o.strip() for o in data["operators"].split(",")]
+                        )
                         for operator_name in operator_names:
-                            operator = self.session.query(Operator).filter_by(
-                                name=operator_name).first()
+                            operator = (
+                                self.session.query(Operator)
+                                .filter_by(name=operator_name)
+                                .first()
+                            )
                             if operator:
                                 record.operators.append(operator)
 
                 # Many-to-many: drones
-                if 'drones' in data:
+                if "drones" in data:
                     record.drones.clear()
-                    if data['drones']:
-                        drone_names = data['drones'] if isinstance(data['drones'], list) else [
-                            d.strip() for d in data['drones'].split(',')]
+                    if data["drones"]:
+                        drone_names = (
+                            data["drones"]
+                            if isinstance(data["drones"], list)
+                            else [d.strip() for d in data["drones"].split(",")]
+                        )
                         for drone_name in drone_names:
-                            drone = self.session.query(Drone).filter_by(
-                                name=drone_name).first()
+                            drone = (
+                                self.session.query(Drone)
+                                .filter_by(name=drone_name)
+                                .first()
+                            )
                             if drone:
                                 record.drones.append(drone)
 
                 # Many-to-many: uhub_users
-                if 'uhub_users' in data:
+                if "uhub_users" in data:
                     record.uhub_users.clear()
-                    if data['uhub_users']:
-                        user_names = data['uhub_users'] if isinstance(data['uhub_users'], list) else [
-                            u.strip() for u in data['uhub_users'].split(',')]
+                    if data["uhub_users"]:
+                        user_names = (
+                            data["uhub_users"]
+                            if isinstance(data["uhub_users"], list)
+                            else [u.strip() for u in data["uhub_users"].split(",")]
+                        )
                         for user_name in user_names:
-                            user = self.session.query(UhubUser).filter_by(
-                                username=user_name).first()
+                            user = (
+                                self.session.query(UhubUser)
+                                .filter_by(username=user_name)
+                                .first()
+                            )
                             if user:
                                 record.uhub_users.append(user)
 
                 # --- STEPS ---
-                if 'steps' in data:
+                if "steps" in data:
                     existing_steps = {step.id: step for step in record.steps}
                     updated_step_ids = set()
 
-                    for step_data in data['steps']:
-                        step_id = step_data.get('id')
+                    for step_data in data["steps"]:
+                        step_id = step_data.get("id")
                         if step_id and step_id in existing_steps:
                             # Actualizar step existente
                             step = existing_steps[step_id]
-                            step.action = step_data.get('action', step.action)
+                            step.action = step_data.get("action", step.action)
                             step.expected_result = step_data.get(
-                                'expected_result', step.expected_result)
-                            step.comments = step_data.get(
-                                'comments', step.comments)
+                                "expected_result", step.expected_result
+                            )
+                            step.comments = step_data.get("comments", step.comments)
                             # Actualizar requirements asociados
-                            if 'affected_requirements' in step_data:
+                            if "affected_requirements" in step_data:
                                 step.affected_requirements.clear()
-                                for req_code in step_data['affected_requirements']:
-                                    req = self.session.query(Requirement).filter_by(
-                                        code=req_code).first()
+                                for req_code in step_data["affected_requirements"]:
+                                    req = (
+                                        self.session.query(Requirement)
+                                        .filter_by(code=req_code)
+                                        .first()
+                                    )
                                     if req:
                                         step.affected_requirements.append(req)
                             updated_step_ids.add(step_id)
@@ -552,21 +674,22 @@ class DatabaseManager:
                         else:
                             # Nuevo step
                             new_step = Step(
-                                action=step_data.get('action'),
-                                expected_result=step_data.get(
-                                    'expected_result'),
-                                comments=step_data.get('comments'),
-                                case=record
+                                action=step_data.get("action"),
+                                expected_result=step_data.get("expected_result"),
+                                comments=step_data.get("comments"),
+                                case=record,
                             )
                             self.session.add(new_step)
                             # Asociar requirements
-                            if 'affected_requirements' in step_data:
-                                for req_code in step_data['affected_requirements']:
-                                    req = self.session.query(Requirement).filter_by(
-                                        code=req_code).first()
+                            if "affected_requirements" in step_data:
+                                for req_code in step_data["affected_requirements"]:
+                                    req = (
+                                        self.session.query(Requirement)
+                                        .filter_by(code=req_code)
+                                        .first()
+                                    )
                                     if req:
-                                        new_step.affected_requirements.append(
-                                            req)
+                                        new_step.affected_requirements.append(req)
 
                     # Eliminar steps que ya no están
                     for step_id, step in existing_steps.items():
@@ -580,7 +703,7 @@ class DatabaseManager:
                         setattr(record, field, value)
 
             # Actualizar last_update si existe
-            if hasattr(record, 'last_update'):
+            if hasattr(record, "last_update"):
                 record.last_update = current_time
 
             self.session.commit()
@@ -602,9 +725,10 @@ class DatabaseManager:
     def get_by_id(self, table_name: str, record_id: int):
         """Obtiene un registro por su ID."""
         if table_name not in self._model_map:
-            available_keys = ', '.join(self._model_map.keys())
+            available_keys = ", ".join(self._model_map.keys())
             raise ValueError(
-                f"Key '{table_name}' not found. Available keys: {available_keys}")
+                f"Key '{table_name}' not found. Available keys: {available_keys}"
+            )
 
         model = self._model_map[table_name]
 
@@ -621,87 +745,89 @@ class DatabaseManager:
                 result[column.name] = getattr(record, column.name)
 
             # Manejar relaciones muchos-a-muchos
-            if table_name == 'requirements':
-                if hasattr(record, 'systems'):
-                    result['systems'] = [sys.name for sys in record.systems]
-                if hasattr(record, 'sections'):
-                    result['sections'] = [sec.name for sec in record.sections]
+            if table_name == "requirements":
+                if hasattr(record, "systems"):
+                    result["systems"] = [sys.name for sys in record.systems]
+                if hasattr(record, "sections"):
+                    result["sections"] = [sec.name for sec in record.sections]
 
-            elif table_name == 'cases':
+            elif table_name == "cases":
                 # Systems
-                if hasattr(record, 'systems'):
-                    result['systems'] = [sys.name for sys in record.systems]
+                if hasattr(record, "systems"):
+                    result["systems"] = [sys.name for sys in record.systems]
                 # Sections
-                if hasattr(record, 'sections'):
-                    result['sections'] = [sec.name for sec in record.sections]
+                if hasattr(record, "sections"):
+                    result["sections"] = [sec.name for sec in record.sections]
                 # Operators
-                if hasattr(record, 'operators'):
-                    result['operators'] = [op.name for op in record.operators]
+                if hasattr(record, "operators"):
+                    result["operators"] = [op.name for op in record.operators]
                 # Drones
-                if hasattr(record, 'drones'):
-                    result['drones'] = [drone.name for drone in record.drones]
+                if hasattr(record, "drones"):
+                    result["drones"] = [drone.name for drone in record.drones]
                 # Uhub users
-                if hasattr(record, 'uhub_users'):
-                    result['uhub_users'] = [
-                        user.username for user in record.uhub_users]
+                if hasattr(record, "uhub_users"):
+                    result["uhub_users"] = [user.username for user in record.uhub_users]
 
                 # Associated steps
-                if hasattr(record, 'steps'):
-                    result['steps'] = []
+                if hasattr(record, "steps"):
+                    result["steps"] = []
                 for step in record.steps:
                     step_dict = {
-                        'id': step.id,
-                        'action': step.action,
-                        'expected_result': step.expected_result,
-                        'comments': step.comments,
-                        'affected_requirements': [req.code for req in step.affected_requirements] if hasattr(step, 'affected_requirements') else []
+                        "id": step.id,
+                        "action": step.action,
+                        "expected_result": step.expected_result,
+                        "comments": step.comments,
+                        "affected_requirements": [
+                            req.code for req in step.affected_requirements
+                        ]
+                        if hasattr(step, "affected_requirements")
+                        else [],
                     }
-                    result['steps'].append(step_dict)
+                    result["steps"].append(step_dict)
 
-            elif table_name == 'blocks':
+            elif table_name == "blocks":
                 # Associated cases
-                if hasattr(record, 'cases'):
-                    result['cases'] = []
+                if hasattr(record, "cases"):
+                    result["cases"] = []
                 for case in record.cases:
                     case_dict = {
-                        'id': case.id,
-                        'identification': case.identification,
-                        'name': case.name,
-                        'comments': case.comments
+                        "id": case.id,
+                        "identification": case.identification,
+                        "name": case.name,
+                        "comments": case.comments,
                     }
-                    result['cases'].append(case_dict)
-            
-            elif table_name == 'campaigns':
+                    result["cases"].append(case_dict)
+
+            elif table_name == "campaigns":
                 # Associated cases
-                if hasattr(record, 'blocks'):
-                    result['blocks'] = []
+                if hasattr(record, "blocks"):
+                    result["blocks"] = []
                 for block in record.blocks:
                     block_dict = {
-                        'id': block.id,
-                        'identification': block.identification,
-                        'name': block.name,
-                        'system':block.system,
-                        'comments': block.comments
+                        "id": block.id,
+                        "identification": block.identification,
+                        "name": block.name,
+                        "system": block.system,
+                        "comments": block.comments,
                     }
-                    result['blocks'].append(block_dict)
+                    result["blocks"].append(block_dict)
 
-            elif table_name == 'bugs':
+            elif table_name == "bugs":
                 # System (uno-a-muchos)
-                if hasattr(record, 'system') and record.system:
-                    result['system_id'] = record.system.name
+                if hasattr(record, "system") and record.system:
+                    result["system_id"] = record.system.name
                 else:
-                    result['system_id'] = ""
+                    result["system_id"] = ""
                 # Campaign (uno-a-uno)
-                if hasattr(record, 'campaign') and record.campaign:
-                    result['campaign_id'] = record.campaign.identifier
+                if hasattr(record, "campaign") and record.campaign:
+                    result["campaign_id"] = record.campaign.identifier
                 else:
-                    result['campaign_id'] = "NA"
+                    result["campaign_id"] = "NA"
                 # Requirements (muchos-a-muchos)
-                if hasattr(record, 'requirements'):
-                    result['requirements'] = [
-                        req.code for req in record.requirements]
+                if hasattr(record, "requirements"):
+                    result["requirements"] = [req.code for req in record.requirements]
                 else:
-                    result['requirements'] = []
+                    result["requirements"] = []
 
             return result
 
@@ -712,9 +838,8 @@ class DatabaseManager:
     def filter_by(self, key, **kwargs):
         """Filtra registros por criterios específicos."""
         if key not in self._model_map:
-            available_keys = ', '.join(self._model_map.keys())
-            raise ValueError(
-                f"Key '{key}' not found. Available keys: {available_keys}")
+            available_keys = ", ".join(self._model_map.keys())
+            raise ValueError(f"Key '{key}' not found. Available keys: {available_keys}")
 
         model = self._model_map[key]
         try:
@@ -726,9 +851,10 @@ class DatabaseManager:
     def delete_register(self, table_name: str, record_id: int):
         """Elimina un registro por su ID."""
         if table_name not in self._model_map:
-            available_keys = ', '.join(self._model_map.keys())
+            available_keys = ", ".join(self._model_map.keys())
             raise ValueError(
-                f"Key '{table_name}' not found. Available keys: {available_keys}")
+                f"Key '{table_name}' not found. Available keys: {available_keys}"
+            )
 
         model = self._model_map[table_name]
         try:
@@ -747,9 +873,8 @@ class DatabaseManager:
     def count(self, key, **kwargs):
         """Cuenta el número de registros que cumplen con los criterios especificados."""
         if key not in self._model_map:
-            available_keys = ', '.join(self._model_map.keys())
-            raise ValueError(
-                f"Key '{key}' not found. Available keys: {available_keys}")
+            available_keys = ", ".join(self._model_map.keys())
+            raise ValueError(f"Key '{key}' not found. Available keys: {available_keys}")
 
         model = self._model_map[key]
         try:

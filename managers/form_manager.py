@@ -1,5 +1,5 @@
-from typing import Dict, Optional, List
 from PySide6.QtCore import QObject, Signal
+
 from base.base_form import BaseForm
 from config.form_config import FORMS
 from config.page_config import PAGES
@@ -8,14 +8,21 @@ from utils.form_mode import FormMode
 
 class FormManager(QObject):
     """Gestor de formularios, maneja apertura y cierre."""
+
     data_updated = Signal(str)
 
     def __init__(self):
         super().__init__()
-        self.active_forms: Dict[str, BaseForm] = {}
+        self.active_forms: dict[str, BaseForm] = {}
 
-    def open_form(self, form_key: str, edit: bool,
-                  data: Optional[List], data_instead_id: bool = False, row_index: Optional[int] = None):
+    def open_form(
+        self,
+        form_key: str,
+        edit: bool,
+        data: list | None,
+        data_instead_id: bool = False,
+        row_index: int | None = None,
+    ):
         """Opens a form based on its key and mode (create/edit)."""
 
         # Closes previous form if opened
@@ -24,7 +31,7 @@ class FormManager(QObject):
             self.active_forms.pop(form_key, None)
 
         # Obtain form configuration
-        form_config = FORMS[form_key]['config']
+        form_config = FORMS[form_key]["config"]
 
         # Determine form mode and databse ID if editing and item
         mode = FormMode.EDIT if edit else FormMode.CREATE
@@ -32,9 +39,10 @@ class FormManager(QObject):
         # Handle if the form wants id or full data
         if data_instead_id:
             form_instance = form_config.form_class(
-                mode=mode, data=data, row_index=row_index)
+                mode=mode, data=data, row_index=row_index
+            )
         else:
-            db_id = data.get('id', None) if data else None
+            db_id = data.get("id", None) if data else None
             form_instance = form_config.form_class(mode=mode, db_id=db_id)
 
         # Connects signals for event handling (in particular, a form being
@@ -56,12 +64,14 @@ class FormManager(QObject):
             form_instance.close()
         self.active_forms.clear()
 
-    def get_form_key(self, current_page: str,
-                     tab_index: Optional[int]) -> Optional[str]:
+    def get_form_key(self, current_page: str, tab_index: int | None) -> str | None:
         page_config = PAGES.get(current_page, {}).get("config")
         page_forms = page_config.forms if page_config else []
         if not page_forms:
             print(f"No forms associated with page '{current_page}'.")
             return None
-        return page_forms[tab_index] if tab_index is not None and tab_index < len(
-            page_forms) else page_forms[0]
+        return (
+            page_forms[tab_index]
+            if tab_index is not None and tab_index < len(page_forms)
+            else page_forms[0]
+        )

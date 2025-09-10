@@ -1,36 +1,38 @@
 from datetime import datetime
-from typing import List, Optional, Any, Dict
-from PySide6.QtCore import QObject, Signal, QModelIndex, Qt, QSortFilterProxyModel
-from PySide6.QtWidgets import QTableView, QHeaderView, QAbstractItemView
-from PySide6.QtGui import QStandardItem, QStandardItemModel
+from typing import Any
 
-from config.page_config import PAGES
+from PySide6.QtCore import QModelIndex, QObject, QSortFilterProxyModel, Qt, Signal
+from PySide6.QtGui import QStandardItem, QStandardItemModel
+from PySide6.QtWidgets import QAbstractItemView, QHeaderView, QTableView
 
 from services.table_service import TableService
-
 from utils.dict_utils import get_base_table_config
 
 
 class TableManager(QObject):
-
     table_double_clicked = Signal(str, object)
     selection_changed = Signal(object)
 
     def __init__(self):
         """Initializes table manager.
-        
+
         This object handles tables in the application, including:
         - Its registration and configuration
         - Interaction signals handling
         -Data model management
         """
         super().__init__()
-        self.tables: Dict[str, QTableView] = {}
-        self.table_configs: Dict[str, Dict] = {}
-    
-    def setup_table(self, table: QTableView, name: str,
-                    data: List[Dict[str, Any]], config: Optional[Dict] = None, register=False):
+        self.tables: dict[str, QTableView] = {}
+        self.table_configs: dict[str, dict] = {}
 
+    def setup_table(
+        self,
+        table: QTableView,
+        name: str,
+        data: list[dict[str, Any]],
+        config: dict | None = None,
+        register=False,
+    ):
         merged_config = TableService.merge_table_config(name, config)
 
         # Configure source model
@@ -46,15 +48,15 @@ class TableManager(QObject):
 
         # Hide ID if there is a column named "Id" or "ID"
         for i, header in enumerate(headers):
-            if header.lower() in ['id']:
+            if header.lower() in ["id"]:
                 table.setColumnHidden(i, True)
                 break
 
         # Configure table properties
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setAlternatingRowColors(
-            merged_config.get(
-                "alternating_row_colors", False))
+            merged_config.get("alternating_row_colors", False)
+        )
         table.setSelectionMode(QAbstractItemView.SingleSelection)
         table.setSelectionBehavior(QAbstractItemView.SelectRows)
 
@@ -62,7 +64,8 @@ class TableManager(QObject):
             self._register_table(table, name, config)
 
     def _populate_model(
-            self, name: str, model: QStandardItemModel, data: List[Dict[str, Any]]):
+        self, name: str, model: QStandardItemModel, data: list[dict[str, Any]]
+    ):
         """Populates the model associated to a table with the elements obtained from the database."""
         if not data:
             return
@@ -70,10 +73,9 @@ class TableManager(QObject):
         config = get_base_table_config(name)
         column_map = config.column_map
         headers = [
-            model.headerData(
-                col,
-                Qt.Orientation.Horizontal) for col in range(
-                model.columnCount())]
+            model.headerData(col, Qt.Orientation.Horizontal)
+            for col in range(model.columnCount())
+        ]
 
         for row_data in data:
             items = []
@@ -88,42 +90,34 @@ class TableManager(QObject):
                 model.appendRow(items)
 
     def _create_item(
-            self, value: Any, config: Optional[Dict], column_index: int) -> QStandardItem:
+        self, value: Any, config: dict | None, column_index: int
+    ) -> QStandardItem:
         """Creates a new item for a certain mode."""
         if value is None:
             value = ""
         elif isinstance(value, datetime):
             # Converts a datetime object to a string so it can be displayed on
             # the table
-            value = value.strftime(("%Y-%m-%d %H:%M:%S"))
+            value = value.strftime("%Y-%m-%d %H:%M:%S")
 
         item = QStandardItem(str(value))
 
         # Saves the original value as item data
         item.setData(value, Qt.ItemDataRole.UserRole)
 
-        if config and hasattr(config, 'column_config'):
-            col_config = getattr(
-                config, 'column_config', {}).get(
-                column_index, {})
+        if config and hasattr(config, "column_config"):
+            col_config = getattr(config, "column_config", {}).get(column_index, {})
             self._apply_item_config(item, col_config)
 
         # Non editable and non drop enabled items by default
-        item.setEditable(
-            getattr(
-                config,
-                'editable',
-                False) if config else False)
-        item.setDropEnabled(
-            getattr(
-                config,
-                'drop_enabled',
-                False) if config else False)
+        item.setEditable(getattr(config, "editable", False) if config else False)
+        item.setDropEnabled(getattr(config, "drop_enabled", False) if config else False)
 
         return item
 
-    def _register_table(self, table: QTableView, name: str,
-                        config: Optional[Dict] = None) -> bool:
+    def _register_table(
+        self, table: QTableView, name: str, config: dict | None = None
+    ) -> bool:
         """Registers a table and sets up its signals."""
         if name in self.tables:
             raise ValueError(f"The table named '{name} is already registered")
@@ -138,29 +132,26 @@ class TableManager(QObject):
 
         if table.selectionModel():
             table.selectionModel().selectionChanged.connect(
-                lambda selected, deselected: self._handle_selection_changed(
-                    name)
+                lambda selected, deselected: self._handle_selection_changed(name)
             )
 
         # Table registered successfully
         return True
 
-    def _apply_item_config(self, item: QStandardItem, col_config: Dict):
+    def _apply_item_config(self, item: QStandardItem, col_config: dict):
+        if "alignment" in col_config:
+            item.setTextAlignment(col_config["alignment"])
 
-        if 'alignment' in col_config:
-            item.setTextAlignment(col_config['alignment'])
+        if "background_color" in col_config:
+            item.setBackground(col_config["background_color"])
 
-        if 'background_color' in col_config:
-            item.setBackground(col_config['background_color'])
+        if "text_color" in col_config:
+            item.setForeground(col_config["text_color"])
 
-        if 'text_color' in col_config:
-            item.setForeground(col_config['text_color'])
+        if "tooltip" in col_config:
+            item.setToolTip(col_config["tooltip"])
 
-        if 'tooltip' in col_config:
-            item.setToolTip(col_config['tooltip'])
-
-    def get_row_data(self, name: str, table: QTableView,
-                     row: int) -> Dict[str, Any]:
+    def get_row_data(self, name: str, table: QTableView, row: int) -> dict[str, Any]:
         """Obtains data from a row as a dictionary using the DB column names."""
         model = table.model()
         if not model or row < 0 or row >= model.rowCount():
@@ -168,7 +159,7 @@ class TableManager(QObject):
 
         # Obtener el mapeo de columnas
         config = self.table_configs.get(name, {})
-        column_map = config.get('column_map', {})
+        column_map = config.get("column_map", {})
 
         row_data = {}
         for column in range(model.columnCount()):
@@ -187,8 +178,7 @@ class TableManager(QObject):
 
         return row_data
 
-    def get_selected_record_id(self, table_name: str) -> Optional[int]:
-
+    def get_selected_record_id(self, table_name: str) -> int | None:
         table = self.tables.get(table_name)
         if not table or not table.selectionModel().hasSelection():
             return None
@@ -202,7 +192,7 @@ class TableManager(QObject):
         proxy_index = proxy_indices[0]
 
         # Map to index source if there is proxy model
-        if hasattr(table.model(), 'mapToSource'):
+        if hasattr(table.model(), "mapToSource"):
             source_index = table.model().mapToSource(proxy_index)
             source_model = table.model().sourceModel()
             # Obtain Id stored in first colum
@@ -217,38 +207,42 @@ class TableManager(QObject):
 
         return None
 
-    def get_selected_row_indices(self, table: QTableView) -> List[int]:
+    def get_selected_row_indices(self, table: QTableView) -> list[int]:
         if not table or not table.selectionModel():
             return []
 
         indices = table.selectionModel().selectedRows()
         return [index.row() for index in indices]
 
-    def get_table_data(self, table: QTableView) -> List[Dict[str, Any]]:
+    def get_table_data(self, table: QTableView) -> list[dict[str, Any]]:
         """Obtains all table data."""
         model = table.model()
-        source_model = model.sourceModel() if hasattr(model, 'sourceModel') else model
+        source_model = model.sourceModel() if hasattr(model, "sourceModel") else model
         rows = []
         for row in range(source_model.rowCount()):
             row_data = {}
             for col in range(source_model.columnCount()):
                 index = source_model.index(row, col)
-                header = source_model.headerData(
-                    col, Qt.Orientation.Horizontal)
+                header = source_model.headerData(col, Qt.Orientation.Horizontal)
                 value = source_model.data(index, Qt.ItemDataRole.UserRole)
                 row_data[header] = value
             rows.append(row_data)
 
         return rows
 
-    def add_row(self, table: QTableView,
-                row_data: List[Any], position: Optional[int] = None, config_module=None):
+    def add_row(
+        self,
+        table: QTableView,
+        row_data: list[Any],
+        position: int | None = None,
+        config_module=None,
+    ):
         model = table.model()
         if not model:
             return
 
         source_model = model
-        if hasattr(model, 'sourceModel'):
+        if hasattr(model, "sourceModel"):
             source_model = model.sourceModel()
 
         processed_items = []
@@ -257,8 +251,7 @@ class TableManager(QObject):
             # Obtener headers del modelo
             headers = []
             for col in range(source_model.columnCount()):
-                header = source_model.headerData(
-                    col, Qt.Orientation.Horizontal)
+                header = source_model.headerData(col, Qt.Orientation.Horizontal)
                 headers.append(header)
 
             # Buscar configuración en CASE_TABLES
@@ -268,14 +261,17 @@ class TableManager(QObject):
             if config_module:
                 config_modules.append(config_module)
             else:
-                from config.case_table_config import CASE_TABLES
                 from config.block_table_config import BLOCK_TABLES
+                from config.case_table_config import CASE_TABLES
+
                 config_modules = [CASE_TABLES, BLOCK_TABLES]
 
             for tables in config_modules:
                 for _, table_config in tables.items():
-                    if hasattr(table, 'objectName') and table.objectName(
-                    ) == table_config["config"].widget_name:
+                    if (
+                        hasattr(table, "objectName")
+                        and table.objectName() == table_config["config"].widget_name
+                    ):
                         config = table_config["config"]
                         break
                 if config:
@@ -284,10 +280,10 @@ class TableManager(QObject):
             # Convertir diccionario a lista ordenada según headers
             ordered_data = []
             for header in headers:
-                if config and hasattr(
-                        config, 'column_map') and config.column_map:
+                if config and hasattr(config, "column_map") and config.column_map:
                     db_column = config.column_map.get(
-                        header, header.lower().replace(" ", "_"))
+                        header, header.lower().replace(" ", "_")
+                    )
                 else:
                     db_column = header.lower().replace(" ", "_")
 
@@ -338,8 +334,7 @@ class TableManager(QObject):
         else:
             source_model.insertRow(position, processed_items)
 
-    def update_row(self, table: QTableView,
-                   row_data: Dict[str, Any], row_index: int):
+    def update_row(self, table: QTableView, row_data: dict[str, Any], row_index: int):
         """Updates an existing row in the table with new data."""
         model = table.model()
         if not model:
@@ -347,7 +342,7 @@ class TableManager(QObject):
             return False
 
         source_model = model
-        if hasattr(model, 'sourceModel'):
+        if hasattr(model, "sourceModel"):
             source_model = model.sourceModel()
 
         # Check if the row index is valid
@@ -366,18 +361,22 @@ class TableManager(QObject):
         table_name = None
 
         from config.case_table_config import CASE_TABLES
+
         for name, table_config in CASE_TABLES.items():
-            if hasattr(table, 'objectName') and table.objectName(
-            ) == table_config["config"].widget_name:
+            if (
+                hasattr(table, "objectName")
+                and table.objectName() == table_config["config"].widget_name
+            ):
                 config = table_config["config"]
                 table_name = name
                 break
 
         # Update each column in the row
         for col, header in enumerate(headers):
-            if config and hasattr(config, 'column_map') and config.column_map:
+            if config and hasattr(config, "column_map") and config.column_map:
                 db_column = config.column_map.get(
-                    header, header.lower().replace(" ", "_"))
+                    header, header.lower().replace(" ", "_")
+                )
             else:
                 db_column = header.lower().replace(" ", "_")
 
@@ -423,7 +422,7 @@ class TableManager(QObject):
             return False
 
         source_model = model
-        if hasattr(model, 'sourceModel'):
+        if hasattr(model, "sourceModel"):
             source_model = model.sourceModel()
 
         if row_index < 0 or row_index >= source_model.rowCount():
@@ -434,8 +433,7 @@ class TableManager(QObject):
         print(f"Row {row_index} deleted successfully")
         return True
 
-    def _handle_double_click(
-            self, name: str, table: QTableView, index: QModelIndex):
+    def _handle_double_click(self, name: str, table: QTableView, index: QModelIndex):
         """Handles the double click on a table item event."""
         if index.isValid():
             row_data = self.get_row_data(name, table, index.row())
@@ -455,22 +453,21 @@ class TableManager(QObject):
         model = table_widget.model()
         source_model = model
 
-        if hasattr(model, 'sourceModel'):
+        if hasattr(model, "sourceModel"):
             source_model = model.sourceModel()
 
         source_model.clear()
 
         config = get_base_table_config(table_name)
-        headers = config.headers if hasattr(config, 'headers') else []
+        headers = config.headers if hasattr(config, "headers") else []
         if headers:
             source_model.setHorizontalHeaderLabels(headers)
 
         self._populate_model(table_name, source_model, new_data)
 
         for i, header in enumerate(headers):
-            if header.lower() in ['id']:
+            if header.lower() in ["id"]:
                 table_widget.setColumnHidden(i, True)
                 break
 
-        print(
-            f"Table model '{table_name}' updated with {len(new_data)} records")
+        print(f"Table model '{table_name}' updated with {len(new_data)} records")
