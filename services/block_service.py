@@ -1,4 +1,4 @@
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from config.model_domains import Block
 from config.block_table_config import BLOCK_TABLES
 from typing import Any, Dict, List

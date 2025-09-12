@@ -15,13 +15,19 @@ def get_or_create(session: Session, model, **kwargs):
         instance: el objeto existente o recién creado
         created: True si se creó, False si ya existía
     """
-
-    instance = model(**kwargs)
-    session.add(instance)
     try:
-        session.commit()
+        instance = session.query(model).filter_by(**kwargs).first()
+        if instance:
+            return instance, False
+
+        instance = model(**kwargs)
+        session.add(instance)
+        session.flush()
         return instance, True
+
     except IntegrityError:
         session.rollback()
-        instance = session.query(model).filter_by(**kwargs).one()
+        instance = session.query(model).filter_by(**kwargs).first()
+        if not instance:
+            raise
         return instance, False

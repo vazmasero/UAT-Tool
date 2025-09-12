@@ -9,7 +9,7 @@ from controllers.block_controller import BlockController
 from services.block_service import BlockService
 from utils.form_mode import FormMode
 
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 
 
 class FormBlock(BaseForm):

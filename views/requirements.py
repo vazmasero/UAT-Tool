@@ -2,7 +2,7 @@ from base.base_form import BaseForm
 from ui.ui_form_requirements import Ui_form_requirement
 from controllers.requirements_controller import RequirementController
 from services.requirement_service import RequirementService
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from utils.form_mode import FormMode
 from typing import Optional, Dict, Any
 

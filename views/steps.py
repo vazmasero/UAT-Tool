@@ -2,7 +2,7 @@ from base.base_form import BaseForm
 from ui.ui_add_step import Ui_add_step
 from controllers.step_controller import StepController
 from services.step_service import StepService
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from utils.form_mode import FormMode
 from typing import Optional, Dict, Any
 from PySide6.QtCore import Signal

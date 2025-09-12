@@ -1,4 +1,4 @@
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from typing import Dict, Any, Optional
 from config.assets_config import AssetConfig
 

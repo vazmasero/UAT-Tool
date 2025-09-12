@@ -7,7 +7,7 @@ from controllers.bug_controller import BugController
 from services.bug_service import BugService
 from utils.form_mode import FormMode
 
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 
 class FormBug(BaseForm):
     def __init__(self, mode: FormMode, db_id: Optional[int]):

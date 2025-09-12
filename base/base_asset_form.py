@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QFileDialog
 from base.base_form import BaseForm
 from controllers.assets_controller import AssetsController
 from services.assets_service import AssetsService
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from config.assets_config import ASSET_CONFIGS
 from utils.form_mode import FormMode
 from typing import Optional, Dict, Any, List

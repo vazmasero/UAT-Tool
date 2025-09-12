@@ -1,4 +1,4 @@
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from config.model_domains import Bug
 
 class BugService:

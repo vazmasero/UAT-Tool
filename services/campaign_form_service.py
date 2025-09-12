@@ -1,4 +1,4 @@
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from config.model_domains import Campaign
 from typing import Any, Dict, List, Optional
 

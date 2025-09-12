@@ -4,22 +4,35 @@ Inicializa la base de datos, crea la ventana principal y lanza
 el bucle de eventos de la interfaz gráfica.
 """
 
-import sys
+# import sys
 
-from PySide6.QtWidgets import QApplication
+# from PySide6.QtWidgets import QApplication
 
-from db import db
-from views.main_window import MainWindow
+from application.application_controller import ApplicationController
+from database.init_db import Session, init_db
 
-if __name__ == "__main__":
+# from views.main_window import MainWindow
+
+
+def main():
+    # Inicializa la base de datos y carga datos iniciales
+    init_db()
+
+    # Crea la sesión para los repositorios
+    session = Session()
+
+    # Inicializa el ApplicationController con la sesión
+    #app_controller = ApplicationController(session)
+
+    """# Inicializa la aplicación Qt
     app = QApplication(sys.argv)
 
-    # Inicializa la base de datos
-    db.init_db()
-
-    # Crear y mostrar la ventana principal
-    main_window = MainWindow()
+    # Pasa el controller a la ventana principal
+    main_window = MainWindow(controller=app_controller)
     main_window.show()
 
-    # Ejecuta el bucle de eventos de la app
-    sys.exit(app.exec())
+    sys.exit(app.exec())"""
+
+
+if __name__ == "__main__":
+    main()

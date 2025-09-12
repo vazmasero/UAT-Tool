@@ -1,4 +1,4 @@
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from config.model_domains import Case
 from config.case_table_config import CASE_TABLES
 from typing import Any, Dict, List

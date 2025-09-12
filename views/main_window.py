@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QMainWindow
 
 from config.form_config import FORMS
 from controllers.main_controller import MainController
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager

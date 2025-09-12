@@ -1,6 +1,6 @@
 from typing import Optional, Dict
 
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from utils.dict_utils import get_base_table_config
 from config.table_config import TableCommonConfig
 

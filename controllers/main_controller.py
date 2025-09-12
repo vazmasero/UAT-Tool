@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QTableView
 from config.app_config import BaseUI
 from config.page_config import PAGES
 from config.table_config import TABLES
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 from managers.form_manager import FormManager
 from managers.page_manager import PageManager
 from managers.table_manager import TableManager

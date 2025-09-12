@@ -9,7 +9,7 @@ from controllers.campaing_form_controller import CampaignFormController
 from services.campaign_form_service import CampaignFormService
 from utils.form_mode import FormMode
 
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 
 
 # Page to manage the creation or edition of campaigns

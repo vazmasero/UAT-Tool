@@ -8,7 +8,7 @@ from controllers.case_controller import CaseController
 from services.case_service import CaseService
 from utils.form_mode import FormMode
 
-from db.db import DatabaseManager
+from database.db import DatabaseManager
 
 
 class FormCase(BaseForm):

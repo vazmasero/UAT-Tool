@@ -1,5 +1,5 @@
-import sqlite3
 import os
+import sqlite3
 
 
 def open_db_shell():
@@ -32,7 +32,8 @@ def open_db_shell():
                 break
             elif command == "tables":
                 cursor = conn.execute(
-                    "SELECT name FROM sqlite_master WHERE type='table'")
+                    "SELECT name FROM sqlite_master WHERE type='table'"
+                )
                 tables = cursor.fetchall()
                 print("Tablas:")
                 for table in tables:
@@ -42,7 +43,8 @@ def open_db_shell():
                 if len(parts) > 1:
                     table = parts[1]
                     cursor = conn.execute(
-                        f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}'")
+                        f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}'"
+                    )
                     result = cursor.fetchone()
                     if result:
                         print(f"Estructura de {table}:")
@@ -70,15 +72,21 @@ def open_db_shell():
             elif command == "drop all":
                 # Obtener todas las tablas
                 cursor = conn.execute(
-                    "SELECT name FROM sqlite_master WHERE type='table'")
+                    "SELECT name FROM sqlite_master WHERE type='table'"
+                )
                 tables = cursor.fetchall()
 
                 if not tables:
                     print("No hay tablas para eliminar")
                 else:
-                    confirm = input(
-                        f"¿Estás seguro de que quieres eliminar todas las {len(tables)} tablas? (y/N): ").strip().lower()
-                    if confirm in ['y', 'yes', 'si', 's']:
+                    confirm = (
+                        input(
+                            f"¿Estás seguro de que quieres eliminar todas las {len(tables)} tablas? (y/N): "
+                        )
+                        .strip()
+                        .lower()
+                    )
+                    if confirm in ["y", "yes", "si", "s"]:
                         for table in tables:
                             conn.execute(f"DROP TABLE IF EXISTS {table[0]}")
                             print(f"  - Tabla {table[0]} eliminada")
