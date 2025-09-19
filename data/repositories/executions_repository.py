@@ -5,19 +5,20 @@ from sqlalchemy.orm import Session, joinedload
 
 from core.models import Campaign, CampaignRun, Case, CaseRun, File, Step, StepRun
 
-from .base import BaseRepository, EnvironmentMixinRepository
+from .base import AuditEnvironmentMixinRepository, BaseRepository
 
 
-class CampaignRunRepository(BaseRepository[CampaignRun], EnvironmentMixinRepository[CampaignRun]):
+class CampaignRunRepository(
+    BaseRepository[CampaignRun], AuditEnvironmentMixinRepository[CampaignRun]
+):
     """Repositorio para la entidad CampaignRun."""
 
     def __init__(self, session: Session):
         super().__init__(session, CampaignRun)
-        EnvironmentMixinRepository.__init__(session, CampaignRun)
 
     def start_campaign_run(self, data: dict) -> CampaignRun:
         """Inicia una nueva ejecución de campaña."""
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
         required_fields = ["campaign_id", "executed_by"]
         for field in required_fields:
             if field not in data:
@@ -87,7 +88,7 @@ class CampaignRunRepository(BaseRepository[CampaignRun], EnvironmentMixinReposit
     def get_with_details(self, campaign_run_id: int) -> CampaignRun | None:
         """Obtiene una ejecución de campaña con todos sus detalles."""
         return (
-            self.session.query(CampaignRun)
+            self.query(CampaignRun)
             .options(
                 joinedload(CampaignRun.case_runs).joinedload(CaseRun.step_runs),
                 joinedload(CampaignRun.campaign),
@@ -100,7 +101,7 @@ class CampaignRunRepository(BaseRepository[CampaignRun], EnvironmentMixinReposit
     def get_by_campaign(self, campaign_id: int) -> list[CampaignRun]:
         """Obtiene todas las ejecuciones de una campaña."""
         return (
-            self.session.query(CampaignRun)
+            self.query(CampaignRun)
             .filter(CampaignRun.campaign_id == campaign_id)
             .order_by(CampaignRun.started_at.desc())
             .all()
@@ -170,7 +171,7 @@ class CaseRunRepository(BaseRepository[CaseRun]):
     def get_with_steps(self, case_run_id: int) -> CaseRun | None:
         """Obtiene una ejecución de caso con sus step runs."""
         return (
-            self.session.query(CaseRun)
+            self.query(CaseRun)
             .options(joinedload(CaseRun.step_runs))
             .filter(CaseRun.id == case_run_id)
             .one_or_none()
@@ -179,7 +180,7 @@ class CaseRunRepository(BaseRepository[CaseRun]):
     def get_by_campaign_run(self, campaign_run_id: int) -> list[CaseRun]:
         """Obtiene todas las ejecuciones de caso de una campaña."""
         return (
-            self.session.query(CaseRun)
+            self.query(CaseRun)
             .options(joinedload(CaseRun.case))
             .filter(CaseRun.campaign_run_id == campaign_run_id)
             .all()
@@ -243,7 +244,7 @@ class StepRunRepository(BaseRepository[StepRun]):
     def get_with_details(self, step_run_id: int) -> StepRun | None:
         """Obtiene una ejecución de paso con todos sus detalles."""
         return (
-            self.session.query(StepRun)
+            self.query(StepRun)
             .options(
                 joinedload(StepRun.step),
                 joinedload(StepRun.case_run),
@@ -257,7 +258,7 @@ class StepRunRepository(BaseRepository[StepRun]):
     def get_by_case_run(self, case_run_id: int) -> list[StepRun]:
         """Obtiene todas las ejecuciones de paso de un caso."""
         return (
-            self.session.query(StepRun)
+            self.query(StepRun)
             .options(joinedload(StepRun.step))
             .filter(StepRun.case_run_id == case_run_id)
             .order_by(StepRun.step_id)

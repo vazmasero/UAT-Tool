@@ -9,7 +9,7 @@ el bucle de eventos de la interfaz gráfica.
 # from PySide6.QtWidgets import QApplication
 
 from application.application_controller import ApplicationController
-from database.init_db import Session, init_db
+from data.database import Session, init_db
 
 # from views.main_window import MainWindow
 

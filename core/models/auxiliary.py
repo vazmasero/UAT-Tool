@@ -8,9 +8,7 @@ Todos los modelos heredan EnvironmentMixin (excepto Environment) y Base para coh
 """
 
 from sqlalchemy import Column, DateTime, Integer, String, Text, func
-from sqlalchemy.orm import (
-    relationship,
-)
+from sqlalchemy.orm import relationship
 
 from data.database import Base
 
@@ -26,17 +24,22 @@ class Environment(Base):
     description = Column(Text, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
 
-    emails = relationship("Email", backref="environment")
-    operators = relationship("Operator", backref="environment")
-    drones = relationship("Drone", backref="environment")
-    uhub_orgs = relationship("UhubOrg", backref="environment")
-    uhub_users = relationship("UhubUser", backref="environment")
-    uas_zones = relationship("UasZone", backref="environment")
-    uspaces = relationship("Uspace", backref="environment")
-    bugs = relationship("Bug", backref="environment")
-    campaigns = relationship("Campaign", backref="environment")
-    campaign_runs = relationship("CampaignRun", backref="environment")
-    requirements = relationship("Requirement", backref="environment")
+    # Relaciones corregidas para evitar colisión con EnvironmentMixin
+    environment_emails = relationship("Email", back_populates="environment_rel")
+    environment_operators = relationship("Operator", back_populates="environment_rel")
+    environment_drones = relationship("Drone", back_populates="environment_rel")
+    environment_uhub_orgs = relationship("UhubOrg", back_populates="environment_rel")
+    environment_uhub_users = relationship("UhubUser", back_populates="environment_rel")
+    environment_uas_zones = relationship("UasZone", back_populates="environment_rel")
+    environment_uspaces = relationship("Uspace", back_populates="environment_rel")
+    environment_bugs = relationship("Bug", back_populates="environment_rel")
+    environment_campaigns = relationship("Campaign", back_populates="environment_rel")
+    environment_campaign_runs = relationship(
+        "CampaignRun", back_populates="environment_rel"
+    )
+    environment_requirements = relationship(
+        "Requirement", back_populates="environment_rel"
+    )
 
 
 # ---- SYSTEMS ---- #
@@ -47,11 +50,12 @@ class System(Base):
     __tablename__ = "systems"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False)
+
     requirements = relationship(
         "Requirement", secondary="requirement_systems", back_populates="systems"
     )
     cases = relationship("Case", secondary="case_systems", back_populates="systems")
-    bugs = relationship("Bug", backref="system")
+    bugs = relationship("Bug", back_populates="system")
 
 
 # --- SECTIONS ---- #
@@ -62,6 +66,7 @@ class Section(Base):
     __tablename__ = "sections"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False)
+
     requirements = relationship(
         "Requirement", secondary="requirement_sections", back_populates="sections"
     )
@@ -75,6 +80,7 @@ class Reason(Base):
     __tablename__ = "reasons"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False)
+
     uas_zones = relationship(
         "UasZone", secondary="zone_reasons", back_populates="reasons"
     )
@@ -95,6 +101,6 @@ class File(Base):
     uploaded_by = Column(String, nullable=False)
     uploaded_at = Column(DateTime, server_default=func.now(), nullable=False)
 
-    uspace_files = relationship("Uspace", backref="file")
-    step_runs_files = relationship("StepRun", backref="file")
-    bug_files = relationship("Bug", backref="file")
+    uspace = relationship("Uspace", back_populates="file")
+    bug_files = relationship("Bug", back_populates="file")
+    step_runs_files = relationship("StepRun", back_populates="file")

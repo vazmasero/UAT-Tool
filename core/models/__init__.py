@@ -1,5 +1,5 @@
 """
-Paquete `db.models`
+Paquete `core.models`
 
 Contiene todos los modelos de la base de datos y tablas de asociación
 para el ORM de SQLAlchemy. Organizado por categorías:

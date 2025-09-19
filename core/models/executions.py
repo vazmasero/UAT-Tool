@@ -21,11 +21,11 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-from data.database import Base, EnvironmentMixin
+from data.database import AuditMixin, Base, EnvironmentMixin
 
 
 # ---- EJECUCIÓN DE CAMPAÑAS ---- #
-class CampaignRun(EnvironmentMixin, Base):
+class CampaignRun(AuditMixin, EnvironmentMixin, Base):
     """Modelo que representa la ejecución de una campaña de pruebas."""
 
     __tablename__ = "campaign_runs"
@@ -37,15 +37,20 @@ class CampaignRun(EnvironmentMixin, Base):
     executed_by = Column(String, nullable=False)
     notes = Column(Text)
 
-    case_runs = relationship("CaseRun", backref="campaign_run")
-    step_runs = relationship("StepRun", backref="campaign_run")
-    bugs = relationship("Bug", backref="campaign_run")
+    case_runs = relationship("CaseRun", back_populates="campaign_run")
+    step_runs = relationship("StepRun", back_populates="campaign_run")
+    bugs = relationship("Bug", back_populates="campaign_run")
+    environment_rel = relationship(
+        "Environment", back_populates="environment_campaign_runs"
+    )
+    campaign = relationship("Campaign", back_populates="campaign_runs")
 
 
 class CaseRun(Base):
     """Modelo que representa el estado de ejecución de un caso de prueba dentro de una campaña."""
 
     __tablename__ = "case_runs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
     campaign_run_id = Column(
         Integer, ForeignKey("campaign_runs.id", ondelete="RESTRICT"), nullable=False
     )
@@ -54,13 +59,16 @@ class CaseRun(Base):
     )
     notes = Column(Text)
 
-    step_runs = relationship("StepRun", backref="case_run")
+    step_runs = relationship("StepRun", back_populates="case_run")
+    campaign_run = relationship("CampaignRun", back_populates="case_runs")
+    case = relationship("Case", back_populates="case_runs")
 
 
 class StepRun(Base):
     """Modelo que representa la ejecución de un paso dentro de un caso de prueba en una campaña."""
 
     __tablename__ = "step_runs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
     campaign_run_id = Column(
         Integer, ForeignKey("campaign_runs.id", ondelete="RESTRICT"), nullable=False
     )
@@ -75,3 +83,8 @@ class StepRun(Base):
     file_id = Column(
         Integer, ForeignKey("files.id", ondelete="RESTRICT"), nullable=True
     )
+
+    file = relationship("File", back_populates="step_runs_files")
+    step = relationship("Step", back_populates="step_runs")
+    campaign_run = relationship("CampaignRun", back_populates="step_runs")
+    case_run = relationship("CaseRun", back_populates="step_runs")

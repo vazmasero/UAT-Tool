@@ -15,21 +15,20 @@ from core.models import (
     UhubUser,
 )
 
-from .base import BaseRepository, EnvironmentMixinRepository
+from .base import AuditEnvironmentMixinRepository, BaseRepository
 
 
 class CampaignRepository(
-    BaseRepository[Campaign], EnvironmentMixinRepository[Campaign]
+    BaseRepository[Campaign], AuditEnvironmentMixinRepository[Campaign]
 ):
     """Repositorio para la entidad Campaign."""
 
     def __init__(self, session: Session):
         super().__init__(session, Campaign)
-        EnvironmentMixinRepository.__init__(session, Campaign)
 
     def create_with_blocks(self, data: dict) -> Campaign:
         """Crea una campaña con bloques asociados."""
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
 
         if not data.get("system_id"):
             raise ValueError("Las campañas deben tener un sistema asociado.")
@@ -78,7 +77,7 @@ class CampaignRepository(
     def get_with_blocks(self, campaign_id: int) -> Campaign | None:
         """Obtiene una campaña con sus bloques cargados."""
         return (
-            self.session.query(Campaign)
+            self.query(Campaign)
             .options(joinedload(Campaign.blocks))
             .filter(Campaign.id == campaign_id)
             .one_or_none()
@@ -87,22 +86,21 @@ class CampaignRepository(
     def get_by_code(self, code: str, environment_id: int) -> Campaign | None:
         """Busca una campaña por código y entorno."""
         return (
-            self.session.query(Campaign)
+            self.query(Campaign)
             .filter(Campaign.code == code, Campaign.environment_id == environment_id)
             .first()
         )
 
 
-class BlockRepository(BaseRepository[Block], EnvironmentMixinRepository[Block]):
+class BlockRepository(BaseRepository[Block], AuditEnvironmentMixinRepository[Block]):
     """Repositorio para la entidad Block."""
 
     def __init__(self, session: Session):
         super().__init__(session, Block)
-        EnvironmentMixinRepository.__init__(session, Block)
 
     def create_with_system(self, data: dict) -> Block:
         """Crea un bloque con sistema asociado."""
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
         if not data.get("system_id"):
             raise ValueError("Los bloques deben tener un sistema asociado.")
 
@@ -142,7 +140,7 @@ class BlockRepository(BaseRepository[Block], EnvironmentMixinRepository[Block]):
     def get_with_cases(self, block_id: int) -> Block | None:
         """Obtiene un bloque con sus casos cargados."""
         return (
-            self.session.query(Block)
+            self.query(Block)
             .options(joinedload(Block.cases))
             .filter(Block.id == block_id)
             .one_or_none()
@@ -151,22 +149,21 @@ class BlockRepository(BaseRepository[Block], EnvironmentMixinRepository[Block]):
     def get_by_code(self, code: str, environment_id: int) -> Block | None:
         """Busca un bloque por código y entorno."""
         return (
-            self.session.query(Block)
+            self.query(Block)
             .filter(Block.code == code, Block.environment_id == environment_id)
             .first()
         )
 
 
-class CaseRepository(BaseRepository[Case], EnvironmentMixinRepository[Case]):
+class CaseRepository(BaseRepository[Case], AuditEnvironmentMixinRepository[Case]):
     """Repositorio para la entidad Case."""
 
     def __init__(self, session: Session):
         super().__init__(session, Case)
-        EnvironmentMixinRepository.__init__(session, Case)
 
     def create_with_relations(self, data: dict) -> Case:
         """Crea un caso de prueba con todas sus relaciones."""
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
         required_fields = ["code", "name", "comments"]
         for field in required_fields:
             if field not in data:
@@ -216,7 +213,7 @@ class CaseRepository(BaseRepository[Case], EnvironmentMixinRepository[Case]):
     def get_with_full_relations(self, case_id: int) -> Case | None:
         """Obtiene un caso con todas sus relaciones cargadas."""
         return (
-            self.session.query(Case)
+            self.query(Case)
             .options(
                 joinedload(Case.operators),
                 joinedload(Case.drones),
@@ -234,7 +231,7 @@ class CaseRepository(BaseRepository[Case], EnvironmentMixinRepository[Case]):
     def get_by_code(self, code: str, environment_id: int) -> Case | None:
         """Busca un caso por código y entorno."""
         return (
-            self.session.query(Case)
+            self.query(Case)
             .filter(Case.code == code, Case.environment_id == environment_id)
             .first()
         )
@@ -291,12 +288,12 @@ class StepRepository(BaseRepository[Step]):
 
     def get_by_case(self, case_id: int) -> list[Step]:
         """Obtiene todos los pasos de un caso."""
-        return self.session.query(Step).filter(Step.case_id == case_id).all()
+        return self.query(Step).filter(Step.case_id == case_id).all()
 
     def get_with_requirements(self, step_id: int) -> Step | None:
         """Obtiene un paso con sus requisitos cargados."""
         return (
-            self.session.query(Step)
+            self.query(Step)
             .options(joinedload(Step.requirements))
             .filter(Step.id == step_id)
             .one_or_none()

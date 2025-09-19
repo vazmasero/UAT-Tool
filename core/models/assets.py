@@ -22,13 +22,13 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-from data.database import Base, EnvironmentMixin
+from data.database import AuditMixin, Base, EnvironmentMixin
 
 # ---- EMAIL ---- #
 
 
-class Email(EnvironmentMixin, Base):
-    """Modelo que representa un correo electrónico asociado o no a operadores USSP."""
+class Email(AuditMixin, EnvironmentMixin, Base):
+    """Modelo que representa un correo electrónico asociado (o no) a operadores USSP."""
 
     __tablename__ = "emails"
 
@@ -41,13 +41,14 @@ class Email(EnvironmentMixin, Base):
         UniqueConstraint("environment_id", "email", name="uq_email_email_env"),
     )
 
-    operators = relationship("Operator", backref="email")
+    operators = relationship("Operator", back_populates="email")
+    environment_rel = relationship("Environment", back_populates="environment_emails")
 
 
 # ---- OPERATORS ---- #
 
 
-class Operator(EnvironmentMixin, Base):
+class Operator(AuditMixin, EnvironmentMixin, Base):
     """Operador de USSP, asociado a un email y que puede tener múltiples drones."""
 
     __tablename__ = "operators"
@@ -69,12 +70,14 @@ class Operator(EnvironmentMixin, Base):
         UniqueConstraint("environment_id", "email_id", name="uq_operator_email_env"),
     )
 
-    drones = relationship("Drone", backref="operator")
+    email = relationship("Email", back_populates="operators")
+    drones = relationship("Drone", back_populates="operator")
     cases = relationship("Case", secondary="case_operators", back_populates="operators")
+    environment_rel = relationship("Environment", back_populates="environment_operators")
 
 
 # ---- DRONES ---- #
-class Drone(EnvironmentMixin, Base):
+class Drone(AuditMixin, EnvironmentMixin, Base):
     """Dron operado por un operador USSP."""
 
     __tablename__ = "drones"
@@ -91,13 +94,15 @@ class Drone(EnvironmentMixin, Base):
     operator_id = Column(
         Integer, ForeignKey("operators.id", ondelete="RESTRICT"), nullable=False
     )
+    operator = relationship("Operator", back_populates="drones")
     cases = relationship("Case", secondary="case_drones", back_populates="drones")
+    environment_rel = relationship("Environment", back_populates="environment_drones")
 
 
 # ---- U-HUB ORGANIZATIONS ---- #
 
 
-class UhubOrg(EnvironmentMixin, Base):
+class UhubOrg(AuditMixin, EnvironmentMixin, Base):
     """Organización U-Hub, que puede tener o no un conjunto de usuarios y zonas UAS asociadas."""
 
     __tablename__ = "uhub_orgs"
@@ -111,10 +116,11 @@ class UhubOrg(EnvironmentMixin, Base):
         Enum("INFORMATIVE", "OPERATIVE", name="uhub_org_type_enum"), nullable=False
     )
 
-    users = relationship("UhubUser", backref="uhub_org")
+    users = relationship("UhubUser", back_populates="organization")
     uas_zones = relationship(
         "UasZone", secondary="zone_organization", back_populates="organizations"
     )
+    environment_rel = relationship("Environment", back_populates="environment_uhub_orgs")
 
     __table_args__ = (
         UniqueConstraint("environment_id", "name", name="uq_uhub_org_name_env"),
@@ -123,7 +129,7 @@ class UhubOrg(EnvironmentMixin, Base):
 
 
 # - --- U-HUB USERS ---- #
-class UhubUser(EnvironmentMixin, Base):
+class UhubUser(AuditMixin, EnvironmentMixin, Base):
     """Usuario de U-Hub, asociado a una organización"""
 
     __tablename__ = "uhub_users"
@@ -143,9 +149,11 @@ class UhubUser(EnvironmentMixin, Base):
         ForeignKey("uhub_orgs.id", ondelete="RESTRICT"),
         nullable=False,
     )
+    organization = relationship("UhubOrg", back_populates="users")
     cases = relationship(
         "Case", secondary="case_uhub_users", back_populates="uhub_users"
     )
+    environment_rel = relationship("Environment", back_populates="environment_uhub_users")
 
     __table_args__ = (
         UniqueConstraint("environment_id", "name", name="uq_uhub_user_name_env"),
@@ -158,7 +166,7 @@ class UhubUser(EnvironmentMixin, Base):
 
 
 # ---- UAS ZONES ---- #
-class UasZone(EnvironmentMixin, Base):
+class UasZone(AuditMixin, EnvironmentMixin, Base):
     """Zona UAS, que puede estar asociada a múltiples organizaciones U-Hub."""
 
     __tablename__ = "uas_zones"
@@ -198,6 +206,7 @@ class UasZone(EnvironmentMixin, Base):
         "UhubOrg", secondary="zone_organization", back_populates="uas_zones"
     )
     cases = relationship("Case", secondary="case_uas_zones", back_populates="uas_zones")
+    environment_rel = relationship("Environment", back_populates="environment_uas_zones")
 
     __table_args__ = (
         UniqueConstraint("environment_id", "name", name="uq_uas_zone_name_env"),
@@ -213,7 +222,7 @@ class UasZone(EnvironmentMixin, Base):
 
 
 # ---- USPACE ---- #
-class Uspace(EnvironmentMixin, Base):
+class Uspace(AuditMixin, EnvironmentMixin, Base):
     """Modelo que representa un espacio aéreo U-Space."""
 
     __tablename__ = "uspaces"
@@ -226,3 +235,5 @@ class Uspace(EnvironmentMixin, Base):
         nullable=False,
         unique=True,
     )
+
+    environment_rel = relationship("Environment", back_populates="environment_uspaces")

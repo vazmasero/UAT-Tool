@@ -12,10 +12,40 @@ from .asset_repository import (
     UhubUserRepository,
     UspaceRepository,
 )
+from .auxiliary_repository import (
+    EnvironmentRepository,
+    FileRepository,
+    ReasonRepository,
+    SectionRepository,
+    SystemRepository,
+)
 from .bug_repository import BugRepository
+from .executions_repository import (
+    CampaignRunRepository,
+    CaseRunRepository,
+    StepRunRepository,
+)
 from .requirement_repository import RequirementRepository
+from .test_management_repository import (
+    BlockRepository,
+    CampaignRepository,
+    CaseRepository,
+    StepRepository,
+)
 
 __all__ = [
+    "EnvironmentRepository",
+    "SectionRepository",
+    "SystemRepository",
+    "FileRepository",
+    "ReasonRepository",
+    "CampaignRunRepository",
+    "CaseRunRepository",
+    "StepRunRepository",
+    "CampaignRepository",
+    "CaseRepository",
+    "BlockRepository",
+    "StepRepository",
     "EmailRepository",
     "OperatorRepository",
     "UasZoneRepository",

@@ -116,7 +116,7 @@ class BaseRepository(Generic[T]):
         try:
             instance = self.model_class(**kwargs)
             self.session.add(instance)
-            self.session.flush()  # Flush instead of commit for transaction control
+            self.session.flush()
             logger.info(f"Creado {self.model_class.__name__}: {instance.id}")
             return instance
         except IntegrityError as e:
@@ -128,7 +128,7 @@ class BaseRepository(Generic[T]):
         except SQLAlchemyError as e:
             self.session.rollback()
             logger.error(
-                f"Error de base de datos creando {self.model_class.__name__}: {e}"
+                f"Error en base de datos creando {self.model_class.__name__}: {e}"
             )
             raise
 
@@ -248,29 +248,70 @@ class BaseRepository(Generic[T]):
         instance = self.create(**create_data)
         return instance, True
 
+    def _get_instance_id(self, instance: T) -> str:
+        """Obtiene el ID de una instancia para loging."""
+
+
+class AuditMixinRepository(Generic[T]):
+    """Mixin para repositorios que manejan modelos con AuditMixin."""
+
+    def _validate_audit_data(self, data: dict) -> None:
+        """Valida que los datos contengan modified_by."""
+        if "modified_by" not in data:
+            raise ValueError("Se debe indicar quién ha modificado el modelo")
+
+    def create_with_audit(self, data: dict, modified_by: str) -> T:
+        """Crea un registro validando los campos de AuditMixin."""
+        data["modified_by"] = modified_by
+        self._validate_audit_data(data)
+        # La creación real se delega al repositorio específico
+        return self.create(**data)
+
+    def update_with_audit(self, instance: T, data: dict, modified_by: str) -> T:
+        """Actualiza un registro con campos de AuditMixin."""
+        data["modified_by"] = modified_by
+        self._validate_audit_data(data)
+        # La actualización real se delega al repositorio específico
+        return self.update(instance, **data)
+
 
 class EnvironmentMixinRepository(Generic[T]):
     """Mixin para repositorios que manejan modelos con EnvironmentMixin."""
 
-    def __init__(self, session: Session, model_class: type[T]):
-        self.session = session
-        self.model_class = model_class
-
     def _validate_environment_data(self, data: dict) -> None:
-        """Valida que los datos contengan environment_id y modified_by."""
+        """Valida que los datos contengan environment_id."""
         if "environment_id" not in data:
             raise ValueError("Es obligatiorio definir un entorno para este modelo")
-        if "modified_by" not in data:
-            raise ValueError("Se debe indicar quién ha modificado el modelo")
 
-    def create_with_environment(self, data: dict) -> T:
+    def create_with_environment(self, data: dict, environment_id: int) -> T:
         """Crea un registro validando los campos de EnvironmentMixin."""
+        data["environment_id"] = environment_id
         self._validate_environment_data(data)
         # La creación real se delega al repositorio específico
         return self.create(**data)
 
-    def update_with_environment(self, instance: T, data: dict, modified_by: str) -> T:
-        """Actualiza un registro actualizando también los campos de EnvironmentMixin."""
+
+class AuditEnvironmentMixinRepository(Generic[T]):
+    """Mixin combinado para modelos con AMBOS mixins."""
+
+    def _validate_audit_environment_data(self, data: dict) -> None:
+        """Valida ambos campos requeridos."""
+        if "environment_id" not in data:
+            raise ValueError("environment_id requerido")
+        if "modified_by" not in data:
+            raise ValueError("modified_by requerido")
+
+    def create_with_audit_env(
+        self, data: dict, environment_id: int, modified_by: str
+    ) -> T:
+        """Crea registro con validación de ambos mixins."""
+        data["environment_id"] = environment_id
         data["modified_by"] = modified_by
-        # La actualización real se delega al repositorio específico
+        self._validate_audit_environment_data(data)
+        return self.create(**data)
+
+    def update_with_audit_env(self, instance: T, data: dict, modified_by: str) -> T:
+        """Actualiza registro con campos de ambos mixins."""
+        data["modified_by"] = modified_by
+        self._validate_audit_environment_data(data)
         return self.update(instance, **data)

@@ -3,21 +3,20 @@ from sqlalchemy.orm import Session, joinedload
 
 from core.models import Bug, BugHistory, CampaignRun, File, System
 
-from .base import BaseRepository, EnvironmentMixinRepository
+from .base import AuditEnvironmentMixinRepository, BaseRepository
 
 
-class BugRepository(BaseRepository[Bug], EnvironmentMixinRepository[Bug]):
+class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
     """Repositorio específico para la entidad Bug."""
 
     def __init__(self, session: Session):
         super().__init__(session, Bug)
-        EnvironmentMixinRepository.__init__(session, Bug)
 
     def create_with_relations(self, data: dict) -> Bug:
         """Crea un nuevo Bug con relaciones opcionales (campaign_run, file) y obligatoria (system_id).
         También inicializa un registro en BugHistory."""
 
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
 
         if not data.get("system_id"):
             raise ValueError(
@@ -105,8 +104,43 @@ class BugRepository(BaseRepository[Bug], EnvironmentMixinRepository[Bug]):
     def get_with_history(self, bug_id: int) -> Bug | None:
         """Devuelve un bug junto con su historial cargado."""
         return (
-            self.session.query(Bug)
+            self.query(Bug)
             .options(joinedload(Bug.history))
             .filter(Bug.id == bug_id)
             .one_or_none()
+        )
+
+    def update_status(
+        self, bug_id: int, new_status: str, changed_by: str, change_summary: str
+    ) -> Bug:
+        """Actualiza el estado de un bug y registra el cambio en el historial."""
+        bug = self.get_by_id(bug_id, raise_if_not_found=True)
+
+        old_status = bug.status
+        bug.status = new_status
+
+        # Registrar en el historial
+        self.add_history(
+            bug_id=bug_id,
+            changed_by=changed_by,
+            change_summary=f"{change_summary} (Estado cambiado: {old_status}->{new_status})",
+        )
+
+        self.session.flush()
+        return bug
+
+    def get_bugs_by_system(self, system_id: int, environment_id: int) -> list[Bug]:
+        """Obtiene todos los bugs asociados a un sistema específico."""
+        return (
+            self.query()
+            .filter(Bug.system_id == system_id, Bug.environment_id == environment_id)
+            .all()
+        )
+
+    def get_bugs_by_status(self, status: str, environment_id: int) -> list[Bug]:
+        """Obtiene todos los bugs con un estado específico."""
+        return (
+            self.query()
+            .filter(Bug.status == status, Bug.environment_id == environment_id)
+            .all()
         )

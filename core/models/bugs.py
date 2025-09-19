@@ -19,11 +19,11 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-from data.database import Base, EnvironmentMixin
+from data.database import AuditMixin, Base, EnvironmentMixin
 
 
 # ---- BUGS ---- #
-class Bug(EnvironmentMixin, Base):
+class Bug(AuditMixin, EnvironmentMixin, Base):
     """Errores encontrados en la aplicación. Pueden registrarse a través de la ejecución de una campaña
     o de forma manual."""
 
@@ -54,17 +54,26 @@ class Bug(EnvironmentMixin, Base):
     comments = Column(Text)
     file_id = Column(Integer, ForeignKey("files.id", ondelete="RESTRICT"))
 
+    campaign_run = relationship("CampaignRun", back_populates="bugs")
+    environment_rel = relationship("Environment", back_populates="environment_bugs")
+    system = relationship("System", back_populates="bugs")
+    file = relationship("File", back_populates="bug_files")
+    history = relationship("BugHistory", back_populates="bug")
+
+    requirements = relationship("Requirement", secondary="bug_requirements", back_populates="bugs")
+
 
 # ---- HISTORIAL DE BUGS ---- #
-class BugHistory(EnvironmentMixin, Base):
+class BugHistory(Base):
     """Modelo que representa el historial de cambios de un bug.
     Se registra quién ha hecho el cambio, la fecha y un resumen del cambio.
     """
 
     __tablename__ = "bug_history"
+    id = Column(Integer, primary_key=True, autoincrement=True)
     bug_id = Column(Integer, ForeignKey("bugs.id", ondelete="CASCADE"), nullable=False)
     changed_by = Column(String, nullable=False)
     change_timestamp = Column(DateTime, server_default=func.now(), nullable=False)
     change_summary = Column(Text, nullable=False)
 
-    bugs = relationship("Bug", backref="bug_history")
+    bug = relationship("Bug", back_populates="history")

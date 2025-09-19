@@ -12,111 +12,126 @@ from core.models import (
     Uspace,
 )
 
-from .base import BaseRepository, EnvironmentMixinRepository
+from .base import AuditEnvironmentMixinRepository, BaseRepository
 
 
-class EmailRepository(BaseRepository[Email], EnvironmentMixinRepository[Email]):
+class EmailRepository(BaseRepository[Email], AuditEnvironmentMixinRepository[Email]):
     def __init__(self, session: Session):
         super().__init__(session, Email)
-        EnvironmentMixinRepository.__init__(session, Email)
 
     def create(self, **kwargs) -> Email:
-        self._validate_environment_data(kwargs)
+        self._validate_audit_environment_data(kwargs)
         return super().create(**kwargs)
+
+    def get_by_email(self, email: str, environment_id: int) -> Email | None:
+        """Busca un email por dirección y environment_id."""
+        return (
+            self.query()
+            .filter(Email.email == email, Email.environment_id == environment_id)
+            .first()
+        )
 
 
 class OperatorRepository(
-    BaseRepository[Operator], EnvironmentMixinRepository[Operator]
+    BaseRepository[Operator], AuditEnvironmentMixinRepository[Operator]
 ):
     def __init__(self, session: Session):
         super().__init__(session, Operator)
-        EnvironmentMixinRepository.__init__(session, Operator)
 
     def create_with_relations(self, data: dict) -> Operator:
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
         if "email_id" not in data:
             raise ValueError("Operator debe tener un email asociado (email_id).")
+        return self.create(**data)
 
-        operator_data = {
-            "name": data["name"],
-            "surname": data.get("surname"),
-            "email_id": data["email_id"],
-            "environment_id": data["environment_id"],
-            "modified_by": data["modified_by"],
-        }
-        return self.create(**operator_data)
+    def get_by_easa_id(self, easa_id: str, environment_id: int) -> Operator | None:
+        """Busca un operador por EASA ID y environment_id."""
+        return (
+            self.query()
+            .filter(
+                Operator.easa_id == easa_id, Operator.environment_id == environment_id
+            )
+            .first()
+        )
 
 
-class DroneRepository(BaseRepository[Drone], EnvironmentMixinRepository[Drone]):
+class DroneRepository(BaseRepository[Drone], AuditEnvironmentMixinRepository[Drone]):
     def __init__(self, session: Session):
         super().__init__(session, Drone)
-        EnvironmentMixinRepository.__init__(session, Drone)
 
     def create_with_operator(self, data: dict) -> Drone:
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
         if "operator_id" not in data:
-            raise ValueError("Drone debe estar asociado a un operador (operator_id).")
+            raise ValueError("Un dron debe estar asociado a un operador (operator_id).")
+        return self.create(**data)
 
-        drone_data = {
-            "name": data["name"],
-            "model": data.get("model"),
-            "serial_number": data.get("serial_number"),
-            "operator_id": data["operator_id"],
-            "environment_id": data["environment_id"],
-            "modified_by": data["modified_by"],
-        }
-        return self.create(**drone_data)
+    def get_by_serial_number(
+        self, serial_number: str, environment_id: int
+    ) -> Drone | None:
+        """Busca un dron por número de serie y environment_id."""
+        return (
+            self.query()
+            .filter(
+                Drone.serial_number == serial_number,
+                Drone.environment_id == environment_id,
+            )
+            .first()
+        )
 
 
-class UhubOrgRepository(BaseRepository[UhubOrg], EnvironmentMixinRepository[UhubOrg]):
+class UhubOrgRepository(
+    BaseRepository[UhubOrg], AuditEnvironmentMixinRepository[UhubOrg]
+):
     def __init__(self, session: Session):
         super().__init__(session, UhubOrg)
-        EnvironmentMixinRepository.__init__(session, UhubOrg)
 
     def create_with_relations(self, data: dict) -> UhubOrg:
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
 
-        org_data = {
-            "name": data["name"],
-            "description": data.get("description"),
-            "environment_id": data["environment_id"],
-            "modified_by": data["modified_by"],
-        }
-        return self.create(**org_data)
+        return self.create(**data)
+
+    def get_by_org_email(self, email: str, environment_id: int) -> UhubOrg | None:
+        """Busca una organización por email y environment_id."""
+        return (
+            self.query()
+            .filter(UhubOrg.email == email, UhubOrg.environment_id == environment_id)
+            .first()
+        )
 
 
 class UhubUserRepository(
-    BaseRepository[UhubUser], EnvironmentMixinRepository[UhubUser]
+    BaseRepository[UhubUser], AuditEnvironmentMixinRepository[UhubUser]
 ):
     def __init__(self, session: Session):
         super().__init__(session, UhubUser)
-        EnvironmentMixinRepository.__init__(session, UhubUser)
 
     def create_with_org(self, data: dict) -> UhubUser:
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
         if "organization_id" not in data:
             raise ValueError(
                 "UhubUser debe estar asociado a una organización (organization_id)."
             )
+        return self.create(**data)
 
-        user_data = {
-            "name": data["name"],
-            "surname": data.get("surname"),
-            "email": data["email"],
-            "organization_id": data["organization_id"],
-            "environment_id": data["environment_id"],
-            "modified_by": data["modified_by"],
-        }
-        return self.create(**user_data)
+    def get_by_username(self, username: str, environment_id: int) -> UhubUser | None:
+        """Busca un usuario por username y environment_id."""
+        return (
+            self.query()
+            .filter(
+                UhubUser.username == username, UhubUser.environment_id == environment_id
+            )
+            .first()
+        )
 
 
-class UasZoneRepository(BaseRepository[UasZone], EnvironmentMixinRepository[UasZone]):
+class UasZoneRepository(
+    BaseRepository[UasZone], AuditEnvironmentMixinRepository[UasZone]
+):
     def __init__(self, session: Session):
         super().__init__(session, UasZone)
-        EnvironmentMixinRepository.__init__(session, UasZone)
 
     def create_with_relations(self, data: dict) -> UasZone:
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
 
         required_fields = [
             "name",
@@ -135,27 +150,16 @@ class UasZoneRepository(BaseRepository[UasZone], EnvironmentMixinRepository[UasZ
 
         try:
             # Crea la zona primero
-            zone_data = {
-                "name": data["name"],
-                "area_type": data["area_type"],
-                "lower_limit": data["lower_limit"],
-                "upper_limit": data["upper_limit"],
-                "reference_lower": data["reference_lower"],
-                "reference_upper": data["reference_upper"],
-                "application": data["application"],
-                "restriction_type": data["restriction_type"],
-                "clearance_required": data["clearance_required"],
-                "comments": data.get("comments"),
-                "environment_id": data["environment_id"],
-                "modified_by": data["modified_by"],
-            }
-            zone = self.create(**zone_data)
+            zone = self.create(**data)
 
             # Many-to-many relaciones opcionales
             if "organizations" in data:
                 orgs = (
                     self.session.query(UhubOrg)
-                    .filter(UhubOrg.id.in_(data["organizations"]))
+                    .filter(
+                        UhubOrg.id.in_(data["organizations"]),
+                        UhubOrg.environment_id == data["environment_id"],
+                    )
                     .all()
                 )
                 zone.organizations = orgs
@@ -175,30 +179,36 @@ class UasZoneRepository(BaseRepository[UasZone], EnvironmentMixinRepository[UasZ
             self.session.rollback()
             raise
 
+    def get_by_zone_name(self, name: str, environment_id: int) -> UasZone | None:
+        """Busca una zona UAS por nombre y environment_id."""
+        return (
+            self.query()
+            .filter(UasZone.name == name, UasZone.environment_id == environment_id)
+            .first()
+        )
 
-class UspaceRepository(BaseRepository[Uspace], EnvironmentMixinRepository[Uspace]):
+
+class UspaceRepository(BaseRepository[Uspace], AuditEnvironmentMixinRepository[Uspace]):
     def __init__(self, session: Session):
         super().__init__(session, Uspace)
-        EnvironmentMixinRepository.__init__(session, Uspace)
 
     def create_with_file(self, data: dict) -> Uspace:
         """
         Crea un Uspace asociado a un file_id obligatorio.
         """
-        self._validate_environment_data(data)
+        self._validate_audit_environment_data(data)
 
         required_fields = ["code", "name", "sectors_count", "file_id"]
         for field in required_fields:
             if field not in data:
                 raise ValueError(f"{field} es obligatorio para crear un Uspace")
 
-        uspace_data = {
-            "code": data["code"],
-            "name": data["name"],
-            "sectors_count": data["sectors_count"],
-            "file_id": data["file_id"],
-            "comments": data.get("comments"),
-            "environment_id": data["environment_id"],
-            "modified_by": data["modified_by"],
-        }
-        return self.create(**uspace_data)
+        return self.create(**data)
+
+    def get_by_code(self, code: str, environment_id: int) -> Uspace | None:
+        """Busca un U-space por código y environment_id."""
+        return (
+            self.query()
+            .filter(Uspace.code == code, Uspace.environment_id == environment_id)
+            .first()
+        )
