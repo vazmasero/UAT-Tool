@@ -20,18 +20,16 @@ class EnvironmentRepository(BaseRepository[Environment]):
         Returns:
             Environment | None: entidad del entorno solicitado.
         """
-
-        results = self.filter_by(name=name)
-        return results[0] if results else None
+        return self.query().filter(Environment.name == name).first()
 
     def get_with_relationships(self, environment_id: int) -> Environment | None:
         """Obtiene un entorno con todas sus relaciones cargadas."""
         return (
-            self.session.query(Environment)
+            self.query()
             .options(
                 joinedload(Environment.environment_bugs),
                 joinedload(Environment.environment_campaign_runs),
-                joinedload(Environment.environment_campaigns),
+                joinedload(Environment.environment_campaigns)
             )
             .filter(Environment.id == environment_id)
             .first()
@@ -53,7 +51,7 @@ class SystemRepository(BaseRepository[System]):
         Returns:
             System | None: entidad del sistema solicitado.
         """
-        return self.session.query(System).filter(System.name == name).first()
+        return self.query().filter(System.name == name).first()
 
 
 class SectionRepository(BaseRepository[Section]):
@@ -71,7 +69,7 @@ class SectionRepository(BaseRepository[Section]):
         Returns:
             Section | None: entidad de la sección solicitada.
         """
-        return self.session.query(Section).filter(Section.name == name).first()
+        return self.query().filter(Section.name == name).first()
 
 
 class FileRepository(BaseRepository[File]):
@@ -84,12 +82,12 @@ class FileRepository(BaseRepository[File]):
         """Busca un archivo por su nombre.
 
         Args:
-            name (str): nombre del archivo a buscar
+            filename (str): nombre del archivo a buscar
 
         Returns:
             File | None: entidad del archivo solicitada.
         """
-        return self.session.query(File).filter(File.filename == filename).first()
+        return self.query().filter(File.filename == filename).first()
 
 
 class ReasonRepository(BaseRepository[Reason]):
@@ -107,4 +105,4 @@ class ReasonRepository(BaseRepository[Reason]):
         Returns:
             Reason | None: entidad de la razón solicitada.
         """
-        return self.session.query(Reason).filter(Reason.name == name).first()
+        return self.query().filter(Reason.name == name).first()

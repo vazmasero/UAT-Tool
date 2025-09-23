@@ -248,11 +248,8 @@ class BaseRepository(Generic[T]):
         instance = self.create(**create_data)
         return instance, True
 
-    def _get_instance_id(self, instance: T) -> str:
-        """Obtiene el ID de una instancia para loging."""
 
-
-class AuditMixinRepository(Generic[T]):
+class AuditMixinRepository(BaseRepository[T]):
     """Mixin para repositorios que manejan modelos con AuditMixin."""
 
     def _validate_audit_data(self, data: dict) -> None:
@@ -262,20 +259,20 @@ class AuditMixinRepository(Generic[T]):
 
     def create_with_audit(self, data: dict, modified_by: str) -> T:
         """Crea un registro validando los campos de AuditMixin."""
-        data["modified_by"] = modified_by
-        self._validate_audit_data(data)
-        # La creación real se delega al repositorio específico
-        return self.create(**data)
+        create_data = data.copy()
+        create_data["modified_by"] = modified_by
+        self._validate_audit_data(create_data)
+        return self.create(**create_data)
 
     def update_with_audit(self, instance: T, data: dict, modified_by: str) -> T:
         """Actualiza un registro con campos de AuditMixin."""
-        data["modified_by"] = modified_by
-        self._validate_audit_data(data)
-        # La actualización real se delega al repositorio específico
-        return self.update(instance, **data)
+        update_data = data.copy()
+        update_data["modified_by"] = modified_by
+        self._validate_audit_data(update_data)
+        return self.update(instance, **update_data)
 
 
-class EnvironmentMixinRepository(Generic[T]):
+class EnvironmentMixinRepository(BaseRepository[T]):
     """Mixin para repositorios que manejan modelos con EnvironmentMixin."""
 
     def _validate_environment_data(self, data: dict) -> None:
@@ -285,13 +282,13 @@ class EnvironmentMixinRepository(Generic[T]):
 
     def create_with_environment(self, data: dict, environment_id: int) -> T:
         """Crea un registro validando los campos de EnvironmentMixin."""
-        data["environment_id"] = environment_id
-        self._validate_environment_data(data)
-        # La creación real se delega al repositorio específico
-        return self.create(**data)
+        create_data = data.copy()
+        create_data["environment_id"] = environment_id
+        self._validate_environment_data(create_data)
+        return self.create(**create_data)
 
 
-class AuditEnvironmentMixinRepository(Generic[T]):
+class AuditEnvironmentMixinRepository(BaseRepository[T]):
     """Mixin combinado para modelos con AMBOS mixins."""
 
     def _validate_audit_environment_data(self, data: dict) -> None:
@@ -301,17 +298,19 @@ class AuditEnvironmentMixinRepository(Generic[T]):
         if "modified_by" not in data:
             raise ValueError("modified_by requerido")
 
-    def create_with_audit_env(
-        self, data: dict, environment_id: int, modified_by: str
-    ) -> T:
+    def create_with_audit_env(self, data: dict, environment_id: int, modified_by: str) -> T:
         """Crea registro con validación de ambos mixins."""
-        data["environment_id"] = environment_id
-        data["modified_by"] = modified_by
-        self._validate_audit_environment_data(data)
-        return self.create(**data)
+        create_data = data.copy()
+        create_data["environment_id"] = environment_id
+        create_data["modified_by"] = modified_by
+        
+        self._validate_audit_environment_data(create_data)
+        return self.create(**create_data)
 
     def update_with_audit_env(self, instance: T, data: dict, modified_by: str) -> T:
         """Actualiza registro con campos de ambos mixins."""
-        data["modified_by"] = modified_by
-        self._validate_audit_environment_data(data)
-        return self.update(instance, **data)
+        update_data = data.copy()
+        update_data["modified_by"] = modified_by
+        
+        self._validate_audit_environment_data(update_data)
+        return self.update(instance, **update_data)

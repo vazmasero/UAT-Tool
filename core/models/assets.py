@@ -236,4 +236,5 @@ class Uspace(AuditMixin, EnvironmentMixin, Base):
         unique=True,
     )
 
+    file = relationship("File", back_populates="uspace")
     environment_rel = relationship("Environment", back_populates="environment_uspaces")

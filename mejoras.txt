@@ -28,4 +28,9 @@ Blocks:
 Bugs y U-space:
 	- Arreglar el tema de los archivos adjuntos. Por un lado, que al hacer click se puedan descargar y, 
 	por otro, que al cargar de la tabla y volver a editar se guarde correctamente
+
+
+- Versión 2.0
+Valorar meter validaciones básicas __init__ en los modelos de db
+Añadir getters simples en los metodos dominio (get full name, is ative, etc)
 	

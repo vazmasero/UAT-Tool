@@ -7,8 +7,17 @@
       "source.organizeImports.ruff": "explicit"
     }
   },
-      // --- autoDocstring ---
-    "autoDocstring.docstringFormat": "google",
+  // --- autoDocstring ---
+  "autoDocstring.docstringFormat": "google",
+  "python.testing.pytestArgs": [
+    "tests",
+    "-v",
+    "--ignore=tests/coverage_reports",
+    "--ignore=tests/reports"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.terminal.activateEnvironment": false,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+  "python.envFile": "${workspaceFolder}/.env"
 }
-
-

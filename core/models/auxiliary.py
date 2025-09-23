@@ -24,7 +24,6 @@ class Environment(Base):
     description = Column(Text, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
 
-    # Relaciones corregidas para evitar colisión con EnvironmentMixin
     environment_emails = relationship("Email", back_populates="environment_rel")
     environment_operators = relationship("Operator", back_populates="environment_rel")
     environment_drones = relationship("Drone", back_populates="environment_rel")
@@ -56,6 +55,7 @@ class System(Base):
     )
     cases = relationship("Case", secondary="case_systems", back_populates="systems")
     bugs = relationship("Bug", back_populates="system")
+    campaigns = relationship("Campaign", back_populates="system")
 
 
 # --- SECTIONS ---- #

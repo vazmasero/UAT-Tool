@@ -1,27 +1,17 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from core.models import (
-    Drone,
-    Email,
-    Operator,
-    Reason,
-    UasZone,
-    UhubOrg,
-    UhubUser,
-    Uspace,
-)
-
-from .base import AuditEnvironmentMixinRepository, BaseRepository
+from core.models import Drone, Email, Operator, Reason, UasZone, UhubOrg, UhubUser, Uspace
+from .base import AuditEnvironmentMixinRepository
 
 
-class EmailRepository(BaseRepository[Email], AuditEnvironmentMixinRepository[Email]):
+class EmailRepository(AuditEnvironmentMixinRepository[Email]):
     def __init__(self, session: Session):
         super().__init__(session, Email)
 
-    def create(self, **kwargs) -> Email:
-        self._validate_audit_environment_data(kwargs)
-        return super().create(**kwargs)
+    def create(self, data: dict, environment_id: int, modified_by: str) -> Email:
+        """Crea un email usando el método centralizado del mixin."""
+        return self.create_with_audit_env(data, environment_id, modified_by)
 
     def get_by_email(self, email: str, environment_id: int) -> Email | None:
         """Busca un email por dirección y environment_id."""
@@ -32,17 +22,16 @@ class EmailRepository(BaseRepository[Email], AuditEnvironmentMixinRepository[Ema
         )
 
 
-class OperatorRepository(
-    BaseRepository[Operator], AuditEnvironmentMixinRepository[Operator]
-):
+class OperatorRepository(AuditEnvironmentMixinRepository[Operator]):
     def __init__(self, session: Session):
         super().__init__(session, Operator)
 
-    def create_with_relations(self, data: dict) -> Operator:
-        self._validate_audit_environment_data(data)
-        if "email_id" not in data:
+    def create(self, data: dict, environment_id: int, modified_by: str) -> Operator:
+        """Crea operador validando email_id."""
+        if not data.get("email_id"):
             raise ValueError("Operator debe tener un email asociado (email_id).")
-        return self.create(**data)
+        
+        return self.create_with_audit_env(data, environment_id, modified_by)
 
     def get_by_easa_id(self, easa_id: str, environment_id: int) -> Operator | None:
         """Busca un operador por EASA ID y environment_id."""
@@ -55,15 +44,16 @@ class OperatorRepository(
         )
 
 
-class DroneRepository(BaseRepository[Drone], AuditEnvironmentMixinRepository[Drone]):
+class DroneRepository(AuditEnvironmentMixinRepository[Drone]):
     def __init__(self, session: Session):
         super().__init__(session, Drone)
 
-    def create_with_operator(self, data: dict) -> Drone:
-        self._validate_audit_environment_data(data)
-        if "operator_id" not in data:
+    def create(self, data: dict, environment_id: int, modified_by: str) -> Drone:
+        """Crea dron validando operator_id."""
+        if not data.get("operator_id"):
             raise ValueError("Un dron debe estar asociado a un operador (operator_id).")
-        return self.create(**data)
+        
+        return self.create_with_audit_env(data, environment_id, modified_by)
 
     def get_by_serial_number(
         self, serial_number: str, environment_id: int
@@ -79,17 +69,14 @@ class DroneRepository(BaseRepository[Drone], AuditEnvironmentMixinRepository[Dro
         )
 
 
-class UhubOrgRepository(
-    BaseRepository[UhubOrg], AuditEnvironmentMixinRepository[UhubOrg]
-):
+class UhubOrgRepository(AuditEnvironmentMixinRepository[UhubOrg]):
     def __init__(self, session: Session):
         super().__init__(session, UhubOrg)
 
-    def create_with_relations(self, data: dict) -> UhubOrg:
-        self._validate_audit_environment_data(data)
-
-        return self.create(**data)
-
+    def create(self, data: dict, environment_id: int, modified_by: str) -> UhubOrg:
+        """Crea organización usando método centralizado."""
+        return self.create_with_audit_env(data, environment_id, modified_by)
+    
     def get_by_org_email(self, email: str, environment_id: int) -> UhubOrg | None:
         """Busca una organización por email y environment_id."""
         return (
@@ -99,19 +86,16 @@ class UhubOrgRepository(
         )
 
 
-class UhubUserRepository(
-    BaseRepository[UhubUser], AuditEnvironmentMixinRepository[UhubUser]
-):
+class UhubUserRepository(AuditEnvironmentMixinRepository[UhubUser]):
     def __init__(self, session: Session):
         super().__init__(session, UhubUser)
 
-    def create_with_org(self, data: dict) -> UhubUser:
-        self._validate_audit_environment_data(data)
-        if "organization_id" not in data:
-            raise ValueError(
-                "UhubUser debe estar asociado a una organización (organization_id)."
-            )
-        return self.create(**data)
+    def create(self, data: dict, environment_id: int, modified_by: str) -> UhubUser:
+        """Crea usuario validando organization_id."""
+        if not data.get("organization_id"):
+            raise ValueError("UhubUser debe estar asociado a una organización (organization_id).")
+        
+        return self.create_with_audit_env(data, environment_id, modified_by)
 
     def get_by_username(self, username: str, environment_id: int) -> UhubUser | None:
         """Busca un usuario por username y environment_id."""
@@ -124,56 +108,43 @@ class UhubUserRepository(
         )
 
 
-class UasZoneRepository(
-    BaseRepository[UasZone], AuditEnvironmentMixinRepository[UasZone]
-):
+class UasZoneRepository(AuditEnvironmentMixinRepository[UasZone]):
     def __init__(self, session: Session):
         super().__init__(session, UasZone)
 
-    def create_with_relations(self, data: dict) -> UasZone:
-        self._validate_audit_environment_data(data)
+    def _validate_related_objects(self, model_class, ids: list[int], error_message: str) -> list:
+        """Valida que los objetos relacionados existan."""
+        if not ids:
+            return []
+        
+        objects = self.query(model_class).filter(model_class.id.in_(ids)).all()
+        if len(objects) != len(ids):
+            missing = set(ids) - {obj.id for obj in objects}
+            raise ValueError(f"{error_message}: {missing}")
+        return objects
 
-        required_fields = [
-            "name",
-            "area_type",
-            "lower_limit",
-            "upper_limit",
-            "reference_lower",
-            "reference_upper",
-            "application",
-            "restriction_type",
-            "clearance_required",
-        ]
-        for field in required_fields:
-            if field not in data:
-                raise ValueError(f"{field} es obligatorio para UasZone")
-
+    def create(self, data: dict, environment_id: int, modified_by: str) -> UasZone:
+        """Crea zona UAS con relaciones."""
         try:
-            # Crea la zona primero
-            zone = self.create(**data)
+            # Usar transacción para operación atómica
+            with self.session.begin_nested():
+                # Crear zona base 
+                zone = self.create_with_audit_env(data, environment_id, modified_by)
 
-            # Many-to-many relaciones opcionales
-            if "organizations" in data:
-                orgs = (
-                    self.session.query(UhubOrg)
-                    .filter(
-                        UhubOrg.id.in_(data["organizations"]),
-                        UhubOrg.environment_id == data["environment_id"],
+                # Manejar relaciones many-to-many
+                if "organizations" in data:
+                    orgs = self._validate_related_objects(
+                        UhubOrg, data["organizations"], "Organizaciones no encontradas"
                     )
-                    .all()
-                )
-                zone.organizations = orgs
+                    zone.organizations = orgs
 
-            if "reasons" in data:
-                reasons = (
-                    self.session.query(Reason)
-                    .filter(Reason.id.in_(data["reasons"]))
-                    .all()
-                )
-                zone.reasons = reasons
+                if "reasons" in data:
+                    reasons = self._validate_related_objects(
+                        Reason, data["reasons"], "Razones no encontradas"
+                    )
+                    zone.reasons = reasons
 
-            self.session.flush()
-            return zone
+                return zone
 
         except SQLAlchemyError:
             self.session.rollback()
@@ -188,22 +159,16 @@ class UasZoneRepository(
         )
 
 
-class UspaceRepository(BaseRepository[Uspace], AuditEnvironmentMixinRepository[Uspace]):
+class UspaceRepository(AuditEnvironmentMixinRepository[Uspace]):
     def __init__(self, session: Session):
         super().__init__(session, Uspace)
 
-    def create_with_file(self, data: dict) -> Uspace:
-        """
-        Crea un Uspace asociado a un file_id obligatorio.
-        """
-        self._validate_audit_environment_data(data)
-
-        required_fields = ["code", "name", "sectors_count", "file_id"]
-        for field in required_fields:
-            if field not in data:
-                raise ValueError(f"{field} es obligatorio para crear un Uspace")
-
-        return self.create(**data)
+    def create(self, data: dict, environment_id: int, modified_by: str) -> Uspace:
+        """Crea Uspace validando file_id."""
+        if not data.get("file_id"):
+            raise ValueError("file_id es obligatorio para crear un Uspace")
+        
+        return self.create_with_audit_env(data, environment_id, modified_by)
 
     def get_by_code(self, code: str, environment_id: int) -> Uspace | None:
         """Busca un U-space por código y environment_id."""

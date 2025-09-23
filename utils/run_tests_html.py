@@ -29,7 +29,7 @@ def main():
         "-m",
         "pytest",
         "-p",
-        "pytest_html",  # fuerza carga del plugin por si acaso
+        "pytest_html",
         "-v",
         "tests/unit/",
         f"--html={html_file}",

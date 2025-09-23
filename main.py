@@ -8,7 +8,7 @@ el bucle de eventos de la interfaz gráfica.
 
 # from PySide6.QtWidgets import QApplication
 
-from application.application_controller import ApplicationController
+#from application.application_controller import ApplicationController
 from data.database import Session, init_db
 
 # from views.main_window import MainWindow
@@ -19,7 +19,7 @@ def main():
     init_db()
 
     # Crea la sesión para los repositorios
-    session = Session()
+    #session = Session()
 
     # Inicializa el ApplicationController con la sesión
     #app_controller = ApplicationController(session)

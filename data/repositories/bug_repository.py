@@ -3,20 +3,18 @@ from sqlalchemy.orm import Session, joinedload
 
 from core.models import Bug, BugHistory, CampaignRun, File, System
 
-from .base import AuditEnvironmentMixinRepository, BaseRepository
+from .base import AuditEnvironmentMixinRepository
 
 
-class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
+class BugRepository(AuditEnvironmentMixinRepository[Bug]):
     """Repositorio específico para la entidad Bug."""
 
     def __init__(self, session: Session):
         super().__init__(session, Bug)
 
-    def create_with_relations(self, data: dict) -> Bug:
+    def create(self, data: dict, environment_id: int, modified_by: str) -> Bug:
         """Crea un nuevo Bug con relaciones opcionales (campaign_run, file) y obligatoria (system_id).
         También inicializa un registro en BugHistory."""
-
-        self._validate_audit_environment_data(data)
 
         if not data.get("system_id"):
             raise ValueError(
@@ -24,7 +22,7 @@ class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
             )
         try:
             # Validar FK
-            system = self.session.query(System).get(data["system_id"])
+            system = self.session.get(System, data["system_id"])
             if not system:
                 raise ValueError(f"System con id {data['system_id']} no encontrado.")
 
@@ -40,7 +38,7 @@ class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
 
             file_id = data.get("file_id")
             if file_id:
-                file = self.session.query(File).get(file_id)
+                file = self.session.get(File, file_id)
                 if not file:
                     raise ValueError(f"File con id {file_id} no encontrado.")
             else:
@@ -48,32 +46,16 @@ class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
 
             # Crear el bug usando el método base
             bug_data = {
-                "status": data["status"],
+                **data,
                 "system_id": system.id,
                 "campaign_run_id": campaign_run.id if campaign_run else None,
-                "system_version": data["system_version"],
-                "service_now_id": data.get("service_now_id"),
-                "short_description": data["short_description"],
-                "definition": data["definition"],
-                "urgency": data["urgency"],
-                "impact": data["impact"],
-                "comments": data.get("comments"),
-                "file_id": file.id if file else None,
-                "environment_id": data["environment_id"],
-                "modified_by": data["modified_by"],
+                "file_id": file.id if file else None,   
             }
 
-            bug = self.create(**bug_data)
+            bug = self.create_with_audit_env(bug_data, environment_id, modified_by)
 
             # Crear registro en el historial
-            history = BugHistory(
-                bug_id=bug.id,
-                changed_by=data.get("changed_by", "system"),
-                change_summary="Bug creado",
-            )
-
-            self.session.add(history)
-            self.session.flush()
+            self.add_history(bug.id, modified_by, "Bug creado")
 
             return bug
 
@@ -89,6 +71,7 @@ class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
             bug = self.get_by_id(bug_id)
             if not bug:
                 raise ValueError(f"Bug con id {bug_id} no encontrado.")
+            
             history = BugHistory(
                 bug_id=bug_id,
                 changed_by=changed_by,
@@ -104,7 +87,7 @@ class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
     def get_with_history(self, bug_id: int) -> Bug | None:
         """Devuelve un bug junto con su historial cargado."""
         return (
-            self.query(Bug)
+            self.session.query(Bug)
             .options(joinedload(Bug.history))
             .filter(Bug.id == bug_id)
             .one_or_none()
@@ -143,4 +126,15 @@ class BugRepository(BaseRepository[Bug], AuditEnvironmentMixinRepository[Bug]):
             self.query()
             .filter(Bug.status == status, Bug.environment_id == environment_id)
             .all()
+        )
+    
+    def get_by_service_now_id(self, service_now_id: str, environment_id: int) -> Bug | None:
+        """Busca un bug por Service Now ID y environment_id."""
+        return (
+            self.query()
+            .filter(
+                Bug.service_now_id == service_now_id, 
+                Bug.environment_id == environment_id
+            )
+            .first()
         )

@@ -6,16 +6,19 @@ from data.database.init_db import init_db
 
 def test_init_db_creates_tables(test_engine):
     """Test que verifica que init_db crea las tablas"""
-    # Asegurarse de que no hay tablas inicialmente
+    # Verificar que hay modelos registrados
+    assert len(Base.metadata.tables) > 0
+
     inspector = inspect(test_engine)
     tables_before = inspector.get_table_names()
+    assert tables_before == []
 
-    # Crear tablas
-    init_db()
+    init_db(engine=test_engine)
 
-    # Verificar que se crearon tablas
+    inspector = inspect(test_engine)
     tables_after = inspector.get_table_names()
-    assert len(tables_after) > len(tables_before)
+
+    assert len(tables_after) > 0
 
 
 def test_init_db_with_drop_existing(test_engine):
@@ -26,7 +29,7 @@ def test_init_db_with_drop_existing(test_engine):
     tables_before = inspector.get_table_names()
 
     # Recrear tablas con drop_existing
-    init_db(drop_existing=True)
+    init_db(drop_existing=True, engine=test_engine)
 
     tables_after = inspector.get_table_names()
     assert len(tables_after) == len(tables_before)

@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 
 from core.models import Reason, Section, System
-from data.database import Base
 
 from .utils import get_or_create
 
@@ -42,7 +41,7 @@ REASONS = [
 
 def load_initial_data(session: Session) -> None:
     """Puebla las tablas con datos predefinidos cuando el programa se lanza."""
-    mapping = dict[type[Base], list[str]] = {
+    mapping = {
         System: SYSTEMS,
         Section: SECTIONS,
         Reason: REASONS,
