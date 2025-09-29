@@ -1,10 +1,10 @@
-from core.models.auxiliary import Environment, System, Section, Reason, File
+from core.models.auxiliary import Environment, File, Reason, Section, System
 from data.repositories import (
     EnvironmentRepository,
-    SystemRepository,
-    SectionRepository,
     FileRepository,
     ReasonRepository,
+    SectionRepository,
+    SystemRepository,
 )
 
 
@@ -33,9 +33,8 @@ def test_environment_repository_get_by_name_not_found(db_session):
 
     assert found is None
 
-def test_environment_repository_get_with_relationships(
-    db_session, model_test_data
-):
+
+def test_environment_repository_get_with_relationships(db_session, model_test_data):
     """Test EnvironmentRepository.get_with_relationships"""
     repo = EnvironmentRepository(db_session)
 
@@ -70,6 +69,7 @@ def test_system_repository_get_by_name(db_session):
     assert found is not None
     assert found.name == "Test System"
 
+
 def test_system_repository_get_by_name_not_found(db_session):
     """Test SystemRepository.get_by_name cuando no existe."""
     repo = SystemRepository(db_session)
@@ -83,6 +83,7 @@ def test_system_repository_get_by_name_not_found(db_session):
     found = repo.get_by_name("NonExistent")
 
     assert found is None
+
 
 def test_section_repository_get_by_name(db_session):
     """Test SectionRepository.get_by_name."""
@@ -99,6 +100,7 @@ def test_section_repository_get_by_name(db_session):
     assert found is not None
     assert found.name == "Test Section"
 
+
 def test_section_repository_get_by_name_not_found(db_session):
     """Test SectionRepository.get_by_name cuando no existe."""
     repo = SectionRepository(db_session)
@@ -112,6 +114,7 @@ def test_section_repository_get_by_name_not_found(db_session):
     found = repo.get_by_name("NonExistent")
 
     assert found is None
+
 
 def test_file_repository_get_by_filename(db_session, model_test_data):
     """Test FileRepository.get_by_filename."""
@@ -128,6 +131,7 @@ def test_file_repository_get_by_filename(db_session, model_test_data):
     assert found is not None
     assert found.filename == "test.txt"
 
+
 def test_file_repository_get_by_filename_not_found(db_session, model_test_data):
     """Test FileRepository.get_by_name cuando no existe."""
     repo = FileRepository(db_session)
@@ -141,6 +145,7 @@ def test_file_repository_get_by_filename_not_found(db_session, model_test_data):
     found = repo.get_by_filename("NonExistent.txt")
 
     assert found is None
+
 
 def test_reason_repository_get_by_filename(db_session):
     """Test ReasonRepository.get_by_filename."""
@@ -156,6 +161,7 @@ def test_reason_repository_get_by_filename(db_session):
 
     assert found is not None
     assert found.name == "Test Reason"
+
 
 def test_reason_repository_get_by_name_not_found(db_session):
     """Test ReasonRepository.get_by_name cuando no existe."""

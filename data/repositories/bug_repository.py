@@ -49,13 +49,70 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
                 **data,
                 "system_id": system.id,
                 "campaign_run_id": campaign_run.id if campaign_run else None,
-                "file_id": file.id if file else None,   
+                "file_id": file.id if file else None,
             }
 
             bug = self.create_with_audit_env(bug_data, environment_id, modified_by)
 
             # Crear registro en el historial
             self.add_history(bug.id, modified_by, "Bug creado")
+
+            return bug
+
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
+
+    def update(
+        self,
+        bug_id: int,
+        data: dict,
+        environment_id: int,
+        modified_by: str,
+        change_summary: str = "Bug actualizado",
+    ) -> Bug:
+        """Actualiza un bug existente y registra el cambio en el historial."""
+        try:
+            bug = self.get_by_id(bug_id, raise_if_not_found=True)
+
+            # Validar FK si se proporcionan
+            if "system_id" in data:
+                system = self.session.get(System, data["system_id"])
+                if not system:
+                    raise ValueError(
+                        f"System con id {data['system_id']} no encontrado."
+                    )
+
+            if "campaign_run_id" in data:
+                campaign_run_id = data["campaign_run_id"]
+                if campaign_run_id:
+                    campaign_run = self.session.query(CampaignRun).get(campaign_run_id)
+                    if not campaign_run:
+                        raise ValueError(
+                            f"CampaignRun con id {campaign_run_id} no encontrado."
+                        )
+                # Si campaign_run_id es None, se permite (puede ser desasociado)
+
+            if "file_id" in data:
+                file_id = data["file_id"]
+                if file_id:
+                    file = self.session.get(File, file_id)
+                    if not file:
+                        raise ValueError(f"File con id {file_id} no encontrado.")
+                # Si file_id es None, se permite (puede ser desasociado)
+
+            # Guardar estado anterior para el historial si es relevante
+            old_status = bug.status if "status" in data else None
+
+            # Actualizar el bug usando el método base
+            bug = self.update_with_audit_env(bug, data, modified_by, environment_id)
+
+            # Registrar en el historial
+            history_message = change_summary
+            if old_status and "status" in data and data["status"] != old_status:
+                history_message += f" (Estado cambiado: {old_status}->{data['status']})"
+
+            self.add_history(bug_id, modified_by, history_message)
 
             return bug
 
@@ -71,7 +128,7 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             bug = self.get_by_id(bug_id)
             if not bug:
                 raise ValueError(f"Bug con id {bug_id} no encontrado.")
-            
+
             history = BugHistory(
                 bug_id=bug_id,
                 changed_by=changed_by,
@@ -127,14 +184,16 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             .filter(Bug.status == status, Bug.environment_id == environment_id)
             .all()
         )
-    
-    def get_by_service_now_id(self, service_now_id: str, environment_id: int) -> Bug | None:
+
+    def get_by_service_now_id(
+        self, service_now_id: str, environment_id: int
+    ) -> Bug | None:
         """Busca un bug por Service Now ID y environment_id."""
         return (
             self.query()
             .filter(
-                Bug.service_now_id == service_now_id, 
-                Bug.environment_id == environment_id
+                Bug.service_now_id == service_now_id,
+                Bug.environment_id == environment_id,
             )
             .first()
         )

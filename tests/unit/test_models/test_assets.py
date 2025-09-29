@@ -1,10 +1,11 @@
 from core.models import Email
 
 
-def test_email_creation_full(db_session, model_test_data):
+def test_email_creation_full(db_session, model_test_data, sample_audit_data):
     """Test completo de creación de email"""
     email = Email(**model_test_data["email_data"])
     email.environment_id = 1
+    email.modified_by = sample_audit_data["modified_by"]
     db_session.add(email)
     db_session.commit()
 

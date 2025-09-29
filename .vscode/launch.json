@@ -5,6 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Pytest",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["${relativeFileDirname}"],
+      "justMyCode": true
+    },
+
+    {
       "name": "Depurador de Python: Archivo actual",
       "type": "debugpy",
       "request": "launch",
@@ -15,6 +24,6 @@
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
       }
-    }
+    },
   ]
 }

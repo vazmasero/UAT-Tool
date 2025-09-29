@@ -24,6 +24,19 @@ class CampaignRepository(AuditEnvironmentMixinRepository[Campaign]):
     def __init__(self, session: Session):
         super().__init__(session, Campaign)
 
+    def _validate_related_objects(
+        self, model_class, ids: list[int], error_message: str
+    ) -> list:
+        """Valida que los objetos relacionados existan."""
+        if not ids:
+            return []
+
+        objects = self.session.query(model_class).filter(model_class.id.in_(ids)).all()
+        if len(objects) != len(ids):
+            missing = set(ids) - {obj.id for obj in objects}
+            raise ValueError(f"{error_message}: {missing}")
+        return objects
+
     def create(self, data: dict, environment_id: int, modified_by: str) -> Campaign:
         """Crea una campaña con bloques asociados."""
         if not data.get("system_id"):
@@ -39,25 +52,19 @@ class CampaignRepository(AuditEnvironmentMixinRepository[Campaign]):
             if not system:
                 raise ValueError(f"Sistema con id {data['system_id']} no encontrado.")
 
-            # Validar que los bloques existen
-            block_ids = data["blocks"]
-            blocks = self.session.query(Block).filter(Block.id.in_(block_ids)).all()
-
-            if len(blocks) != len(block_ids):
-                missing = set(block_ids) - {b.id for b in blocks}
-                raise ValueError(f"Bloques no encontrados: {missing}")
+            # Extraer bloques antes de crear (y validar que no está vacío)
+            block_ids = data.pop("blocks")
 
             # Crear la campaña
-            campaign_data = {
-                **data,
-                "system_id": system.id,
-            }
-            campaign = self.create_with_audit_env(campaign_data, environment_id, modified_by)
+            campaign = self.create_with_audit_env(data, environment_id, modified_by)
 
-            # Asociar bloques
+            # Validar y asociar bloques
+            blocks = self._validate_related_objects(
+                Block, block_ids, "Bloques no encontrados"
+            )
             campaign.blocks = blocks
-            self.session.flush()
 
+            self.session.flush()
             return campaign
 
         except SQLAlchemyError:
@@ -81,12 +88,54 @@ class CampaignRepository(AuditEnvironmentMixinRepository[Campaign]):
             .first()
         )
 
+    def update(
+        self, campaign_id: int, data: dict, environment_id: int, modified_by: str
+    ) -> Campaign:
+        """Actualiza una campaña con bloques asociados."""
+        try:
+            campaign = self.get_by_id(campaign_id, raise_if_not_found=True)
+
+            # Extraer bloques primero
+            block_ids = data.pop("blocks", None)
+
+            # Actualizar campos básicos
+            campaign = self.update_with_audit_env(
+                campaign, data, modified_by, environment_id
+            )
+
+            # Actualizar bloques si se proporcionan
+            if block_ids is not None:
+                blocks = self._validate_related_objects(
+                    Block, block_ids, "Bloques no encontrados"
+                )
+                campaign.blocks = blocks
+
+            self.session.flush()
+            return campaign
+
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
+
 
 class BlockRepository(AuditEnvironmentMixinRepository[Block]):
     """Repositorio para la entidad Block."""
 
     def __init__(self, session: Session):
         super().__init__(session, Block)
+
+    def _validate_related_objects(
+        self, model_class, ids: list[int], error_message: str
+    ) -> list:
+        """Valida que los objetos relacionados existan."""
+        if not ids:
+            return []
+
+        objects = self.session.query(model_class).filter(model_class.id.in_(ids)).all()
+        if len(objects) != len(ids):
+            missing = set(ids) - {obj.id for obj in objects}
+            raise ValueError(f"{error_message}: {missing}")
+        return objects
 
     def create(self, data: dict, environment_id: int, modified_by: str) -> Block:
         """Crea un bloque con sistema asociado."""
@@ -99,20 +148,17 @@ class BlockRepository(AuditEnvironmentMixinRepository[Block]):
             if not system:
                 raise ValueError(f"Sistema con id {data['system_id']} no encontrado.")
 
+            # Extraer relaciones antes de crear
+            case_ids = data.pop("cases", [])
+
             # Crear el bloque
-            block_data = {
-                **data,
-                "system_id": system.id,
-            }
-            block = self.create_with_audit_env(block_data, environment_id, modified_by)
+            block = self.create_with_audit_env(data, environment_id, modified_by)
 
             # Asociar casos si se proporcionan
-            if "cases" in data:
-                case_ids = data["cases"]
-                cases = self.session.query(Case).filter(Case.id.in_(case_ids)).all()
-                if len(cases) != len(case_ids):
-                    missing = set(case_ids) - {c.id for c in cases}
-                    raise ValueError(f"Casos no encontrados: {missing}")
+            if case_ids:
+                cases = self._validate_related_objects(
+                    Case, case_ids, "Casos no encontrados"
+                )
                 block.cases = cases
 
             self.session.flush()
@@ -139,6 +185,33 @@ class BlockRepository(AuditEnvironmentMixinRepository[Block]):
             .first()
         )
 
+    def update(
+        self, block_id: int, data: dict, environment_id: int, modified_by: str
+    ) -> Block:
+        """Actualiza un bloque con casos asociados."""
+        try:
+            block = self.get_by_id(block_id, raise_if_not_found=True)
+
+            # Extraer relaciones primero
+            case_ids = data.pop("cases", None)
+
+            # Actualizar campos básicos
+            block = self.update_with_audit_env(block, data, modified_by, environment_id)
+
+            # Actualizar casos si se proporcionan
+            if case_ids is not None:
+                cases = self._validate_related_objects(
+                    Case, case_ids, "Casos no encontrados"
+                )
+                block.cases = cases
+
+            self.session.flush()
+            return block
+
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
+
 
 class CaseRepository(AuditEnvironmentMixinRepository[Case]):
     """Repositorio para la entidad Case."""
@@ -146,42 +219,57 @@ class CaseRepository(AuditEnvironmentMixinRepository[Case]):
     def __init__(self, session: Session):
         super().__init__(session, Case)
 
+    def _validate_related_objects(
+        self, model_class, ids: list[int], error_message: str
+    ) -> list:
+        """Valida que los objetos relacionados existan."""
+        if not ids:
+            return []
+
+        objects = self.session.query(model_class).filter(model_class.id.in_(ids)).all()
+        if len(objects) != len(ids):
+            missing = set(ids) - {obj.id for obj in objects}
+            raise ValueError(f"{error_message}: {missing}")
+        return objects
+
     def create(self, data: dict, environment_id: int, modified_by: str) -> Case:
         """Crea un caso de prueba con todas sus relaciones."""
-        required_fields = ["code", "name", "comments"]
-        for field in required_fields:
-            if field not in data:
-                raise ValueError(f"{field} es obligatorio para Case")
-
         try:
-            # Crear el caso base
-            case = self.create_with_audit_env(data, environment_id, modified_by)
-
-            # Asociar relaciones many-to-many
-            relations_mapping = {
-                "operators": (Operator, "operators"),
-                "drones": (Drone, "drones"),
-                "uhub_users": (UhubUser, "uhub_users"),
-                "uas_zones": (UasZone, "uas_zones"),
-                "systems": (System, "systems"),
-                "sections": (Section, "sections"),
+            # Configuración de relaciones
+            relations_config = {
+                "operators": (Operator, "operators", "Operadores no encontrados"),
+                "drones": (Drone, "drones", "Drones no encontrados"),
+                "uhub_users": (UhubUser, "uhub_users", "Usuarios Uhub no encontrados"),
+                "uas_zones": (UasZone, "uas_zones", "Zonas UAS no encontradas"),
+                "systems": (System, "systems", "Sistemas no encontrados"),
+                "sections": (Section, "sections", "Secciones no encontradas"),
             }
 
-            for relation_key, (model_class, attr_name) in relations_mapping.items():
-                if relation_key in data:
-                    ids = data[relation_key]
-                    objects = (
-                        self.session.query(model_class)
-                        .filter(model_class.id.in_(ids))
-                        .all()
-                    )
-                    if len(objects) != len(ids):
-                        missing = set(ids) - {obj.id for obj in objects}
-                        raise ValueError(f"{relation_key} no encontrados: {missing}")
-                    setattr(case, attr_name, objects)
+            # Extraer todas las relaciones del data
+            extracted_relations = {}
+            for relation_key in relations_config.keys():
+                extracted_relations[relation_key] = data.pop(relation_key, [])
 
-            self.session.flush()
-            return case
+            # Usar transacción para operación atómica
+            with self.session.begin_nested():
+                # Crear caso base
+                case = self.create_with_audit_env(data, environment_id, modified_by)
+
+                # Manejar relaciones many-to-many
+                for relation_key, (
+                    model_class,
+                    attr_name,
+                    error_msg,
+                ) in relations_config.items():
+                    ids = extracted_relations[relation_key]
+                    if ids:
+                        objects = self._validate_related_objects(
+                            model_class, ids, error_msg
+                        )
+                        setattr(case, attr_name, objects)
+
+                self.session.flush()
+                return case
 
         except SQLAlchemyError:
             self.session.rollback()
@@ -213,12 +301,74 @@ class CaseRepository(AuditEnvironmentMixinRepository[Case]):
             .first()
         )
 
+    def update(
+        self, case_id: int, data: dict, environment_id: int, modified_by: str
+    ) -> UasZone:
+        """Actualiza una zona UAS con relaciones."""
+        try:
+            case = self.get_by_id(case_id, raise_if_not_found=True)
+
+            # Configuración de relaciones
+            relations_config = {
+                "operators": (Operator, "operators", "Operadores no encontrados"),
+                "drones": (Drone, "drones", "Drones no encontrados"),
+                "uhub_users": (UhubUser, "uhub_users", "Usuarios Uhub no encontrados"),
+                "uas_zones": (UasZone, "uas_zones", "Zonas UAS no encontradas"),
+                "systems": (System, "systems", "Sistemas no encontrados"),
+                "sections": (Section, "sections", "Secciones no encontradas"),
+            }
+
+            # Extraer todas las relaciones del data
+            extracted_relations = {}
+            for relation_key in relations_config.keys():
+                extracted_relations[relation_key] = data.pop(relation_key, [])
+
+            # Usar transacción para operación atómica
+            with self.session.begin_nested():
+                # Crear caso base
+                case = self.update_with_audit_env(
+                    case, data, environment_id, modified_by
+                )
+
+                # Actualizar relaciones si se proporcionan
+                for relation_key, (
+                    model_class,
+                    attr_name,
+                    error_msg,
+                ) in relations_config.items():
+                    ids = extracted_relations[relation_key]
+                    if ids:
+                        objects = self._validate_related_objects(
+                            model_class, ids, error_msg
+                        )
+                        setattr(case, attr_name, objects)
+
+                self.session.flush()
+                return case
+
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
+
 
 class StepRepository(BaseRepository[Step]):
     """Repositorio para la entidad Step."""
 
     def __init__(self, session: Session):
         super().__init__(session, Step)
+
+    def _validate_related_objects(
+        self, model_class, ids: list[int], error_message: str
+    ) -> list:
+        """Valida que los objetos relacionados existan."""
+        if not ids:
+            return []
+
+        objects = self.session.query(model_class).filter(model_class.id.in_(ids)).all()
+        if len(objects) != len(ids):
+            missing = set(ids) - {obj.id for obj in objects}
+            raise ValueError(f"{error_message}: {missing}")
+        return objects
 
     def create(self, data: dict) -> Step:
         """Crea un paso con requisitos asociados."""
@@ -234,24 +384,17 @@ class StepRepository(BaseRepository[Step]):
             if not case:
                 raise ValueError(f"Case con id {data['case_id']} no encontrado.")
 
+            # Extraer requisitos antes de crear el paso
+            req_ids = data.pop("requirements", [])
+
             # Crear el paso
-            step_data = {
-                **data,
-                "case_id": case.id,
-            }
-            step = self.create(**step_data)
+            step = super().create(**data)
 
             # Asociar requisitos si se proporcionan
-            if "requirements" in data:
-                req_ids = data["requirements"]
-                requirements = (
-                    self.session.query(Requirement)
-                    .filter(Requirement.id.in_(req_ids))
-                    .all()
+            if req_ids:
+                requirements = self._validate_related_objects(
+                    Requirement, req_ids, "Requisitos no encontrados"
                 )
-                if len(requirements) != len(req_ids):
-                    missing = set(req_ids) - {r.id for r in requirements}
-                    raise ValueError(f"Requisitos no encontrados: {missing}")
                 step.requirements = requirements
 
             self.session.flush()
@@ -273,3 +416,47 @@ class StepRepository(BaseRepository[Step]):
             .filter(Step.id == step_id)
             .one_or_none()
         )
+
+    def update(
+        self, step_id: int, data: dict, environment_id: int, modified_by: str
+    ) -> UasZone:
+        """Actualiza un paso con requisitos asociados."""
+        try:
+            step = self.get_by_id(step_id, raise_if_not_found=True)
+
+            # Configuración de relaciones
+            relations_config = {
+                "requirements": (
+                    Requirement,
+                    "requirements",
+                    "Requisitos no encontrados",
+                ),
+            }
+
+            # Extraer relaciones primero
+            extracted_relations = {}
+            for relation_key in relations_config.keys():
+                extracted_relations[relation_key] = data.pop(relation_key, None)
+
+            # Actualizar campos básicos
+            step = super().update(step, **data)
+
+            # Actualizar relaciones si se proporcionan
+            for relation_key, (
+                model_class,
+                attr_name,
+                error_msg,
+            ) in relations_config.items():
+                ids = extracted_relations[relation_key]
+                if ids is not None:
+                    objects = self._validate_related_objects(
+                        model_class, ids, error_msg
+                    )
+                    setattr(step, attr_name, objects)
+
+            self.session.flush()
+            return step
+
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise

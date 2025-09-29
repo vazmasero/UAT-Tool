@@ -155,7 +155,6 @@ def model_test_data():
         },
         # ---- Executions ----
         "campaign_run_data": {
-            "executed_by": "test_executor",
             "notes": "Test campaign run",
         },
         "case_run_data": {"notes": "Test case run"},

@@ -12,11 +12,13 @@ class RequirementRepository(AuditEnvironmentMixinRepository[Requirement]):
     def __init__(self, session: Session):
         super().__init__(session, Requirement)
 
-    def _validate_related_objects(self, model_class, ids: list[int], error_message: str) -> list:
+    def _validate_related_objects(
+        self, model_class, ids: list[int], error_message: str
+    ) -> list:
         """Valida que los objetos relacionados existan."""
         if not ids:
             return []
-        
+
         objects = self.session.query(model_class).filter(model_class.id.in_(ids)).all()
         if len(objects) != len(ids):
             missing = set(ids) - {obj.id for obj in objects}
@@ -25,29 +27,36 @@ class RequirementRepository(AuditEnvironmentMixinRepository[Requirement]):
 
     def create(self, data: dict, environment_id: int, modified_by: str) -> Requirement:
         """Crea un Requirement y lo asocia a sistemas y secciones"""
-        system_ids = data.get("systems", [])
-        section_ids = data.get("sections", [])
-
-        if not system_ids:
-            raise ValueError("Un requisito debe estar asociado a al menos un sistema.")
-        if not section_ids:
-            raise ValueError("Un requisito debe estar asociado a al menos una sección.")
-
         try:
+            # Separar relaciones antes de crear la instancia
+            system_ids = data.pop("systems", [])
+            section_ids = data.pop("sections", [])
+
             with self.session.begin_nested():
-                # Validar objetos relacionados
-                systems = self._validate_related_objects(
-                    System, system_ids, "Sistemas no encontrados"
-                )
-                sections = self._validate_related_objects(
-                    Section, section_ids, "Secciones no encontradas"
+                requirement = self.create_with_audit_env(
+                    data, environment_id, modified_by
                 )
 
-                requirement = self.create_with_audit_env(data, environment_id, modified_by)
+                # Manejar relaciones many-to-many
+                if system_ids:
+                    systems = self._validate_related_objects(
+                        System, system_ids, "Sistemas no encontrados"
+                    )
+                    requirement.systems = systems
+                else:
+                    raise ValueError(
+                        "Un requisito debe estar asociado a al menos un sistema."
+                    )
 
-                # Establecer relaciones
-                requirement.systems = systems
-                requirement.sections = sections
+                if section_ids:
+                    sections = self._validate_related_objects(
+                        Section, section_ids, "Secciones no encontradas"
+                    )
+                    requirement.sections = sections
+                else:
+                    raise ValueError(
+                        "Un requisito debe estar asociado a al menos una sección."
+                    )
 
                 self.session.flush()
                 return requirement
@@ -66,9 +75,7 @@ class RequirementRepository(AuditEnvironmentMixinRepository[Requirement]):
             .one_or_none()
         )
 
-    def get_with_relations(
-        self, requirement_id: int
-    ) -> Requirement | None:
+    def get_with_relations(self, requirement_id: int) -> Requirement | None:
         """Obtiene un requisito con sus relaciones cargadas."""
         return (
             self.query()
@@ -79,27 +86,44 @@ class RequirementRepository(AuditEnvironmentMixinRepository[Requirement]):
             .first()
         )
 
-    def update(self, requirement_id: int, data: dict, environment_id: int, modified_by: str) -> Requirement:
+    def update(
+        self, requirement_id: int, data: dict, environment_id: int, modified_by: str
+    ) -> Requirement:
         """Actualiza un requirement y sus relaciones."""
-        requirement = self.get_by_id(requirement_id, raise_if_not_found=True)
 
         try:
+            requirement = self.get_by_id(requirement_id, raise_if_not_found=True)
+
+            # Separar relaciones antes de crear la instancia
+            system_ids = data.pop("systems", [])
+            section_ids = data.pop("sections", [])
+
             with self.session.begin_nested():
                 # Actualizar campos básicos
-                requirement = self.update_with_audit_env(requirement, data, modified_by)
+                requirement = self.update_with_audit_env(
+                    requirement, data, modified_by, environment_id
+                )
 
-                # Actualizar relaciones si se proporcionan
-                if "systems" in data:
+                # Manejar relaciones many-to-many
+                if system_ids:
                     systems = self._validate_related_objects(
-                        System, data["systems"], "Sistemas no encontrados"
+                        System, system_ids, "Sistemas no encontrados"
                     )
                     requirement.systems = systems
+                else:
+                    raise ValueError(
+                        "Un requisito debe estar asociado a al menos un sistema."
+                    )
 
-                if "sections" in data:
+                if section_ids:
                     sections = self._validate_related_objects(
-                        Section, data["sections"], "Secciones no encontradas"
+                        Section, section_ids, "Secciones no encontradas"
                     )
                     requirement.sections = sections
+                else:
+                    raise ValueError(
+                        "Un requisito debe estar asociado a al menos una sección."
+                    )
 
                 self.session.flush()
                 return requirement

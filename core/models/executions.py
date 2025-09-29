@@ -21,20 +21,24 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-from data.database import AuditMixin, Base, EnvironmentMixin
+from data.database import Base, EnvironmentMixin
 
 
 # ---- EJECUCIÓN DE CAMPAÑAS ---- #
-class CampaignRun(AuditMixin, EnvironmentMixin, Base):
+class CampaignRun(EnvironmentMixin, Base):
     """Modelo que representa la ejecución de una campaña de pruebas."""
 
     __tablename__ = "campaign_runs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
     campaign_id = Column(
         Integer, ForeignKey("campaigns.id", ondelete="RESTRICT"), nullable=False
     )
-    started_at = Column(DateTime, server_default=func.now())
+    started_at = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=func.now(), onupdate=func.now(), nullable=False
+    )
     ended_at = Column(DateTime)
-    executed_by = Column(String, nullable=False)
+    modified_by = Column(String, nullable=False)
     notes = Column(Text)
 
     case_runs = relationship("CaseRun", back_populates="campaign_run")

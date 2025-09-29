@@ -262,14 +262,14 @@ class AuditMixinRepository(BaseRepository[T]):
         create_data = data.copy()
         create_data["modified_by"] = modified_by
         self._validate_audit_data(create_data)
-        return self.create(**create_data)
+        return super().create(**create_data)
 
     def update_with_audit(self, instance: T, data: dict, modified_by: str) -> T:
         """Actualiza un registro con campos de AuditMixin."""
         update_data = data.copy()
         update_data["modified_by"] = modified_by
         self._validate_audit_data(update_data)
-        return self.update(instance, **update_data)
+        return super().update(instance, **update_data)
 
 
 class EnvironmentMixinRepository(BaseRepository[T]):
@@ -285,7 +285,7 @@ class EnvironmentMixinRepository(BaseRepository[T]):
         create_data = data.copy()
         create_data["environment_id"] = environment_id
         self._validate_environment_data(create_data)
-        return self.create(**create_data)
+        return super().create(**create_data)
 
 
 class AuditEnvironmentMixinRepository(BaseRepository[T]):
@@ -298,19 +298,22 @@ class AuditEnvironmentMixinRepository(BaseRepository[T]):
         if "modified_by" not in data:
             raise ValueError("modified_by requerido")
 
-    def create_with_audit_env(self, data: dict, environment_id: int, modified_by: str) -> T:
+    def create_with_audit_env(
+        self, data: dict, environment_id: int, modified_by: str
+    ) -> T:
         """Crea registro con validación de ambos mixins."""
         create_data = data.copy()
         create_data["environment_id"] = environment_id
         create_data["modified_by"] = modified_by
-        
-        self._validate_audit_environment_data(create_data)
-        return self.create(**create_data)
 
-    def update_with_audit_env(self, instance: T, data: dict, modified_by: str) -> T:
+        self._validate_audit_environment_data(create_data)
+        return super().create(**create_data)
+
+    def update_with_audit_env(self, instance: T, data: dict, modified_by: str, environment_id: int) -> T:
         """Actualiza registro con campos de ambos mixins."""
         update_data = data.copy()
         update_data["modified_by"] = modified_by
-        
+        update_data["environment_id"] = environment_id
+
         self._validate_audit_environment_data(update_data)
-        return self.update(instance, **update_data)
+        return super().update(instance, **update_data)

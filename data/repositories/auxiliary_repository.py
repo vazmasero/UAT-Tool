@@ -29,7 +29,7 @@ class EnvironmentRepository(BaseRepository[Environment]):
             .options(
                 joinedload(Environment.environment_bugs),
                 joinedload(Environment.environment_campaign_runs),
-                joinedload(Environment.environment_campaigns)
+                joinedload(Environment.environment_campaigns),
             )
             .filter(Environment.id == environment_id)
             .first()

@@ -19,5 +19,7 @@
   "python.testing.pytestEnabled": true,
   "python.terminal.activateEnvironment": false,
   "python.testing.autoTestDiscoverOnSaveEnabled": false,
-  "python.envFile": "${workspaceFolder}/.env"
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.testing.debugPort": 5678,
+  "python.testing.pytestPath": "${workspaceFolder}/.venv/Scripts/pytest.exe"
 }
