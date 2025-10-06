@@ -1,4 +1,4 @@
-from core.models import Email
+from uat_tool.domain import Email
 
 
 def test_email_creation_full(db_session, model_test_data, sample_audit_data):

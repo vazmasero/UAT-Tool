@@ -1,4 +1,8 @@
-from data.repositories import RequirementRepository, SectionRepository, SystemRepository
+from uat_tool.domain import (
+    RequirementRepository,
+    SectionRepository,
+    SystemRepository,
+)
 
 
 def test_requirement_repository_create(db_session, model_test_data, sample_audit_data):

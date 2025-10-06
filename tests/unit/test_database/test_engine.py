@@ -1,4 +1,4 @@
-from data.database.engine import DB_URL, Session, engine
+from uat_tool.infrastructure import DB_URL, Session, engine
 
 
 def test_engine_creation():

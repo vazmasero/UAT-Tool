@@ -1,9 +1,13 @@
-from core.models.auxiliary import Environment, File, Reason, Section, System
-from data.repositories import (
+from uat_tool.domain import (
+    Environment,
     EnvironmentRepository,
+    File,
     FileRepository,
+    Reason,
     ReasonRepository,
+    Section,
     SectionRepository,
+    System,
     SystemRepository,
 )
 

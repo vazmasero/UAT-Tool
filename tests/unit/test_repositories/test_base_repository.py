@@ -1,6 +1,7 @@
 import pytest
-from core.models.auxiliary import System
-from data.repositories.base import BaseRepository
+
+from uat_tool.domain import BaseRepository, System
+
 
 def test_base_repository_create(db_session, model_test_data):
     """Test creación básica con BaseRepository"""
@@ -23,14 +24,16 @@ def test_base_repository_get_by_id(db_session, model_test_data):
     assert retrieved.id == system.id
     assert retrieved.name == "Test System"
 
+
 def test_base_repository_get_by_id_value_error(db_session, model_test_data):
     """Test obtener por ID erróneo con BaseRepository (ValueError)"""
     repo = BaseRepository(db_session, System)
 
     system = repo.create(**model_test_data["system_data"])
-    
+
     with pytest.raises(ValueError):
         repo.get_by_id(2, raise_if_not_found=True)
+
 
 def test_base_repository_get_all(db_session):
     """Test obtener todos los registros con BaseRepository"""
@@ -44,6 +47,7 @@ def test_base_repository_get_all(db_session):
 
     assert len(systems) == 2
 
+
 def test_base_repository_get_all_limit(db_session):
     """Test obtener un número de registros concreto (limit) con BaseRepository"""
     repo = BaseRepository(db_session, System)
@@ -55,6 +59,7 @@ def test_base_repository_get_all_limit(db_session):
     systems = repo.get_all(limit=1)
 
     assert len(systems) == 1
+
 
 def test_base_repository_get_all_offset(db_session):
     """Test obtener un registro concreto (offset) con BaseRepository"""
@@ -69,6 +74,7 @@ def test_base_repository_get_all_offset(db_session):
     assert retrieved[0] is not None
     assert retrieved[0].id == 2
     assert retrieved[0].name == "System 2"
+
 
 def test_base_repository_filter_by(db_session):
     """Test filtrar registros con BaseRepository"""
@@ -102,6 +108,7 @@ def test_base_repository_delete(db_session):
 
     assert result is True
     assert repo.get_by_id(system.id) is None
+
 
 def test_base_repository_delete_false(db_session):
     """Test eliminar registro con BaseRepository"""

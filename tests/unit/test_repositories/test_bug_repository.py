@@ -1,6 +1,6 @@
 import pytest
 
-from data.repositories import (
+from uat_tool.domain import (
     BlockRepository,
     BugRepository,
     CampaignRepository,
@@ -10,6 +10,7 @@ from data.repositories import (
     FileRepository,
     OperatorRepository,
     ReasonRepository,
+    RequirementRepository,
     SectionRepository,
     SystemRepository,
     UasZoneRepository,
@@ -24,11 +25,28 @@ def test_bug_repository_create(db_session, model_test_data, sample_audit_data):
     sys_repo = SystemRepository(db_session)
     system = sys_repo.create(**model_test_data["system_data"])
 
+    # Crear una sección
+    sect_repo = SectionRepository(db_session)
+    section = sect_repo.create(**model_test_data["section_data"])
+
+    # Crear el requisito
+    req_repo = RequirementRepository(db_session)
+
+    req_data = {
+        **model_test_data["requirement_data"],
+        "systems": [system.id],
+        "sections": [section.id],
+    }
+    requirement = req_repo.create(
+        req_data, environment_id=1, modified_by=sample_audit_data["modified_by"]
+    )
+
     repo = BugRepository(db_session)
 
     bug_data = {
         **model_test_data["bug_data"],
         "system_id": system.id,
+        "requirements": [requirement.id],
     }
     bug = repo.create(
         bug_data, environment_id=1, modified_by=sample_audit_data["modified_by"]

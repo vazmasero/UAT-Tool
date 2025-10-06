@@ -1,8 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
-from core.models import Environment
-from data.database import AuditMixin, Base, EnvironmentMixin
+from uat_tool.domain import Environment
+from uat_tool.infrastructure import AuditMixin, Base, EnvironmentMixin
 
 
 # Modelo de ejemplo para test
@@ -59,9 +59,7 @@ def test_dummy_model_insert_and_query(db_session, sample_audit_data):
     assert result.modified_by == "test_user"
 
 
-def test_dummy_model_with_environment(
-    db_session, sample_audit_data, model_test_data
-):
+def test_dummy_model_with_environment(db_session, sample_audit_data, model_test_data):
     """Comprueba que environment_id puede asignarse."""
     env = Environment(**model_test_data["environment_data"])
     db_session.add(env)

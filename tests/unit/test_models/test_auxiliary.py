@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy.exc import IntegrityError
 
-from core.models.auxiliary import Environment, File, Reason, Section, System
+from uat_tool.domain import Environment, File, Reason, Section, System
 
 
 def test_environment_creation(db_session, model_test_data):

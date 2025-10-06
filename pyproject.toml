@@ -9,13 +9,42 @@ ignore = ["E501"]  # Ignorar longitud de línea (ya controlada por format)
 [tool.ruff.lint.mccabe]
 max-complexity = 10
 
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 docstring-code-format = true
 
+[tool.ruff.isort]
+known-first-party = ["uat_tool"]
+classes = ["constants", "models", "services", "repositories", "controllers", "views"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
-addopts = "--cov=core --cov=data --cov-report=html --cov-report=term"
+pythonpath = ["src"]
+addopts = [
+    "--import-mode=importlib",
+    "--tb=short",
+    "--strict-markers",
+    "--strict-config"
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/venv/*",
+    "*/.venv/*"
+]
+
+[project]
+name = "uat-tool"
+
+[tool.setuptools]
+packages = ["uat_tool"]
+
+[tool.setuptools.package-dir]
+uat_tool = "src/uat_tool"

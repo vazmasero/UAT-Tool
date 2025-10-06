@@ -1,8 +1,14 @@
+import os
+import sys
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from data.database import Base
+from uat_tool.infrastructure import Base
+
+# Añadir src al path para imports absolutos
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
 
 @pytest.fixture(scope="session")

@@ -1,4 +1,4 @@
-from data.repositories import (
+from uat_tool.domain import (
     DroneRepository,
     EmailRepository,
     FileRepository,

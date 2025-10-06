@@ -1,7 +1,6 @@
 from sqlalchemy import inspect
 
-from data.database import Base
-from data.database.init_db import init_db
+from uat_tool.infrastructure import Base, init_db
 
 
 def test_init_db_creates_tables(test_engine):

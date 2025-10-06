@@ -1,6 +1,6 @@
 import os
 
-exclude_dirs = {".venv", "__pycache__", ".git", "docs"}
+exclude_dirs = {".venv", "__pycache__", ".git", "docs", "old", ".vscode", ".pytest_cache", "utils",}
 
 
 def list_files(startpath):

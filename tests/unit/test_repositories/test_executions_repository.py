@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from core.models import StepRun
-from data.repositories import (
+from uat_tool.domain import (
     BlockRepository,
     CampaignRepository,
     CampaignRunRepository,
@@ -12,6 +11,7 @@ from data.repositories import (
     ReasonRepository,
     SectionRepository,
     StepRepository,
+    StepRun,
     StepRunRepository,
     SystemRepository,
     UasZoneRepository,
