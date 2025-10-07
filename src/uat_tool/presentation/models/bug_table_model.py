@@ -1,6 +1,6 @@
 from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
 
-from uat_tool.application import BugTableDTO
+from uat_tool.application.dto import BugTableDTO
 
 
 class BugTableModel(QAbstractTableModel):
@@ -65,7 +65,7 @@ class BugTableModel(QAbstractTableModel):
             elif col == 7:
                 return bug.service_now_id
             elif col == 8:
-                return bug.campaign
+                return bug.campaign_run
             elif col == 9:
                 return bug.requirements
             elif col == 10:

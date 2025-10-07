@@ -1,8 +1,7 @@
 from uat_tool.application import (
     ApplicationContext,
-    BugServiceDTO,
-    BugTableDTO,
 )
+from uat_tool.application.dto import BugServiceDTO, BugTableDTO
 from uat_tool.application.services.base_service import BaseService
 from uat_tool.domain import Bug
 from uat_tool.shared import get_logger
@@ -70,9 +69,8 @@ class BugService(BaseService):
             return BugTableDTO.from_service_dto(
                 bug_dto=bug_dto,
                 system_name=system_name,
-                campaign_code="",  # O usa self._get_campaign_name si lo tienes
                 requirement_codes=requirement_codes,
-                file_name=file_name
+                file_name=file_name,
             )
         except Exception as e:
             logger.error(f"Error enriqueciendo bug {bug_dto.id} para tabla: {e}")

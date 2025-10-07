@@ -24,7 +24,7 @@ class Ui_form_bug(object):
         if not form_bug.objectName():
             form_bug.setObjectName(u"form_bug")
         form_bug.setEnabled(True)
-        form_bug.resize(720, 510)
+        form_bug.resize(726, 523)
         self.verticalLayout = QVBoxLayout(form_bug)
         self.verticalLayout.setSpacing(15)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -53,6 +53,7 @@ class Ui_form_bug(object):
         self.hlayout_status.addWidget(self.lbl_status)
 
         self.cb_status = QComboBox(self.tab_info)
+        self.cb_status.addItem("")
         self.cb_status.addItem("")
         self.cb_status.addItem("")
         self.cb_status.addItem("")
@@ -194,6 +195,21 @@ class Ui_form_bug(object):
 
         self.verticalLayout_2.addLayout(self.hlayout_definition)
 
+        self.hlayout_comments = QHBoxLayout()
+        self.hlayout_comments.setObjectName(u"hlayout_comments")
+        self.lbl_comments = QLabel(self.tab_info)
+        self.lbl_comments.setObjectName(u"lbl_comments")
+
+        self.hlayout_comments.addWidget(self.lbl_comments)
+
+        self.le_comments = QLineEdit(self.tab_info)
+        self.le_comments.setObjectName(u"le_comments")
+
+        self.hlayout_comments.addWidget(self.le_comments)
+
+
+        self.verticalLayout_2.addLayout(self.hlayout_comments)
+
         self.hlayout_files = QHBoxLayout()
         self.hlayout_files.setObjectName(u"hlayout_files")
         self.lbl_files = QLabel(self.tab_info)
@@ -206,11 +222,16 @@ class Ui_form_bug(object):
 
         self.hlayout_files.addWidget(self.le_files)
 
-        self.btn_files = QPushButton(self.tab_info)
-        self.btn_files.setObjectName(u"btn_files")
-        self.btn_files.setMinimumSize(QSize(175, 0))
+        self.btn_file_browse = QPushButton(self.tab_info)
+        self.btn_file_browse.setObjectName(u"btn_file_browse")
+        self.btn_file_browse.setMinimumSize(QSize(175, 0))
 
-        self.hlayout_files.addWidget(self.btn_files)
+        self.hlayout_files.addWidget(self.btn_file_browse)
+
+        self.btn_file_download = QPushButton(self.tab_info)
+        self.btn_file_download.setObjectName(u"btn_file_download")
+
+        self.hlayout_files.addWidget(self.btn_file_download)
 
 
         self.verticalLayout_2.addLayout(self.hlayout_files)
@@ -260,10 +281,11 @@ class Ui_form_bug(object):
         form_bug.setWindowTitle(QCoreApplication.translate("form_bug", u"Form", None))
         self.lbl_title.setText(QCoreApplication.translate("form_bug", u"[Bug name]", None))
         self.lbl_status.setText(QCoreApplication.translate("form_bug", u"Status:", None))
-        self.cb_status.setItemText(0, QCoreApplication.translate("form_bug", u"IN PROGRESS", None))
-        self.cb_status.setItemText(1, QCoreApplication.translate("form_bug", u"OPEN", None))
-        self.cb_status.setItemText(2, QCoreApplication.translate("form_bug", u"CLOSED", None))
-        self.cb_status.setItemText(3, QCoreApplication.translate("form_bug", u"PENDING ACTION", None))
+        self.cb_status.setItemText(0, QCoreApplication.translate("form_bug", u"OPEN", None))
+        self.cb_status.setItemText(1, QCoreApplication.translate("form_bug", u"CLOSED SOLVED", None))
+        self.cb_status.setItemText(2, QCoreApplication.translate("form_bug", u"CLOSED UNSOLVED", None))
+        self.cb_status.setItemText(3, QCoreApplication.translate("form_bug", u"PENDING", None))
+        self.cb_status.setItemText(4, QCoreApplication.translate("form_bug", u"ON HOLD", None))
 
         self.lbl_system.setText(QCoreApplication.translate("form_bug", u"System:", None))
         self.lbl_version.setText(QCoreApplication.translate("form_bug", u"System version:", None))
@@ -292,9 +314,12 @@ class Ui_form_bug(object):
         self.lbl_definition.setText(QCoreApplication.translate("form_bug", u"Definition:", None))
         self.le_definition.setText("")
         self.le_definition.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Definition]", None))
+        self.lbl_comments.setText(QCoreApplication.translate("form_bug", u"Comments:", None))
+        self.le_comments.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Comments]", None))
         self.lbl_files.setText(QCoreApplication.translate("form_bug", u"Additional files: ", None))
         self.le_files.setPlaceholderText(QCoreApplication.translate("form_bug", u"[Add associated files]", None))
-        self.btn_files.setText(QCoreApplication.translate("form_bug", u"Browse", None))
+        self.btn_file_browse.setText(QCoreApplication.translate("form_bug", u"Browse", None))
+        self.btn_file_download.setText(QCoreApplication.translate("form_bug", u"Download File", None))
         self.tab_widget_bug.setTabText(self.tab_widget_bug.indexOf(self.tab_info), QCoreApplication.translate("form_bug", u"Bug info", None))
 
         __sortingEnabled = self.lw_history.isSortingEnabled()

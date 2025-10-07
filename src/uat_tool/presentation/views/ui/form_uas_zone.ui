@@ -45,35 +45,154 @@
       <widget class="QLineEdit" name="le_name"/>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_reason">
+      <widget class="QLabel" name="lbl_orgs">
        <property name="text">
-        <string>Reason:</string>
+        <string>Organizations:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_reason"/>
+      <widget class="QListWidget" name="lw_orgs">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>40</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_cause" stretch="0,0,0,0">
+    <layout class="QHBoxLayout" name="hlayout_area_type">
+     <item>
+      <widget class="QLabel" name="lbl_area_type">
+       <property name="text">
+        <string>Area type: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_area_type">
+       <item>
+        <property name="text">
+         <string>POLYGON</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CIRCLE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CORRIDOR</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_radius">
+       <property name="text">
+        <string>Circle radius: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_radius"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_width">
+       <property name="text">
+        <string>Corridor width: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_width"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_lower_limit">
+     <item>
+      <widget class="QLabel" name="lbl_lower_limit">
+       <property name="text">
+        <string>Lower limit: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_lower_limit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_reference_lower">
+       <property name="text">
+        <string>Reference: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_reference_lower">
+       <item>
+        <property name="text">
+         <string>AGL</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AMSL</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_upper_limit">
+       <property name="text">
+        <string>Upper limit: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_upper_limit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_reference_upper">
+       <property name="text">
+        <string>Reference</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_reference_upper">
+       <item>
+        <property name="text">
+         <string>AGL</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AMSL</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_cause" stretch="0,0,0,0,0,0">
      <property name="leftMargin">
       <number>5</number>
      </property>
      <property name="rightMargin">
       <number>5</number>
      </property>
-     <item>
-      <widget class="QLabel" name="lbl_cause">
-       <property name="text">
-        <string>Cause:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="le_cause"/>
-     </item>
      <item>
       <widget class="QLabel" name="lbl_restriction_type">
        <property name="text">
@@ -85,7 +204,72 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_restriction_type"/>
+      <widget class="QComboBox" name="cb_restriction_type">
+       <item>
+        <property name="text">
+         <string>INFORMATIVE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PROHIBITED</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>REQ.AUTHORISATION</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CONDITIONAL</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_reason">
+       <property name="text">
+        <string>Reason:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="lw_reasons">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>40</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_application">
+       <property name="text">
+        <string>Application time: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_application">
+       <item>
+        <property name="text">
+         <string>TEMPORAL</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PERMANENT</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
@@ -98,24 +282,35 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_authority">
+      <widget class="QLabel" name="lbl_message">
        <property name="text">
-        <string>Authority:</string>
+        <string>Message: </string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_authority"/>
+      <widget class="QLineEdit" name="le_message"/>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_activation_time">
+      <widget class="QLabel" name="lbl_clearance">
        <property name="text">
-        <string>Activation time:</string>
+        <string>Clearance:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_activation_time"/>
+      <widget class="QComboBox" name="cb_clearance">
+       <item>
+        <property name="text">
+         <string>YES</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NO</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>

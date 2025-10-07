@@ -23,38 +23,38 @@ class Ui_form_campaign(object):
     def setupUi(self, form_campaign):
         if not form_campaign.objectName():
             form_campaign.setObjectName(u"form_campaign")
-        form_campaign.resize(697, 504)
+        form_campaign.resize(904, 501)
         self.verticalLayout = QVBoxLayout(form_campaign)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(30, 10, 30, -1)
-        self.hlayout_id = QHBoxLayout()
-        self.hlayout_id.setObjectName(u"hlayout_id")
-        self.hlayout_id.setContentsMargins(5, -1, 5, -1)
-        self.lbl_identification = QLabel(form_campaign)
-        self.lbl_identification.setObjectName(u"lbl_identification")
+        self.hlayout_code = QHBoxLayout()
+        self.hlayout_code.setObjectName(u"hlayout_code")
+        self.hlayout_code.setContentsMargins(5, -1, 5, -1)
+        self.lbl_code = QLabel(form_campaign)
+        self.lbl_code.setObjectName(u"lbl_code")
 
-        self.hlayout_id.addWidget(self.lbl_identification)
+        self.hlayout_code.addWidget(self.lbl_code)
 
-        self.le_identification = QLineEdit(form_campaign)
-        self.le_identification.setObjectName(u"le_identification")
-        self.le_identification.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
+        self.le_code = QLineEdit(form_campaign)
+        self.le_code.setObjectName(u"le_code")
+        self.le_code.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
 
-        self.hlayout_id.addWidget(self.le_identification)
+        self.hlayout_code.addWidget(self.le_code)
 
         self.lbl_description = QLabel(form_campaign)
         self.lbl_description.setObjectName(u"lbl_description")
 
-        self.hlayout_id.addWidget(self.lbl_description)
+        self.hlayout_code.addWidget(self.lbl_description)
 
         self.le_description = QLineEdit(form_campaign)
         self.le_description.setObjectName(u"le_description")
 
-        self.hlayout_id.addWidget(self.le_description)
+        self.hlayout_code.addWidget(self.le_description)
 
-        self.hlayout_id.setStretch(3, 50)
+        self.hlayout_code.setStretch(3, 50)
 
-        self.verticalLayout.addLayout(self.hlayout_id)
+        self.verticalLayout.addLayout(self.hlayout_code)
 
         self.hlayout_system = QHBoxLayout()
         self.hlayout_system.setObjectName(u"hlayout_system")
@@ -74,10 +74,10 @@ class Ui_form_campaign(object):
 
         self.hlayout_system.addWidget(self.cb_system)
 
-        self.lbl_version = QLabel(form_campaign)
-        self.lbl_version.setObjectName(u"lbl_version")
+        self.lbl_system_version = QLabel(form_campaign)
+        self.lbl_system_version.setObjectName(u"lbl_system_version")
 
-        self.hlayout_system.addWidget(self.lbl_version)
+        self.hlayout_system.addWidget(self.lbl_system_version)
 
         self.le_version = QLineEdit(form_campaign)
         self.le_version.setObjectName(u"le_version")
@@ -109,6 +109,21 @@ class Ui_form_campaign(object):
 
         self.verticalLayout.addLayout(self.hlayout_system)
 
+        self.hlayout_comments = QHBoxLayout()
+        self.hlayout_comments.setObjectName(u"hlayout_comments")
+        self.lbl_comments = QLabel(form_campaign)
+        self.lbl_comments.setObjectName(u"lbl_comments")
+
+        self.hlayout_comments.addWidget(self.lbl_comments)
+
+        self.le_comments = QLineEdit(form_campaign)
+        self.le_comments.setObjectName(u"le_comments")
+
+        self.hlayout_comments.addWidget(self.le_comments)
+
+
+        self.verticalLayout.addLayout(self.hlayout_comments)
+
         self.hlayout_btn_campaign = QHBoxLayout()
         self.hlayout_btn_campaign.setSpacing(2)
         self.hlayout_btn_campaign.setObjectName(u"hlayout_btn_campaign")
@@ -134,9 +149,9 @@ class Ui_form_campaign(object):
 
     def retranslateUi(self, form_campaign):
         form_campaign.setWindowTitle(QCoreApplication.translate("form_campaign", u"Form", None))
-        self.lbl_identification.setText(QCoreApplication.translate("form_campaign", u"Id:", None))
-        self.le_identification.setText("")
-        self.le_identification.setPlaceholderText(QCoreApplication.translate("form_campaign", u"[Identification]", None))
+        self.lbl_code.setText(QCoreApplication.translate("form_campaign", u"Code:", None))
+        self.le_code.setText("")
+        self.le_code.setPlaceholderText(QCoreApplication.translate("form_campaign", u"[Code]", None))
         self.lbl_description.setText(QCoreApplication.translate("form_campaign", u"Description:", None))
         self.le_description.setText("")
         self.le_description.setPlaceholderText(QCoreApplication.translate("form_campaign", u"[Description]", None))
@@ -147,10 +162,11 @@ class Ui_form_campaign(object):
         self.cb_system.setItemText(3, QCoreApplication.translate("form_campaign", u"EXCHANGE", None))
         self.cb_system.setItemText(4, QCoreApplication.translate("form_campaign", u"NA", None))
 
-        self.lbl_version.setText(QCoreApplication.translate("form_campaign", u"Version:", None))
+        self.lbl_system_version.setText(QCoreApplication.translate("form_campaign", u"System version:", None))
         self.le_version.setText("")
-        self.le_version.setPlaceholderText(QCoreApplication.translate("form_campaign", u"[Version]", None))
+        self.le_version.setPlaceholderText(QCoreApplication.translate("form_campaign", u"[System version]", None))
         self.lbl_blocks.setText(QCoreApplication.translate("form_campaign", u"Test blocks:", None))
+        self.lbl_comments.setText(QCoreApplication.translate("form_campaign", u"Comments: ", None))
         self.btn_accept.setText(QCoreApplication.translate("form_campaign", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_campaign", u"Cancel", None))
     # retranslateUi

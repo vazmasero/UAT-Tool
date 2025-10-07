@@ -67,7 +67,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_role" stretch="0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="hlayout_role" stretch="0,0,0,0,0,0,0,0">
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -106,6 +106,27 @@
      </item>
      <item>
       <widget class="QLineEdit" name="le_aoi"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_type">
+       <property name="text">
+        <string>Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_type">
+       <item>
+        <property name="text">
+         <string>INFORMATIVE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OPERATIVE</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>

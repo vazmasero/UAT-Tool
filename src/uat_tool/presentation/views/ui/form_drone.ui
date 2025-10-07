@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_operator"/>
+      <widget class="QComboBox" name="cb_operator"/>
      </item>
     </layout>
    </item>
@@ -125,7 +125,18 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_tracker_type"/>
+      <widget class="QComboBox" name="cb_tracker_type">
+       <item>
+        <property name="text">
+         <string>BLIP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>GCS-API</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbl_transponder_id">

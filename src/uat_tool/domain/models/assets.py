@@ -139,7 +139,6 @@ class UhubUser(AuditMixin, EnvironmentMixin, Base):
     """Usuario de U-Hub, asociado a una organización"""
 
     __tablename__ = "uhub_users"
-    name = Column(String, nullable=False, index=True)
     email = Column(String, nullable=False, index=True)
     dni = Column(String, nullable=False, index=True)
     phone = Column(String)
@@ -164,7 +163,6 @@ class UhubUser(AuditMixin, EnvironmentMixin, Base):
     )
 
     __table_args__ = (
-        UniqueConstraint("environment_id", "name", name="uq_uhub_user_name_env"),
         UniqueConstraint("environment_id", "email", name="uq_uhub_user_email_env"),
         UniqueConstraint("environment_id", "dni", name="uq_uhub_user_dni_env"),
         UniqueConstraint(

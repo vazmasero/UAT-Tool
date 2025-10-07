@@ -74,14 +74,14 @@
          <item>
           <widget class="QLabel" name="lbl_identification">
            <property name="text">
-            <string>Id:</string>
+            <string>Code:</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLineEdit" name="le_identification">
            <property name="placeholderText">
-            <string>[Identifier]</string>
+            <string>[Code]</string>
            </property>
           </widget>
          </item>

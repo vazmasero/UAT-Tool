@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_form_uhub_org(object):
     def setupUi(self, form_uhub_org):
@@ -97,6 +98,18 @@ class Ui_form_uhub_org(object):
 
         self.hlayout_role.addWidget(self.le_aoi)
 
+        self.lbl_type = QLabel(form_uhub_org)
+        self.lbl_type.setObjectName(u"lbl_type")
+
+        self.hlayout_role.addWidget(self.lbl_type)
+
+        self.cb_type = QComboBox(form_uhub_org)
+        self.cb_type.addItem("")
+        self.cb_type.addItem("")
+        self.cb_type.setObjectName(u"cb_type")
+
+        self.hlayout_role.addWidget(self.cb_type)
+
 
         self.verticalLayout.addLayout(self.hlayout_role)
 
@@ -130,6 +143,10 @@ class Ui_form_uhub_org(object):
         self.lbl_role.setText(QCoreApplication.translate("form_uhub_org", u"Role:", None))
         self.lbl_jurisdiction.setText(QCoreApplication.translate("form_uhub_org", u"Jurisdiction:", None))
         self.lbl_aoi.setText(QCoreApplication.translate("form_uhub_org", u"AoI:", None))
+        self.lbl_type.setText(QCoreApplication.translate("form_uhub_org", u"Type:", None))
+        self.cb_type.setItemText(0, QCoreApplication.translate("form_uhub_org", u"INFORMATIVE", None))
+        self.cb_type.setItemText(1, QCoreApplication.translate("form_uhub_org", u"OPERATIVE", None))
+
         self.btn_accept.setText(QCoreApplication.translate("form_uhub_org", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_uhub_org", u"Cancel", None))
     # retranslateUi

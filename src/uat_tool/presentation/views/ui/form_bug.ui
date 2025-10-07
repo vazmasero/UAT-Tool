@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>510</height>
+    <width>726</width>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -82,22 +82,27 @@
           <widget class="QComboBox" name="cb_status">
            <item>
             <property name="text">
-             <string>IN PROGRESS</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
              <string>OPEN</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>CLOSED</string>
+             <string>CLOSED SOLVED</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>PENDING ACTION</string>
+             <string>CLOSED UNSOLVED</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>PENDING</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ON HOLD</string>
             </property>
            </item>
           </widget>
@@ -302,6 +307,24 @@
         </layout>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="hlayout_comments">
+         <item>
+          <widget class="QLabel" name="lbl_comments">
+           <property name="text">
+            <string>Comments:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="le_comments">
+           <property name="placeholderText">
+            <string>[Comments]</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="hlayout_files">
          <item>
           <widget class="QLabel" name="lbl_files">
@@ -318,7 +341,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="btn_files">
+          <widget class="QPushButton" name="btn_file_browse">
            <property name="minimumSize">
             <size>
              <width>175</width>
@@ -327,6 +350,13 @@
            </property>
            <property name="text">
             <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_file_download">
+           <property name="text">
+            <string>Download File</string>
            </property>
           </widget>
          </item>

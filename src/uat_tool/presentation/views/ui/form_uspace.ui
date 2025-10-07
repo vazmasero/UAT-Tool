@@ -24,7 +24,7 @@
     <number>30</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_id" stretch="0,5,0,200">
+    <layout class="QHBoxLayout" name="hlayout_code" stretch="0,5,0,200">
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -32,14 +32,14 @@
       <number>200</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_id">
+      <widget class="QLabel" name="lbl_code">
        <property name="text">
-        <string>Id:</string>
+        <string>Code:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_identification"/>
+      <widget class="QLineEdit" name="le_code"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_name">
@@ -65,14 +65,14 @@
       <number>150</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_sectors">
+      <widget class="QLabel" name="lbl_sectors_count">
        <property name="text">
         <string># of sectors</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_sectors_number"/>
+      <widget class="QLineEdit" name="le_sectors_count"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_file">
@@ -84,7 +84,7 @@
      <item>
       <layout class="QHBoxLayout" name="hlayout_file">
        <item>
-        <widget class="QLineEdit" name="le_file_path">
+        <widget class="QLineEdit" name="le_file">
          <property name="readOnly">
           <bool>true</bool>
          </property>

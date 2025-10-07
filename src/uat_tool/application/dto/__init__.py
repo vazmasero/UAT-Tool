@@ -16,10 +16,71 @@ Ejemplo:
     bug_dto = BugDTO(id=1, status="OPEN", ...)
 """
 
-from .bug_dto import BugFormDTO, BugServiceDTO, BugTableDTO
+from .assets_dto import (
+    DroneFormDTO,
+    DroneServiceDTO,
+    DroneTableDTO,
+    EmailFormDTO,
+    EmailServiceDTO,
+    EmailTableDTO,
+    OperatorFormDTO,
+    OperatorServiceDTO,
+    OperatorTableDTO,
+    UasZoneFormDTO,
+    UasZoneServiceDTO,
+    UasZoneTableDTO,
+    UhubOrgFormDTO,
+    UhubOrgServiceDTO,
+    UhubOrgTableDTO,
+    UhubUserFormDTO,
+    UhubUserServiceDTO,
+    UhubUserTableDTO,
+    UspaceFormDTO,
+    UspaceServiceDTO,
+    UspaceTableDTO,
+)
+from .bug_dto import (
+    BugDetailDTO,
+    BugFormDTO,
+    BugHistoryServiceDTO,
+    BugHistoryTableDTO,
+    BugServiceDTO,
+    BugTableDTO,
+)
+from .requirement_dto import (
+    RequirementFormDTO,
+    RequirementServiceDTO,
+    RequirementTableDTO,
+)
 
 __all__ = [
-    "BugFormDTO",
+    "BugDetailDTO",
+    "BugHistoryTableDTO",
+    "BugHistoryServiceDTOBugFormDTO",
     "BugTableDTO",
     "BugServiceDTO",
+    "RequirementFormDTO",
+    "RequirementServiceDTO",
+    "RequirementTableDTO",
+    "EmailFormDTO",
+    "EmailServiceDTO",
+    "EmailTableDTO",
+    "OperatorTableDTO",
+    "OperatorFormDTO",
+    "OperatorServiceDTO",
+    "UhubOrgFormDTO",
+    "UhubOrgServiceDTO",
+    "UhubOrgTableDTO",
+    "UhubUserFormDTO",
+    "UhubUserServiceDTO",
+    "UhubUserTableDTO",
+    "DroneFormDTO",
+    "DroneServiceDTO",
+    "DroneTableDTO",
+    "UasZoneFormDTO",
+    "UasZoneServiceDTO",
+    "UasZoneTableDTO",
+    "UspaceFormDTO",
+    "UspaceServiceDTO",
+    "UspaceTableDTO",
 ]

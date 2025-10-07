@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
-    <height>504</height>
+    <width>904</width>
+    <height>501</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
     <number>30</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_id" stretch="0,0,0,50">
+    <layout class="QHBoxLayout" name="hlayout_code" stretch="0,0,0,50">
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -35,14 +35,14 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbl_identification">
+      <widget class="QLabel" name="lbl_code">
        <property name="text">
-        <string>Id:</string>
+        <string>Code:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_identification">
+      <widget class="QLineEdit" name="le_code">
        <property name="cursor">
         <cursorShape>ArrowCursor</cursorShape>
        </property>
@@ -50,7 +50,7 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>[Identification]</string>
+        <string>[Code]</string>
        </property>
       </widget>
      </item>
@@ -118,9 +118,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lbl_version">
+      <widget class="QLabel" name="lbl_system_version">
        <property name="text">
-        <string>Version:</string>
+        <string>System version:</string>
        </property>
       </widget>
      </item>
@@ -136,7 +136,7 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>[Version]</string>
+        <string>[System version]</string>
        </property>
       </widget>
      </item>
@@ -168,6 +168,20 @@
         </size>
        </property>
       </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hlayout_comments">
+     <item>
+      <widget class="QLabel" name="lbl_comments">
+       <property name="text">
+        <string>Comments: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_comments"/>
      </item>
     </layout>
    </item>

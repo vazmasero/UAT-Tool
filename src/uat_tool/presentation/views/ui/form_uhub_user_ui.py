@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_form_uhub_user(object):
     def setupUi(self, form_uhub_user):
@@ -63,6 +64,43 @@ class Ui_form_uhub_user(object):
 
         self.verticalLayout.addLayout(self.hlayout_username)
 
+        self.hlayout_dni = QHBoxLayout()
+        self.hlayout_dni.setObjectName(u"hlayout_dni")
+        self.lbl_dni = QLabel(form_uhub_user)
+        self.lbl_dni.setObjectName(u"lbl_dni")
+
+        self.hlayout_dni.addWidget(self.lbl_dni)
+
+        self.le_dni = QLineEdit(form_uhub_user)
+        self.le_dni.setObjectName(u"le_dni")
+
+        self.hlayout_dni.addWidget(self.le_dni)
+
+        self.lbl_phone = QLabel(form_uhub_user)
+        self.lbl_phone.setObjectName(u"lbl_phone")
+
+        self.hlayout_dni.addWidget(self.lbl_phone)
+
+        self.le_phone = QLineEdit(form_uhub_user)
+        self.le_phone.setObjectName(u"le_phone")
+
+        self.hlayout_dni.addWidget(self.le_phone)
+
+        self.lbl_type = QLabel(form_uhub_user)
+        self.lbl_type.setObjectName(u"lbl_type")
+
+        self.hlayout_dni.addWidget(self.lbl_type)
+
+        self.cb_type = QComboBox(form_uhub_user)
+        self.cb_type.addItem("")
+        self.cb_type.addItem("")
+        self.cb_type.setObjectName(u"cb_type")
+
+        self.hlayout_dni.addWidget(self.cb_type)
+
+
+        self.verticalLayout.addLayout(self.hlayout_dni)
+
         self.hlayout_org = QHBoxLayout()
         self.hlayout_org.setObjectName(u"hlayout_org")
         self.hlayout_org.setContentsMargins(5, -1, 5, -1)
@@ -71,10 +109,10 @@ class Ui_form_uhub_user(object):
 
         self.hlayout_org.addWidget(self.lbl_organization)
 
-        self.le_organization = QLineEdit(form_uhub_user)
-        self.le_organization.setObjectName(u"le_organization")
+        self.cb_organization = QComboBox(form_uhub_user)
+        self.cb_organization.setObjectName(u"cb_organization")
 
-        self.hlayout_org.addWidget(self.le_organization)
+        self.hlayout_org.addWidget(self.cb_organization)
 
         self.lbl_role = QLabel(form_uhub_user)
         self.lbl_role.setObjectName(u"lbl_role")
@@ -142,6 +180,12 @@ class Ui_form_uhub_user(object):
         self.lbl_username.setText(QCoreApplication.translate("form_uhub_user", u"Username:", None))
         self.lbl_email.setText(QCoreApplication.translate("form_uhub_user", u"Email:", None))
         self.lbl_password.setText(QCoreApplication.translate("form_uhub_user", u"Password:", None))
+        self.lbl_dni.setText(QCoreApplication.translate("form_uhub_user", u"DNI: ", None))
+        self.lbl_phone.setText(QCoreApplication.translate("form_uhub_user", u"Phone: ", None))
+        self.lbl_type.setText(QCoreApplication.translate("form_uhub_user", u"Type: ", None))
+        self.cb_type.setItemText(0, QCoreApplication.translate("form_uhub_user", u"ADMIN", None))
+        self.cb_type.setItemText(1, QCoreApplication.translate("form_uhub_user", u"USER", None))
+
         self.lbl_organization.setText(QCoreApplication.translate("form_uhub_user", u"Organization", None))
         self.lbl_role.setText(QCoreApplication.translate("form_uhub_user", u"Role:", None))
         self.lbl_jurisdiction.setText(QCoreApplication.translate("form_uhub_user", u"Jurisdiction:", None))

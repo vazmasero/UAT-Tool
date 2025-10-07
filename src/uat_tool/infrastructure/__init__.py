@@ -1,18 +1,11 @@
 """
 Paquete `infrastructure`
 
-Contiene las implementaciones técnicas y acceso a recursos externos:
-
-- Database: Configuración y conexión a base de datos
-- Implementations: Implementaciones concretas de repositorios
+Proporciona acceso a la capa de infraestructura:
+- Configuración de base de datos
+- Sesiones y motor SQLAlchemy
+- Utilidades de persistencia
 - [Futuros]: APIs externas, sistemas de archivos, etc.
-
-Esta capa contiene detalles de implementación que pueden variar
-sin afectar al dominio de negocio.
-
-Ejemplos de uso:
-    from infrastructure.database import Session, init_db
-    from infrastructure.implementations import SQLAlchemyBugRepository
 """
 
 from .database import (
@@ -22,15 +15,20 @@ from .database import (
     EnvironmentMixin,
     Session,
     engine,
+    get_or_create,
     init_db,
 )
 
 __all__ = [
-    "AuditMixin",
-    "Session",
-    "engine",
-    "init_db",
-    "Base",
-    "EnvironmentMixin",
+    # Configuración BD
     "DB_URL",
+    "engine",
+    "Session",
+    # Base y Mixins para modelos
+    "Base",
+    "AuditMixin",
+    "EnvironmentMixin",
+    # Funciones públicas
+    "init_db",
+    "get_or_create",
 ]

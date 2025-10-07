@@ -1,3 +1,5 @@
+from sqlalchemy.orm import sessionmaker
+
 from .base import Base
 from .engine import Session
 from .engine import engine as default_engine
@@ -21,9 +23,18 @@ def init_db(drop_existing: bool = False, engine=None):
 
     Base.metadata.create_all(db_engine)
 
-    session = Session()
+    # Crear sesión apropiada según el engine
+    if engine is not None:
+        # Testing: crear una nueva sesión con el engine de test
+        TestSession = sessionmaker(bind=engine)
+        session = TestSession()
+    else:
+        # Producción: usar la sesión por defcto (scoped)
+        session = Session()
+
     try:
         from .initial_data import load_initial_data
+
         load_initial_data(session)
         session.commit()
     except Exception as e:

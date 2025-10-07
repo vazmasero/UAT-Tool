@@ -84,10 +84,12 @@ class UnitOfWork:
     def close(self):
         """Cierra la sesión de forma segura para ambos tipos (scoped o no)."""
         try:
-            if hasattr(self.session, "close"):
-                self.session.close()
-            elif hasattr(self.session, "remove"):
+            # Priorizar remove para scoped sessions
+            if hasattr(self.session, "remove"):
                 self.session.remove()
+            # Fallback a close para sessions regulares
+            elif hasattr(self.session, "close"):
+                self.session.close()
         except Exception as e:
             print(f"Error cerrando sesión: {e}")
 

@@ -26,47 +26,47 @@ class Ui_form_uspace(object):
         self.verticalLayout = QVBoxLayout(form_uspace)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(30, 10, 30, -1)
-        self.hlayout_id = QHBoxLayout()
-        self.hlayout_id.setObjectName(u"hlayout_id")
-        self.hlayout_id.setContentsMargins(5, -1, 200, -1)
-        self.lbl_id = QLabel(form_uspace)
-        self.lbl_id.setObjectName(u"lbl_id")
+        self.hlayout_code = QHBoxLayout()
+        self.hlayout_code.setObjectName(u"hlayout_code")
+        self.hlayout_code.setContentsMargins(5, -1, 200, -1)
+        self.lbl_code = QLabel(form_uspace)
+        self.lbl_code.setObjectName(u"lbl_code")
 
-        self.hlayout_id.addWidget(self.lbl_id)
+        self.hlayout_code.addWidget(self.lbl_code)
 
-        self.le_identification = QLineEdit(form_uspace)
-        self.le_identification.setObjectName(u"le_identification")
+        self.le_code = QLineEdit(form_uspace)
+        self.le_code.setObjectName(u"le_code")
 
-        self.hlayout_id.addWidget(self.le_identification)
+        self.hlayout_code.addWidget(self.le_code)
 
         self.lbl_name = QLabel(form_uspace)
         self.lbl_name.setObjectName(u"lbl_name")
         self.lbl_name.setWordWrap(False)
 
-        self.hlayout_id.addWidget(self.lbl_name)
+        self.hlayout_code.addWidget(self.lbl_name)
 
         self.le_name = QLineEdit(form_uspace)
         self.le_name.setObjectName(u"le_name")
 
-        self.hlayout_id.addWidget(self.le_name)
+        self.hlayout_code.addWidget(self.le_name)
 
-        self.hlayout_id.setStretch(1, 5)
-        self.hlayout_id.setStretch(3, 200)
+        self.hlayout_code.setStretch(1, 5)
+        self.hlayout_code.setStretch(3, 200)
 
-        self.verticalLayout.addLayout(self.hlayout_id)
+        self.verticalLayout.addLayout(self.hlayout_code)
 
         self.hlayout_sectors = QHBoxLayout()
         self.hlayout_sectors.setObjectName(u"hlayout_sectors")
         self.hlayout_sectors.setContentsMargins(5, -1, 150, -1)
-        self.lbl_sectors = QLabel(form_uspace)
-        self.lbl_sectors.setObjectName(u"lbl_sectors")
+        self.lbl_sectors_count = QLabel(form_uspace)
+        self.lbl_sectors_count.setObjectName(u"lbl_sectors_count")
 
-        self.hlayout_sectors.addWidget(self.lbl_sectors)
+        self.hlayout_sectors.addWidget(self.lbl_sectors_count)
 
-        self.le_sectors_number = QLineEdit(form_uspace)
-        self.le_sectors_number.setObjectName(u"le_sectors_number")
+        self.le_sectors_count = QLineEdit(form_uspace)
+        self.le_sectors_count.setObjectName(u"le_sectors_count")
 
-        self.hlayout_sectors.addWidget(self.le_sectors_number)
+        self.hlayout_sectors.addWidget(self.le_sectors_count)
 
         self.lbl_file = QLabel(form_uspace)
         self.lbl_file.setObjectName(u"lbl_file")
@@ -75,11 +75,11 @@ class Ui_form_uspace(object):
 
         self.hlayout_file = QHBoxLayout()
         self.hlayout_file.setObjectName(u"hlayout_file")
-        self.le_file_path = QLineEdit(form_uspace)
-        self.le_file_path.setObjectName(u"le_file_path")
-        self.le_file_path.setReadOnly(True)
+        self.le_file = QLineEdit(form_uspace)
+        self.le_file.setObjectName(u"le_file")
+        self.le_file.setReadOnly(True)
 
-        self.hlayout_file.addWidget(self.le_file_path)
+        self.hlayout_file.addWidget(self.le_file)
 
         self.btn_browse_file = QPushButton(form_uspace)
         self.btn_browse_file.setObjectName(u"btn_browse_file")
@@ -116,11 +116,11 @@ class Ui_form_uspace(object):
 
     def retranslateUi(self, form_uspace):
         form_uspace.setWindowTitle(QCoreApplication.translate("form_uspace", u"Form", None))
-        self.lbl_id.setText(QCoreApplication.translate("form_uspace", u"Id:", None))
+        self.lbl_code.setText(QCoreApplication.translate("form_uspace", u"Code:", None))
         self.lbl_name.setText(QCoreApplication.translate("form_uspace", u"Name:", None))
-        self.lbl_sectors.setText(QCoreApplication.translate("form_uspace", u"# of sectors", None))
+        self.lbl_sectors_count.setText(QCoreApplication.translate("form_uspace", u"# of sectors", None))
         self.lbl_file.setText(QCoreApplication.translate("form_uspace", u"File:", None))
-        self.le_file_path.setPlaceholderText(QCoreApplication.translate("form_uspace", u"No file selected", None))
+        self.le_file.setPlaceholderText(QCoreApplication.translate("form_uspace", u"No file selected", None))
         self.btn_browse_file.setText(QCoreApplication.translate("form_uspace", u"Browse...", None))
         self.btn_accept.setText(QCoreApplication.translate("form_uspace", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_uspace", u"Cancel", None))

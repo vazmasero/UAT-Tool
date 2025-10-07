@@ -1,7 +1,5 @@
 from sqlalchemy.orm import Session
 
-from uat_tool.domain import Reason, Section, System
-
 from .utils import get_or_create
 
 # ---- Datos iniciales ----
@@ -41,6 +39,7 @@ REASONS = [
 
 def load_initial_data(session: Session) -> None:
     """Puebla las tablas con datos predefinidos cuando el programa se lanza."""
+    from uat_tool.domain import Reason, Section, System
     mapping = {
         System: SYSTEMS,
         Section: SECTIONS,

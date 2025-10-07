@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_form_drone(object):
     def setupUi(self, form_drone):
@@ -35,10 +36,10 @@ class Ui_form_drone(object):
 
         self.hlayout_operator.addWidget(self.lbl_operator)
 
-        self.le_operator = QLineEdit(form_drone)
-        self.le_operator.setObjectName(u"le_operator")
+        self.cb_operator = QComboBox(form_drone)
+        self.cb_operator.setObjectName(u"cb_operator")
 
-        self.hlayout_operator.addWidget(self.le_operator)
+        self.hlayout_operator.addWidget(self.cb_operator)
 
         self.hlayout_operator.setStretch(0, 5)
 
@@ -105,10 +106,12 @@ class Ui_form_drone(object):
 
         self.hlayout_tracker.addWidget(self.lbl_tracker_type)
 
-        self.le_tracker_type = QLineEdit(form_drone)
-        self.le_tracker_type.setObjectName(u"le_tracker_type")
+        self.cb_tracker_type = QComboBox(form_drone)
+        self.cb_tracker_type.addItem("")
+        self.cb_tracker_type.addItem("")
+        self.cb_tracker_type.setObjectName(u"cb_tracker_type")
 
-        self.hlayout_tracker.addWidget(self.le_tracker_type)
+        self.hlayout_tracker.addWidget(self.cb_tracker_type)
 
         self.lbl_transponder_id = QLabel(form_drone)
         self.lbl_transponder_id.setObjectName(u"lbl_transponder_id")
@@ -153,6 +156,9 @@ class Ui_form_drone(object):
         self.lbl_manufacturer.setText(QCoreApplication.translate("form_drone", u"Manufacturer:", None))
         self.lbl_model.setText(QCoreApplication.translate("form_drone", u"Model:", None))
         self.lbl_tracker_type.setText(QCoreApplication.translate("form_drone", u"Tracker type:", None))
+        self.cb_tracker_type.setItemText(0, QCoreApplication.translate("form_drone", u"BLIP", None))
+        self.cb_tracker_type.setItemText(1, QCoreApplication.translate("form_drone", u"GCS-API", None))
+
         self.lbl_transponder_id.setText(QCoreApplication.translate("form_drone", u"Transponder ID:", None))
         self.btn_accept.setText(QCoreApplication.translate("form_drone", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("form_drone", u"Cancel", None))

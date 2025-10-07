@@ -1,10 +1,13 @@
 import os
 import sys
+from datetime import datetime
+from unittest.mock import Mock
 
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+from uat_tool.application.dto import BugServiceDTO, RequirementServiceDTO
 from uat_tool.infrastructure import Base
 
 # Añadir src al path para imports absolutos
@@ -103,7 +106,6 @@ def model_test_data():
             "type": "OPERATIVE",
         },
         "uhub_user_data": {
-            "name": "Test User",
             "email": "user@example.com",
             "dni": "12345678A",
             "phone": "+1122334455",
@@ -181,3 +183,51 @@ def model_test_data():
             "change_summary": "Bug created",
         },
     }
+
+
+@pytest.fixture
+def sample_bug_service_dto():
+    """Fixture para BugServiceDTO de ejemplo"""
+    return BugServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        status="OPEN",
+        system_id=1,
+        system_version="1.0.0",
+        short_description="Test bug description",
+        definition="Test bug definition with enough characters",
+        urgency="2",
+        impact="2",
+        requirements=[1, 2, 3],
+        history=[],
+    )
+
+
+@pytest.fixture
+def sample_requirement_service_dto():
+    """Fixture para RequirementServiceDTO de ejemplo"""
+    return RequirementServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        code="REQ001",
+        definition="Test requirement definition with enough characters",
+        systems=[1, 2],
+        sections=[1, 2],
+    )
+
+
+@pytest.fixture
+def mock_db_session():
+    """Fixture para sesión de base de datos mock"""
+    session = Mock()
+    session.commit = Mock()
+    session.rollback = Mock()
+    session.close = Mock()
+    session.remove = Mock()
+    return session

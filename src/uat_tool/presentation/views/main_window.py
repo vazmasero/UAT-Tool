@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QAbstractItemView, QHeaderView, QMainWindow, QMessageBox
 
 from uat_tool.presentation.controllers import MainController
-from uat_tool.presentation.views.ui.ui_main import Ui_main_window
+from uat_tool.presentation.views.ui.main_ui import Ui_main_window
 
 
 class MainWindow(QMainWindow, Ui_main_window):

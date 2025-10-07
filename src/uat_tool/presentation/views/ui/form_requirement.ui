@@ -24,30 +24,30 @@
     <number>39</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_id">
+    <layout class="QHBoxLayout" name="hlayout_code">
      <item>
-      <widget class="QLabel" name="lbl_id">
+      <widget class="QLabel" name="lbl_code">
        <property name="text">
-        <string>ID:</string>
+        <string>Code*:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_id"/>
+      <widget class="QLineEdit" name="le_code"/>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_system">
+    <layout class="QHBoxLayout" name="hlayout_systems">
      <item>
-      <widget class="QLabel" name="lbl_system">
+      <widget class="QLabel" name="lbl_systems">
        <property name="text">
-        <string>System:</string>
+        <string>System(s):</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="lw_system">
+      <widget class="QListWidget" name="lw_systems">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -65,16 +65,16 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="hlayout_section">
+    <layout class="QHBoxLayout" name="hlayout_sections">
      <item>
-      <widget class="QLabel" name="lbl_section">
+      <widget class="QLabel" name="lbl_sections">
        <property name="text">
-        <string>Section</string>
+        <string>Section(s):</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="lw_section">
+      <widget class="QListWidget" name="lw_sections">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -96,7 +96,7 @@
      <item>
       <widget class="QLabel" name="lbl_definition">
        <property name="text">
-        <string>Definition:</string>
+        <string>Definition*:</string>
        </property>
       </widget>
      </item>

@@ -163,8 +163,8 @@ class Ui_form_block(object):
     def retranslateUi(self, form_block):
         form_block.setWindowTitle(QCoreApplication.translate("form_block", u"Form", None))
         self.lbl_block.setText(QCoreApplication.translate("form_block", u"[New/Test Block #]", None))
-        self.lbl_identification.setText(QCoreApplication.translate("form_block", u"Id:", None))
-        self.le_identification.setPlaceholderText(QCoreApplication.translate("form_block", u"[Identifier]", None))
+        self.lbl_identification.setText(QCoreApplication.translate("form_block", u"Code:", None))
+        self.le_identification.setPlaceholderText(QCoreApplication.translate("form_block", u"[Code]", None))
         self.lbl_name.setText(QCoreApplication.translate("form_block", u"Name:", None))
         self.le_name.setText("")
         self.le_name.setPlaceholderText(QCoreApplication.translate("form_block", u"[Name]", None))

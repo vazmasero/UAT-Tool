@@ -64,21 +64,21 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="hlayout_id">
+        <layout class="QHBoxLayout" name="hlayout_code">
          <item>
-          <widget class="QLabel" name="lbl_id">
+          <widget class="QLabel" name="lbl_code">
            <property name="text">
-            <string>Id:</string>
+            <string>Code:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="le_identification">
+          <widget class="QLineEdit" name="le_code">
            <property name="text">
             <string/>
            </property>
            <property name="placeholderText">
-            <string>[Id]</string>
+            <string>[Code]</string>
            </property>
           </widget>
          </item>
@@ -103,14 +103,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_system">
+          <widget class="QLabel" name="lbl_systems">
            <property name="text">
             <string>System(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="lw_system">
+          <widget class="QListWidget" name="lw_systems">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -126,14 +126,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_section">
+          <widget class="QLabel" name="lbl_sections">
            <property name="text">
             <string>Section(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="lw_section">
+          <widget class="QListWidget" name="lw_sections">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -156,14 +156,14 @@
           <number>50</number>
          </property>
          <item>
-          <widget class="QLabel" name="lbl_operator">
+          <widget class="QLabel" name="lbl_operators">
            <property name="text">
             <string>Operator(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="lw_operator">
+          <widget class="QListWidget" name="lw_operators">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -179,14 +179,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_drone">
+          <widget class="QLabel" name="lbl_drones">
            <property name="text">
             <string>Drone(s):</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="lw_drone">
+          <widget class="QListWidget" name="lw_drones">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -202,14 +202,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lbl_uhub_user">
+          <widget class="QLabel" name="lbl_uhub_users">
            <property name="text">
             <string>U-hub User(s)</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="lw_uhub_user">
+          <widget class="QListWidget" name="lw_uhub_users">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -229,14 +229,14 @@
        <item>
         <layout class="QHBoxLayout" name="hlayout_comment">
          <item>
-          <widget class="QLabel" name="lbl_comment">
+          <widget class="QLabel" name="lbl_comments">
            <property name="text">
             <string>Comments:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="le_comment">
+          <widget class="QLineEdit" name="le_comments">
            <property name="text">
             <string/>
            </property>

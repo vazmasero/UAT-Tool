@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_form_operator(object):
     def setupUi(self, form_operator):
@@ -80,10 +81,10 @@ class Ui_form_operator(object):
 
         self.hlayout_email.addWidget(self.lbl_email)
 
-        self.le_email = QLineEdit(form_operator)
-        self.le_email.setObjectName(u"le_email")
+        self.cb_email = QComboBox(form_operator)
+        self.cb_email.setObjectName(u"cb_email")
 
-        self.hlayout_email.addWidget(self.le_email)
+        self.hlayout_email.addWidget(self.cb_email)
 
         self.lbl_password = QLabel(form_operator)
         self.lbl_password.setObjectName(u"lbl_password")

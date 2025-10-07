@@ -34,3 +34,30 @@ Bugs y U-space:
 Valorar meter validaciones básicas __init__ en los modelos de db
 Añadir getters simples en los metodos dominio (get full name, is ative, etc)
 	
+
+
+
+
+En Bugs DTO se sugiere lo siguiente
+
+Separar DTOs de creación y actualización - CreateBugDTO sin ID, UpdateBugDTO con campos opcionales
+
+Centralizar mapeos - Los maps de urgency/impact en constante reutilizable
+
+Mejorar validaciones - Separar validaciones de creación vs edición en FormDTO
+
+Manejo de errores más específico - Excepciones personalizadas para validaciones de DTO
+
+Documentar campos opcionales/requeridos - Más claro qué campos son realmente obligatorios
+
+Consistencia en nombres - Unificar convención (le_ vs cb_ vs lw_)
+
+Manejo de fechas más robusto - Timezone awareness en las conversiones
+
+Propiedades calculadas - Para campos derivados como prioridad combinada
+
+Testing helpers - Métodos para crear DTOs de prueba en tests
+
+Serialización/deserialización - Métodos para JSON si necesitas APIs
+
+Mejor manejo de context_data - Estructura más definida para los datos de contexto

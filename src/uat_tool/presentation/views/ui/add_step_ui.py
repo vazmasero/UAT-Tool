@@ -23,7 +23,7 @@ class Ui_add_step(object):
     def setupUi(self, add_step):
         if not add_step.objectName():
             add_step.setObjectName(u"add_step")
-        add_step.resize(572, 408)
+        add_step.resize(592, 408)
         self.verticalLayout = QVBoxLayout(add_step)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(30, 10, 30, -1)
@@ -59,13 +59,13 @@ class Ui_add_step(object):
 
         self.verticalLayout.addLayout(self.hlayout_expected)
 
-        self.hlayout_requirement = QHBoxLayout()
-        self.hlayout_requirement.setObjectName(u"hlayout_requirement")
-        self.hlayout_requirement.setContentsMargins(5, -1, 250, -1)
-        self.b_requirement = QLabel(add_step)
-        self.b_requirement.setObjectName(u"b_requirement")
+        self.hlayout_requirements = QHBoxLayout()
+        self.hlayout_requirements.setObjectName(u"hlayout_requirements")
+        self.hlayout_requirements.setContentsMargins(5, -1, 250, -1)
+        self.lbl_requirement = QLabel(add_step)
+        self.lbl_requirement.setObjectName(u"lbl_requirement")
 
-        self.hlayout_requirement.addWidget(self.b_requirement)
+        self.hlayout_requirements.addWidget(self.lbl_requirement)
 
         self.lw_requirements = QListWidget(add_step)
         self.lw_requirements.setObjectName(u"lw_requirements")
@@ -77,10 +77,10 @@ class Ui_add_step(object):
         self.lw_requirements.setMinimumSize(QSize(150, 25))
         self.lw_requirements.setMaximumSize(QSize(300, 40))
 
-        self.hlayout_requirement.addWidget(self.lw_requirements)
+        self.hlayout_requirements.addWidget(self.lw_requirements)
 
 
-        self.verticalLayout.addLayout(self.hlayout_requirement)
+        self.verticalLayout.addLayout(self.hlayout_requirements)
 
         self.hlayout_comment = QHBoxLayout()
         self.hlayout_comment.setObjectName(u"hlayout_comment")
@@ -124,7 +124,7 @@ class Ui_add_step(object):
         add_step.setWindowTitle(QCoreApplication.translate("add_step", u"Form", None))
         self.lbl_action.setText(QCoreApplication.translate("add_step", u"Action:", None))
         self.lbl_expected_result.setText(QCoreApplication.translate("add_step", u"Expected result:", None))
-        self.b_requirement.setText(QCoreApplication.translate("add_step", u"Affected requirements:", None))
+        self.lbl_requirement.setText(QCoreApplication.translate("add_step", u"Affected requirements:", None))
         self.lbl_comments.setText(QCoreApplication.translate("add_step", u"Comments:", None))
         self.btn_accept.setText(QCoreApplication.translate("add_step", u"Accept", None))
         self.btn_cancel.setText(QCoreApplication.translate("add_step", u"Cancel", None))

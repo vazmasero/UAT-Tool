@@ -383,7 +383,6 @@ def test_uhub_user_repository_create(db_session, model_test_data, sample_audit_d
     )
 
     assert user.id is not None
-    assert user.name == "Test User"
     assert user.type == "USER"
     assert user.username == "testuser"
     assert user.organization_id == org.id
@@ -442,7 +441,6 @@ def test_uhub_user_repository_update(db_session, model_test_data, sample_audit_d
 
     # Actualizar el usuario
     update_data = {
-        "name": "Updated User",
         "phone": "+999999999",
         "role": "Updated Role",
         "type": "ADMIN",
@@ -453,7 +451,6 @@ def test_uhub_user_repository_update(db_session, model_test_data, sample_audit_d
     )
 
     assert updated_user.id == user.id
-    assert updated_user.name == "Updated User"
     assert updated_user.phone == "+999999999"
     assert updated_user.role == "Updated Role"
     assert updated_user.type == "ADMIN"

@@ -67,6 +67,51 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="hlayout_dni">
+     <item>
+      <widget class="QLabel" name="lbl_dni">
+       <property name="text">
+        <string>DNI: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_dni"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_phone">
+       <property name="text">
+        <string>Phone: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_phone"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_type">
+       <property name="text">
+        <string>Type: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_type">
+       <item>
+        <property name="text">
+         <string>ADMIN</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>USER</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="hlayout_org" stretch="0,0,0,0">
      <property name="leftMargin">
       <number>5</number>
@@ -82,7 +127,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_organization"/>
+      <widget class="QComboBox" name="cb_organization"/>
      </item>
      <item>
       <widget class="QLabel" name="lbl_role">

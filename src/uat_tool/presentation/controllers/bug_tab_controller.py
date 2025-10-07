@@ -1,10 +1,8 @@
 from uat_tool.application import (
     ApplicationContext,
-    BugFormDTO,
     BugService,
-    BugServiceDTO,
-    BugTableDTO,
 )
+from uat_tool.application.dto import BugFormDTO, BugServiceDTO, BugTableDTO
 from uat_tool.presentation import BugProxyModel, BugTableModel
 from uat_tool.shared import get_logger
 
