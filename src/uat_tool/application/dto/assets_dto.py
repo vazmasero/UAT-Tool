@@ -1,4 +1,3 @@
-# application/dto/assets_dto.py
 from dataclasses import dataclass, field
 
 from uat_tool.application.dto.base_dto import BaseFormDTO, BaseServiceDTO, BaseTableDTO
@@ -70,6 +69,8 @@ class EmailFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             name=self.le_name,
             email=self.le_email,
             password=self.le_password,
@@ -121,11 +122,11 @@ class OperatorTableDTO(BaseTableDTO):
     easa_id: str
     phone: str
     password: str
-    email: str = "N/A"  # Campo "email" del email, no ID
+    email: str  # Campo "email" del email, no ID
 
     @classmethod
     def from_service_dto(
-        cls, service_dto: OperatorServiceDTO, email_email: str = ""
+        cls, service_dto: OperatorServiceDTO, email_email: str
     ) -> "OperatorTableDTO":
         return cls(
             id=service_dto.id,
@@ -133,7 +134,7 @@ class OperatorTableDTO(BaseTableDTO):
             easa_id=service_dto.easa_id,
             phone=service_dto.phone,
             password=service_dto.password,
-            email=email_email or "N/A",
+            email=email_email,
             created_at=cls._format_date(service_dto.created_at),
             updated_at=cls._format_date(service_dto.updated_at),
             modified_by=service_dto.modified_by,
@@ -149,7 +150,7 @@ class OperatorFormDTO(BaseFormDTO):
     le_verification_code: str
     le_password: str
     le_phone: str
-    cb_email: str  # ID del email como string
+    cb_email: int  # ID del email como entero
 
     def __post_init__(self):
         if not all(
@@ -162,12 +163,14 @@ class OperatorFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             name=self.le_name,
             easa_id=self.le_easa_id,
             verification_code=self.le_verification_code,
             password=self.le_password,
             phone=self.le_phone,
-            email_id=int(self.cb_email),
+            email_id=self.cb_email,
         )
 
     @classmethod
@@ -178,7 +181,7 @@ class OperatorFormDTO(BaseFormDTO):
             le_verification_code=service_dto.verification_code,
             le_password=service_dto.password,
             le_phone=service_dto.phone,
-            cb_email=str(service_dto.email_id),
+            cb_email=service_dto.email_id,
         )
 
 
@@ -222,11 +225,11 @@ class DroneTableDTO(BaseTableDTO):
     manufacturer: str
     model: str
     tracker_type: str
-    operator: str = "N/A"  # Nombre del operador, no ID
+    operator: str  # Nombre del operador, no ID
 
     @classmethod
     def from_service_dto(
-        cls, service_dto: DroneServiceDTO, operator_name: str = ""
+        cls, service_dto: DroneServiceDTO, operator_name: str
     ) -> "DroneTableDTO":
         return cls(
             id=service_dto.id,
@@ -235,7 +238,7 @@ class DroneTableDTO(BaseTableDTO):
             manufacturer=service_dto.manufacturer,
             model=service_dto.model,
             tracker_type=service_dto.tracker_type,
-            operator=operator_name or "N/A",
+            operator=operator_name,
             created_at=cls._format_date(service_dto.created_at),
             updated_at=cls._format_date(service_dto.updated_at),
             modified_by=service_dto.modified_by,
@@ -252,7 +255,7 @@ class DroneFormDTO(BaseFormDTO):
     le_model: str
     cb_tracker_type: str
     le_transponder_id: str
-    cb_operator: str  # ID del operador como string
+    cb_operator: int  # ID del operador como entero
 
     def __post_init__(self):
         if not all([self.le_name.strip(), self.le_sn.strip()]):
@@ -263,13 +266,15 @@ class DroneFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             name=self.le_name,
             serial_number=self.le_sn,
             manufacturer=self.le_manufacturer,
             model=self.le_model,
             tracker_type=self.cb_tracker_type,
             transponder_id=self.le_transponder_id,
-            operator_id=int(self.cb_operator),
+            operator_id=self.cb_operator,
         )
 
     @classmethod
@@ -281,7 +286,7 @@ class DroneFormDTO(BaseFormDTO):
             le_model=service_dto.model,
             cb_tracker_type=service_dto.tracker_type,
             le_transponder_id=service_dto.transponder_id,
-            cb_operator=str(service_dto.operator_id),
+            cb_operator=service_dto.operator_id,
         )
 
 
@@ -366,6 +371,8 @@ class UhubOrgFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             name=self.le_name,
             email=self.le_email,
             phone=self.le_phone,
@@ -436,11 +443,11 @@ class UhubUserTableDTO(BaseTableDTO):
     role: str
     jurisdiction: str
     aoi: str
-    organization: str = "N/A"  # Nombre de la organización, no ID
+    organization: str  # Nombre de la organización, no ID
 
     @classmethod
     def from_service_dto(
-        cls, service_dto: UhubUserServiceDTO, org_name: str = ""
+        cls, service_dto: UhubUserServiceDTO, org_name: str
     ) -> "UhubUserTableDTO":
         return cls(
             id=service_dto.id,
@@ -451,7 +458,7 @@ class UhubUserTableDTO(BaseTableDTO):
             role=service_dto.role,
             jurisdiction=service_dto.jurisdiction,
             aoi=service_dto.aoi,
-            organization=org_name or "N/A",
+            organization=org_name,
             created_at=cls._format_date(service_dto.created_at),
             updated_at=cls._format_date(service_dto.updated_at),
             modified_by=service_dto.modified_by,
@@ -471,7 +478,7 @@ class UhubUserFormDTO(BaseFormDTO):
     le_role: str
     le_jurisdiction: str
     le_aoi: str
-    cb_organization: str  # ID de la organización como string
+    cb_organization: int  # ID de la organización como entero
 
     def __post_init__(self):
         if not all([self.le_email.strip(), self.le_username.strip()]):
@@ -482,6 +489,8 @@ class UhubUserFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             email=self.le_email,
             dni=self.le_dni,
             phone=self.le_phone,
@@ -491,7 +500,7 @@ class UhubUserFormDTO(BaseFormDTO):
             role=self.le_role,
             jurisdiction=self.le_jurisdiction,
             aoi=self.le_aoi,
-            organization_id=int(self.cb_organization),
+            organization_id=self.cb_organization,
         )
 
     @classmethod
@@ -506,7 +515,7 @@ class UhubUserFormDTO(BaseFormDTO):
             le_role=service_dto.role,
             le_jurisdiction=service_dto.jurisdiction,
             le_aoi=service_dto.aoi,
-            cb_organization=str(service_dto.organization_id),
+            cb_organization=service_dto.organization_id,
         )
 
 
@@ -633,6 +642,8 @@ class UasZoneFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             name=self.le_name,
             area_type=self.cb_area_type,
             circle_radius=self.le_radius,
@@ -740,6 +751,8 @@ class UspaceFormDTO(BaseFormDTO):
             id=0,
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             code=self.le_code,
             name=self.le_name,
             sectors_count=self.le_sectors_count,

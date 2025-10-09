@@ -211,6 +211,7 @@ class UasZone(AuditMixin, EnvironmentMixin, Base):
     organizations = relationship(
         "UhubOrg", secondary="zone_organization", back_populates="uas_zones"
     )
+
     cases = relationship("Case", secondary="case_uas_zones", back_populates="uas_zones")
     environment_rel = relationship(
         "Environment", back_populates="environment_uas_zones"

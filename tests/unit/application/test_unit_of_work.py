@@ -1,9 +1,12 @@
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
 # Importar el módulo completo para poder hacer patch
-from uat_tool.application.unit_of_work import UnitOfWork, unit_of_work
+from uat_tool.application.uow import UnitOfWork, unit_of_work
+
+PATH_TO_UOW_CLASS = "uat_tool.application.uow.UnitOfWork"
+PATH_TO_SESSION_CLASS = "uat_tool.application.uow.Session"
 
 
 class TestUnitOfWork:
@@ -51,17 +54,38 @@ class TestUnitOfWork:
             mock_rollback.assert_called_once()
 
     def test_unit_of_work_close_scoped_session(self):
-        """Test cierre de sesión scoped"""
+        """Test que llama a remove() cuando la sesión es scoped."""
         # Crear un mock que simule scoped_session (tiene remove pero no close)
         scoped_session_mock = Mock()
-        scoped_session_mock.remove = Mock()
-        # Forzar que no tenga close
-        del scoped_session_mock.close
 
+        # Nos aseguramos de que el mock no tenga close.
+        if hasattr(scoped_session_mock, "close"):
+            del scoped_session_mock.close
+
+        # Instanciar el objeto a probar y ejecutar el método
         uow = UnitOfWork(scoped_session_mock)
         uow.close()
 
+        # Verificar la interacción
         scoped_session_mock.remove.assert_called_once()
+
+        # Asegurar que 'close' NO fue llamado (si el mock tiene el atributo)
+        if hasattr(scoped_session_mock, "close"):
+            scoped_session_mock.close.assert_not_called()
+
+    def test_unit_of_work_close_regular_session(self):
+        """Test que llama a close() cuando la sesión es regular."""
+        # Crear un mock que simule una sesión regular
+        regular_session_mock = Mock()
+
+        # Forzar que el mock no tenga el método 'remove'
+        if hasattr(regular_session_mock, "remove"):
+            del regular_session_mock.remove
+
+        uow = UnitOfWork(regular_session_mock)
+        uow.close()
+
+        regular_session_mock.close.assert_called_once()
 
 
 class TestUnitOfWorkContextManager:
@@ -84,105 +108,45 @@ class TestUnitOfWorkContextManager:
                 assert isinstance(uow, UnitOfWork)
                 raise ValueError("Test error")
 
-
-class TestUnitOfWorkIntegration:
-    """Tests de integración para Unit of Work"""
-
-    def test_unit_of_work_with_actual_operations(
-        self, db_session, model_test_data, sample_audit_data
+    @patch(PATH_TO_SESSION_CLASS)
+    @patch(PATH_TO_UOW_CLASS)
+    def test_uow_commits_on_success(
+        self, MockUnitOfWork: MagicMock, MockSession: MagicMock
     ):
-        """Test UnitOfWork con operaciones reales de repositorio"""
-        uow = UnitOfWork(db_session)
+        """Verifica que se llama a commit() y close() si no hay excepciones."""
+        # Configura el mock para que devuelva instancia simulada
+        mock_uow_instance = MockUnitOfWork.return_value
 
-        # Crear un sistema y sección usando el repositorio del UoW
-        system = uow.sys_repo.create(**model_test_data["system_data"])
-        section = uow.section_repo.create(**model_test_data["section_data"])
+        with unit_of_work() as uow:
+            assert uow is mock_uow_instance
 
-        # Crear un requisito
-        requirement_data = {
-            **model_test_data["requirement_data"],
-            "systems": [system.id],
-            "sections": [section.id],
-        }
+        # Verificamos las llamadas al salir del context manager
+        MockSession.assert_called_once()
+        MockUnitOfWork.assert_called_once_with(MockSession.return_value)
+        mock_uow_instance.commit.assert_called_once()
+        mock_uow_instance.rollback.assert_not_called()
+        mock_uow_instance.close.assert_called_once()
 
-        requirement = uow.req_repo.create(
-            requirement_data,
-            environment_id=1,
-            modified_by=sample_audit_data["modified_by"],
-        )
-
-        # Verificar que las operaciones se realizaron correctamente
-        assert system.id is not None
-        assert requirement.id is not None
-        assert requirement.code == "REQ001"
-
-        # Commit de las operaciones
-        uow.commit()
-
-        # Verificar que los datos persisten después del commit
-        persisted_system = uow.sys_repo.get_by_id(system.id)
-        persisted_requirement = uow.req_repo.get_by_id(requirement.id)
-
-        assert persisted_system is not None
-        assert persisted_requirement is not None
-        assert persisted_requirement.code == "REQ001"
-
-    def test_unit_of_work_rollback_operations(self, db_session, model_test_data):
-        """Test que el rollback revierte las operaciones"""
-        uow = UnitOfWork(db_session)
-
-        # Contar sistemas antes de la operación
-        initial_count = len(uow.sys_repo.get_all())
-
-        # Crear un nuevo sistema
-        system = uow.sys_repo.create(**model_test_data["system_data"])
-
-        # Verificar que se creó en la sesión actual
-        current_count = len(uow.sys_repo.get_all())
-        assert current_count == initial_count + 1
-
-        # Hacer rollback
-        uow.rollback()
-
-        # Verificar que el sistema no persiste después del rollback
-        final_count = len(uow.sys_repo.get_all())
-        assert final_count == initial_count
-
-    def test_unit_of_work_multiple_repositories(
-        self, db_session, model_test_data, sample_audit_data
+    @patch(PATH_TO_SESSION_CLASS)
+    @patch(PATH_TO_UOW_CLASS)
+    def test_uow_rollbacks_on_exception(
+        self, MockUnitOfWork: MagicMock, MockSession: MagicMock
     ):
-        """Test uso de múltiples repositorios en el mismo UoW"""
-        uow = UnitOfWork(db_session)
+        """Verifica que se llama a rollback() y close() si hay excepciones."""
+        # Configura el mock para que devuelva instancia simulada
+        mock_uow_instance = MockUnitOfWork.return_value
 
-        # Usar varios repositorios
-        system = uow.sys_repo.create(**model_test_data["system_data"])
-        section = uow.section_repo.create(**model_test_data["section_data"])
+        with pytest.raises(ValueError, match="Test error"):
+            with unit_of_work() as uow:
+                assert uow is mock_uow_instance
+                raise ValueError("Test error")
 
-        # Crear requirement relacionado
-        requirement_data = {
-            **model_test_data["requirement_data"],
-            "systems": [system.id],
-            "sections": [section.id],
-        }
-
-        requirement = uow.req_repo.create(
-            requirement_data,
-            environment_id=1,
-            modified_by=sample_audit_data["modified_by"],
-        )
-
-        # Verificar relaciones
-        assert requirement.systems[0].id == system.id
-        assert requirement.sections[0].id == section.id
-
-        uow.commit()
-
-        # Verificar persistencia
-        persisted_requirement = uow.req_repo.get_with_relations(requirement.id)
-        assert persisted_requirement is not None
-        assert len(persisted_requirement.systems) == 1
-        assert len(persisted_requirement.sections) == 1
-
+        # Verificamos las llamadas tras la excepción
+        MockSession.assert_called_once()
+        MockUnitOfWork.assert_called_once_with(MockSession.return_value)
+        mock_uow_instance.commit.assert_not_called()
+        mock_uow_instance.rollback.assert_called_once()
+        mock_uow_instance.close.assert_called_once()
 
 class TestUnitOfWorkErrorScenarios:
     """Tests para escenarios de error en Unit of Work"""

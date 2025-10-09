@@ -27,6 +27,9 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = [
     "--import-mode=importlib",
+    "--cov=uat_tool",
+    "--cov-report=html",
+    "--cov-report=term",
     "--tb=short",
     "--strict-markers",
     "--strict-config"

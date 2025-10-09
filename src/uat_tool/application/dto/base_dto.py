@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from datetime import datetime
 
 
@@ -12,6 +12,10 @@ class BaseServiceDTO:
     modified_by: str
     created_at: datetime | None
     updated_at: datetime | None
+
+    def to_dict(self) -> dict:
+        """Convierte el DTO a un diccionario."""
+        return asdict(self)
 
 
 @dataclass

@@ -24,7 +24,7 @@ class Ui_form_bug(object):
         if not form_bug.objectName():
             form_bug.setObjectName(u"form_bug")
         form_bug.setEnabled(True)
-        form_bug.resize(726, 523)
+        form_bug.resize(720, 510)
         self.verticalLayout = QVBoxLayout(form_bug)
         self.verticalLayout.setSpacing(15)
         self.verticalLayout.setObjectName(u"verticalLayout")

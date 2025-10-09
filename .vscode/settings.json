@@ -13,7 +13,11 @@
     "tests",
     "-v",
     "--ignore=tests/coverage_reports",
-    "--ignore=tests/reports"
+    "--ignore=tests/reports",
+    "--cov=uat_tool",
+    "--cov-report=html",
+    "--cov-report=term",
+    "tests"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,

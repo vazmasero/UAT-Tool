@@ -1,21 +1,19 @@
-import os
-import sys
 from datetime import datetime
-from unittest.mock import Mock
 
 import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 
-from uat_tool.application.dto import BugServiceDTO, RequirementServiceDTO
-from uat_tool.infrastructure import Base
-
-# Añadir src al path para imports absolutos
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
+from uat_tool.application import ApplicationContext
+from uat_tool.application.dto.assets_dto import (
+    UasZoneServiceDTO,
+    UhubUserServiceDTO,
+    UspaceServiceDTO,
+)
 
 
 @pytest.fixture(scope="session")
 def test_engine():
+    from sqlalchemy import create_engine
+
     """Motor de base de datos para testing."""
     engine = create_engine("sqlite:///:memory:", echo=False)
     return engine
@@ -23,12 +21,16 @@ def test_engine():
 
 @pytest.fixture(scope="session")
 def test_session_factory(test_engine):
+    from sqlalchemy.orm import scoped_session, sessionmaker
+
     """Factory de sesiones para testing"""
     return scoped_session(sessionmaker(bind=test_engine))
 
 
 @pytest.fixture(scope="function")
 def db_session(test_engine, test_session_factory):
+    from uat_tool.infrastructure import Base
+
     """Sesión de base de datos para cada test"""
     # Crear todas las tablas
     Base.metadata.create_all(test_engine)
@@ -186,7 +188,149 @@ def model_test_data():
 
 
 @pytest.fixture
+def sample_email_service_dto():
+    from uat_tool.application.dto import EmailServiceDTO
+
+    """Fixture para EmailServiceDTO de ejemplo"""
+    return EmailServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        email="test@example.com",
+        name="Test Email",
+        password="testpassword",
+    )
+
+
+@pytest.fixture
+def sample_operator_service_dto():
+    from uat_tool.application.dto import OperatorServiceDTO
+
+    """Fixture para OperatorServiceDTO de ejemplo"""
+    return OperatorServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        name="Test Name",
+        easa_id="EASA123",
+        verification_code="VERIF123",
+        password="testpassword",
+        phone="123456789",
+        email_id=1,
+    )
+
+
+@pytest.fixture
+def sample_drone_service_dto():
+    from uat_tool.application.dto import DroneServiceDTO
+
+    """Fixture para DroneServiceDTO de ejemplo"""
+    return DroneServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        name="Test Drone",
+        serial_number="SN123456",
+        manufacturer="Test Manufacturer",
+        model="Test Model",
+        tracker_type="SIMULATOR",
+        transponder_id="TP123456",
+        operator_id=1,
+    )
+
+
+@pytest.fixture
+def sample_org_service_dto():
+    from uat_tool.application.dto import UhubOrgServiceDTO
+
+    """Fixture para UhubOrgServiceDTO de ejemplo"""
+    return UhubOrgServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        name="Test Organization",
+        email="test@example.com",
+        phone="123456789",
+        jurisdiction="Test Jurisdiction",
+        aoi="Test AOI",
+        role="Test Role",
+        type="INFORMATIVE",
+    )
+
+
+@pytest.fixture
+def sample_uhub_user_service_dto():
+    return UhubUserServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        username="testuser",
+        password="testpassword",
+        email="user@example.com",
+        dni="12345678A",
+        phone="123456789",
+        type="USER",
+        role="Test Role",
+        jurisdiction="Test Jurisdiction",
+        aoi="Test AOI",
+        organization_id=1,
+    )
+
+
+@pytest.fixture
+def sample_uas_zone_service_dto():
+    return UasZoneServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        name="Test Zone",
+        area_type="POLYGON",
+        circle_radius=None,
+        corridor_width=None,
+        lower_limit=0,
+        upper_limit=120,
+        reference_lower="AGL",
+        reference_upper="AGL",
+        application="TEMPORAL",
+        restriction_type="INFORMATIVE",
+        message="Test message",
+        clearance_required=False,
+        reasons=[1, 2],
+        organizations=[1, 3],
+    )
+
+
+@pytest.fixture
+def sample_uspace_service_dto():
+    return UspaceServiceDTO(
+        id=1,
+        environment_id=1,
+        modified_by="test_user",
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        code="USPACE001",
+        name="Test Uspace",
+        sectors_count=5,
+        file_id=1,
+    )
+
+
+@pytest.fixture
 def sample_bug_service_dto():
+    from uat_tool.application.dto import BugServiceDTO
+
     """Fixture para BugServiceDTO de ejemplo"""
     return BugServiceDTO(
         id=1,
@@ -208,6 +352,8 @@ def sample_bug_service_dto():
 
 @pytest.fixture
 def sample_requirement_service_dto():
+    from uat_tool.application.dto import RequirementServiceDTO
+
     """Fixture para RequirementServiceDTO de ejemplo"""
     return RequirementServiceDTO(
         id=1,
@@ -223,11 +369,8 @@ def sample_requirement_service_dto():
 
 
 @pytest.fixture
-def mock_db_session():
-    """Fixture para sesión de base de datos mock"""
-    session = Mock()
-    session.commit = Mock()
-    session.rollback = Mock()
-    session.close = Mock()
-    session.remove = Mock()
-    return session
+def app_context():
+    """Crea una nueva instancia del ApplicationContext en modo test."""
+    ctx = ApplicationContext(test_mode=True)
+    yield ctx
+    ctx.shutdown()

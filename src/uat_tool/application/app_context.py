@@ -3,7 +3,7 @@ from typing import Any
 from uat_tool.infrastructure import Session, init_db
 from uat_tool.shared import get_logger
 
-from .unit_of_work import UnitOfWork, unit_of_work
+from .uow import UnitOfWork, unit_of_work
 
 logger = get_logger(__name__)
 
@@ -101,21 +101,26 @@ class ApplicationContext:
 
     def shutdown(self):
         """Cierra el contexto y libera recursos."""
-        try:
-            logger.info("Cerrando ApplicationContext...")
+        logger.info("Cerrando ApplicationContext...")
 
-            # Cerrar servicios si tienen método shutdown
-            for _, service in self._services.items():
-                if hasattr(service, "shutdown"):
+        errors = []
+
+        for name, service in list(self._services.items()):
+            if hasattr(service, "shutdown"):
+                try:
                     service.shutdown()
+                except Exception as e:
+                    errors.append(f"{name}: {e}")
+                    logger.error(f"Error cerrando servicio {name}: {e}")
 
-            self._services.clear()
-            self._is_initialized = False
+        # Limpiar siempre
+        self._services.clear()
+        self._is_initialized = False
 
+        if errors:
+            logger.error(f"Error(es) cerrando ApplicationContext: {', '.join(errors)}")
+        else:
             logger.info("ApplicationContext cerrado correctamente")
-
-        except Exception as e:
-            logger.error(f"Error cerrando ApplicationContext: {e}")
 
     @classmethod
     def get_instance(cls):

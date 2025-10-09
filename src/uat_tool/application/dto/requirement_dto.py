@@ -1,4 +1,3 @@
-# requirement_dto.py
 from dataclasses import dataclass, field
 
 from uat_tool.application.dto.base_dto import BaseFormDTO, BaseServiceDTO, BaseTableDTO
@@ -118,6 +117,8 @@ class RequirementFormDTO(BaseFormDTO):
             id=0,  # 0 para nuevos requisitos, se asignará en BD
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
+            created_at=None,
+            updated_at=None,
             systems=self.lw_systems,
             sections=self.lw_sections,
             definition=self.le_definition,

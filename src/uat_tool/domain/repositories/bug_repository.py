@@ -62,7 +62,7 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
 
             campaign_run_id = data.get("campaign_run_id")
             if campaign_run_id:
-                campaign_run = self.session.query(CampaignRun).get(campaign_run_id)
+                campaign_run = self.session.get(CampaignRun, campaign_run_id)
                 if not campaign_run:
                     raise ValueError(
                         f"CampaignRun con id {campaign_run_id} no encontrado."
