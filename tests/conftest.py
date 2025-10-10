@@ -28,23 +28,58 @@ def test_session_factory(test_engine):
 
 
 @pytest.fixture(scope="function")
-def db_session(test_engine, test_session_factory):
+def shared_test_session(test_engine, test_session_factory):
     from uat_tool.infrastructure import Base
+    from uat_tool.infrastructure.database.initial_data import load_initial_data
 
-    """Sesión de base de datos para cada test"""
+    """Sesión compartida con datos iniciales para cada test."""
     # Crear todas las tablas
     Base.metadata.create_all(test_engine)
 
     # Crear una nueva sesión
     session = test_session_factory()
 
+    # Cargar datos iniciales
+    try:
+        load_initial_data(session)
+        session.commit()
+        print("Datos iniciales cargados correctamente")
+    except Exception as e:
+        session.rollback()
+        print(f"Error cargando datos iniciales: {e}")
+        # Continuar aunque falle la carga de datos iniciales
+
     yield session
 
     # Limpiar después del test
-    session.rollback()
-    session.close()
-    # Eliminar todas las tablas
-    Base.metadata.drop_all(test_engine)
+    try:
+        session.rollback()
+    finally:
+        session.close()
+
+
+@pytest.fixture(scope="function")
+def db_session(shared_test_session):
+    """Alias para compatibilidad con tests existentes."""
+    return shared_test_session
+
+
+@pytest.fixture
+def app_context(db_session):
+    """Crea ApplicationContext usando la misma sesión de BD SIN inicializar."""
+
+    # Usar el engine de la sesión compartida
+    test_engine = db_session.get_bind()
+
+    # Crear ApplicationContext pero NO inicializar
+    # (las tablas ya fueron creadas por shared_test_session)
+    ctx = ApplicationContext(test_mode=True, test_engine=test_engine)
+
+    # NO llamar a initialize() - las tablas ya existen
+    # ctx.initialize()
+
+    yield ctx
+    ctx.shutdown()
 
 
 @pytest.fixture
@@ -366,11 +401,3 @@ def sample_requirement_service_dto():
         systems=[1, 2],
         sections=[1, 2],
     )
-
-
-@pytest.fixture
-def app_context():
-    """Crea una nueva instancia del ApplicationContext en modo test."""
-    ctx = ApplicationContext(test_mode=True)
-    yield ctx
-    ctx.shutdown()

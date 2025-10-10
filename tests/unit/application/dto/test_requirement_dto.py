@@ -258,8 +258,8 @@ def test_requirement_table_dto_date_formatting():
 
     table_dto = RequirementTableDTO.from_service_dto(requirement_service_dto_none_dates)
 
-    assert table_dto.created_at == "Not assigned"
-    assert table_dto.updated_at == "Not assigned"
+    assert table_dto.created_at == "N/A"
+    assert table_dto.updated_at == "N/A"
 
     # Test con fechas válidas
     test_date = datetime(2024, 1, 15, 14, 30, 0)

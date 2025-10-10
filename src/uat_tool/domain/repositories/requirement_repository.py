@@ -81,9 +81,23 @@ class RequirementRepository(AuditEnvironmentMixinRepository[Requirement]):
             self.query()
             .options(
                 joinedload(Requirement.bugs),
+                joinedload(Requirement.systems),
+                joinedload(Requirement.sections),
             )
             .filter(Requirement.id == requirement_id)
             .first()
+        )
+
+    def get_all_with_relations(self) -> list[Requirement]:
+        """Obtiene todos los requisitos con sistemas y secciones cargadas."""
+        return (
+            self.query()
+            .options(
+                joinedload(Requirement.systems),
+                joinedload(Requirement.sections),
+                joinedload(Requirement.bugs),
+            )
+            .all()
         )
 
     def update(

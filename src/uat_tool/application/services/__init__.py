@@ -16,8 +16,10 @@ Ejemplo:
 
 from .base_service import BaseService
 from .bug_service import BugService
+from .requirement_service import RequirementService
 
 __all__ = [
     "BugService",
     "BaseService",
+    "RequirementService",
 ]

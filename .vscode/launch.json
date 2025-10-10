@@ -1,29 +1,63 @@
 {
-  // Use IntelliSense para saber los atributos posibles.
-  // Mantenga el puntero para ver las descripciones de los existentes atributos.
-  // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Pytest",
+      "name": "Debug UAT Tool",
       "type": "debugpy",
       "request": "launch",
-      "module": "pytest",
-      "args": ["${relativeFileDirname}"],
-      "justMyCode": true
+      "program": "${workspaceFolder}/src/uat_tool/main.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      },
+      "args": []
     },
-
     {
-      "name": "Depurador de Python: Archivo actual",
+      "name": "Debug Current File",
       "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "stopOnEntry": true,
       "env": {
-        "PYTHONPATH": "${workspaceFolder}"
+        "PYTHONPATH": "${workspaceFolder}/src"
       }
     },
+    {
+      "name": "Debug Pytest",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["${relativeFileDirname}", "-v", "--no-cov"],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "name": "Debug Pytest All",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["tests/", "-v", "--no-cov"],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "name": "Debug Module",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uat_tool.main",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    }
   ]
 }

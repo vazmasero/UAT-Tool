@@ -19,11 +19,13 @@ from .app_context import ApplicationContext
 # DTOs
 from .services.base_service import BaseService
 from .services.bug_service import BugService
+from .services.requirement_service import RequirementService
 from .uow import unit_of_work
 
 __all__ = [
     "ApplicationContext",
     "BugService",
+    "RequirementService",
     "BaseService",
     "uow",
 ]

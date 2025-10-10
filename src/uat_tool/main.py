@@ -4,11 +4,7 @@ Inicializa la base de datos, crea la ventana principal y lanza
 el bucle de eventos de la interfaz gráfica.
 """
 
-import os
 import sys
-
-# Añadir el directorio src al path para imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from PySide6.QtWidgets import QApplication
 

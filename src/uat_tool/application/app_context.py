@@ -13,11 +13,12 @@ class ApplicationContext:
 
     _instance: "ApplicationContext" = None
 
-    def __init__(self, test_mode: bool = False):
+    def __init__(self, test_mode: bool = False, test_engine=None):
         self._session_factory = Session
         self._services: dict[str, Any] = {}
         self._test_mode = test_mode
         self._is_initialized = False
+        self._test_engine = test_engine
 
     def initialize(self):
         """Inicializa el contexto de la aplicación."""
@@ -46,10 +47,11 @@ class ApplicationContext:
         try:
             logger.info("Inicializando base de datos...")
 
-            # En modo test, dropeamos y recreamos la base de datos
+            # En modo test, dropeamos y recreamos la base de datos usando el motor de test
             drop_existing = self._test_mode
+            engine = self._test_engine if self._test_mode else None
 
-            init_db(drop_existing=drop_existing)
+            init_db(drop_existing=drop_existing, engine=engine)
 
             logger.info("Base de datos inicializada correctamente")
 
@@ -59,14 +61,15 @@ class ApplicationContext:
 
     def _initialize_services(self):
         """Inicializa los servicios de la aplicación."""
-        from uat_tool.application.services.bug_service import BugService
+        from uat_tool.application.services import BugService, RequirementService
 
         try:
             logger.info("Inicializando servicios...")
 
-            # Inicializar BugService
             bug_service = BugService(self)
             self.register_service("bug_service", bug_service)
+            requirement_service = RequirementService(self)
+            self.register_service("requirement_service", requirement_service)
 
             # Inicializar otros servicios
 

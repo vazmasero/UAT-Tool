@@ -18,6 +18,7 @@ class BaseTabController(QObject):
     item_deleted = Signal(int)  # Emite id del item eliminado
     error_occurred = Signal(str)
     loading_state_changed = Signal(bool)
+    selection_state_changed = Signal(bool)
 
     def __init__(self, app_context: ApplicationContext, tab_name: str):
         super().__init__()
@@ -25,6 +26,7 @@ class BaseTabController(QObject):
         self.tab_name = tab_name
         self._is_active = False
         self._current_data = []
+        self._selected_item_id = None
 
     def get_all_items(self) -> list[Any]:
         """Obtiene todos los items de la tabla."""
@@ -46,7 +48,38 @@ class BaseTabController(QObject):
         """Obtiene un item por su ID."""
         raise NotImplementedError
 
-    # Métodos comunes
+    def load_data(self):
+        """Carga los datos de la tabla."""
+        raise NotImplementedError
+
+    # --- MÉTODOS PARA GESTIÓN DE UI ---
+
+    def handle_new_register(self):
+        """Maneja la creación de un nueva registro."""
+        raise NotImplementedError
+
+    def handle_edit_register(self):
+        """Maneja la edición del registro seleccionado."""
+        raise NotImplementedError
+
+    def handle_remove_register(self):
+        """Maneja la eliminación del registro seleccionado."""
+        raise NotImplementedError
+
+    def handle_double_click(self, index):
+        """Maneja doble clic en la tabla."""
+        raise NotImplementedError
+
+    def get_selected_item_id(self) -> int | None:
+        """Obtiene el ID del item seleccionado."""
+        return self._selected_item_id
+
+    def set_selected_item(self, item_id: int | None):
+        """Establece el item seleccionado y notifica."""
+        self._selected_item_id = item_id
+        has_selection = item_id is not None
+        self.selection_state_changed.emit(has_selection)
+
     def activate(self):
         """Se ejecuta cuando la pestaña se activa."""
         self._is_active = True
@@ -64,27 +97,12 @@ class BaseTabController(QObject):
             logger.info(f"Recargando datos de {self.tab_name}")
             self.load_data()
 
-    def load_data(self):
-        """Carga los datos de la tabla."""
-        try:
-            self.loading_state_changed.emit(True)
-            items = self.get_all_items()
-            self._current_data = items
-            self.data_loaded.emit(items)
-            logger.info(f"Datos cargados para {self.tab_name}: {len(items)} items")
-        except Exception as e:
-            logger.error(f"Error cargando datos de {self.tab_name}: {e}")
-            self.error_occurred.emit(f"Error cargando datos: {str(e)}")
-        finally:
-            self.loading_state_changed.emit(False)
-
     def handle_create_item(self, item_data: dict):
         """Maneja la creación de un nuevo item."""
         try:
             new_item = self.create_item(item_data)
             self.item_created.emit(new_item)
             logger.info(f"Item creado en {self.tab_name}: {new_item.id}")
-            # Recargar datos para reflejar cambios
             self.load_data()
         except Exception as e:
             logger.error(f"Error creando item en {self.tab_name}: {e}")
@@ -96,7 +114,6 @@ class BaseTabController(QObject):
             updated_item = self.update_item(item_id, item_data)
             self.item_updated.emit(updated_item)
             logger.info(f"Item actualizado en {self.tab_name}: {item_id}")
-            # Recargar datos para reflejar cambios
             self.load_data()
         except Exception as e:
             logger.error(f"Error actualizando item en {self.tab_name}: {e}")
@@ -109,7 +126,6 @@ class BaseTabController(QObject):
             if success:
                 self.item_deleted.emit(item_id)
                 logger.info(f"Item eliminado de {self.tab_name}: {item_id}")
-                # Recargar datos para reflejar cambios
                 self.load_data()
             else:
                 self.error_occurred.emit(f"No se pudo eliminar el item {item_id}")

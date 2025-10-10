@@ -5927,3 +5927,1281 @@
 2025-10-09 11:10:18,894 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
 2025-10-09 11:10:18,922 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
 2025-10-09 11:10:18,929 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:50:39,950 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Requirements
+2025-10-09 13:50:39,964 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 13:50:39,972 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 999
+2025-10-09 13:50:39,981 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-09 13:50:39,998 - uat_tool.application.services.requirement_service - ERROR - Error enriqueciendo requisito 1 para tabla: Test error
+2025-10-09 13:50:40,410 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 13:50:40,424 - uat_tool.application.services.base_service - INFO - Operación 'update' en Requirement ID 1
+2025-10-09 13:50:40,434 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 13:50:40,445 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 999
+2025-10-09 13:50:40,454 - uat_tool.application.services.base_service - INFO - Operación 'delete' en Requirement ID 1
+2025-10-09 13:50:40,464 - uat_tool.application.services.base_service - INFO - Operación 'delete' en Requirement ID 999
+2025-10-09 13:50:40,476 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Requirements
+2025-10-09 13:51:06,187 - uat_tool.application.services.requirement_service - ERROR - Error enriqueciendo requisito 1 para tabla: Test error
+2025-10-09 13:52:02,684 - uat_tool.application.services.requirement_service - ERROR - Error enriqueciendo requisito 1 para tabla: Test error
+2025-10-09 13:53:09,024 - uat_tool.application.services.requirement_service - ERROR - Error enriqueciendo requisito 1 para tabla: Test error
+2025-10-09 13:53:20,179 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Requirements
+2025-10-09 13:55:59,111 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 13:55:59,112 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 13:55:59,113 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 13:55:59,114 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 13:55:59,115 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 13:55:59,116 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 13:55:59,116 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 13:55:59,117 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 13:55:59,121 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 13:55:59,122 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 13:55:59,126 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 13:55:59,127 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 13:55:59,132 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 13:55:59,133 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 13:55:59,134 - uat_tool.application.app_context - ERROR - Error inicializando base de datos: DB broken
+2025-10-09 13:55:59,134 - uat_tool.application.app_context - ERROR - Error inicializando ApplicationContext: DB broken
+2025-10-09 13:55:59,136 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 13:55:59,137 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 13:55:59,392 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:55:59,395 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:55:59,400 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:55:59,483 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:55:59,539 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:55:59,541 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:55:59,543 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:00,142 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Requirements
+2025-10-09 13:56:00,150 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 13:56:00,157 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 999
+2025-10-09 13:56:00,168 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-09 13:56:00,189 - uat_tool.application.services.requirement_service - ERROR - Error enriqueciendo requisito 1 para tabla: Test error
+2025-10-09 13:56:00,198 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 13:56:00,209 - uat_tool.application.services.base_service - INFO - Operación 'update' en Requirement ID 1
+2025-10-09 13:56:00,218 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 13:56:00,226 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 999
+2025-10-09 13:56:00,234 - uat_tool.application.services.base_service - INFO - Operación 'delete' en Requirement ID 1
+2025-10-09 13:56:00,242 - uat_tool.application.services.base_service - INFO - Operación 'delete' en Requirement ID 999
+2025-10-09 13:56:00,259 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 13:56:00,261 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 13:56:00,261 - uat_tool.application.app_context - WARNING - ApplicationContext ya está inicializado
+2025-10-09 13:56:00,276 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 13:56:00,277 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 13:56:00,284 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 13:56:00,285 - uat_tool.application.app_context - ERROR - Error inicializando base de datos: DB init error
+2025-10-09 13:56:00,291 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 13:56:00,291 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 13:56:00,292 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 13:56:00,293 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 13:56:00,293 - uat_tool.application.app_context - ERROR - Error inicializando servicios: Service init failed
+2025-10-09 13:56:00,293 - uat_tool.application.app_context - ERROR - Error inicializando ApplicationContext: Service init failed
+2025-10-09 13:56:01,684 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:01,733 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:01,782 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:01,784 - uat_tool.domain.repositories.base - INFO - Actualizado Email 1
+2025-10-09 13:56:01,836 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:01,840 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:01,902 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:01,904 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:01,956 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:01,958 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:01,960 - uat_tool.domain.repositories.base - INFO - Actualizado Operator 1
+2025-10-09 13:56:02,008 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:02,012 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:02,059 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:02,061 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:02,113 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 13:56:02,114 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:02,117 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:02,119 - uat_tool.domain.repositories.base - INFO - Actualizado Drone 1
+2025-10-09 13:56:02,171 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,219 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,270 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,272 - uat_tool.domain.repositories.base - INFO - Actualizado UhubOrg 1
+2025-10-09 13:56:02,320 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,324 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:02,373 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,376 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:02,428 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,430 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:02,434 - uat_tool.domain.repositories.base - INFO - Actualizado UhubUser 1
+2025-10-09 13:56:02,491 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,492 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:02,497 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:02,561 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,563 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:02,566 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:02,623 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:02,625 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 2
+2025-10-09 13:56:02,627 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:02,628 - uat_tool.domain.repositories.base - INFO - Creado Reason: 2
+2025-10-09 13:56:02,631 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:02,640 - uat_tool.domain.repositories.base - INFO - Actualizado UasZone 1
+2025-10-09 13:56:02,694 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 13:56:02,698 - uat_tool.domain.repositories.base - INFO - Creado Uspace: 1
+2025-10-09 13:56:02,752 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 13:56:02,754 - uat_tool.domain.repositories.base - INFO - Creado Uspace: 1
+2025-10-09 13:56:02,809 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 13:56:02,810 - uat_tool.domain.repositories.base - INFO - Creado Uspace: 1
+2025-10-09 13:56:02,814 - uat_tool.domain.repositories.base - INFO - Actualizado Uspace 1
+2025-10-09 13:56:03,418 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,469 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,519 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,566 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,566 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:03,624 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,626 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:03,690 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,691 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:03,746 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,747 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:03,800 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,802 - uat_tool.domain.repositories.base - INFO - Actualizado System 1
+2025-10-09 13:56:03,851 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,860 - uat_tool.domain.repositories.base - INFO - Borrado System 1
+2025-10-09 13:56:03,912 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:03,914 - uat_tool.domain.repositories.base - WARNING - System con id 2 no encontrado para eliminar
+2025-10-09 13:56:03,967 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,019 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,021 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:04,023 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:04,035 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,101 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,103 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:04,105 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:04,107 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:04,109 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:04,111 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:04,113 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:04,123 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:04,126 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:04,176 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:04,188 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:56:04,199 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 13:56:04,214 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 13:56:04,220 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:04,222 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 13:56:04,225 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,313 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,316 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,364 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,367 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,416 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,419 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,467 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,469 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:04,471 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,474 - uat_tool.domain.repositories.base - INFO - Actualizado Bug 1
+2025-10-09 13:56:04,531 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,533 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:04,535 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:04,536 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:04,538 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:04,539 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:04,542 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:04,550 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:04,552 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:04,578 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:04,586 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:56:04,588 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 13:56:04,595 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 13:56:04,598 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:04,598 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 13:56:04,598 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,605 - uat_tool.domain.repositories.base - INFO - Actualizado Bug 1
+2025-10-09 13:56:04,607 - uat_tool.domain.repositories.base - INFO - Actualizado Bug 1
+2025-10-09 13:56:04,651 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,652 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:04,654 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,656 - uat_tool.domain.repositories.base - INFO - Creado Bug: 2
+2025-10-09 13:56:04,658 - uat_tool.domain.repositories.base - INFO - Creado Bug: 3
+2025-10-09 13:56:04,704 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,706 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,709 - uat_tool.domain.repositories.base - INFO - Creado Bug: 2
+2025-10-09 13:56:04,712 - uat_tool.domain.repositories.base - INFO - Creado Bug: 3
+2025-10-09 13:56:04,760 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,764 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 13:56:04,812 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:04,814 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:04,816 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:04,818 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:04,820 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:04,822 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:04,830 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,831 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:04,833 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:04,906 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:04,912 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:56:04,916 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 13:56:04,920 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 13:56:04,922 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:04,968 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:04,969 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:04,971 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:04,973 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:04,974 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:04,976 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:04,985 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:04,986 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:04,987 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,013 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:05,020 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:56:05,025 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 13:56:05,029 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 13:56:05,032 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:05,036 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:05,084 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:05,086 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:05,088 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:05,090 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:05,092 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:05,096 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:05,104 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,105 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,107 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,138 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:05,146 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:56:05,151 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 13:56:05,156 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 13:56:05,159 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:05,163 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:05,208 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:05,210 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:05,212 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:05,214 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:05,216 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:05,217 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:05,226 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,227 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,229 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,254 - uat_tool.domain.repositories.base - INFO - Creado Step: 1
+2025-10-09 13:56:05,257 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:05,263 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 13:56:05,267 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 13:56:05,271 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 13:56:05,274 - uat_tool.domain.repositories.base - INFO - Creado StepRun: 1
+2025-10-09 13:56:05,277 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 13:56:05,282 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 13:56:05,330 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,332 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,334 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:05,392 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,394 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,396 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:05,493 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,495 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,497 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:05,553 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,554 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,558 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:05,566 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 13:56:05,567 - uat_tool.domain.repositories.base - INFO - Creado Section: 2
+2025-10-09 13:56:05,569 - uat_tool.domain.repositories.base - INFO - Actualizado Requirement 1
+2025-10-09 13:56:05,621 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:05,623 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:05,625 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:05,626 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:05,628 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:05,630 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:05,638 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,640 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,642 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,714 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:05,716 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:05,717 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:05,719 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:05,721 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:05,723 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:05,732 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,734 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,736 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,762 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 13:56:05,771 - uat_tool.domain.repositories.base - INFO - Creado Step: 1
+2025-10-09 13:56:05,825 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:05,826 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:05,829 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:05,830 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:05,832 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:05,834 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:05,843 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,845 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,848 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,873 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:05,936 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 13:56:05,938 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 13:56:05,941 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 13:56:05,943 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 13:56:05,945 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 13:56:05,947 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 13:56:05,956 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 13:56:05,958 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 13:56:05,960 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 13:56:05,988 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 13:56:05,997 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:46,823 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:46,830 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 0
+2025-10-09 14:01:47,083 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:47,085 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:47,184 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:47,189 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-UPDATE', 'Initial requirement definition for update testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 14:01:48,508 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:48,509 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:48,562 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:48,566 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-TABLE-1', 'First requirement for table testing with sufficient length', 0, 'table_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 14:01:49,608 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:49,609 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:49,660 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:49,663 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-DELETE', 'Requirement to be deleted in integration test', 0, 'delete_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 14:01:50,816 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:50,817 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:50,875 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:50,878 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-UNIQUE', 'Requirement for uniqueness testing with sufficient length', 0, 'uniqueness_test', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 14:01:51,826 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:51,827 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:51,874 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:51,876 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-NO-SYSTEMS', 'Requirement without systems should fail validation', 0, 'validation_test', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 14:01:52,853 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:52,853 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:52,894 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:52,896 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-NO-SECTIONS', 'Requirement without sections should fail validation', 0, 'validation_test', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 14:01:53,791 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:53,791 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:53,807 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 14:01:53,808 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 14:01:53,809 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 14:01:53,810 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 14:01:53,810 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 14:01:53,810 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 14:01:53,811 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:53,812 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:53,814 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:53,815 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:53,820 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:53,821 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:53,826 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 14:01:53,826 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 14:01:53,827 - uat_tool.application.app_context - ERROR - Error inicializando base de datos: DB broken
+2025-10-09 14:01:53,827 - uat_tool.application.app_context - ERROR - Error inicializando ApplicationContext: DB broken
+2025-10-09 14:01:53,829 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:53,830 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:53,858 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:53,859 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:53,862 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:53,919 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:53,965 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:53,967 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:53,969 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:54,432 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Requirements
+2025-10-09 14:01:54,443 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 14:01:54,451 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 999
+2025-10-09 14:01:54,460 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-09 14:01:54,475 - uat_tool.application.services.requirement_service - ERROR - Error enriqueciendo requisito 1 para tabla: Test error
+2025-10-09 14:01:54,484 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 14:01:54,493 - uat_tool.application.services.base_service - INFO - Operación 'update' en Requirement ID 1
+2025-10-09 14:01:54,503 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 14:01:54,510 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 999
+2025-10-09 14:01:54,516 - uat_tool.application.services.base_service - INFO - Operación 'delete' en Requirement ID 1
+2025-10-09 14:01:54,523 - uat_tool.application.services.base_service - INFO - Operación 'delete' en Requirement ID 999
+2025-10-09 14:01:54,541 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 14:01:54,542 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 14:01:54,543 - uat_tool.application.app_context - WARNING - ApplicationContext ya está inicializado
+2025-10-09 14:01:54,558 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 14:01:54,560 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 14:01:54,568 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 14:01:54,569 - uat_tool.application.app_context - ERROR - Error inicializando base de datos: DB init error
+2025-10-09 14:01:54,574 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 14:01:54,574 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 14:01:54,575 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 14:01:54,576 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 14:01:54,576 - uat_tool.application.app_context - ERROR - Error inicializando servicios: Service init failed
+2025-10-09 14:01:54,577 - uat_tool.application.app_context - ERROR - Error inicializando ApplicationContext: Service init failed
+2025-10-09 14:01:55,672 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:55,727 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:55,780 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:55,783 - uat_tool.domain.repositories.base - INFO - Actualizado Email 1
+2025-10-09 14:01:55,835 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:55,839 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:55,894 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:55,896 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:55,964 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:55,966 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:55,970 - uat_tool.domain.repositories.base - INFO - Actualizado Operator 1
+2025-10-09 14:01:56,025 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:56,030 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:56,084 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:56,087 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:56,141 - uat_tool.domain.repositories.base - INFO - Creado Email: 1
+2025-10-09 14:01:56,143 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:56,145 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:56,147 - uat_tool.domain.repositories.base - INFO - Actualizado Drone 1
+2025-10-09 14:01:56,228 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,291 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,339 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,343 - uat_tool.domain.repositories.base - INFO - Actualizado UhubOrg 1
+2025-10-09 14:01:56,388 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,392 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:56,442 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,444 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:56,497 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,499 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:56,501 - uat_tool.domain.repositories.base - INFO - Actualizado UhubUser 1
+2025-10-09 14:01:56,543 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,545 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:56,549 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:56,603 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,604 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:56,607 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:56,661 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:56,663 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 2
+2025-10-09 14:01:56,665 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:56,666 - uat_tool.domain.repositories.base - INFO - Creado Reason: 2
+2025-10-09 14:01:56,668 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:56,678 - uat_tool.domain.repositories.base - INFO - Actualizado UasZone 1
+2025-10-09 14:01:56,737 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 14:01:56,740 - uat_tool.domain.repositories.base - INFO - Creado Uspace: 1
+2025-10-09 14:01:56,795 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 14:01:56,797 - uat_tool.domain.repositories.base - INFO - Creado Uspace: 1
+2025-10-09 14:01:56,852 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 14:01:56,855 - uat_tool.domain.repositories.base - INFO - Creado Uspace: 1
+2025-10-09 14:01:56,858 - uat_tool.domain.repositories.base - INFO - Actualizado Uspace 1
+2025-10-09 14:01:57,403 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,450 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,499 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,551 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,554 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:57,617 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,620 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:57,671 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,671 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:57,719 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,721 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:57,765 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,767 - uat_tool.domain.repositories.base - INFO - Actualizado System 1
+2025-10-09 14:01:57,810 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,816 - uat_tool.domain.repositories.base - INFO - Borrado System 1
+2025-10-09 14:01:57,854 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,862 - uat_tool.domain.repositories.base - WARNING - System con id 2 no encontrado para eliminar
+2025-10-09 14:01:57,904 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,954 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:57,954 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:57,954 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:57,968 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,026 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,028 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:58,030 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:58,031 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:58,033 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:58,034 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:58,037 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:58,045 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:58,048 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:58,092 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:58,105 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:58,115 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 14:01:58,130 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 14:01:58,135 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:58,136 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 14:01:58,139 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,221 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,229 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,271 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,280 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,329 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,331 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,379 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,381 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:58,383 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,386 - uat_tool.domain.repositories.base - INFO - Actualizado Bug 1
+2025-10-09 14:01:58,431 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,433 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:58,435 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:58,437 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:58,438 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:58,438 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:58,438 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:58,450 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:58,453 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:58,473 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:58,484 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:58,488 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 14:01:58,488 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 14:01:58,495 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:58,497 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 14:01:58,498 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,502 - uat_tool.domain.repositories.base - INFO - Actualizado Bug 1
+2025-10-09 14:01:58,505 - uat_tool.domain.repositories.base - INFO - Actualizado Bug 1
+2025-10-09 14:01:58,547 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,549 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:58,551 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,553 - uat_tool.domain.repositories.base - INFO - Creado Bug: 2
+2025-10-09 14:01:58,557 - uat_tool.domain.repositories.base - INFO - Creado Bug: 3
+2025-10-09 14:01:58,603 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,605 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,605 - uat_tool.domain.repositories.base - INFO - Creado Bug: 2
+2025-10-09 14:01:58,612 - uat_tool.domain.repositories.base - INFO - Creado Bug: 3
+2025-10-09 14:01:58,655 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,661 - uat_tool.domain.repositories.base - INFO - Creado Bug: 1
+2025-10-09 14:01:58,705 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:58,705 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:58,713 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:58,715 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:58,716 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:58,718 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:58,722 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,722 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:58,729 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:58,753 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:58,755 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:58,764 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 14:01:58,767 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 14:01:58,770 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:58,815 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:58,817 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:58,819 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:58,821 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:58,822 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:58,822 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:58,832 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,833 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:58,835 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:58,855 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:58,866 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:58,870 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 14:01:58,872 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 14:01:58,872 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:58,880 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:58,922 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:58,922 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:58,928 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:58,929 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:58,931 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:58,932 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:58,938 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:58,938 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:58,938 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:58,967 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:58,972 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:58,979 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 14:01:58,982 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 14:01:58,985 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:58,988 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:59,034 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:59,036 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:59,038 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:59,041 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:59,042 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:59,044 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:59,052 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,053 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,057 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:59,082 - uat_tool.domain.repositories.base - INFO - Creado Step: 1
+2025-10-09 14:01:59,084 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:59,090 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 14:01:59,095 - uat_tool.domain.repositories.base - INFO - Creado CampaignRun: 1
+2025-10-09 14:01:59,098 - uat_tool.domain.repositories.base - INFO - Creado CaseRun: 1
+2025-10-09 14:01:59,102 - uat_tool.domain.repositories.base - INFO - Creado StepRun: 1
+2025-10-09 14:01:59,103 - uat_tool.domain.repositories.base - INFO - Actualizado Campaign 1
+2025-10-09 14:01:59,108 - uat_tool.domain.repositories.base - INFO - Creado File: 1
+2025-10-09 14:01:59,151 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,153 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,154 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:59,204 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,206 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,208 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:59,302 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,304 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,309 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:59,365 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,366 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,368 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:59,376 - uat_tool.domain.repositories.base - INFO - Creado System: 2
+2025-10-09 14:01:59,378 - uat_tool.domain.repositories.base - INFO - Creado Section: 2
+2025-10-09 14:01:59,381 - uat_tool.domain.repositories.base - INFO - Actualizado Requirement 1
+2025-10-09 14:01:59,431 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:59,433 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:59,435 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:59,436 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:59,438 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:59,440 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:59,448 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,449 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,451 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:59,514 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:59,516 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:59,518 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:59,520 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:59,521 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:59,523 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:59,531 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,533 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,534 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:59,560 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 14:01:59,568 - uat_tool.domain.repositories.base - INFO - Creado Step: 1
+2025-10-09 14:01:59,616 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:59,618 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:59,620 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:59,622 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:59,623 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:59,625 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:59,632 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,634 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,635 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:59,660 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:59,707 - uat_tool.domain.repositories.base - INFO - Creado Operator: 1
+2025-10-09 14:01:59,709 - uat_tool.domain.repositories.base - INFO - Creado Drone: 1
+2025-10-09 14:01:59,711 - uat_tool.domain.repositories.base - INFO - Creado UhubOrg: 1
+2025-10-09 14:01:59,713 - uat_tool.domain.repositories.base - INFO - Creado UhubUser: 1
+2025-10-09 14:01:59,714 - uat_tool.domain.repositories.base - INFO - Creado Reason: 1
+2025-10-09 14:01:59,716 - uat_tool.domain.repositories.base - INFO - Creado UasZone: 1
+2025-10-09 14:01:59,724 - uat_tool.domain.repositories.base - INFO - Creado System: 1
+2025-10-09 14:01:59,725 - uat_tool.domain.repositories.base - INFO - Creado Section: 1
+2025-10-09 14:01:59,727 - uat_tool.domain.repositories.base - INFO - Creado Case: 1
+2025-10-09 14:01:59,750 - uat_tool.domain.repositories.base - INFO - Creado Block: 1
+2025-10-09 14:01:59,756 - uat_tool.domain.repositories.base - INFO - Creado Campaign: 1
+2025-10-09 15:48:17,957 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 15:48:17,984 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.id
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-UPDATE', 'Initial requirement definition for update testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 15:48:19,473 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 15:48:19,473 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 15:53:16,696 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 15:53:16,754 - uat_tool.domain.repositories.base - INFO - Creado Requirement: 1
+2025-10-09 15:53:17,010 - uat_tool.application.services.base_service - INFO - Operación 'get_by_id' en Requirement ID 1
+2025-10-09 15:53:17,017 - uat_tool.application.services.base_service - INFO - Operación 'update' en Requirement ID 1
+2025-10-09 15:53:17,024 - uat_tool.domain.repositories.base - INFO - Actualizado Requirement 1
+2025-10-09 15:53:17,188 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 15:53:17,189 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 15:53:24,925 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 15:53:24,932 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.environment_id, requirements.code
+[SQL: INSERT INTO requirements (code, definition, modified_by, environment_id) VALUES (?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 15:53:25,978 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 15:53:25,978 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 15:56:15,396 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 15:56:15,405 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.environment_id, requirements.code
+[SQL: INSERT INTO requirements (code, definition, modified_by, environment_id) VALUES (?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 15:56:16,468 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 15:56:16,469 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 15:56:36,536 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 15:56:36,543 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.environment_id, requirements.code
+[SQL: INSERT INTO requirements (code, definition, modified_by, environment_id) VALUES (?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-UPDATE', 'Initial requirement definition for update testing', 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 15:56:37,550 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 15:56:37,551 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 15:59:55,566 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 15:59:55,574 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.environment_id, requirements.code
+[SQL: INSERT INTO requirements (code, definition, modified_by, environment_id) VALUES (?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 15:59:56,630 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 15:59:56,630 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:04:30,443 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:04:30,449 - uat_tool.domain.repositories.base - ERROR - Error de integridad creando Requirement: (sqlite3.IntegrityError) UNIQUE constraint failed: requirements.environment_id, requirements.code
+[SQL: INSERT INTO requirements (code, definition, modified_by, environment_id) VALUES (?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-10-09 16:04:31,521 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:04:31,522 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:06:50,517 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:06:50,519 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:08:24,148 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:08:24,156 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, modified_by, environment_id) VALUES (?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:08:25,259 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:08:25,260 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:18:05,354 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:18:05,368 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:18:06,841 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:18:06,842 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:19:47,746 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 16:19:47,748 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 16:19:48,077 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 16:19:48,078 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 16:19:48,079 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 16:19:48,079 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 16:19:49,518 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:19:49,520 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:21:42,035 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 16:21:42,038 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 16:21:42,383 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 16:21:42,385 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 16:21:42,386 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 16:21:42,386 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 16:21:43,732 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:21:43,732 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:22:22,046 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 16:22:22,047 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 16:22:22,356 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 16:22:22,358 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 16:22:22,359 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 16:22:22,360 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 16:22:22,448 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:22:22,450 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:24:52,509 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 16:24:52,510 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 16:24:52,842 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 16:24:52,844 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 16:24:52,845 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 16:24:52,845 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 16:24:52,848 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:24:52,856 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:24:53,950 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:24:53,950 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:25:32,343 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 16:25:32,344 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 16:25:32,635 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 16:25:32,635 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 16:25:32,635 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 16:25:32,648 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 16:25:32,650 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:25:32,650 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:25:33,728 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:25:33,728 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:28:47,382 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:28:47,590 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:28:48,793 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:28:48,794 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:39:08,376 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 16:39:08,377 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 16:39:08,461 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 16:39:08,462 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 16:39:08,463 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 16:39:08,463 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 16:39:08,468 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:39:08,473 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:39:09,564 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:39:09,564 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:41:29,982 - uat_tool.application.services.base_service - INFO - Operación 'create' en Requirements
+2025-10-09 16:41:29,989 - uat_tool.domain.repositories.base - ERROR - Error en base de datos creando Requirement: (sqlite3.OperationalError) no such table: requirements
+[SQL: INSERT INTO requirements (code, definition, id, modified_by, environment_id) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at, updated_at]
+[parameters: ('REQ-INT-001', 'This is a test requirement definition for integration testing', 0, 'integration_test_user', 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-09 16:41:31,058 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:41:31,058 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 16:43:17,454 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-09 16:43:17,456 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-09 17:11:27,154 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-09 17:11:27,537 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-09 17:11:27,538 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-09 17:11:27,539 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-09 17:11:32,908 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-09 17:11:32,908 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-09 17:11:32,908 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-09 17:11:32,908 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-09 17:11:32,908 - __main__ - INFO - Configurando interfaz...
+2025-10-09 17:11:32,908 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-09 17:11:32,908 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-09 17:11:32,927 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'campaigns', 'test_management', 'requirements', 'assets']
+2025-10-09 17:11:32,928 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-09 17:11:32,929 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-09 17:11:32,930 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-09 17:11:32,935 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-09 17:11:32,936 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-09 17:11:32,937 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-09 17:11:33,495 - __main__ - INFO - Aplicación lista
+2025-10-09 17:11:33,496 - __main__ - INFO - Mostrando ventana principal...
+2025-10-09 17:11:42,296 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-09 17:11:42,297 - presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-09 17:11:42,297 - presentation.controllers.base_tab_controller - ERROR - Error cargando datos de requirements: 
+2025-10-09 17:11:42,298 - uat_tool.presentation.controllers.main_controller - ERROR - Error en pestaña requirements: Error cargando datos: 
+2025-10-09 17:11:43,546 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 08:19:25,031 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 08:19:25,443 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 08:19:25,443 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 08:19:25,444 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 08:19:25,607 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 08:19:25,607 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 08:19:25,608 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 08:19:25,609 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 08:19:25,610 - __main__ - INFO - Configurando interfaz...
+2025-10-10 08:19:25,610 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 08:19:25,611 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 08:19:25,626 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'campaigns', 'test_management', 'requirements', 'assets']
+2025-10-10 08:19:25,626 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 08:19:25,626 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 08:19:25,626 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 08:19:25,632 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 08:19:25,633 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 08:19:25,635 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 08:19:26,405 - __main__ - INFO - Aplicación lista
+2025-10-10 08:19:26,405 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 08:24:46,059 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 08:24:46,091 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 08:24:46,092 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 08:24:46,093 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 08:24:46,416 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 08:24:46,416 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 08:24:46,416 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 08:24:46,416 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 08:24:46,416 - __main__ - INFO - Configurando interfaz...
+2025-10-10 08:24:46,416 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 08:24:46,416 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 08:24:46,435 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'campaigns', 'test_management', 'requirements', 'assets']
+2025-10-10 08:24:46,436 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 08:24:46,437 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 08:24:46,438 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 08:24:46,445 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 08:24:46,447 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 08:24:46,447 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 08:24:46,483 - __main__ - INFO - Aplicación lista
+2025-10-10 08:24:46,484 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 08:24:51,493 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 08:24:51,494 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 08:24:51,494 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 08:24:51,495 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 08:24:51,495 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 08:24:51,496 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 08:24:51,496 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 08:24:51,512 - __main__ - INFO - Aplicación finalizada
+2025-10-10 08:24:51,513 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 08:24:51,515 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 08:24:51,516 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 08:24:51,517 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-10 08:35:33,115 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 08:36:08,124 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 08:37:34,432 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 08:37:35,785 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 08:37:49,815 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 08:38:03,880 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 08:43:58,324 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 08:44:41,980 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 08:45:23,749 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 08:52:47,034 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 08:52:51,265 - __main__ - INFO - Configurando interfaz...
+2025-10-10 08:54:39,077 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 08:54:43,933 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 09:08:05,686 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'campaigns', 'test_management', 'requirements', 'assets']
+2025-10-10 09:54:13,066 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:01:26,920 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:01:26,920 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:02:10,449 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:02:19,048 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:02:22,601 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:02:30,305 - __main__ - INFO - Aplicación lista
+2025-10-10 10:02:30,873 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:02:46,336 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:02:46,337 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 10:02:46,338 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 10:02:46,338 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 10:02:46,339 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 10:02:46,340 - presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 10:02:46,340 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:02:46,364 - __main__ - INFO - Aplicación finalizada
+2025-10-10 10:02:46,365 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:02:46,366 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:02:46,367 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 10:02:46,368 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-10 10:03:49,109 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:03:49,509 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:03:49,510 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:03:49,511 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:03:49,869 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:03:49,884 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:03:49,885 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:03:49,886 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:03:49,886 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:03:49,887 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:03:49,887 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:03:49,890 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'campaigns', 'test_management', 'requirements', 'assets']
+2025-10-10 10:04:18,148 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:04:18,149 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:04:18,150 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:04:18,158 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:04:18,159 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:04:19,636 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:04:19,664 - __main__ - INFO - Aplicación lista
+2025-10-10 10:04:19,667 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:04:51,462 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:05:05,206 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:05:17,367 - uat_tool.presentation.controllers.base_tab_controller - ERROR - Error cargando datos de requirements: 
+2025-10-10 10:05:19,648 - uat_tool.presentation.controllers.main_controller - ERROR - Error en pestaña requirements: Error cargando datos: 
+2025-10-10 10:05:22,885 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 10:05:25,207 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:05:25,209 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 10:05:25,210 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 10:05:25,210 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 10:05:25,211 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 10:05:25,212 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 10:05:25,213 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:05:25,237 - __main__ - INFO - Aplicación finalizada
+2025-10-10 10:05:25,238 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:05:25,240 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:05:25,241 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 10:05:25,242 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-10 10:10:03,372 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:10:03,619 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:10:03,620 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:10:03,621 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:10:04,010 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:10:04,024 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:10:04,025 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:10:04,025 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:10:04,025 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:10:04,026 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:10:04,026 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:10:04,042 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:10:05,743 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:10:05,744 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:10:05,745 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:10:05,755 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:10:05,757 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:10:05,759 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:10:06,292 - __main__ - INFO - Aplicación lista
+2025-10-10 10:10:06,293 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:10:15,767 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:10:28,664 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:10:41,552 - uat_tool.presentation.controllers.base_tab_controller - ERROR - Error cargando datos de requirements: 
+2025-10-10 10:10:41,968 - uat_tool.presentation.controllers.main_controller - ERROR - Error en pestaña requirements: Error cargando datos: 
+2025-10-10 10:16:29,672 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:16:29,703 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:16:29,704 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:16:29,704 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:16:29,983 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:16:29,984 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:16:29,985 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:16:29,986 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:16:29,986 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:16:29,987 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:16:29,987 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:16:29,990 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:16:30,954 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:16:30,955 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:16:30,956 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:16:30,964 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:16:30,966 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:16:30,966 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:16:30,994 - __main__ - INFO - Aplicación lista
+2025-10-10 10:16:30,995 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:16:40,211 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:16:46,035 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:17:25,253 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:17:25,284 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:17:25,285 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:17:25,286 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:17:25,574 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:17:25,576 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:17:25,577 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:17:25,578 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:17:25,579 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:17:25,580 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:17:25,581 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:17:25,584 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:17:26,094 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:17:26,095 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:17:26,096 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:17:26,102 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:17:26,103 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:17:26,104 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:17:26,129 - __main__ - INFO - Aplicación lista
+2025-10-10 10:17:26,130 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:17:46,636 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:17:49,971 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:18:04,445 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 10:18:11,022 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 10:19:06,771 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - 0 requirements obtenidos y enriquecidos
+2025-10-10 10:19:07,735 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Datos cargados para requirements: 0 items
+2025-10-10 10:19:10,808 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 10:19:22,824 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements desactivada
+2025-10-10 10:19:22,825 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:19:22,827 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:19:22,827 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:19:22,830 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:19:22,831 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:19:22,837 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:19:22,838 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:19:22,842 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:19:22,844 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:19:22,846 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:19:29,809 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:19:29,809 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 10:19:29,809 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 10:19:29,809 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 10:19:29,809 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 10:19:29,809 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 10:19:29,819 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:19:29,842 - __main__ - INFO - Aplicación finalizada
+2025-10-10 10:19:29,844 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:19:29,845 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:19:29,846 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 10:19:29,848 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-10 10:22:00,057 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:22:00,326 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:22:00,327 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:22:00,328 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:22:00,752 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:22:00,766 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:22:00,767 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:22:00,767 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:22:00,768 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:22:00,769 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:22:00,771 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:22:00,789 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:22:13,389 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:22:13,390 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:22:13,391 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:22:13,397 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:22:13,398 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:22:13,399 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:22:13,832 - __main__ - INFO - Aplicación lista
+2025-10-10 10:22:13,835 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:22:24,581 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:22:27,429 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:24:04,969 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 10:24:06,776 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 10:24:56,866 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - 1 requirements obtenidos y enriquecidos
+2025-10-10 10:27:01,486 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Datos cargados para requirements: 1 items
+2025-10-10 10:27:50,671 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 10:29:05,561 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:29:05,613 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:29:05,618 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:29:05,620 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:29:06,345 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:29:06,348 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:29:06,350 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:29:06,350 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:29:06,353 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:29:06,354 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:29:06,355 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:29:06,358 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:29:07,661 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:29:07,665 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:29:07,666 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:29:07,681 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:29:07,683 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:29:07,685 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:29:07,751 - __main__ - INFO - Aplicación lista
+2025-10-10 10:29:07,755 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:29:18,420 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:29:19,587 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:29:19,588 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Iniciando carga de datos...
+2025-10-10 10:29:19,589 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 10:29:19,590 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 10:29:19,619 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - 1 requirements obtenidos y enriquecidos
+2025-10-10 10:29:19,622 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Datos cargados para requirements: 1 items
+2025-10-10 10:29:24,017 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 10:29:33,513 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:29:33,554 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:29:33,555 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:29:33,556 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:29:33,924 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:29:33,927 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:29:33,927 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:29:33,929 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:29:33,929 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:29:33,929 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:29:33,929 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:29:33,932 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:29:36,914 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:29:36,915 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:29:36,916 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:29:36,924 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:29:36,926 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:29:36,927 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:29:36,964 - __main__ - INFO - Aplicación lista
+2025-10-10 10:29:36,965 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:29:43,416 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:29:46,922 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:30:59,472 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:30:59,510 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:30:59,511 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:30:59,512 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:30:59,829 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:30:59,831 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:30:59,832 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:30:59,832 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:30:59,833 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:30:59,833 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:30:59,834 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:30:59,837 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:30:59,839 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:30:59,840 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:30:59,841 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:30:59,849 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:30:59,851 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:30:59,852 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:30:59,882 - __main__ - INFO - Aplicación lista
+2025-10-10 10:30:59,883 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:31:03,300 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:31:03,301 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:31:06,207 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Iniciando carga de datos...
+2025-10-10 10:34:19,443 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 10:34:19,444 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 10:35:17,191 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:35:17,443 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:35:17,443 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:35:17,444 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:35:17,861 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:35:17,879 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:35:17,880 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:35:17,881 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:35:17,882 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:35:17,883 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:35:17,884 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:35:17,905 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:35:17,906 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:35:17,908 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:35:17,908 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:35:17,914 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:35:17,916 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:35:17,917 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:35:18,349 - __main__ - INFO - Aplicación lista
+2025-10-10 10:35:18,349 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:35:20,236 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:35:20,237 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:35:22,782 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Iniciando carga de datos...
+2025-10-10 10:35:24,278 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 10:35:24,279 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 10:50:17,408 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 10:50:17,440 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 10:50:17,443 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 10:50:17,443 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 10:50:17,571 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 10:50:17,572 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 10:50:17,573 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 10:50:17,573 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 10:50:17,574 - __main__ - INFO - Configurando interfaz...
+2025-10-10 10:50:17,574 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 10:50:17,575 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 10:50:17,577 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 10:50:17,578 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 10:50:17,578 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 10:50:17,580 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 10:50:17,584 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 10:50:17,585 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 10:50:17,586 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 10:50:17,618 - __main__ - INFO - Aplicación lista
+2025-10-10 10:50:17,618 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 10:50:19,273 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 10:50:19,273 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 10:50:19,274 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Iniciando carga de datos...
+2025-10-10 10:50:19,274 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 10:50:19,274 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 10:50:19,283 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - 1 requirements obtenidos y enriquecidos
+2025-10-10 10:50:19,356 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Datos cargados para requirements: 1 items
+2025-10-10 10:50:19,408 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 10:50:54,306 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:50:54,307 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 10:50:54,308 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 10:50:54,308 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 10:50:54,309 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 10:50:54,309 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 10:50:54,309 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:50:54,326 - __main__ - INFO - Aplicación finalizada
+2025-10-10 10:50:54,327 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 10:50:54,328 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 10:50:54,329 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 10:50:54,330 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-10 17:00:27,992 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 17:00:29,301 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 17:00:29,302 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 17:00:29,302 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 17:00:29,611 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 17:00:29,637 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 17:00:29,638 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 17:00:29,638 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 17:00:29,639 - __main__ - INFO - Configurando interfaz...
+2025-10-10 17:00:29,668 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 17:00:29,668 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 17:00:29,734 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 17:00:29,736 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 17:00:29,737 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 17:00:29,737 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 17:00:29,741 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 17:00:29,758 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 17:00:29,778 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 17:00:31,611 - __main__ - ERROR - Error durante la inicialización: 'MainWindow' object has no attribute '_on_start_clicked'
+2025-10-10 17:00:31,611 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 17:00:31,611 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 17:00:31,611 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 17:00:31,611 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 17:00:31,611 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 17:00:31,611 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 17:00:31,619 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 17:00:31,632 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 17:00:31,634 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente
+2025-10-10 17:00:31,634 - __main__ - ERROR - Error fatal: 'MainWindow' object has no attribute '_on_start_clicked'
+2025-10-10 17:02:17,471 - __main__ - INFO - Inicializando UAT Tool...
+2025-10-10 17:02:17,513 - __main__ - INFO - Configurando capa de aplicación...
+2025-10-10 17:02:17,515 - uat_tool.application.app_context - INFO - Inicializando ApplicationContext...
+2025-10-10 17:02:17,516 - uat_tool.application.app_context - INFO - Inicializando base de datos...
+2025-10-10 17:02:17,674 - uat_tool.application.app_context - INFO - Base de datos inicializada correctamente
+2025-10-10 17:02:17,689 - uat_tool.application.app_context - INFO - Inicializando servicios...
+2025-10-10 17:02:17,689 - uat_tool.application.app_context - INFO - Servicios inicializados correctamente
+2025-10-10 17:02:17,689 - uat_tool.application.app_context - INFO - ApplicationContext inicializado correctamente
+2025-10-10 17:02:17,689 - __main__ - INFO - Configurando interfaz...
+2025-10-10 17:02:17,689 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controlador principal...
+2025-10-10 17:02:17,689 - uat_tool.presentation.controllers.main_controller - INFO - Inicializando controladores de pestañas...
+2025-10-10 17:02:17,695 - uat_tool.presentation.controllers.main_controller - INFO - Controladores de pestañas inicializados: ['bugs', 'requirements', 'campaigns', 'test_management', 'assets']
+2025-10-10 17:02:17,696 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs activada
+2025-10-10 17:02:17,697 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Bugs
+2025-10-10 17:02:17,698 - uat_tool.application.services.base_service - INFO - Operación 'get_all' en Bugs
+2025-10-10 17:02:17,703 - uat_tool.presentation.controllers.bug_tab_controller - INFO - 0 bugs obtenidos y enriquecidos
+2025-10-10 17:02:17,705 - uat_tool.presentation.controllers.bug_tab_controller - INFO - Datos cargados para bugs: 0 items
+2025-10-10 17:02:17,706 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: bugs
+2025-10-10 17:02:17,735 - __main__ - INFO - Aplicación lista
+2025-10-10 17:02:17,736 - __main__ - INFO - Mostrando ventana principal...
+2025-10-10 17:02:19,977 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña bugs desactivada
+2025-10-10 17:02:19,977 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 17:02:19,977 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Iniciando carga de datos...
+2025-10-10 17:02:19,977 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 17:02:19,977 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 17:02:20,041 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - 1 requirements obtenidos y enriquecidos
+2025-10-10 17:02:20,041 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Datos cargados para requirements: 1 items
+2025-10-10 17:02:20,041 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements desactivada
+2025-10-10 17:02:20,041 - uat_tool.presentation.controllers.base_tab_controller - INFO - Pestaña requirements activada
+2025-10-10 17:02:20,053 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Iniciando carga de datos...
+2025-10-10 17:02:20,053 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Obteniendo todos los items...
+2025-10-10 17:02:20,054 - uat_tool.application.services.base_service - INFO - Operación 'get_all_for_table' en Requirements
+2025-10-10 17:02:20,056 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - 1 requirements obtenidos y enriquecidos
+2025-10-10 17:02:20,057 - uat_tool.presentation.controllers.requirement_tab_controller - INFO - Datos cargados para requirements: 1 items
+2025-10-10 17:02:20,058 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 17:02:20,059 - uat_tool.presentation.controllers.main_controller - INFO - Cambiado a pestaña: requirements
+2025-10-10 17:02:26,267 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 17:02:26,267 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de bugs
+2025-10-10 17:02:26,267 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de requirements
+2025-10-10 17:02:26,282 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de campaigns
+2025-10-10 17:02:26,282 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de test_management
+2025-10-10 17:02:26,282 - uat_tool.presentation.controllers.base_tab_controller - INFO - Cerrando controlador de assets
+2025-10-10 17:02:26,282 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 17:02:26,310 - __main__ - INFO - Aplicación finalizada
+2025-10-10 17:02:26,312 - uat_tool.presentation.controllers.main_controller - INFO - Cerrando controlador principal...
+2025-10-10 17:02:26,313 - uat_tool.presentation.controllers.main_controller - INFO - Controlador principal cerrado correctamente
+2025-10-10 17:02:26,314 - uat_tool.application.app_context - INFO - Cerrando ApplicationContext...
+2025-10-10 17:02:26,315 - uat_tool.application.app_context - INFO - ApplicationContext cerrado correctamente

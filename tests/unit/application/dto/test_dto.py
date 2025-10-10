@@ -124,7 +124,7 @@ class TestDTOFormatting:
 
         # Test con fecha None
         formatted_none = BaseTableDTO._format_date(None)
-        assert formatted_none == "Not assigned"
+        assert formatted_none == "N/A"
 
     def test_urgency_impact_mapping(self):
         """Test mapeo de urgencia e impacto"""

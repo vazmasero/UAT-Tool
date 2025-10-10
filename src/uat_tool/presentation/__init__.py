@@ -13,11 +13,18 @@ Arquitectura MVVM con separación clara entre vista y lógica.
 """
 
 # Exportar componentes principales a través de sus paquetes
-from .models import BugProxyModel, BugTableModel
+from .models import (
+    BugProxyModel,
+    BugTableModel,
+    RequirementProxyModel,
+    RequirementTableModel,
+)
 from .views.main_window import MainWindow
 
 __all__ = [
     "MainWindow",
     "BugTableModel",
     "BugProxyModel",
+    "RequirementTableModel",
+    "RequirementProxyModel",
 ]

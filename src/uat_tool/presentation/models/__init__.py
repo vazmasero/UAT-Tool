@@ -16,8 +16,12 @@ Ejemplo:
 
 from .bug_proxy_model import BugProxyModel
 from .bug_table_model import BugTableModel
+from .requirement_proxy_model import RequirementProxyModel
+from .requirement_table_model import RequirementTableModel
 
 __all__ = [
     "BugTableModel",
     "BugProxyModel",
+    "RequirementTableModel",
+    "RequirementProxyModel",
 ]
