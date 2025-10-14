@@ -61,7 +61,11 @@ class ApplicationContext:
 
     def _initialize_services(self):
         """Inicializa los servicios de la aplicación."""
-        from uat_tool.application.services import BugService, RequirementService
+        from uat_tool.application.services import (
+            AuxiliaryService,
+            BugService,
+            RequirementService,
+        )
 
         try:
             logger.info("Inicializando servicios...")
@@ -70,6 +74,8 @@ class ApplicationContext:
             self.register_service("bug_service", bug_service)
             requirement_service = RequirementService(self)
             self.register_service("requirement_service", requirement_service)
+            auxiliary_service = AuxiliaryService(self)
+            self.register_service("auxiliary_service", auxiliary_service)
 
             # Inicializar otros servicios
 

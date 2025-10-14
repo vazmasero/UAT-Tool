@@ -49,8 +49,8 @@ class Bug(AuditMixin, EnvironmentMixin, Base):
     service_now_id = Column(String)
     short_description = Column(String, nullable=False)
     definition = Column(Text, nullable=False)
-    urgency = Column(Enum("1", "2", "3", name="urgency_enum"), nullable=False)
-    impact = Column(Enum("1", "2", "3", name="impact_enum"), nullable=False)
+    urgency = Column(Integer, nullable=False)
+    impact = Column(Integer, nullable=False)
     comments = Column(Text)
     file_id = Column(Integer, ForeignKey("files.id", ondelete="RESTRICT"))
     requirements = relationship(

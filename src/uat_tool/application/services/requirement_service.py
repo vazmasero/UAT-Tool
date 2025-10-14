@@ -57,58 +57,42 @@ class RequirementService(BaseService):
     def get_all_requirements_for_table(self) -> list[RequirementTableDTO]:
         """Obtiene todos los requisitos enriquecidos para mostrar en la tabla UI."""
         self._log_operation("get_all_for_table", "Requirement")
-
         with self.app_context.get_unit_of_work_context() as uow:
             requirements = uow.req_repo.get_all_with_relations()
-            return [self._enrich_requirement_for_table(req) for req in requirements]
+            requirements_dto = [
+                RequirementServiceDTO.from_model(req) for req in requirements
+            ]
+        return [self._enrich_requirement_for_table(req) for req in requirements_dto]
 
     def _enrich_requirement_for_table(
-        self, requirement: Requirement
+        self, requirement_dto: RequirementServiceDTO
     ) -> RequirementTableDTO:
         """Enriquece un Requirement directamente con sus relaciones cargadas."""
         try:
-            # Extraer nombres directamente de las relaciones ya cargadas
-            system_names = [system.name for system in requirement.systems]
-            section_names = [section.name for section in requirement.sections]
+            system_names = requirement_dto.system_names
+            section_names = requirement_dto.section_names
 
-            # Crear ServiceDTO desde el modelo
-            service_dto = RequirementServiceDTO.from_model(requirement)
+            if not system_names and requirement_dto.systems:
+                system_names = [
+                    self._get_system_name(sys_id) for sys_id in requirement_dto.systems
+                ]
+            if not section_names and requirement_dto.sections:
+                section_names = [
+                    self._get_section_name(section_id)
+                    for section_id in requirement_dto.sections
+                ]
 
             return RequirementTableDTO.from_service_dto(
-                service_dto=service_dto,
+                service_dto=requirement_dto,
                 system_names=system_names,
                 section_names=section_names,
             )
 
         except Exception as e:
             logger.error(
-                f"Error enriqueciendo requisito {requirement.id} para tabla: {e}"
+                f"Error enriqueciendo requisito {requirement_dto.id} para tabla: {e}"
             )
-            # Fallback básico - crear TableDTO directamente sin ServiceDTO
-            system_names = [
-                system.name for system in getattr(requirement, "systems", [])
-            ]
-            section_names = [
-                section.name for section in getattr(requirement, "sections", [])
-            ]
-
-            systems_display = ", ".join(system_names) if system_names else "N/A"
-            sections_display = ", ".join(section_names) if section_names else "N/A"
-
-            return RequirementTableDTO(
-                id=getattr(requirement, "id", 0),
-                code=getattr(requirement, "code", "N/A"),
-                definition=getattr(requirement, "definition", "N/A"),
-                systems=systems_display,
-                sections=sections_display,
-                created_at=RequirementTableDTO._format_date(
-                    getattr(requirement, "created_at", None)
-                ),
-                updated_at=RequirementTableDTO._format_date(
-                    getattr(requirement, "updated_at", None)
-                ),
-                modified_by=getattr(requirement, "modified_by", "Unknown"),
-            )
+            return RequirementTableDTO.from_service_dto(requirement_dto)
 
     # --- MÉTODOS CRUD ---
 

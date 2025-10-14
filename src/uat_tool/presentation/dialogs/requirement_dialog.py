@@ -25,6 +25,8 @@ class RequirementDialog(QDialog, Ui_form_requirement):
         else:
             self.setWindowTitle("New Requirement")
 
+        logger.info("Diálogo inicializado correctamente")
+
     def _setup_ui(self):
         """Configura la UI del diálogo."""
         # Permitir selección múltiple en listas
@@ -43,19 +45,19 @@ class RequirementDialog(QDialog, Ui_form_requirement):
     def _load_existing_data(self):
         """Carga los datos existentes para edición."""
         if self.requirement:
-            self.setWindowTitle(f"Editar Requirement - {self.requirement.code}")
-            self.le_code.setText(self.requirement.code)
-            self.le_definition.setText(self.requirement.definition)
+            self.setWindowTitle(f"Editar Requirement - {self.requirement.le_code}")
+            self.le_code.setText(self.requirement.le_code)
+            self.le_definition.setText(self.requirement.le_definition)
 
             # Seleccionar sistemas y secciones (implementar según tu lógica)
-            self._select_systems(self.requirement.systems)
-            self._select_sections(self.requirement.sections)
+            self._select_systems(self.requirement.lw_systems)
+            self._select_sections(self.requirement.lw_sections)
 
     def _load_systems(self):
         """Carga la lista de sistemas disponibles."""
         try:
-            system_service = self.app_context.get_service("system_service")
-            systems = system_service.get_all_systems()
+            service = self.app_context.get_service("auxiliary_service")
+            systems = service.get_all_systems_service_dto()
 
             self.lw_systems.clear()
             for system in systems:
@@ -69,8 +71,8 @@ class RequirementDialog(QDialog, Ui_form_requirement):
     def _load_sections(self):
         """Carga la lista de secciones disponibles."""
         try:
-            section_service = self.app_context.get_service("section_service")
-            sections = section_service.get_all_sections()
+            section_service = self.app_context.get_service("auxiliary_service")
+            sections = section_service.get_all_sections_service_dto()
 
             self.lw_sections.clear()
             for section in sections:
@@ -120,10 +122,10 @@ class RequirementDialog(QDialog, Ui_form_requirement):
     def get_form_data(self) -> RequirementFormDTO:
         """Obtiene los datos del formulario como DTO."""
         return RequirementFormDTO(
-            code=self.le_code.text().strip(),
-            definition=self.le_definition.text().strip(),
-            systems=self._get_selected_systems(),
-            sections=self._get_selected_sections(),
+            le_code=self.le_code.text().strip(),
+            le_definition=self.le_definition.text().strip(),
+            lw_systems=self._get_selected_systems(),
+            lw_sections=self._get_selected_sections(),
         )
 
     def _get_selected_systems(self) -> list[int]:

@@ -14,12 +14,9 @@ Ejemplo:
     bugs = BugService(app_context).get_all_bugs_dto()
 """
 
+from .auxiliary_service import AuxiliaryService
 from .base_service import BaseService
 from .bug_service import BugService
 from .requirement_service import RequirementService
 
-__all__ = [
-    "BugService",
-    "BaseService",
-    "RequirementService",
-]
+__all__ = ["BugService", "BaseService", "RequirementService", "AuxiliaryService"]

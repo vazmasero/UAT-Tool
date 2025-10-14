@@ -105,7 +105,6 @@ class MainController(QObject):
                     )
 
             self._is_initialized = True
-            self.application_ready.emit()
 
             logger.info(
                 f"Controladores de pestañas inicializados: {list(self._tab_controllers.keys())}"
@@ -116,7 +115,8 @@ class MainController(QObject):
 
         except Exception as e:
             logger.error(f"Error inicializando controladores de pestañas: {e}")
-            self.application_error.emit(f"Error inicializando pestañas: {str(e)}")
+            # TO DO: que la vista reciba correctamente este emit
+            # self.application_error.emit(f"Error inicializando pestañas: {str(e)}")
 
     def switch_to_tab(self, tab_name: str):
         """Cambia a la pestaña especificada."""
@@ -148,8 +148,8 @@ class MainController(QObject):
             # Actualizar estado de UI
             self._update_ui_state()
 
-            self.tab_changed.emit(tab_name)
             logger.info(f"Cambiado a pestaña: {tab_name}")
+            self.tab_changed.emit(tab_name)
 
         except Exception as e:
             logger.error(f"Error cambiando a pestaña {tab_name}: {e}")
@@ -251,7 +251,7 @@ class MainController(QObject):
             4: "assets",
         }
         tab_name = tab_mapping.get(index)
-        if tab_name:
+        if tab_name and tab_name != self._current_tab:
             self.switch_to_tab(tab_name)
 
     def on_add_clicked(self):

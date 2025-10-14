@@ -20,6 +20,8 @@ class MainWindow(QMainWindow, Ui_main_window):
         self._setup_menu_actions()
         self._setup_initial_state()
 
+        self._on_application_ready()
+
     def _connect_signals(self):
         """Conecta las señales del controlador principal."""
 
@@ -36,6 +38,7 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.main_controller.ui_state_changed.connect(self._on_ui_state_changed)
         self.main_controller.application_ready.connect(self._on_application_ready)
         self.main_controller.application_error.connect(self._on_application_error)
+
         self.main_controller.tab_changed.connect(self._on_tab_changed)
 
     def _on_ui_state_changed(self, ui_state: dict):
@@ -49,19 +52,19 @@ class MainWindow(QMainWindow, Ui_main_window):
         """Configura las acciones del menú para cambiar de pestaña."""
         # Conectar acciones de vista a cambio de pestañas
         self.action_view_bugs.triggered.connect(
-            lambda: self.main_controller.switch_to_tab("bugs")
+            lambda: self.stacked_widget.setCurrentIndex(0)
         )
         self.action_view_campaigns.triggered.connect(
-            lambda: self.main_controller.switch_to_tab("campaigns")
+            lambda: self.stacked_widget.setCurrentIndex(1)
         )
         self.action_view_management.triggered.connect(
-            lambda: self.main_controller.switch_to_tab("test_management")
+            lambda: self.stacked_widget.setCurrentIndex(2)
         )
         self.action_view_requirements.triggered.connect(
-            lambda: self.main_controller.switch_to_tab("requirements")
+            lambda: self.stacked_widget.setCurrentIndex(3)
         )
         self.action_view_assets.triggered.connect(
-            lambda: self.main_controller.switch_to_tab("assets")
+            lambda: self.stacked_widget.setCurrentIndex(4)
         )
 
         # Conectar acciones de "Nuevo" - deelegado al controlador principal
@@ -119,6 +122,8 @@ class MainWindow(QMainWindow, Ui_main_window):
         if self.bug_controller and hasattr(self.bug_controller, "proxy_model"):
             self.tbl_bugs.setModel(self.bug_controller.proxy_model)
 
+            self.tbl_bugs.setColumnHidden(0, True)
+
             # Configurar headers específicos para bugs
             header = self.tbl_bugs.horizontalHeader()
             header.setSectionResizeMode(1, QHeaderView.Stretch)
@@ -139,7 +144,10 @@ class MainWindow(QMainWindow, Ui_main_window):
         if self.requirement_controller and hasattr(
             self.requirement_controller, "proxy_model"
         ):
+            # Asignar modelo a la tabla
             self.tbl_requirements.setModel(self.requirement_controller.proxy_model)
+
+            self.tbl_requirements.setColumnHidden(0, True)
 
             # Configurar headers específicos para requirements
             header = self.tbl_requirements.horizontalHeader()
@@ -192,7 +200,6 @@ class MainWindow(QMainWindow, Ui_main_window):
         }
 
         if tab_name in tab_mapping:
-            self.stacked_widget.setCurrentIndex(tab_mapping[tab_name])
             self._update_window_title(tab_name)
 
     def _update_window_title(self, tab_name: str):
@@ -214,11 +221,6 @@ class MainWindow(QMainWindow, Ui_main_window):
 
         # Configurar modelos de tabla
         self._setup_table_models()
-
-        # Cargar datos iniciales para la pestaña actual
-        current_controller = self.main_controller.get_current_tab_controller()
-        if current_controller:
-            current_controller.load_data()
 
     def _on_application_error(self, error_message: str):
         """Maneja errores de la aplicación."""

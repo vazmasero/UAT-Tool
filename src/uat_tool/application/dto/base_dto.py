@@ -14,10 +14,24 @@ class BaseServiceDTO:
     updated_at: datetime | None
 
     def to_dict(self) -> dict:
-        """Convierte el DTO a un diccionario, excluyendo None values."""
+        """Convierte a dict para el repositorio, excluyendo None values y campos de solo lectura."""
         data = asdict(self)
-        # Excluir campos None para que la BD asigne valores automáticos
-        return {k: v for k, v in data.items() if v is not None}
+
+        # Campos a excluir (solo lectura/calculados)
+        excluded_fields = {
+            "system_names",
+            "section_names",
+            "requirement_codes",
+            "system_name",
+            "file_name",
+            # Añadir más campos de lectura si es necesario
+        }
+
+        return {
+            key: value
+            for key, value in data.items()
+            if value is not None and key not in excluded_fields
+        }
 
 
 @dataclass

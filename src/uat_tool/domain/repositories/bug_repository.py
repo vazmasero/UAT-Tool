@@ -244,3 +244,32 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             )
             .first()
         )
+
+    def get_with_relations(self, bug_id: int) -> Bug | None:
+        """Obtiene un bug con sus relaciones cargadas."""
+        return (
+            self.query()
+            .options(
+                joinedload(Bug.system),
+                joinedload(Bug.campaign_run),
+                joinedload(Bug.file),
+                joinedload(Bug.requirements),
+                joinedload(Bug.history),
+            )
+            .filter(Bug.id == bug_id)
+            .first()
+        )
+
+    def get_all_with_relations(self) -> list[Bug]:
+        """Obtiene todos los bugs con sus relaciones cargadas."""
+        return (
+            self.query()
+            .options(
+                joinedload(Bug.system),
+                joinedload(Bug.campaign_run),
+                joinedload(Bug.file),
+                joinedload(Bug.requirements),
+                joinedload(Bug.history),
+            )
+            .all()
+        )

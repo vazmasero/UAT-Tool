@@ -39,6 +39,7 @@ from .assets_dto import (
     UspaceServiceDTO,
     UspaceTableDTO,
 )
+from .auxiliary_dto import FileServiceDTO, SectionServiceDTO, SystemServiceDTO
 from .bug_dto import (
     BugDetailDTO,
     BugFormDTO,
@@ -68,6 +69,9 @@ from .test_management_dto import (
 )
 
 __all__ = [
+    "FileServiceDTO",
+    "SystemServiceDTO",
+    "SectionServiceDTO",
     "BlockFormDTO",
     "BlockServiceDTO",
     "BlockTableDTO",

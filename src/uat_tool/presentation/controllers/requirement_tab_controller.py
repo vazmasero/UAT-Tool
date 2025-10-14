@@ -30,14 +30,14 @@ class RequirementTabController(BaseTabController):
         self.proxy_model.setSourceModel(self.table_model)
 
     def load_data(self):
-        """Carga los datos de bugs enriquecidos para la tabla."""
+        """Carga los datos de requisitos enriquecidos para la tabla."""
         try:
             logger.info("Iniciando carga de datos...")
             self.loading_state_changed.emit(True)
 
             requirement_table_dto = self.get_all_items()
             logger.info(
-                f"{len(requirement_table_dto)} requirements obtenidos y enriquecidos"
+                f"{len(requirement_table_dto)} requisitos obtenidos y enriquecidos"
             )
 
             self._on_data_loaded(requirement_table_dto)
@@ -99,7 +99,7 @@ class RequirementTabController(BaseTabController):
             logger.info(f"Editando requisito {self._selected_item_id}...")
 
             # Obtener datos actuales del requisito
-            requirement = self.get_item_by_id(self._selected_item_id)
+            requirement = self.get_item_form_dto_by_id(self._selected_item_id)
             if not requirement:
                 self.error_occurred.emit(
                     f"Requirement {self._selected_item_id} no encontrado"
@@ -148,15 +148,15 @@ class RequirementTabController(BaseTabController):
             if reply == QMessageBox.Yes:
                 success = self.delete_item(self._selected_item_id)
                 if success:
+                    logger.info(f"Requisito {self._selected_item_id} eliminado")
                     self.item_deleted.emit(self._selected_item_id)
                     self.set_selected_item(None)
-                    logger.info(f"Requisito {self._selected_item_id} eliminado")
 
                     # Mostrar mensaje de éxito
                     QMessageBox.information(
                         None,
                         "Éxito",
-                        f"Requisito eliminado correctamente (ID: '{self._selected_item_id}')",
+                        "Requisito eliminado correctamente",
                     )
                 else:
                     self.error_occurred.emit(
@@ -184,23 +184,25 @@ class RequirementTabController(BaseTabController):
             logger.error(f"Error manejando doble clic: {e}")
             self.error_occurred.emit(f"Error manejando doble clic: {str(e)}")
 
-    def get_item_by_id(self, item_id) -> RequirementTableDTO | None:
+    def get_item_table_dto_by_id(self, item_id) -> RequirementTableDTO | None:
         """Obtiene un requirement enriquecido por su ID."""
         for requirement in self._current_data:
             if requirement.id == item_id:
                 return requirement
         return None
 
+    def get_item_form_dto_by_id(self, item_id) -> RequirementFormDTO | None:
+        """Obtiene un requirement como formulario DTO por su ID."""
+        requirement_dto = self.requirement_service.get_requirement_dto_by_id(item_id)
+        if not requirement_dto:
+            return None
+
+        return RequirementFormDTO.from_service_dto(requirement_dto)
+
     def delete_item(self, item_id: int) -> bool:
         """Elimina un requirement."""
         try:
-            # CONTEXTO HARDCODEADO PROVISIONAL
-            context = {
-                "modified_by": "provisional",
-                "environment_id": "id",
-            }
-
-            success = self.requirement_service.delete_requirement(item_id, context)
+            success = self.requirement_service.delete_requirement(item_id)
             return success
         except Exception as e:
             logger.error(f"Error eliminando requirement {item_id}: {e}")
@@ -219,7 +221,7 @@ class RequirementTabController(BaseTabController):
         # POR EL USUARIO AL INICIAR EL PROGRAMA.
         context = {
             "modified_by": "provisional",
-            "environment_id": "id",
+            "environment_id": 1,
         }
 
         # Enviar al servicio para crear
@@ -250,7 +252,7 @@ class RequirementTabController(BaseTabController):
             item_id, form_dto, context
         )
         if not updated_service_dto:
-            raise ValueError(f"Bug con ID {item_id} no encontrado")
+            raise ValueError(f"Requirement con ID {item_id} no encontrado")
 
         # Convertir a TableDTO para la tabla
         return self.requirement_service._enrich_requirement_for_table(

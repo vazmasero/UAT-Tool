@@ -64,8 +64,8 @@ class BugServiceDTO(BaseServiceDTO):
     system_version: str
     short_description: str
     definition: str
-    urgency: str  # "1", "2", "3"
-    impact: str  # "1", "2", "3"
+    urgency: int  # 1, 2, 3
+    impact: int  # 1, 2, 3
 
     # Campos opcionales (con default)
     campaign_run_id: str | None = None
@@ -74,12 +74,17 @@ class BugServiceDTO(BaseServiceDTO):
     comments: str | None = None
     file_id: int | None = None
 
+    # Campos auxiliares (opcionales)
+    system_name: str = ""
+    requirement_codes: list[str] = field(default_factory=list)
+    file_name: str = ""
+
     # Historial (se carga bajo demanda)
     history: list[BugHistoryServiceDTO] = field(default_factory=list)
 
     @classmethod
     def from_model(cls, bug: "Bug") -> "BugServiceDTO":
-        """Conversión directa modelo -> DTO (sin enriquecimiento).
+        """Conversión directa modelo -> DTO (enriquecidos con datos relacionados).
 
         Args:
             bug (Bug): modelo SQLAlchemy de la entidad a transformar.
@@ -87,6 +92,12 @@ class BugServiceDTO(BaseServiceDTO):
         Returns:
             BugServiceDTO: modelo DTO de la entidad transformada.
         """
+        system_name = bug.system.name if bug.system else ""
+        requirement_codes = (
+            [req.code for req in bug.requirements] if bug.requirements else []
+        )
+        file_name = bug.file.filename if bug.file else ""
+
         return cls(
             id=bug.id,
             created_at=bug.created_at,
@@ -110,6 +121,9 @@ class BugServiceDTO(BaseServiceDTO):
             history=[BugHistoryServiceDTO.from_model(hist) for hist in bug.history]
             if bug.history
             else [],
+            system_name=system_name,
+            requirement_codes=requirement_codes,
+            file_name=file_name,
         )
 
 
@@ -155,8 +169,8 @@ class BugTableDTO(BaseTableDTO):
         """
 
         # Mapear urgencia/impacto numérico a texto
-        urgency_map = {"1": "Baja", "2": "Media", "3": "Alta"}
-        impact_map = {"1": "Baja", "2": "Media", "3": "Alta"}
+        urgency_map = {1: "Baja", 2: "Media", 3: "Alta"}
+        impact_map = {1: "Baja", 2: "Media", 3: "Alta"}
 
         # Formatear fechas (manejar caso de None para nuevos bugs)
         created_at_str = (
@@ -208,8 +222,8 @@ class BugFormDTO(BaseFormDTO):
     cb_status: str  # "OPEN", "CLOSED SOLVED", etc.
     cb_system: str  # ID del sistema seleccionado
     le_version: str  # Versión del sistema
-    cb_urgency: int  # "1", "2", "3"
-    cb_impact: int  # "1", "2", "3"
+    cb_urgency: int  # 1, 2, 3
+    cb_impact: int  # 1, 2, 3
     le_short_desc: str  # Descripción corta
     le_definition: str  # Definición
 
@@ -219,7 +233,7 @@ class BugFormDTO(BaseFormDTO):
         default_factory=list
     )  # Lista de IDs de requisitos seleccionados
     le_service_now_id: str = ""  # ID de ServiceNow
-    comments: str = ""  # Comentarios
+    le_comments: str = ""  # Comentarios
     le_files: str = ""  # Ruta/nombre del archivo temporal para subir
     existing_file_id: int | None = None  # ID del archivo ya subido
 
@@ -235,22 +249,22 @@ class BugFormDTO(BaseFormDTO):
     def to_service_dto(self, context_data: dict) -> BugServiceDTO:
         """Convierte datos de formulario -> ServiceDTO para guardar."""
         return BugServiceDTO(
-            id=0,  # 0 para nuevos bugs, se asignará en BD
+            id=None,  # Nuevo bug
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
             created_at=None,  # None inicialmente para nuevos registros (los gestiona BBDD)
             updated_at=None,  # Idem
             status=self.cb_status,
-            system_id=int(self.cb_system),
+            system_id=self.cb_system,
             system_version=self.le_version,
             service_now_id=self.le_service_now_id or None,
             campaign_run_id=self.cb_campaign,
             requirements=self.lw_requirements,
-            urgency=str(self.cb_urgency),  # Convertir a string para consistencia
-            impact=str(self.cb_impact),  # Convertir a string para consistencia
+            urgency=self.cb_urgency,  # Mantener como entero
+            impact=self.cb_impact,  # Mantener como entero
             short_description=self.le_short_desc,
             definition=self.le_definition,
-            comments=self.comments or None,
+            comments=self.le_comments or None,
             file_id=self.existing_file_id,
             history=[],  # Historial vacío para nuevos bugs
         )
@@ -262,14 +276,14 @@ class BugFormDTO(BaseFormDTO):
             cb_status=service_dto.status,
             cb_system=str(service_dto.system_id),  # int -> string
             le_version=service_dto.system_version,
-            cb_urgency=int(service_dto.urgency),  # string -> int
-            cb_impact=int(service_dto.impact),  # string -> int
+            cb_urgency=service_dto.urgency,
+            cb_impact=service_dto.impact,
             le_short_desc=service_dto.short_description,
             le_definition=service_dto.definition,
             cb_campaign=service_dto.campaign_run_id,
             lw_requirements=service_dto.requirements,
             le_service_now_id=service_dto.service_now_id or "",
-            comments=service_dto.comments or "",
+            le_comments=service_dto.comments or "",
             existing_file_id=service_dto.file_id,
         )
 

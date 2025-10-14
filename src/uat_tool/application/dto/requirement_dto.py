@@ -18,9 +18,13 @@ class RequirementServiceDTO(BaseServiceDTO):
     systems: list[int] = field(default_factory=list)
     sections: list[int] = field(default_factory=list)
 
+    # Campos para nombres (opcionales)
+    system_names: list[str] = field(default_factory=list)
+    section_names: list[str] = field(default_factory=list)
+
     @classmethod
     def from_model(cls, requirement: "Requirement") -> "RequirementServiceDTO":
-        """Conversión directa modelo -> DTO (sin enriquecimiento).
+        """Conversión directa modelo -> DTO (enriquecidos con nombres, si están disponibles).
 
         Args:
             requirement (Requirement): modelo SQLAlchemy de la entidad a transformar.
@@ -28,6 +32,16 @@ class RequirementServiceDTO(BaseServiceDTO):
         Returns:
             RequirementServiceDTO: modelo DTO de la entidad transformada.
         """
+
+        system_names = (
+            [sys.name for sys in requirement.systems] if requirement.systems else []
+        )
+        section_names = (
+            [section.name for section in requirement.sections]
+            if requirement.sections
+            else []
+        )
+
         return cls(
             id=requirement.id,
             created_at=requirement.created_at,
@@ -42,6 +56,8 @@ class RequirementServiceDTO(BaseServiceDTO):
             sections=[section.id for section in requirement.sections]
             if requirement.sections
             else [],
+            system_names=system_names,
+            section_names=section_names,
         )
 
 
@@ -109,12 +125,12 @@ class RequirementFormDTO(BaseFormDTO):
         if len(self.le_definition.strip()) < 10:
             raise ValueError("La definición debe tener al menos 10 caracteres")
         if not self.le_code.strip():
-            raise ValueError("La versión del sistema es requerida")
+            raise ValueError("El código del requisito es requerido")
 
     def to_service_dto(self, context_data: dict) -> RequirementServiceDTO:
         """Convierte datos de formulario -> ServiceDTO para guardar."""
         return RequirementServiceDTO(
-            id=0,  # 0 para nuevos requisitos, se asignará en BD
+            id=None,  # Nuevo requisito
             modified_by=context_data["modified_by"],
             environment_id=context_data["environment_id"],
             created_at=None,

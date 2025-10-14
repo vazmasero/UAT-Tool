@@ -28,6 +28,11 @@ class BaseTabController(QObject):
         self._current_data = []
         self._selected_item_id = None
 
+        # Conectar señales CRUD para auto-refrescar
+        self.item_created.connect(lambda _: self.refresh_data())
+        self.item_updated.connect(lambda _: self.refresh_data())
+        self.item_deleted.connect(lambda _: self.refresh_data())
+
     def get_all_items(self) -> list[Any]:
         """Obtiene todos los items de la tabla."""
         raise NotImplementedError
