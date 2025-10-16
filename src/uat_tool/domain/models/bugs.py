@@ -52,7 +52,6 @@ class Bug(AuditMixin, EnvironmentMixin, Base):
     urgency = Column(Integer, nullable=False)
     impact = Column(Integer, nullable=False)
     comments = Column(Text)
-    file_id = Column(Integer, ForeignKey("files.id", ondelete="RESTRICT"))
     requirements = relationship(
         "Requirement", secondary="bug_requirements", back_populates="bugs"
     )
@@ -60,7 +59,6 @@ class Bug(AuditMixin, EnvironmentMixin, Base):
     campaign_run = relationship("CampaignRun", back_populates="bugs")
     environment_rel = relationship("Environment", back_populates="environment_bugs")
     system = relationship("System", back_populates="bugs")
-    file = relationship("File", back_populates="bug_files")
     history = relationship("BugHistory", back_populates="bug")
 
 

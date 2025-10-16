@@ -23,7 +23,7 @@ class BaseServiceDTO:
             "section_names",
             "requirement_codes",
             "system_name",
-            "file_name",
+            "files",
             # Añadir más campos de lectura si es necesario
         }
 
@@ -59,6 +59,8 @@ class BaseTableDTO:
 @dataclass
 class BaseFormDTO:
     """DTO base para formularios con validaciones comunes."""
+
+    id: int | None
 
     @staticmethod
     def _format_date(date: datetime | None) -> str:

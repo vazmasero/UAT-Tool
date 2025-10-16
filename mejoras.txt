@@ -9,7 +9,6 @@ Formularios:
 
 Tablas: 
 	- Deselección al pulsar fuera de la tabla.
-	- Añadir columnas de "Creation date" y "Last update" a todas las tablas. 
 	- Recargar TODAS las tablas siempre y cuando haya un cambio en un item que tenga relaciones
 	otros. Ej: se cambia el nombre de un dron, que cascadee a todas las tablas la actualización del nombre o 
 	su eliminación. 
@@ -17,13 +16,6 @@ Tablas:
 Assets: 
 	- Víncular assets entre sí (cuando aplique) mediante base de datos
 	(uso de checkboxes y list widgets con tablas intermedias).
-
-Steps: 
-	- Arreglar la importación de form manager para poder usar una instancia general al abrir 
-	el formulario de steps (probar singleton)
-
-Blocks:
-	- Los sistemas se almacenan como string y no como un vinculo a un sistema de BBDD
 
 Bugs y U-space:
 	- Arreglar el tema de los archivos adjuntos. Por un lado, que al hacer click se puedan descargar y, 
@@ -33,8 +25,13 @@ Bugs y U-space:
 - Versión 2.0
 Valorar meter validaciones básicas __init__ en los modelos de db
 Añadir getters simples en los metodos dominio (get full name, is ative, etc)
-	
 
+- Manejo de files. Que si se edita un bug y no se seleccionan archivos, se mantengan los que ya estaban creados
+Hasta ahora es necesario volver a seleccionar el archivo para que se mantenga. 
+	
+Que al borrar bugs se borre la carpeta en files, no solo los archivos
+
+Gestión de archivos grandes en la carga de archivos
 
 
 

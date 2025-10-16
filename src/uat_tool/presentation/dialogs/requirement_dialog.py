@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QAbstractItemView, QDialog, QListWidgetItem, QMessageBox
 
-from uat_tool.application.dto import RequirementFormDTO, RequirementTableDTO
+from uat_tool.application.dto import RequirementFormDTO
 from uat_tool.presentation.views.ui.form_requirement_ui import Ui_form_requirement
 from uat_tool.shared import get_logger
 
@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 class RequirementDialog(QDialog, Ui_form_requirement):
     """Diálogo para crear/editar requisitos."""
 
-    def __init__(self, app_context, requirement: RequirementTableDTO = None):
+    def __init__(self, app_context, requirement: RequirementFormDTO = None):
         super().__init__()
         self.setupUi(self)
         self.app_context = app_context
@@ -122,6 +122,7 @@ class RequirementDialog(QDialog, Ui_form_requirement):
     def get_form_data(self) -> RequirementFormDTO:
         """Obtiene los datos del formulario como DTO."""
         return RequirementFormDTO(
+            id=None,
             le_code=self.le_code.text().strip(),
             le_definition=self.le_definition.text().strip(),
             lw_systems=self._get_selected_systems(),

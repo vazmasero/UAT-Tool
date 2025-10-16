@@ -8,7 +8,6 @@ from uat_tool.domain import (
     CampaignRun,
     Case,
     CaseRun,
-    File,
     Step,
     StepRun,
 )
@@ -265,19 +264,13 @@ class StepRunRepository(BaseRepository[StepRun]):
             raise
 
     def update_step_result(
-        self, step_run_id: int, passed: bool, notes: str = None, file_id: int = None
+        self, step_run_id: int, passed: bool, notes: str = None
     ) -> StepRun:
         """Actualiza el resultado de un paso ejecutado."""
         step_run = self.get_by_id(step_run_id, raise_if_not_found=True)
         step_run.passed = passed
         if notes:
             step_run.notes = notes
-        if file_id:
-            # Validar que el archivo existe
-            file = self.session.get(File, file_id)
-            if not file:
-                raise ValueError(f"File con id {file_id} no encontrado.")
-            step_run.file_id = file_id
         self.session.flush()
         return step_run
 
@@ -289,7 +282,6 @@ class StepRunRepository(BaseRepository[StepRun]):
                 joinedload(StepRun.step),
                 joinedload(StepRun.case_run),
                 joinedload(StepRun.campaign_run),
-                joinedload(StepRun.file),
             )
             .filter(StepRun.id == step_run_id)
             .one_or_none()

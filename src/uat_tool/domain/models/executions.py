@@ -84,11 +84,7 @@ class StepRun(Base):
     )
     passed = Column(Boolean)
     notes = Column(Text)
-    file_id = Column(
-        Integer, ForeignKey("files.id", ondelete="RESTRICT"), nullable=True
-    )
 
-    file = relationship("File", back_populates="step_runs_files")
     step = relationship("Step", back_populates="step_runs")
     campaign_run = relationship("CampaignRun", back_populates="step_runs")
     case_run = relationship("CaseRun", back_populates="step_runs")

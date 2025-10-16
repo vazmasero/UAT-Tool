@@ -147,6 +147,7 @@ class RequirementFormDTO(BaseFormDTO):
     ) -> "RequirementFormDTO":
         """Convierte ServiceDTO -> FormDTO para precargar formulario."""
         return cls(
+            id=service_dto.id,
             le_code=service_dto.code,
             le_definition=service_dto.definition,
             lw_systems=service_dto.systems,

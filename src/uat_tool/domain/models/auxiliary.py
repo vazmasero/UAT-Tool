@@ -94,13 +94,10 @@ class File(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     owner_type = Column(String, nullable=False)
+    owner_id = Column(Integer, nullable=False)
     filename = Column(String, nullable=False)
     filepath = Column(String, nullable=False)
     mime_type = Column(String, nullable=False)
     size = Column(String, nullable=False)
     uploaded_by = Column(String, nullable=False)
     uploaded_at = Column(DateTime, server_default=func.now(), nullable=False)
-
-    uspace = relationship("Uspace", back_populates="file")
-    bug_files = relationship("Bug", back_populates="file")
-    step_runs_files = relationship("StepRun", back_populates="file")

@@ -1,12 +1,12 @@
+import os
 import shutil
-import sys
-import uuid
 from pathlib import Path
 
-from PySide6.QtWidgets import QApplication, QMessageBox
+from PySide6.QtWidgets import QMessageBox
 
 from uat_tool.application import (
     ApplicationContext,
+    AuxiliaryService,
     BugService,
 )
 from uat_tool.application.dto import BugFormDTO, BugTableDTO, FileServiceDTO
@@ -25,6 +25,9 @@ class BugTabController(BaseTabController):
     def __init__(self, app_context: ApplicationContext):
         super().__init__(app_context, "bugs")
         self.bug_service: BugService = self.app_context.get_service("bug_service")
+        self.aux_service: AuxiliaryService = self.app_context.get_service(
+            "auxiliary_service"
+        )
         self.table_model = BugTableModel()
         self.proxy_model = BugProxyModel()
         self.proxy_model.setSourceModel(self.table_model)
@@ -64,64 +67,63 @@ class BugTabController(BaseTabController):
 
     def handle_new_register(self):
         """Maneja la creación de un nuevo bug desde formulario"""
-        temp_file_dtos = []
-
+        dialog = None
         try:
             logger.info("Abriendo diálogo para nuevo bug...")
 
             # Crear y mostrar diálogo de formulario
             dialog = BugDialog(self.app_context)
             if dialog.exec():
-                # 1. Obtener datos del formulario
+                # Obtener datos del formulario
                 form_dto = dialog.get_form_data()
                 file_dtos = dialog.get_selected_files_data()
 
-                # 2. Mostrar advertencia si hay archivos grandes
-                if file_dtos:
-                    QMessageBox.information(
-                        None,
-                        "Procesando archivos",
-                        f"Preparando {len(file_dtos)} archivo(s)...",
-                    )
-
-                # 3. Copiar archivos a ubicación temporal con UUID
-                temp_file_dtos = self._copy_files_to_temp(file_dtos)
-
-                # Si el usuario canceló archivos muy grandes
-                if file_dtos and not temp_file_dtos:
-                    logger.info("Usuario canceló la operación por archivos muy grandes")
-                    return
-
-                # 4. Crear el bug (sin archivos)
+                # Crear el bug (sin archivos)
                 new_item = self.create_item(form_dto)
+                bug_id = new_item.id
 
-                # 5. Mover archivos a ubicación definitiva con ID real
-                final_file_dtos = self._move_files_to_final_location(
-                    temp_file_dtos, new_item.id
+                logger.info(f"Bug creado con ID: {bug_id}")
+
+                # Si hay archivos, procesarlos
+                if file_dtos:
+                    try:
+                        self._process_bug_files(bug_id, file_dtos)
+
+                    except Exception as file_error:
+                        logger.error(f"Error procesando archivos: {file_error}")
+
+                        # Eliminar bug si fallan archivos
+                        self._rollback_bug_creation(bug_id)
+
+                        # Mostrar error y mantener diálogo abierto
+                        QMessageBox.critical(
+                            dialog,  # Usar dialog como parent para mantenerlo abierto
+                            "Error en archivos",
+                            f"Error procesando archivos: {str(file_error)}\n\nEl bug no se ha creado. Puede intentarlo de nuevo.",
+                        )
+                        return
+
+                # Éxito completo
+                QMessageBox.information(
+                    None,
+                    "Éxito",
+                    f"Bug creado correctamente con {len(file_dtos)} archivos adjuntos",
                 )
 
-                # 6. Actualizar bug con referencias a archivos
-                self._associate_files_with_bug(new_item.id, final_file_dtos)
-
-                # 7. Emitir señal
+                # Emit signal para actualizar
                 self.item_created.emit(new_item)
-                logger.info(f"Nuevo bug creado: {new_item.id}")
-
-                # Mostrar mensaje de éxito
-                success_msg = f"Bug creado correctamente (Id: '{new_item.id}')"
-                if final_file_dtos:
-                    success_msg += f"\n\nArchivos asociados: {len(final_file_dtos)}"
-
-                QMessageBox.information(None, "Éxito", success_msg)
 
         except Exception as e:
-            # 8. Limpiar archivos temporales en caso de error
-            if temp_file_dtos:  # ← Solo si hay archivos temporales
-                self._cleanup_temp_files(temp_file_dtos)
-                logger.info("Archivos temporales limpiados debido a error")
-
             logger.error(f"Error creando nuevo bug: {e}")
-            self.error_occurred.emit(f"Error creando bug: {str(e)}")
+
+            if dialog and dialog.isVisible():
+                QMessageBox.critical(
+                    dialog,
+                    "Error creando bug",
+                    f"Error creando bug: {str(e)}\n\nPuede intentarlo de nuevo.",
+                )
+            else:
+                self.error_occurred.emit(f"Error creando bug: {str(e)}")
 
     def handle_edit_register(self):
         """Maneja la edición del bug seleccionado desde formulario."""
@@ -143,15 +145,19 @@ class BugTabController(BaseTabController):
             if dialog.exec():
                 form_dto = dialog.get_form_data()
                 updated_item = self.update_item(self._selected_item_id, form_dto)
-                self.item_updated.emit(updated_item)
-                logger.info(f"Bug {self._selected_item_id} actualizado")
 
+                self._process_bug_files_edit(
+                    bug_id=self._selected_item_id,
+                    new_selected_files=form_dto.selected_files,
+                )
                 # Mostrar mensaje de éxito
                 QMessageBox.information(
                     None,
                     "Éxito",
-                    f"Bug actualizado correctamente (Code: '{self._selected_item_id}')",
+                    "Bug actualizado correctamente",
                 )
+                self.item_updated.emit(updated_item)
+                logger.info(f"Bug {self._selected_item_id} actualizado")
 
         except Exception as e:
             logger.error(f"Error editando bug: {e}")
@@ -170,15 +176,19 @@ class BugTabController(BaseTabController):
             reply = QMessageBox.question(
                 None,
                 "Confirmar eliminación",
-                f"¿Estás seguro de que quieres eliminar el bug {self._selected_item_id}?\n\nEsta acción no se puede deshacer.",
+                f"¿Estás seguro de que quieres eliminar el bug {self._selected_item_id} y sus archivos adjuntos?\n\nEsta acción no se puede deshacer.",
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No,
             )
 
             if reply == QMessageBox.Yes:
+                current_files = self.aux_service.get_files_by_bug_id(
+                    self._selected_item_id
+                )
                 success = self.delete_item(self._selected_item_id)
                 if success:
                     logger.info(f"Bug {self._selected_item_id} eliminado")
+                    self._remove_bug_files(self._selected_item_id, current_files)
                     self.item_deleted.emit(self._selected_item_id)
                     self.set_selected_item(None)
 
@@ -244,7 +254,7 @@ class BugTabController(BaseTabController):
         # POR EL USUARIO AL INICIAR EL PROGRAMA.
         context = {
             "modified_by": "provisional",
-            "environment_id": "id",
+            "environment_id": 1,
         }
 
         # Enviar al servicio para actualizar
@@ -274,8 +284,27 @@ class BugTabController(BaseTabController):
 
     def delete_item(self, item_id: int) -> bool:
         """Elimina un bug."""
-        logger.info(f"🔄 [BugTabController] Eliminando bug {item_id}...")
+        logger.info(f"Eliminando bug {item_id}...")
         return self.bug_service.delete_bug(item_id)
+
+    def _rollback_bug_creation(self, bug_id: int):
+        """Eliminar un bug creado y sus archivos en caso de error."""
+        try:
+            logger.info(f"Realizando rollback del bug {bug_id}")
+
+            bug_dir = self.ensure_bug_directory(bug_id)
+            if bug_dir.exists():
+                import shutil
+
+                shutil.rmtree(bug_dir)
+                logger.info(f"Carpeta de archivos eliminada: {bug_dir}")
+
+                self.delete_item(bug_id)
+                logger.info(f"Bug {bug_id} eliminado de la base de datos")
+
+        except Exception as rollback_error:
+            logger.error(f"Error en rollback del bug {bug_id}: {rollback_error}")
+            # TO DO Informar sobre un estado inconsistente
 
     # Métodos específicos para Bugs
     def get_bugs_by_status(self, status: str) -> list[BugTableDTO]:
@@ -288,243 +317,153 @@ class BugTabController(BaseTabController):
         bugs = self.bug_service.get_bugs_by_priority(priority)
         return [self.bug_service._to_dto(bug) for bug in bugs]
 
-    # Métodos de archivos
-    def _get_app_root(self) -> Path:
-        """Obtiene la ruta raíz de la aplicación."""
-        # Si está empaquetado con PyInstaller
-        if getattr(sys, "frozen", False):
-            return Path(sys.executable).parent
-        else:
-            return Path(__file__).parent.parent.parent  # Ajustar según tu estructura
-
-    def _copy_files_to_temp(
-        self, file_dtos: list[FileServiceDTO]
-    ) -> list[FileServiceDTO]:
-        """Copia archivos a carpeta temporal con manejo de archivos grandes."""
-        # Si no hay archivos, retornar lista vacía inmediatamente
-        if not file_dtos:
-            return []
-
-        temp_dir = self._get_app_root() / "files" / "temp"
-        temp_dir.mkdir(parents=True, exist_ok=True)
-
-        # Verificar archivos muy grandes (>500MB)
-        very_large_files = self._get_very_large_files(file_dtos)
-        if very_large_files:
-            if not self._confirm_very_large_files(very_large_files):
-                return []
-
-        temp_file_dtos = []
-
-        for file_dto in file_dtos:
-            try:
-                file_path = Path(file_dto.filepath)
-                if not file_path.exists():
-                    logger.warning(f"Archivo no encontrado: {file_dto.filepath}")
-                    continue
-
-                file_size = file_path.stat().st_size
-                temp_path = None
-
-                # Estrategia de copia según tamaño
-                if file_size > 100 * 1024 * 1024:  # > 100MB
-                    temp_path = self._copy_large_file_by_chunks(file_dto, temp_dir)
-                else:  # < 100MB
-                    temp_path = self._copy_file_normal(file_dto, temp_dir)
-
-                if temp_path:
-                    temp_id = str(uuid.uuid4())
-                    new_file_dto = FileServiceDTO(
-                        id=0,
-                        owner_type="bug_temp",
-                        filename=file_path.name,
-                        filepath=str(temp_path),
-                        mime_type=file_dto.mime_type,
-                        size=self._format_file_size(file_size),
-                        uploaded_by=file_dto.uploaded_by,
-                        uploaded_at=file_dto.uploaded_at,
-                        temp_id=temp_id,
-                    )
-
-                    temp_file_dtos.append(new_file_dto)
-                    logger.info(
-                        f"Archivo copiado: {file_dto.filename} ({self._format_file_size(file_size)})"
-                    )
-
-            except Exception as e:
-                logger.error(f"Error moviendo archivo a temporal: {e}")
-                raise
-
-        return temp_file_dtos
-
-    def _get_very_large_files(self, file_dtos: list[FileServiceDTO]) -> list[tuple]:
-        """Identifica archivos muy grandes (>500MB)."""
-        very_large_files = []
-        for dto in file_dtos:
-            try:
-                file_size = Path(dto.filepath).stat().st_size
-                if file_size > 500 * 1024 * 1024:  # 500MB
-                    very_large_files.append(
-                        (dto.filename, self._format_file_size(file_size))
-                    )
-            except Exception as e:
-                logger.warning(f"No se pudo obtener tamaño de {dto.filename}: {e}")
-
-        return very_large_files
-
-    def _confirm_very_large_files(self, large_files: list[tuple]) -> bool:
-        """Pide confirmación para archivos muy grandes."""
-        file_list = "\n".join([f"- {name} ({size})" for name, size in large_files])
-
-        reply = QMessageBox.question(
-            None,
-            "Archivos muy grandes detectados",
-            f"Los siguientes archivos son muy grandes:\n{file_list}\n\n"
-            f"La copia puede tomar varios minutos.\n¿Desea continuar?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
-        )
-
-        return reply == QMessageBox.Yes
-
-    def _copy_file_normal(self, file_dto: FileServiceDTO, temp_dir: Path) -> Path:
-        """Copia normal para archivos pequeños/medianos."""
-        original_path = Path(file_dto.filepath)
-        temp_id = str(uuid.uuid4())
-        temp_filename = f"{temp_id}_{original_path.name}"
-        temp_path = temp_dir / temp_filename
-
-        shutil.copy2(original_path, temp_path)
-        return temp_path
-
-    def _copy_large_file_by_chunks(
-        self, file_dto: FileServiceDTO, temp_dir: Path
-    ) -> Path:
-        """Copia archivos grandes por chunks permitiendo que la UI respire."""
-        original_path = Path(file_dto.filepath)
-        temp_id = str(uuid.uuid4())
-        temp_filename = f"{temp_id}_{original_path.name}"
-        temp_path = temp_dir / temp_filename
-
-        file_size = original_path.stat().st_size
-        chunk_size = self._get_optimal_chunk_size(file_size)
-
+    # Manejo de archivos
+    def _process_bug_files(self, bug_id: int, file_dtos: list[FileServiceDTO]):
+        """Procesa y guarda los archivos de un bug."""
         try:
-            copied_bytes = 0
-            with open(original_path, "rb") as src, open(temp_path, "wb") as dst:
-                while True:
-                    chunk = src.read(chunk_size)
-                    if not chunk:
-                        break
-                    dst.write(chunk)
-                    copied_bytes += len(chunk)
+            # Crear directorio para el bug
+            bug_dir = self.ensure_bug_directory(bug_id)
+            saved_files = []
 
-                    # Cada 5 chunks, permitir que la UI se actualice
-                    if copied_bytes % (chunk_size * 5) == 0:
-                        QApplication.processEvents()
-
-            return temp_path
-
-        except Exception:
-            # Limpiar en caso de error
-            if temp_path.exists():
-                temp_path.unlink()
-            raise
-
-    def _get_optimal_chunk_size(self, file_size: int) -> int:
-        """Determina el tamaño óptimo del chunk según el tamaño del archivo."""
-        if file_size > 1024 * 1024 * 1024:  # > 1GB
-            return 50 * 1024 * 1024  # 50MB chunks
-        elif file_size > 500 * 1024 * 1024:  # > 500MB
-            return 20 * 1024 * 1024  # 20MB chunks
-        else:  # 100MB - 500MB
-            return 10 * 1024 * 1024  # 10MB chunks
-
-    def _move_files_to_final_location(
-        self, temp_file_dtos: list[FileServiceDTO], bug_id: int
-    ) -> list[FileServiceDTO]:
-        """Mueve archivos de temporal a ubicación definitiva."""
-        bugs_dir = self._get_app_root() / "files" / "bugs" / str(bug_id)
-        bugs_dir.mkdir(parents=True, exist_ok=True)
-
-        final_file_dtos = []
-
-        for temp_dto in temp_file_dtos:
-            try:
-                temp_path = Path(temp_dto.filepath)
-                final_filename = temp_path.name.replace(
-                    f"{temp_dto.temp_id}_", ""
-                )  # Eliminar UUID
-                final_path = bugs_dir / final_filename
-
-                # Mover (no copiar) de temp a definitivo
-                shutil.move(str(temp_path), str(final_path))
-
-                # Crear DTO final
-                final_file_dto = FileServiceDTO(
-                    id=0,
-                    owner_type="bug",
-                    filename=final_filename,
-                    filepath=str(final_path),
-                    mime_type=temp_dto.mime_type,
-                    size=temp_dto.size,
-                    uploaded_by=temp_dto.uploaded_by,
-                    uploaded_at=temp_dto.uploaded_at,
-                )
-                final_file_dtos.append(final_file_dto)
-
-            except Exception as e:
-                logger.error(f"Error moviendo archivo a ubicación final: {e}")
-                raise
-
-        return final_file_dtos
-
-    def _cleanup_temp_files(self, temp_file_dtos: list[FileServiceDTO]):
-        """Limpia archivos temporales en caso de error."""
-        for temp_dto in temp_file_dtos:
-            try:
-                temp_path = Path(temp_dto.filepath)
-                if temp_path.exists():
-                    temp_path.unlink()
-            except Exception as e:
-                logger.warning(f"No se pudo limpiar archivo temporal {temp_path}: {e}")
-
-    def _format_file_size(self, size_bytes: int) -> str:
-        """Formatea el tamaño del archivo a string legible."""
-        try:
-            for unit in ["B", "KB", "MB", "GB"]:
-                if size_bytes < 1024.0:
-                    return f"{size_bytes:.1f} {unit}"
-                size_bytes /= 1024.0
-            return f"{size_bytes:.1f} TB"
-        except Exception as e:
-            logger.error(f"Error formateando tamaño de archivo: {e}")
-            return "Unknown size"
-
-    def _associate_files_with_bug(self, bug_id: int, file_dtos: list[FileServiceDTO]):
-        """Asocia archivos con un bug en la base de datos."""
-        try:
-            if not file_dtos:
-                logger.info(f"No hay archivos para asociar con bug {bug_id}")
-                return
-
-            logger.info(f"Asociando {len(file_dtos)} archivos con bug {bug_id}")
-
-            # Obtener el servicio de archivos
-            file_service = self.app_context.get_service("file_service")
-
-            # Actualizar los file_dtos con el bug_id como owner_id
+            # Copiar cada archivo y actualizar el DTO
             for file_dto in file_dtos:
-                file_dto.owner_id = bug_id  # Si tu FileServiceDTO tiene este campo
-                # O usar el contexto si no tienes owner_id en el DTO
+                # Generar nombre único para el archivo
+                original_name = Path(file_dto.filepath).name
+                unique_name = self._generate_unique_filename(bug_dir, original_name)
+                destination_path = bug_dir / unique_name
 
-            # Crear los archivos en la base de datos
-            created_files = file_service.create_files_for_bug(file_dtos, bug_id)
+                # Copiar archivo
+                shutil.copy2(file_dto.filepath, destination_path)
+
+                # Actualizar FileServiceDTO con la ruta definitiva
+                file_dto.filepath = str(destination_path)
+                file_dto.owner_type = "bug"
+                saved_files.append(file_dto)
+
+                logger.info(f"Archivo copiado: {original_name} -> {destination_path}")
+
+                # Crear registros en BD
+                if saved_files:
+                    self.aux_service.create_files_for_bug(saved_files, bug_id)
+                    logger.info(
+                        f"{len(saved_files)} archivos guardados en BD para bug {bug_id}"
+                    )
+
+        except Exception as e:
+            logger.error(f"Error procesando archivos para bug {bug_id}: {e}")
+            self._cleanup_saved_files(saved_files, bug_dir)
+            raise  # Relanzar excepción para manejo superior
+
+    def _process_bug_files_edit(
+        self,
+        bug_id: int,
+        new_selected_files: list[FileServiceDTO],
+    ):
+        """Procesa archivos durante edición - reemplaza todos los anteriores."""
+        try:
+            current_files = self.aux_service.get_files_by_bug_id(bug_id)
+
+            files_to_keep = []
+            files_to_add = []
+
+            for new_file in new_selected_files:
+                existing_file = self._find_matching_file(new_file, current_files)
+                if existing_file:
+                    files_to_keep.append(existing_file)
+                else:
+                    files_to_add.append(new_file)
+
+            files_to_remove = [f for f in current_files if f not in files_to_keep]
+
+            if files_to_remove:
+                self._remove_bug_files(bug_id, files_to_remove)
+
+            if files_to_add:
+                self._process_bug_files(bug_id, files_to_add)
 
             logger.info(
-                f"Archivos asociados correctamente: {len(created_files)} archivos para bug {bug_id}"
+                f"Edición archivos bug {bug_id}: +{len(files_to_add)} -{len(files_to_remove)}"
             )
 
         except Exception as e:
-            logger.error(f"Error asociando archivos con bug {bug_id}: {e}")
+            logger.error(f"Error procesando archivos en edición para bug {bug_id}: {e}")
             raise
+
+    def _find_matching_file(
+        self, new_file: FileServiceDTO, existing_files: list[FileServiceDTO]
+    ) -> FileServiceDTO | None:
+        """Encuentra un archivo existente que coincida con el nuevo."""
+        for existing in existing_files:
+            if (
+                new_file.filename == existing.filename
+                and new_file.size == existing.size
+            ):
+                return existing
+        return None
+
+    def _remove_bug_files(self, bug_id: int, files_to_remove: list[FileServiceDTO]):
+        """Elimina archivos de un bug (BD y físico)."""
+        try:
+            with self.app_context.get_unit_of_work_context() as uow:
+                for file_dto in files_to_remove:
+                    # Eliminar de BD
+                    success = uow.file_repo.delete(file_dto.id)
+                    if success:
+                        logger.info(f"Archivo {file_dto.filename} eliminado de BD")
+
+                        # Eliminar archivo físico
+                        if os.path.exists(file_dto.filepath):
+                            os.remove(file_dto.filepath)
+                            logger.info(
+                                f"Archivo físico eliminado: {file_dto.filepath}"
+                            )
+        except Exception as e:
+            logger.error(f"Error eliminando archivos del bug {bug_id}:{e}")
+            raise
+
+    def _cleanup_copied_files(self, copied_files: list, bug_dir: Path):
+        """Elimina archivos copiados en caso de error"""
+        try:
+            # Eliminar archivos individuales copiados
+            for file_path in copied_files:
+                if file_path.exists():
+                    file_path.unlink()
+                    logger.info(f"Archivo eliminado por error: {file_path}")
+
+            # Eliminar carpeta si está vacía
+            if bug_dir and bug_dir.exists() and not any(bug_dir.iterdir()):
+                bug_dir.rmdir()
+                logger.info(f"Carpeta vacía eliminada: {bug_dir}")
+
+        except Exception as cleanup_error:
+            logger.error(f"Error limpiando archivos copiados: {cleanup_error}")
+
+    def _generate_unique_filename(self, directory: Path, filename: str) -> str:
+        """Genera un nombre único para evitar colisiones"""
+        path = directory / filename
+        if not path.exists():
+            return filename
+
+        # Si existe, añadir sufijo numérico
+        stem = path.stem
+        suffix = path.suffix
+        counter = 1
+
+        while True:
+            new_name = f"{stem}_{counter}{suffix}"
+            new_path = directory / new_name
+            if not new_path.exists():
+                return new_name
+            counter += 1
+
+    def get_bug_files_base_path(self) -> Path:
+        """Obtiene la ruta base para archivos de bugs"""
+        base_dir = self.aux_service.get_app_root()
+
+        return base_dir / "files" / "bugs"
+
+    def ensure_bug_directory(self, bug_id: int) -> Path:
+        """Crea y devuelve la carpeta para un bug específico."""
+        bug_dir = self.get_bug_files_base_path() / str(bug_id)
+        bug_dir.mkdir(parents=True, exist_ok=True)
+        return bug_dir

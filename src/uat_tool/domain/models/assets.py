@@ -238,16 +238,9 @@ class Uspace(AuditMixin, EnvironmentMixin, Base):
     code = Column(String, nullable=False)
     name = Column(String, nullable=False)
     sectors_count = Column(Integer, nullable=False)
-    file_id = Column(
-        Integer,
-        ForeignKey("files.id", ondelete="RESTRICT"),
-        nullable=False,
-    )
 
-    file = relationship("File", back_populates="uspace")
     environment_rel = relationship("Environment", back_populates="environment_uspaces")
 
     __table_args__ = (
         UniqueConstraint("environment_id", "code", name="uq_uspace_code_env"),
-        UniqueConstraint("environment_id", "file_id", name="uq_uspace_file_env"),
     )

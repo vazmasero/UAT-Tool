@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+
 from uat_tool.application import (
     ApplicationContext,
 )
@@ -85,33 +88,42 @@ class AuxiliaryService(BaseService):
             created_files = []
             with self.app_context.get_unit_of_work_context() as uow:
                 for file_dto in file_dtos:
-                    # Crear archivo en la base de datos
-                    file_data = {
-                        "owner_type": "bug",
-                        "owner_id": bug_id,
-                        "filename": file_dto.filename,
-                        "filepath": file_dto.filepath,
-                        "mime_type": file_dto.mime_type,
-                        "size": file_dto.size,
-                        "uploaded_by": file_dto.uploaded_by,
-                    }
+                    try:
+                        # Crear archivo en la base de datos
+                        file_data = {
+                            "owner_type": "bug",
+                            "owner_id": bug_id,
+                            "filename": file_dto.filename,
+                            "filepath": file_dto.filepath,
+                            "mime_type": file_dto.mime_type,
+                            "size": file_dto.size,
+                            "uploaded_by": file_dto.uploaded_by,
+                        }
 
-                    created_file = uow.file_repo.create(file_data)
+                        created_file = uow.file_repo.create(**file_data)
 
-                    # Convertir a DTO
-                    file_dto_created = FileServiceDTO.from_model(created_file)
-                    created_files.append(file_dto_created)
+                        # Convertir a DTO
+                        file_dto_created = FileServiceDTO.from_model(created_file)
+                        created_files.append(file_dto_created)
 
-                    logger.info(
-                        f"Archivo creado: {file_dto.filename} (ID: {created_file.id})"
-                    )
+                        logger.info(
+                            f"Archivo creado: {file_dto.filename} (ID: {created_file.id})"
+                        )
 
-                uow.commit()
+                    except Exception as file_error:
+                        logger.error(
+                            f"Error creando archivo {file_dto.filename}: {file_error}"
+                        )
+                        # Si falla un archivo, hacemos rollback de todos
+                        uow.rollback()
+                        raise Exception(
+                            f"Error creando archivo {file_dto.filename}"
+                        ) from file_error
 
             return created_files
 
         except Exception as e:
-            logger.error(f"Error creando archivos para bug {bug_id}: {e}")
+            logger.error(f"Error creando archivos en BD para bug {bug_id}: {e}")
             raise
 
     def get_files_by_bug_id(self, bug_id: int) -> list[FileServiceDTO]:
@@ -124,3 +136,14 @@ class AuxiliaryService(BaseService):
         except Exception as e:
             logger.error(f"Error obteniendo archivos para bug {bug_id}: {e}")
             return []
+
+    # Métodos de archivos
+    def get_app_root(self) -> Path:
+        """Obtiene la ruta raíz de la aplicación."""
+        # Si está empaquetado con PyInstaller
+        if getattr(sys, "frozen", False):
+            return Path(sys.executable).parent
+        else:
+            return Path(
+                __file__
+            ).parent.parent.parent  # Ajustar según la estructura final

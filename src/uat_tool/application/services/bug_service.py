@@ -1,7 +1,14 @@
 from uat_tool.application import (
     ApplicationContext,
 )
-from uat_tool.application.dto import BugFormDTO, BugServiceDTO, BugTableDTO
+from uat_tool.application.dto import (
+    BugFormDTO,
+    BugHistoryServiceDTO,
+    BugHistoryTableDTO,
+    BugServiceDTO,
+    BugTableDTO,
+    FileServiceDTO,
+)
 from uat_tool.application.services.base_service import BaseService
 from uat_tool.domain import Bug
 from uat_tool.shared import get_logger
@@ -42,16 +49,33 @@ class BugService(BaseService):
         self._log_operation("get_by_id", "Bug", bug_id)
         with self.app_context.get_unit_of_work_context() as uow:
             bug = uow.bug_repo.get_by_id(bug_id)
-            return BugServiceDTO.from_model(bug) if bug else None
+            files = uow.file_repo.get_by_owner("bug", bug_id)
+            if files:
+                file_dtos = [FileServiceDTO.from_model(file) for file in files]
+            else:
+                file_dtos = []
+            if bug:
+                bug_dto = BugServiceDTO.from_model(bug)
+                bug_dto.files = file_dtos
+                return bug_dto
+            else:
+                return None
 
     # --- MÉTODOS ENRIQUECIDOS (específicos para UI) ---
 
     def get_all_bugs_for_table(self) -> list[BugTableDTO]:
         """Obtiene todos los bugs enriquecidos para mostrar en la tabla UI."""
         self._log_operation("get_all_for_table", "Bug")
+
+        # Obtener bugs básicos
         with self.app_context.get_unit_of_work_context() as uow:
             bugs = uow.bug_repo.get_all_with_relations()
             bugs_dto = [BugServiceDTO.from_model(bug) for bug in bugs]
+
+        # Enriquecer con archivos
+        auxiliary_service = self.app_context.get_service("auxiliary_service")
+        for bug_dto in bugs_dto:
+            bug_dto.files = auxiliary_service.get_files_by_bug_id(bug_dto.id)
 
         return [self._enrich_bug_for_table(bug) for bug in bugs_dto]
 
@@ -60,7 +84,6 @@ class BugService(BaseService):
         try:
             system_name = bug_dto.system_name
             requirement_codes = bug_dto.requirement_codes
-            file_name = bug_dto.file_name
 
             if not system_name and bug_dto.system_id:
                 system_name = self._get_system_name(bug_dto.system_id)
@@ -71,14 +94,10 @@ class BugService(BaseService):
                     for req_id in bug_dto.requirements
                 ]
 
-            if not file_name and bug_dto.file_id:
-                file_name = self._get_file_name(bug_dto.file_id)
-
             return BugTableDTO.from_service_dto(
                 service_dto=bug_dto,
                 system_name=system_name,
                 requirement_codes=requirement_codes,
-                file_name=file_name,
             )
         except Exception as e:
             logger.error(f"Error enriqueciendo bug {bug_dto.id} para tabla: {e}")
@@ -150,3 +169,17 @@ class BugService(BaseService):
         bugs = self.get_bugs_by_status(status)
         bugs_service_dto = [BugServiceDTO.from_model(bug) for bug in bugs]
         return [self._enrich_bug_for_table(bug_dto) for bug_dto in bugs_service_dto]
+
+    def get_bug_history_dto(self, bug_id) -> list[BugHistoryTableDTO]:
+        """Obtiene el historial de un bug listo para mostrar en formulario."""
+        self._log_operation("get_bug_history_dto", "Bug")
+        # Obtener el historial de un bug segun su id
+        with self.app_context.get_unit_of_work_context() as uow:
+            history = uow.bug_repo.get_with_history(bug_id).history
+
+            return [
+                BugHistoryTableDTO.from_service_dto(
+                    BugHistoryServiceDTO.from_model(change)
+                )
+                for change in history
+            ]

@@ -5,12 +5,14 @@ from uat_tool.domain import (
     Bug,
     BugHistory,
     CampaignRun,
-    File,
     Requirement,
     System,
 )
+from uat_tool.shared import get_logger
 
 from .base import AuditEnvironmentMixinRepository
+
+logger = get_logger(__name__)
 
 
 class BugRepository(AuditEnvironmentMixinRepository[Bug]):
@@ -33,7 +35,7 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
         return objects
 
     def create(self, data: dict, environment_id: int, modified_by: str) -> Bug:
-        """Crea un nuevo Bug con relaciones opcionales (campaign_run, file) y obligatoria (system_id).
+        """Crea un nuevo Bug con relaciones opcionales (campaign_run) y obligatoria (system_id).
         También inicializa un registro en BugHistory."""
 
         if not data.get("system_id"):
@@ -70,20 +72,11 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             else:
                 campaign_run = None
 
-            file_id = data.get("file_id")
-            if file_id:
-                file = self.session.get(File, file_id)
-                if not file:
-                    raise ValueError(f"File con id {file_id} no encontrado.")
-            else:
-                file = None
-
             # Crear el bug usando el método base
             bug_data = {
                 **data,
                 "system_id": system.id,
                 "campaign_run_id": campaign_run.id if campaign_run else None,
-                "file_id": file.id if file else None,
             }
 
             bug = self.create_with_audit_env(bug_data, environment_id, modified_by)
@@ -122,6 +115,23 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
         try:
             bug = self.get_by_id(bug_id, raise_if_not_found=True)
 
+            # Configuración de relaciones
+            relations_config = {
+                "requirements": (
+                    Requirement,
+                    "requirements",
+                    "Requisitos no encontrados",
+                )
+            }
+
+            # Extraer relaciones antes de crear la instancia
+            extracted_relations = {}
+            for relation_key in relations_config.keys():
+                extracted_relations[relation_key] = data.pop(relation_key, [])
+
+            # Extraer historial
+            data.pop("history", [])
+
             # Validar FK si se proporcionan
             if "system_id" in data:
                 system = self.session.get(System, data["system_id"])
@@ -140,19 +150,27 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
                         )
                 # Si campaign_run_id es None, se permite (puede ser desasociado)
 
-            if "file_id" in data:
-                file_id = data["file_id"]
-                if file_id:
-                    file = self.session.get(File, file_id)
-                    if not file:
-                        raise ValueError(f"File con id {file_id} no encontrado.")
-                # Si file_id es None, se permite (puede ser desasociado)
-
             # Guardar estado anterior para el historial si es relevante
             old_status = bug.status if "status" in data else None
 
             # Actualizar el bug usando el método base
             bug = self.update_with_audit_env(bug, data, modified_by, environment_id)
+
+            # Relaciones many to many
+            for relation_key, (
+                model_class,
+                attr_name,
+                error_msg,
+            ) in relations_config.items():
+                ids = extracted_relations[relation_key]
+                # Si se proporciona la relación, actualizarla
+                if (
+                    ids is not None
+                ):  # Importante: permite lista vacía para eliminar todos
+                    objects = self._validate_related_objects(
+                        model_class, ids, error_msg
+                    )
+                    setattr(bug, attr_name, objects)
 
             # Registrar en el historial
             history_message = change_summary
@@ -162,6 +180,27 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             self.add_history(bug_id, modified_by, history_message)
 
             return bug
+
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
+
+    def delete(self, bug_id: int) -> bool:
+        """Elimina un bug y su historial relacionado."""
+        try:
+            bug = self.get_by_id(bug_id)
+            if not bug:
+                return False
+
+            # Eliminar historial primero
+            for history in bug.history:
+                self.session.delete(history)
+
+            # Eliminar el bug
+            self.session.delete(bug)
+            self.session.flush()
+
+            return True
 
         except SQLAlchemyError:
             self.session.rollback()
@@ -252,7 +291,6 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             .options(
                 joinedload(Bug.system),
                 joinedload(Bug.campaign_run),
-                joinedload(Bug.file),
                 joinedload(Bug.requirements),
                 joinedload(Bug.history),
             )
@@ -267,7 +305,6 @@ class BugRepository(AuditEnvironmentMixinRepository[Bug]):
             .options(
                 joinedload(Bug.system),
                 joinedload(Bug.campaign_run),
-                joinedload(Bug.file),
                 joinedload(Bug.requirements),
                 joinedload(Bug.history),
             )

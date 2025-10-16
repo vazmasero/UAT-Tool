@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
 )
 
-from uat_tool.application.dto import BugFormDTO, BugTableDTO, FileServiceDTO
+from uat_tool.application.dto import BugFormDTO, FileServiceDTO
 from uat_tool.presentation.views.ui.form_bug_ui import Ui_form_bug
 from uat_tool.shared import get_logger
 
@@ -20,7 +20,7 @@ logger = get_logger(__name__)
 class BugDialog(QDialog, Ui_form_bug):
     """Diálogo para crear/editar bugs."""
 
-    def __init__(self, app_context, bug: BugTableDTO = None):
+    def __init__(self, app_context, bug: BugFormDTO = None):
         super().__init__()
         self.setupUi(self)
         self.app_context = app_context
@@ -32,6 +32,7 @@ class BugDialog(QDialog, Ui_form_bug):
 
         if bug:
             self._load_existing_data()
+            self._load_history()
         else:
             self.setWindowTitle("New Bug")
 
@@ -39,6 +40,15 @@ class BugDialog(QDialog, Ui_form_bug):
 
     def _setup_ui(self):
         """Configura la UI del diálogo."""
+        # Título
+        if self.bug:
+            if self.bug.le_service_now_id != "":
+                self.lbl_title.setText(f"Edit bug: {self.bug.le_service_now_id}")
+            else:
+                self.lbl_title.setText("Edit bug")
+        else:
+            self.lbl_title.setText("New bug")
+
         # Permitir selección múltiple en lista de requisitos
         self.lw_requirements.setSelectionMode(QAbstractItemView.MultiSelection)
 
@@ -53,7 +63,7 @@ class BugDialog(QDialog, Ui_form_bug):
         self.btn_accept.clicked.connect(self._on_accept)
         self.btn_cancel.clicked.connect(self.reject)
         self.btn_file_browse.clicked.connect(self._on_browse_files)
-        #self.btn_file_download.clicked.connect(self._on_download_file)
+        # self.btn_file_download.clicked.connect(self._on_download_file)
 
     def _on_browse_files(self):
         """Abre el diálogo para seleccionar archivos."""
@@ -84,13 +94,35 @@ class BugDialog(QDialog, Ui_form_bug):
     def _load_existing_data(self):
         """Carga los datos existentes para edición."""
         if self.bug:
-            self.setWindowTitle(f"Editar Bug - {self.bug.le_code}")
-            self.le_code.setText(self.bug.le_code)
+            self.setWindowTitle(f"Editar Bug - {self.bug.id}")
+            self.le_short_desc.setText(self.bug.le_short_desc)
             self.le_definition.setText(self.bug.le_definition)
+            self.le_comments.setText(self.bug.le_comments)
+            self.le_service_now_id.setText(self.bug.le_service_now_id)
+            self.le_version.setText(self.bug.le_version)
 
-            # Seleccionar sistemas y secciones (implementar según tu lógica)
-            self._select_systems(self.bug.lw_systems)
-            self._select_sections(self.bug.lw_sections)
+            if hasattr(self.bug, "existing_file_names"):
+                self.le_files.setText(self.bug.existing_file_names)
+
+            # Seleccionar elementos de combo box y listas
+            self._select_requirements(self.bug.lw_requirements)
+            self._select_status_value(self.bug.cb_status)
+            self._select_urgency_value(self.bug.cb_urgency)
+            self._select_impact_value(self.bug.cb_impact)
+            self._select_system_value(self.bug.cb_system)
+
+    def _load_history(self):
+        """Carga el historial del bug."""
+        if self.bug:
+            # Obtener el historial (lista)
+            history_dtos = self.bug.history
+
+            # Formatear el historial para mostrar en pantalla
+            self.lw_history.clear()
+            for change in history_dtos:
+                self.lw_history.addItem(
+                    f"{change.change_summary} - {change.changed_by} - {change.change_timestamp}"
+                )
 
     def _load_campaigns(self):
         """Carga el combobox de campañas disponibles."""
@@ -141,19 +173,39 @@ class BugDialog(QDialog, Ui_form_bug):
         except Exception as e:
             logger.error(f"Error cargando requisitos: {e}")
 
-    def _select_systems(self, system_ids):
-        """Selecciona sistemas en la lista."""
-        for i in range(self.lw_systems.count()):
-            item = self.lw_systems.item(i)
-            if item.data(Qt.UserRole) in system_ids:
+    def _select_requirements(self, requirement_codes):
+        """Selecciona requisitos en la lista."""
+        for i in range(self.lw_requirements.count()):
+            item = self.lw_requirements.item(i)
+            if item.data(Qt.UserRole) in requirement_codes:
                 item.setSelected(True)
 
-    def _select_sections(self, section_ids):
-        """Selecciona secciones en la lista."""
-        for i in range(self.lw_sections.count()):
-            item = self.lw_sections.item(i)
-            if item.data(Qt.UserRole) in section_ids:
-                item.setSelected(True)
+    def _select_status_value(self, status):
+        """Selecciona el valor del cb status."""
+        index = self.cb_status.findText(status, Qt.MatchFixedString)
+        if index >= 0:
+            self.cb_status.setCurrentIndex(index)
+
+    def _select_urgency_value(self, urgency):
+        """Selecciona el valor del cb status."""
+        for i in range(self.cb_urgency.count()):
+            if self.cb_urgency.itemData(i) == urgency:
+                self.cb_urgency.setCurrentIndex(i)
+                break
+
+    def _select_impact_value(self, impact):
+        """Selecciona el valor del cb status."""
+        for i in range(self.cb_impact.count()):
+            if self.cb_impact.itemData(i) == impact:
+                self.cb_impact.setCurrentIndex(i)
+                break
+
+    def _select_system_value(self, system):
+        """Selecciona el valor del cb status."""
+        for i in range(self.cb_system.count()):
+            if self.cb_system.itemData(i) == system:
+                self.cb_system.setCurrentIndex(i)
+                break
 
     def _on_accept(self):
         """Valida y acepta el formulario."""
@@ -182,6 +234,7 @@ class BugDialog(QDialog, Ui_form_bug):
     def get_form_data(self) -> BugFormDTO:
         """Obtiene los datos del formulario como DTO."""
         return BugFormDTO(
+            id=None,
             le_short_desc=self.le_short_desc.text().strip(),
             le_definition=self.le_definition.text().strip(),
             cb_status=self.cb_status.currentText(),
@@ -193,6 +246,7 @@ class BugDialog(QDialog, Ui_form_bug):
             lw_requirements=self._get_selected_requirements(),
             cb_urgency=self.cb_urgency.currentData(),
             cb_impact=self.cb_impact.currentData(),
+            selected_files=self.get_selected_files_data(),
         )
 
     def _get_selected_requirements(self) -> list[int]:
@@ -250,6 +304,7 @@ class BugDialog(QDialog, Ui_form_bug):
             return FileServiceDTO(
                 id=None,  # Asignado al guardar en BD
                 owner_type="bug",
+                owner_id=None,  # Asignado a posteriori cuando el bug es creado
                 filename=file_name,
                 filepath=file_path,  # Ruta temporal hasta copiar el archivo
                 mime_type=mime_type,

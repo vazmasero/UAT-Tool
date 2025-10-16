@@ -325,7 +325,7 @@ class Ui_form_bug(object):
         __sortingEnabled = self.lw_history.isSortingEnabled()
         self.lw_history.setSortingEnabled(False)
         ___qlistwidgetitem = self.lw_history.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("form_bug", u"[Change in status:...]", None));
+        ___qlistwidgetitem.setText(QCoreApplication.translate("form_bug", u"[No history yet...]", None))
         self.lw_history.setSortingEnabled(__sortingEnabled)
 
         self.tab_widget_bug.setTabText(self.tab_widget_bug.indexOf(self.tab_history), QCoreApplication.translate("form_bug", u"History", None))

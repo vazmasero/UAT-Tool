@@ -89,6 +89,20 @@ class FileRepository(BaseRepository[File]):
         """
         return self.query().filter(File.filename == filename).first()
 
+    def get_by_owner(self, owner_type: str, owner_id: int) -> list[File]:
+        return (
+            self.query()
+            .filter(File.owner_type == owner_type, File.owner_id == owner_id)
+            .all()
+        )
+
+    def get_by_owners(self, owner_type: str, owner_ids: list[int]) -> list[File]:
+        return (
+            self.query()
+            .filter(File.owner_type == owner_type, File.owner_id.in_(owner_ids))
+            .all()
+        )
+
 
 class ReasonRepository(BaseRepository[Reason]):
     """Repositorio para la entidad Reason."""

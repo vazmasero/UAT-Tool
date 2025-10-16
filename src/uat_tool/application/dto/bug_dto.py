@@ -2,6 +2,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
+from uat_tool.application.dto.auxiliary_dto import FileServiceDTO
 from uat_tool.application.dto.base_dto import BaseFormDTO, BaseServiceDTO, BaseTableDTO
 from uat_tool.domain import Bug, BugHistory
 
@@ -72,12 +73,11 @@ class BugServiceDTO(BaseServiceDTO):
     service_now_id: str | None = None
     requirements: list[int] = field(default_factory=list)
     comments: str | None = None
-    file_id: int | None = None
 
     # Campos auxiliares (opcionales)
     system_name: str = ""
     requirement_codes: list[str] = field(default_factory=list)
-    file_name: str = ""
+    files: list[FileServiceDTO] = field(default_factory=list)
 
     # Historial (se carga bajo demanda)
     history: list[BugHistoryServiceDTO] = field(default_factory=list)
@@ -96,7 +96,6 @@ class BugServiceDTO(BaseServiceDTO):
         requirement_codes = (
             [req.code for req in bug.requirements] if bug.requirements else []
         )
-        file_name = bug.file.filename if bug.file else ""
 
         return cls(
             id=bug.id,
@@ -114,7 +113,6 @@ class BugServiceDTO(BaseServiceDTO):
             campaign_run_id=bug.campaign_run_id,
             service_now_id=bug.service_now_id,
             comments=bug.comments,
-            file_id=bug.file_id,
             requirements=[req.id for req in bug.requirements]
             if bug.requirements
             else [],
@@ -123,7 +121,7 @@ class BugServiceDTO(BaseServiceDTO):
             else [],
             system_name=system_name,
             requirement_codes=requirement_codes,
-            file_name=file_name,
+            files=[],  # Se puebla en el servicio
         )
 
 
@@ -146,8 +144,8 @@ class BugTableDTO(BaseTableDTO):
     campaign_run: str = "N/A"  # Nombre de la campaña (no ID)
     requirements: str = "N/A"  # Lista de nombres de requisitos
     comments: str = ""
-    file_name: str = "No file attached"  # Nombre del archivo para descargar
-    file_id: int | None = None  # ID para la descarga
+    file_count: int = 0  # Número de archivos adjuntos
+    file_names: str = "No files attached"  # Nombres concatenados
     history_count: int = 0  # Número de entradas en el historial
 
     @classmethod
@@ -156,7 +154,6 @@ class BugTableDTO(BaseTableDTO):
         service_dto: BugServiceDTO,
         system_name: str = "",
         requirement_codes: list[str] = None,
-        file_name: str = "",
     ) -> "BugTableDTO":
         """Transforma ServiceDTO -> TableDTO con datos enriquecidos.
 
@@ -191,6 +188,14 @@ class BugTableDTO(BaseTableDTO):
             else "N/A"
         )
 
+        file_count = len(service_dto.files)
+        file_names = ", ".join(
+            [f.filename for f in service_dto.files[:3]]
+        )  # Primeros 3
+
+        if file_count > 3:
+            file_names += f" ... (+{file_count - 3} más)"
+
         return cls(
             id=service_dto.id,
             status=service_dto.status.title(),
@@ -207,8 +212,8 @@ class BugTableDTO(BaseTableDTO):
             urgency=urgency_map.get(service_dto.urgency, "Unknown"),
             impact=impact_map.get(service_dto.impact, "Unknown"),
             comments=service_dto.comments or "",
-            file_name=file_name or "No file attached",
-            file_id=service_dto.file_id,
+            file_count=file_count,
+            file_names=file_names if file_count > 0 else "No files attached",
             history_count=len(service_dto.history),
         )
 
@@ -227,15 +232,25 @@ class BugFormDTO(BaseFormDTO):
     le_short_desc: str  # Descripción corta
     le_definition: str  # Definición
 
-    # Campos OPCIONALES (con default) - VAN DESPUÉS
+    # Campos OPCIONALES (con default)
     cb_campaign: int | None = None  # ID de la campaña (puede ser None)
     lw_requirements: list[int] = field(
         default_factory=list
     )  # Lista de IDs de requisitos seleccionados
     le_service_now_id: str = ""  # ID de ServiceNow
     le_comments: str = ""  # Comentarios
-    le_files: str = ""  # Ruta/nombre del archivo temporal para subir
-    existing_file_id: int | None = None  # ID del archivo ya subido
+
+    # Archivos
+    selected_files: list[FileServiceDTO] = field(
+        default_factory=list
+    )  # Archivos nuevos
+    existing_file_ids: list[int] = field(
+        default_factory=list
+    )  # ID del archivos ya existentes
+    existing_file_names: str = ""  # Nombres para mostrar en QLineEdit
+
+    # Historial
+    history: list[BugHistoryTableDTO] = field(default_factory=list)
 
     def __post_init__(self):
         """Validaciones específicas del formulario."""
@@ -265,16 +280,25 @@ class BugFormDTO(BaseFormDTO):
             short_description=self.le_short_desc,
             definition=self.le_definition,
             comments=self.le_comments or None,
-            file_id=self.existing_file_id,
+            files=[],
             history=[],  # Historial vacío para nuevos bugs
         )
 
     @classmethod
     def from_service_dto(cls, service_dto: BugServiceDTO) -> "BugFormDTO":
         """Convierte ServiceDTO -> FormDTO para precargar formulario."""
+
+        existing_file_ids = [f.id for f in service_dto.files if f.id]
+        existing_file_names = ", ".join([f.filename for f in service_dto.files])
+
+        history_dtos = []
+        for change in service_dto.history:
+            history_dtos.append(BugHistoryTableDTO.from_service_dto(change))
+
         return cls(
+            id=service_dto.id,
             cb_status=service_dto.status,
-            cb_system=str(service_dto.system_id),  # int -> string
+            cb_system=service_dto.system_id,  # int -> string
             le_version=service_dto.system_version,
             cb_urgency=service_dto.urgency,
             cb_impact=service_dto.impact,
@@ -284,7 +308,9 @@ class BugFormDTO(BaseFormDTO):
             lw_requirements=service_dto.requirements,
             le_service_now_id=service_dto.service_now_id or "",
             le_comments=service_dto.comments or "",
-            existing_file_id=service_dto.file_id,
+            existing_file_ids=existing_file_ids,
+            existing_file_names=existing_file_names or "No attached files",
+            history=history_dtos,
         )
 
 
@@ -294,6 +320,7 @@ class BugDetailDTO:
 
     bug: BugTableDTO
     history: list[BugHistoryTableDTO]
+    files: list[FileServiceDTO] = field(default_factory=list)
 
     @classmethod
     def from_service_dto(
@@ -301,11 +328,10 @@ class BugDetailDTO:
         bug_service_dto: BugServiceDTO,
         system_name: str = "",
         requirement_codes: list[str] = None,
-        file_name: str = "",
     ) -> "BugDetailDTO":
         """Crea un DTO detallado con bug e historial."""
         bug_table_dto = BugTableDTO.from_service_dto(
-            bug_service_dto, system_name, requirement_codes, file_name
+            bug_service_dto, system_name, requirement_codes
         )
 
         history_table_dtos = [
@@ -313,4 +339,6 @@ class BugDetailDTO:
             for hist in bug_service_dto.history
         ]
 
-        return cls(bug=bug_table_dto, history=history_table_dtos)
+        return cls(
+            bug=bug_table_dto, history=history_table_dtos, files=bug_service_dto.files
+        )

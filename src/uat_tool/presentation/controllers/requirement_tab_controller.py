@@ -110,6 +110,7 @@ class RequirementTabController(BaseTabController):
             dialog = RequirementDialog(self.app_context, requirement)
             if dialog.exec():
                 form_dto = dialog.get_form_data()
+                form_dto.id = self._selected_item_id
                 updated_item = self.update_item(self._selected_item_id, form_dto)
                 self.item_updated.emit(updated_item)
                 logger.info(f"Requisito {self._selected_item_id} actualizado")
@@ -118,7 +119,7 @@ class RequirementTabController(BaseTabController):
                 QMessageBox.information(
                     None,
                     "Éxito",
-                    f"Requisito actualizado correctamente (Code: '{self._selected_item_id}')",
+                    f"Requisito actualizado correctamente (Code: '{updated_item.code}')",
                 )
 
         except Exception as e:

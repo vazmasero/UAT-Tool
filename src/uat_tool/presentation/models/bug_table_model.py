@@ -79,11 +79,7 @@ class BugTableModel(QAbstractTableModel):
             elif col == 14:
                 return bug.comments
             elif col == 15:
-                return bug.file_name
-
-        # Para el botón de descarga
-        elif role == Qt.ItemDataRole.UserRole and col == 15:
-            return bug.file_id  # Devuelve el ID para la descarga
+                return bug.file_names
 
         return None
 

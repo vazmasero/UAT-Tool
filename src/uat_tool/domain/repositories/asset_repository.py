@@ -277,9 +277,7 @@ class UspaceRepository(AuditEnvironmentMixinRepository[Uspace]):
         super().__init__(session, Uspace)
 
     def create(self, data: dict, environment_id: int, modified_by: str) -> Uspace:
-        """Crea Uspace validando file_id."""
-        if not data.get("file_id"):
-            raise ValueError("file_id es obligatorio para crear un Uspace")
+        """Crea Uspace validando mixins."""
 
         return self.create_with_audit_env(data, environment_id, modified_by)
 

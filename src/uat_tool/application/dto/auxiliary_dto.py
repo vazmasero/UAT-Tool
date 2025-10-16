@@ -58,6 +58,7 @@ class SectionServiceDTO:
 @dataclass
 class FileServiceDTO:
     id: int | None
+    owner_id: int | None
     owner_type: str
     filename: str
     filepath: str
@@ -79,6 +80,7 @@ class FileServiceDTO:
         return cls(
             id=file.id,
             owner_type=file.owner_type,
+            owner_id=file.owner_id,
             filename=file.filename,
             filepath=file.filepath,
             mime_type=file.mime_type,
