@@ -79,6 +79,7 @@ class EmailFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: EmailServiceDTO) -> "EmailFormDTO":
         return cls(
+            id=service_dto.id,
             le_name=service_dto.name,
             le_email=service_dto.email,
             le_password=service_dto.password,
@@ -176,6 +177,7 @@ class OperatorFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: OperatorServiceDTO) -> "OperatorFormDTO":
         return cls(
+            id=service_dto.id,
             le_name=service_dto.name,
             le_easa_id=service_dto.easa_id,
             le_verification_code=service_dto.verification_code,
@@ -280,6 +282,7 @@ class DroneFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: DroneServiceDTO) -> "DroneFormDTO":
         return cls(
+            id=service_dto.id,
             le_name=service_dto.name,
             le_sn=service_dto.serial_number,
             le_manufacturer=service_dto.manufacturer,
@@ -385,6 +388,7 @@ class UhubOrgFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: UhubOrgServiceDTO) -> "UhubOrgFormDTO":
         return cls(
+            id=service_dto.id,
             le_name=service_dto.name,
             le_email=service_dto.email,
             le_phone=service_dto.phone,
@@ -506,6 +510,7 @@ class UhubUserFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: UhubUserServiceDTO) -> "UhubUserFormDTO":
         return cls(
+            id=service_dto.id,
             le_email=service_dto.email,
             le_dni=service_dto.dni,
             le_phone=service_dto.phone,
@@ -663,6 +668,7 @@ class UasZoneFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: UasZoneServiceDTO) -> "UasZoneFormDTO":
         return cls(
+            id=service_dto.id,
             le_name=service_dto.name,
             cb_area_type=service_dto.area_type,
             le_radius=service_dto.circle_radius,
@@ -762,6 +768,7 @@ class UspaceFormDTO(BaseFormDTO):
     @classmethod
     def from_service_dto(cls, service_dto: UspaceServiceDTO) -> "UspaceFormDTO":
         return cls(
+            id=service_dto.id,
             le_code=service_dto.code,
             le_name=service_dto.name,
             le_sectors_count=service_dto.sectors_count,

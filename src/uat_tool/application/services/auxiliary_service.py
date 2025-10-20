@@ -1,9 +1,6 @@
 import sys
 from pathlib import Path
 
-from uat_tool.application import (
-    ApplicationContext,
-)
 from uat_tool.application.dto import FileServiceDTO, SectionServiceDTO, SystemServiceDTO
 from uat_tool.application.services.base_service import BaseService
 from uat_tool.domain import Section, System
@@ -14,9 +11,6 @@ logger = get_logger(__name__)
 
 class AuxiliaryService(BaseService):
     """Servicio para manejar la lógica de negocio de modelos auxiliares."""
-
-    def __init__(self, app_context: ApplicationContext):
-        super().__init__(app_context)
 
     # --- MÉTODOS BÁSICOS (para la lógica de negocio y otros servicios) ---
 
@@ -83,7 +77,7 @@ class AuxiliaryService(BaseService):
     ) -> list[FileServiceDTO]:
         """Crea múltiples archivos asociados a un bug."""
         try:
-            logger.info(f"Creando {len(file_dtos)} archivos para bug {bug_id}")
+            logger.info("Creando %i archivos para bug %i", len(file_dtos), bug_id)
 
             created_files = []
             with self.app_context.get_unit_of_work_context() as uow:
@@ -107,23 +101,25 @@ class AuxiliaryService(BaseService):
                         created_files.append(file_dto_created)
 
                         logger.info(
-                            f"Archivo creado: {file_dto.filename} (ID: {created_file.id})"
+                            "Archivo creado: %s (ID: %i)",
+                            file_dto.filename,
+                            created_file.id,
                         )
 
                     except Exception as file_error:
                         logger.error(
-                            f"Error creando archivo {file_dto.filename}: {file_error}"
+                            "Error creando archivo %s: %s",
+                            file_dto.filename,
+                            file_error,
                         )
-                        # Si falla un archivo, hacemos rollback de todos
-                        uow.rollback()
-                        raise Exception(
+                        raise OSError(
                             f"Error creando archivo {file_dto.filename}"
                         ) from file_error
 
             return created_files
 
         except Exception as e:
-            logger.error(f"Error creando archivos en BD para bug {bug_id}: {e}")
+            logger.error("Error creando archivos en BD para bug %i: %s", bug_id, e)
             raise
 
     def get_files_by_bug_id(self, bug_id: int) -> list[FileServiceDTO]:
@@ -134,7 +130,7 @@ class AuxiliaryService(BaseService):
                 return [FileServiceDTO.from_model(file) for file in files]
 
         except Exception as e:
-            logger.error(f"Error obteniendo archivos para bug {bug_id}: {e}")
+            logger.error("Error obteniendo archivos para bug %i: %s", bug_id, e)
             return []
 
     # Métodos de archivos
@@ -143,7 +139,4 @@ class AuxiliaryService(BaseService):
         # Si está empaquetado con PyInstaller
         if getattr(sys, "frozen", False):
             return Path(sys.executable).parent
-        else:
-            return Path(
-                __file__
-            ).parent.parent.parent  # Ajustar según la estructura final
+        return Path(__file__).parent.parent.parent  # Ajustar según la estructura final

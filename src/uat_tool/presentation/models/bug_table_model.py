@@ -45,41 +45,28 @@ class BugTableModel(QAbstractTableModel):
             return None
 
         bug = self.bugs[index.row()]
-        col = index.column()
 
         if role == Qt.ItemDataRole.DisplayRole:
-            if col == 0:
-                return str(bug.id)
-            elif col == 1:
-                return bug.status
-            elif col == 2:
-                return bug.system
-            elif col == 3:
-                return bug.system_version
-            elif col == 4:
-                return bug.created_at
-            elif col == 5:
-                return bug.updated_at
-            elif col == 6:
-                return bug.modified_by
-            elif col == 7:
-                return bug.service_now_id
-            elif col == 8:
-                return bug.campaign_run
-            elif col == 9:
-                return bug.requirements
-            elif col == 10:
-                return bug.short_description
-            elif col == 11:
-                return bug.definition
-            elif col == 12:
-                return bug.urgency
-            elif col == 13:
-                return bug.impact
-            elif col == 14:
-                return bug.comments
-            elif col == 15:
-                return bug.file_names
+            columns = (
+                str(bug.id),
+                bug.status,
+                bug.system,
+                bug.system_version,
+                bug.created_at,
+                bug.updated_at,
+                bug.modified_by,
+                bug.service_now_id,
+                bug.campaign_run,
+                bug.requirements,
+                bug.short_description,
+                bug.definition,
+                bug.urgency,
+                bug.impact,
+                bug.comments,
+                bug.file_names,
+            )
+            if 0 <= index.column() < len(columns):
+                return columns[index.column()]
 
         return None
 

@@ -1,6 +1,3 @@
-from uat_tool.application import (
-    ApplicationContext,
-)
 from uat_tool.application.dto import (
     BugFormDTO,
     BugHistoryServiceDTO,
@@ -18,9 +15,6 @@ logger = get_logger(__name__)
 
 class BugService(BaseService):
     """Servicio para manejar la lógica de negocio de Bugs."""
-
-    def __init__(self, app_context: ApplicationContext):
-        super().__init__(app_context)
 
     # --- MÉTODOS BÁSICOS (para la lógica de negocio y otros servicios) ---
 
@@ -58,8 +52,7 @@ class BugService(BaseService):
                 bug_dto = BugServiceDTO.from_model(bug)
                 bug_dto.files = file_dtos
                 return bug_dto
-            else:
-                return None
+            return None
 
     # --- MÉTODOS ENRIQUECIDOS (específicos para UI) ---
 
@@ -100,7 +93,7 @@ class BugService(BaseService):
                 requirement_codes=requirement_codes,
             )
         except Exception as e:
-            logger.error(f"Error enriqueciendo bug {bug_dto.id} para tabla: {e}")
+            logger.error("Error enriqueciendo bug %i para tabla: %s", bug_dto.id, e)
             return BugTableDTO.from_service_dto(bug_dto)
 
     # --- MÉTODOS CRUD ---

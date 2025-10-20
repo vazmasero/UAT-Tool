@@ -87,6 +87,7 @@ class StepFormDTO(BaseFormDTO):
     def from_service_dto(cls, service_dto: StepServiceDTO) -> "StepFormDTO":
         """Convierte ServiceDTO -> FormDTO para precargar formulario."""
         return cls(
+            id=service_dto.id,
             le_action=service_dto.action,
             le_expected_result=service_dto.expected_result,
             le_comments=service_dto.comments,
@@ -228,6 +229,7 @@ class CaseFormDTO(BaseFormDTO):
         ]
 
         return cls(
+            id=service_dto.id,
             le_code=service_dto.code,
             le_name=service_dto.name,
             le_comments=service_dto.comments,
@@ -337,6 +339,7 @@ class BlockFormDTO(BaseFormDTO):
     def from_service_dto(cls, service_dto: BlockServiceDTO) -> "BlockFormDTO":
         """Convierte ServiceDTO -> FormDTO para precargar formulario."""
         return cls(
+            id=service_dto.id,
             le_code=service_dto.code,
             le_name=service_dto.name,
             cb_system=str(service_dto.system_id),
@@ -458,6 +461,7 @@ class CampaignFormDTO(BaseFormDTO):
     def from_service_dto(cls, service_dto: CampaignServiceDTO) -> "CampaignFormDTO":
         """Convierte ServiceDTO -> FormDTO para precargar formulario."""
         return cls(
+            id=service_dto.id,
             le_code=service_dto.code,
             le_description=service_dto.description,
             cb_system=str(service_dto.system_id),

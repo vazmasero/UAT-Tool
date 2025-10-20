@@ -22,7 +22,7 @@ class Environment(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False)
     description = Column(Text, nullable=False)
-    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)  # pylint: disable=not-callable
 
     environment_emails = relationship("Email", back_populates="environment_rel")
     environment_operators = relationship("Operator", back_populates="environment_rel")
@@ -100,4 +100,4 @@ class File(Base):
     mime_type = Column(String, nullable=False)
     size = Column(String, nullable=False)
     uploaded_by = Column(String, nullable=False)
-    uploaded_at = Column(DateTime, server_default=func.now(), nullable=False)
+    uploaded_at = Column(DateTime, server_default=func.now(), nullable=False)  # pylint: disable=not-callable

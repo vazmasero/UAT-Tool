@@ -83,3 +83,7 @@ CMakeLists.txt.user*
 
 # Virtual environment 
 .venv/
+
+# Graphviz
+.graphviz/
+

@@ -1,7 +1,7 @@
 """Módulo principal de la aplicación.
 
-Inicializa la base de datos, crea la ventana principal y lanza
-el bucle de eventos de la interfaz gráfica.
+Inicializa la base de datos, contexto de aplicación, controlador principal y
+crea la ventana principal y lanza el bucle de eventos de la interfaz gráfica.
 """
 
 import sys
@@ -21,6 +21,14 @@ class ApplicationOrchestrator:
     """Orquestador principal de la aplicación."""
 
     def __init__(self):
+        """Inicializa ApplicationOrchestrator con placeholders.
+
+        Configura los atributos de instancia de applicación, contexto, controlador y ventana principal
+        a None. Estos serán incializados más tarde durante el ciclo de la aplicación.
+
+        Esta inicialización diferida permite una gestión de dependencias y un manejo de errores correcto
+        durante la inicialización de la aplicación.
+        """
         self.app = None
         self.app_context = None
         self.main_controller = None
@@ -56,7 +64,7 @@ class ApplicationOrchestrator:
             logger.info("Aplicación lista")
 
         except Exception as e:
-            logger.error(f"Error durante la inicialización: {e}")
+            logger.error("Error durante la inicialización: %s", e)
             self._safe_shutdown()
             raise
 
@@ -75,15 +83,38 @@ class ApplicationOrchestrator:
 
     def _safe_shutdown(self):
         """Cierre seguro de la aplicación."""
+        shutdown_actions = [
+            (self.main_controller, "shutdown"),
+            (self.app, "quit"),
+            (self.app_context, "shutdown"),
+        ]
+
+        for component, shutdown_method in shutdown_actions:
+            self._safe_component_shutdown(component, shutdown_method)
+
+    def _safe_component_shutdown(self, component, method_name):
+        """Apaga un componente individual de forma segura."""
+        if component is None:
+            return
+
         try:
-            if self.main_controller:
-                self.main_controller.shutdown()
-            if self.app:
-                self.app.quit()
-            if self.app_context:
-                self.app_context.shutdown()
+            method = getattr(component, method_name)
+            method()
         except Exception as e:
-            logger.error(f"Error durante el cierre: {e}")
+            component_name = type(component).__name__
+            logger.error("Error cerrando %s: %s", component_name, e)
+
+    def _safe_component_shutdown(self, component, method_name):
+        """Apaga un componente individual de forma segura."""
+        if component is None:
+            return
+
+        try:
+            method = getattr(component, method_name)
+            method()
+        except Exception as e:
+            component_name = type(component).__name__
+            logger.error("Error cerrando %s: %s", component_name, e)
 
     def run(self):
         """Ejecuta la aplicación principal."""
@@ -101,7 +132,7 @@ class ApplicationOrchestrator:
             return return_code
 
         except Exception as e:
-            logger.error(f"Error durante la ejecución: {e}")
+            logger.error("Error durante la ejecución: %s", e)
             return 1
         finally:
             self._safe_shutdown()
@@ -116,7 +147,7 @@ def main():
         return orchestrator.run()
 
     except Exception as e:
-        logger.error(f"Error fatal: {e}")
+        logger.error("Error fatal: %s", e)
         return 1
 
 

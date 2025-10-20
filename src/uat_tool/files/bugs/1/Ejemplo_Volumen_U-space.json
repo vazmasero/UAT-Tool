@@ -1,0 +1,211 @@
+[
+    {
+        "id": 154,
+        "typeAction": "UPDATE",
+        "cispProvider": "20/0",
+        "usspProviders": [
+            {
+                "name": "Enaire",
+                "identification": "20/1",
+                "url": "enaire.es",
+                "email": "user@enaire.es",
+                "u-spaceServices": [
+                    "Network Id",
+                    "Traffic Information",
+                    "Geo-Awareness",
+                    "UAS Flight Authorization"
+                ],
+                "certificationLimitations": []
+            }
+        ],
+        "country": "ESP",
+        "airspaceVolume": {
+            "horizontalProjection": {
+                "coordinates": [
+                    [
+                        [
+                            -6.981907090696694,
+                            39.42257056039209
+                        ],
+                        [
+                            -6.804980696919017,
+                            39.42257056039209
+                        ],
+                        [
+                            -6.804980696919017,
+                            39.37906105711831
+                        ],
+                        [
+                            -6.981907090696694,
+                            39.37906105711831
+                        ],
+                        [
+                            -6.981907090696694,
+                            39.42257056039209
+                        ]
+                    ]
+                ],
+                "type": "Polygon"
+            },
+            "lowerLimit": 0,
+            "lowerVerticalReference": "AGL",
+            "upperLimit": 1800,
+            "upperVerticalReference": "AGL",
+            "uomDimensions": "M"
+        },
+        "airspaceVolumeStructure": [
+            {
+                "sectorVolume": {
+                    "horizontalProjection": {
+                        "coordinates": [
+                            [
+                                [
+                                    -6.981907090696694,
+                                    39.42257056039209
+                                ],
+                                [
+                                    -6.928352769089116,
+                                    39.42257056039209
+                                ],
+                                [
+                                    -6.939687886238914,
+                                    39.37906105711831
+                                ],
+                                [
+                                    -6.981907090696694,
+                                    39.37906105711831
+                                ],
+                                [
+                                    -6.981907090696694,
+                                    39.42257056039209
+                                ]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "lowerLimit": 0,
+                    "lowerVerticalReference": "AGL",
+                    "upperLimit": 1800,
+                    "upperVerticalReference": "AGL",
+                    "uomDimensions": "M"
+                },
+                "sectorName": "Sector1"
+            },
+            {
+                "sectorVolume": {
+                    "horizontalProjection": {
+                        "coordinates": [
+                            [
+                                [
+                                    -6.928352769089116,
+                                    39.42257056039209
+                                ],
+                                [
+                                    -6.86264194503039,
+                                    39.42257056039209
+                                ],
+                                [
+                                    -6.863299053270595,
+                                    39.37906105711831
+                                ],
+                                [
+                                    -6.939687886238914,
+                                    39.37906105711831
+                                ],
+                                [
+                                    -6.928352769089116,
+                                    39.42257056039209
+                                ]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "lowerLimit": 0,
+                    "lowerVerticalReference": "AGL",
+                    "upperLimit": 1800,
+                    "upperVerticalReference": "AGL",
+                    "uomDimensions": "M"
+                },
+                "sectorName": "Sector2"
+            },
+            {
+                "sectorVolume": {
+                    "horizontalProjection": {
+                        "coordinates": [
+                            [
+                                [
+                                    -6.86264194503039,
+                                    39.42257056039209
+                                ],
+                                [
+                                    -6.804980696919017,
+                                    39.42257056039209
+                                ],
+                                [
+                                    -6.804980696919017,
+                                    39.37906105711831
+                                ],
+                                [
+                                    -6.863299053270595,
+                                    39.37906105711831
+                                ],
+                                [
+                                    -6.86264194503039,
+                                    39.42257056039209
+                                ]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "lowerLimit": 0,
+                    "lowerVerticalReference": "AGL",
+                    "upperLimit": 1800,
+                    "upperVerticalReference": "AGL",
+                    "uomDimensions": "M"
+                },
+                "sectorName": "Sector3"
+            }
+        ],
+        "name": "VolUEspacio",
+        "operationalConditionsAndAirspaceRestrictions": {
+            "airspaceRestrictions": {},
+            "operationalConditions": {
+                "deviationThresholds": {
+                    "horizontal": 50,
+                    "vertical": 50
+                },
+                "protectionBuffers": {
+                    "horizontal": 0,
+                    "vertical": 0
+                },
+                "activationRequestInterval": {
+                    "timeBeforeStart": 25,
+                    "timeAfterStart": 25
+                },
+                "authorizationTimeThreshold": 600,
+                "weather": {
+                    "minTemperature": 1,
+                    "maxTemperature": 50,
+                    "maxWindSpeed": 36
+                },
+                "maximumUAS": 50,
+                "mannedSafetyDistance": {
+                    "horizontal": 250,
+                    "vertical": 75
+                },
+                "proximity": {
+                    "unmannedManned": {
+                        "horizontal": 250,
+                        "vertical": 75
+                    },
+                    "unmannedUnmanned": {
+                        "horizontal": 250,
+                        "vertical": 75
+                    }
+                }
+            }
+        },
+        "UASRestrictions": {},
+        "U-SpaceServicesRequirements": {}
+    }
+]

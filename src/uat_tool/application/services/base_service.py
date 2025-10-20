@@ -25,7 +25,7 @@ class BaseService:
                 system = uow.sys_repo.get_by_id(system_id)
                 return system.name if system else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre del sistema {system_id}: {e}")
+            logger.error("Error obteniendo nombre del sistema %i: %s", system_id, e)
             return "Error"
 
     def _get_section_name(self, section_id: int) -> str:
@@ -36,7 +36,7 @@ class BaseService:
                 section = uow.section_repo.get_by_id(section_id)
                 return section.name if section else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre de la sección {section_id}: {e}")
+            logger.error("Error obteniendo nombre de la sección %i: %s", section_id, e)
             return "Error"
 
     def _get_reason_name(self, reason_id: int) -> str:
@@ -47,7 +47,7 @@ class BaseService:
                 reason = uow.reason_repo.get_by_id(reason_id)
                 return reason.name if reason else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre de la razón {reason_id}: {e}")
+            logger.error("Error obteniendo nombre de la razón %i: %s", reason_id, e)
             return "Error"
 
     def _get_requirement_code(self, requirement_id: int) -> str:
@@ -58,7 +58,9 @@ class BaseService:
                 requirement = uow.req_repo.get_by_id(requirement_id)
                 return requirement.code if requirement else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo código de requisito {requirement_id}: {e}")
+            logger.error(
+                "Error obteniendo código de requisito %i: %s", requirement_id, e
+            )
             return ["Error"]
 
     def _get_file_name(self, file_id: int) -> str:
@@ -69,7 +71,7 @@ class BaseService:
                 file_record = uow.file_repo.get_by_id(file_id)
                 return file_record.filename if file_record else "File not found"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre de archivo {file_id}: {e}")
+            logger.error("Error obteniendo nombre de archivo %i: %s", file_id, e)
             return "Error"
 
     def _get_file_path(self, file_id: int) -> str:
@@ -80,7 +82,7 @@ class BaseService:
                 file_record = uow.file_repo.get_by_id(file_id)
                 return file_record.filepath if file_record else "File not found"
         except Exception as e:
-            logger.error(f"Error obteniendo ruta de archivo {file_id}: {e}")
+            logger.error("Error obteniendo ruta de archivo %i: %s", file_id, e)
             return "Error"
 
     def _get_operator_name(self, operator_id: int) -> str:
@@ -91,7 +93,7 @@ class BaseService:
                 operator = uow.ope_repo.get_by_id(operator_id)
                 return operator.name if operator else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre del operador {operator_id}: {e}")
+            logger.error("Error obteniendo nombre del operador %i: %s", operator_id, e)
             return "Error"
 
     def _get_organization_name(self, organization_id: int) -> str:
@@ -103,7 +105,7 @@ class BaseService:
                 return organization.name if organization else "Unknown"
         except Exception as e:
             logger.error(
-                f"Error obteniendo nombre de la organización {organization_id}: {e}"
+                "Error obteniendo nombre de la organización %i: %s", organization_id, e
             )
             return "Error"
 
@@ -115,7 +117,7 @@ class BaseService:
                 email = uow.email_repo.get_by_id(email_id)
                 return email.email if email else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo email de {email_id}: {e}")
+            logger.error("Error obteniendo email de %i: %s", email_id, e)
             return "Error"
 
     def _get_drone_serial_number(self, drone_id: int) -> str:
@@ -126,7 +128,7 @@ class BaseService:
                 drone = uow.drone_repo.get_by_id(drone_id)
                 return drone.serial_number if drone else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo número de serie de {drone_id}: {e}")
+            logger.error("Error obteniendo número de serie de %i: %s", drone_id, e)
             return "Error"
 
     def _get_uas_zone_name(self, uas_zone_id: int) -> str:
@@ -137,7 +139,9 @@ class BaseService:
                 uas_zone = uow.zone_repo.get_by_id(uas_zone_id)
                 return uas_zone.name if uas_zone else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre de zona UAS de {uas_zone_id}: {e}")
+            logger.error(
+                "Error obteniendo nombre de zona UAS de %i: %s", uas_zone_id, e
+            )
             return "Error"
 
     def _get_uhub_user_username(self, uhub_user_id: int) -> str:
@@ -148,7 +152,9 @@ class BaseService:
                 user = uow.user_repo.get_by_id(uhub_user_id)
                 return user.username if user else "Unknown"
         except Exception as e:
-            logger.error(f"Error obteniendo nombre de usuario de {uhub_user_id}: {e}")
+            logger.error(
+                "Error obteniendo nombre de usuario de %i: %s", uhub_user_id, e
+            )
             return "Error"
 
     # --- MÉTODOS DE LOGGING Y ERRORES ---
@@ -158,14 +164,17 @@ class BaseService:
     ):
         """Log común para operaciones de servicio."""
         entity_info = (
-            f" {entity_type} ID {entity_id}" if entity_id else f" {entity_type}s"
+            "%s ID %i" if entity_id else "%ss",
+            entity_type,
+            entity_id,
+            entity_type,
         )
-        logger.info(f"Operación '{operation}' en{entity_info}")
+        logger.info("Operación '%s' en %s", operation, entity_info)
 
     def _handle_service_error(
         self, operation: str, entity_type: str, error: Exception
     ) -> None:
         """Manejo común de errores en servicios."""
-        logger.error(f"Error en {operation} de {entity_type}: {error}")
+        logger.error("Error en %s de %s: %s", operation, entity_type, error)
         # Puede lanzar una excepción específica del dominio si es necesario
         raise error

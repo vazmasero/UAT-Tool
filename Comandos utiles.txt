@@ -1,0 +1,41 @@
+Te saca los metodos más problematicos por su complejidad
+radon cc src/uat_tool/ -j > analisis_complejidad.json
+radon cc src/uat_tool/ -s | Out-File -FilePath analisis_complejidad.md
+radon cc src/uat_tool/ -s > analisis_complejidad.txt
+
+Te saca las métricas de mantenibilidad
+radon mi src/uat_tool/ -s > analisis_mantenibilidad.txt
+
+Te saca metricas de longitud de archivos y legibilidad
+radon raw src/uat_tool/ -s > analisis_metodos_largos.txt
+
+Te saca diagrama de clases y de paquetes y dependencias
+pyreverse -o png -p UAT_Tool uat_tool/
+
+
+prospector src/uat_tool/ --ignore-paths "src\uat_tool\presentation\views\ui, src\uat_tool\presentation\views\ui\*" --output-format grouped > analisis_prospector.txt
+prospector src/uat_tool/ --output-format json > analisis_prospector.json
+
+Duplicacion de codigo
+flake8 --select=R src/uat_tool/ > duplicados.txt
+
+# Solo las llamadas entre archivos (mucho texto)
+python -m trace --trackcalls src/uat_tool/main.py > trace_llamadas.txt
+
+Tiempos de ejecución, cuellos de botella
+# Profile completo
+pyinstrument -r html --outfile perfil.html src/uat_tool/main.py
+
+# Profile específico de un módulo
+python -m pyinstrument -m uat_tool.presentation.controllers.bug_tab_controller
+
+# Ejecutar tu aplicación con profiling en vivo (va pillando en vivo las cosas)
+scalene --realtime --html --outfile perfil.html src/uat_tool/main.py
+
+# Analiza la documentación
+pydocstyle src/uat_tool > reporte_pydocstyle.txt
+
+
+# Para hacer diagramas de llamadas entre funciones utiles
+code2flow src/uat_tool/ --output docs/flow.dot
+D:\Coding\UAT-Tool\graphviz\bin\dot.exe -Tpng docs/flow.dot -o docs/flow.png

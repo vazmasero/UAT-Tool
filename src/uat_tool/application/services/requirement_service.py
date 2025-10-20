@@ -1,6 +1,3 @@
-from uat_tool.application import (
-    ApplicationContext,
-)
 from uat_tool.application.dto import (
     RequirementServiceDTO,
     RequirementTableDTO,
@@ -15,9 +12,6 @@ logger = get_logger(__name__)
 
 class RequirementService(BaseService):
     """Servicio para manejar la lógica de negocio de Requisitos."""
-
-    def __init__(self, app_context: ApplicationContext):
-        super().__init__(app_context)
 
     # --- MÉTODOS BÁSICOS (para la lógica de negocio y otros servicios) ---
 
@@ -90,7 +84,7 @@ class RequirementService(BaseService):
 
         except Exception as e:
             logger.error(
-                f"Error enriqueciendo requisito {requirement_dto.id} para tabla: {e}"
+                "Error enriqueciendo requisito %i para tabla: %s", requirement_dto.id, e
             )
             return RequirementTableDTO.from_service_dto(requirement_dto)
 

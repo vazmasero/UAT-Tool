@@ -39,7 +39,7 @@ class ApplicationContext:
             logger.info("ApplicationContext inicializado correctamente")
 
         except Exception as e:
-            logger.error(f"Error inicializando ApplicationContext: {e}")
+            logger.error("Error inicializando ApplicationContext: %s", e)
             raise
 
     def _initialize_database(self):
@@ -56,12 +56,12 @@ class ApplicationContext:
             logger.info("Base de datos inicializada correctamente")
 
         except Exception as e:
-            logger.error(f"Error inicializando base de datos: {e}")
+            logger.error("Error inicializando base de datos: %s", e)
             raise
 
     def _initialize_services(self):
         """Inicializa los servicios de la aplicación."""
-        from uat_tool.application.services import (
+        from uat_tool.application.services import (  # pylint: disable=import-outside-toplevel
             AuxiliaryService,
             BugService,
             RequirementService,
@@ -82,7 +82,7 @@ class ApplicationContext:
             logger.info("Servicios inicializados correctamente")
 
         except Exception as e:
-            logger.error(f"Error inicializando servicios: {e}")
+            logger.error("Error inicializando servicios: %s", e)
             raise
 
     def get_uow(self) -> UnitOfWork:
@@ -119,15 +119,15 @@ class ApplicationContext:
                 try:
                     service.shutdown()
                 except Exception as e:
-                    errors.append(f"{name}: {e}")
-                    logger.error(f"Error cerrando servicio {name}: {e}")
+                    errors.append("%s: %s", name, e)
+                    logger.error("Error cerrando servicio %s: %s", name, e)
 
         # Limpiar siempre
         self._services.clear()
         self._is_initialized = False
 
         if errors:
-            logger.error(f"Error(es) cerrando ApplicationContext: {', '.join(errors)}")
+            logger.error("Error(es) cerrando ApplicationContext: %s", ", ".join(errors))
         else:
             logger.info("ApplicationContext cerrado correctamente")
 

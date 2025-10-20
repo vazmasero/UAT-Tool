@@ -88,7 +88,6 @@ __all__ = [
     "BugFormDTO",
     "BugHistoryServiceDTO",
     "BugHistoryTableDTO",
-    "BugHistoryServiceDTOBugFormDTO",
     "BugTableDTO",
     "BugServiceDTO",
     "RequirementFormDTO",

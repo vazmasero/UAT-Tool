@@ -33,9 +33,12 @@ class CampaignRun(EnvironmentMixin, Base):
     campaign_id = Column(
         Integer, ForeignKey("campaigns.id", ondelete="RESTRICT"), nullable=False
     )
-    started_at = Column(DateTime, server_default=func.now(), nullable=False)
+    started_at = Column(DateTime, server_default=func.now(), nullable=False)  # pylint: disable=not-callable
     updated_at = Column(
-        DateTime, server_default=func.now(), onupdate=func.now(), nullable=False
+        DateTime,
+        server_default=func.now(),  # pylint: disable=not-callable
+        onupdate=func.now(),  # pylint: disable=not-callable
+        nullable=False,
     )
     ended_at = Column(DateTime)
     modified_by = Column(String, nullable=False)

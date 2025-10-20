@@ -72,7 +72,7 @@ class BugHistory(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     bug_id = Column(Integer, ForeignKey("bugs.id", ondelete="CASCADE"), nullable=False)
     changed_by = Column(String, nullable=False)
-    change_timestamp = Column(DateTime, server_default=func.now(), nullable=False)
+    change_timestamp = Column(DateTime, server_default=func.now(), nullable=False)  # pylint: disable=not-callable
     change_summary = Column(Text, nullable=False)
 
     bug = relationship("Bug", back_populates="history")

@@ -37,25 +37,20 @@ class RequirementTableModel(QAbstractTableModel):
             return None
 
         requirement = self.requirements[index.row()]
-        col = index.column()
 
         if role == Qt.ItemDataRole.DisplayRole:
-            if col == 0:
-                return str(requirement.id)
-            elif col == 1:
-                return requirement.code
-            elif col == 2:
-                return requirement.definition
-            elif col == 3:
-                return requirement.systems
-            elif col == 4:
-                return requirement.sections
-            elif col == 5:
-                return requirement.created_at
-            elif col == 6:
-                return requirement.updated_at
-            elif col == 7:
-                return requirement.modified_by
+            columns = (
+                str(requirement.id),
+                requirement.code,
+                requirement.definition,
+                requirement.systems,
+                requirement.sections,
+                requirement.created_at,
+                requirement.updated_at,
+                requirement.modified_by,
+            )
+            if 0 <= index.column() < len(columns):
+                return columns[index.column()]
 
         return None
 
