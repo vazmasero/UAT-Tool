@@ -37,8 +37,8 @@ class Requirement(AuditMixin, EnvironmentMixin, Base):
         UniqueConstraint("environment_id", "code", name="uq_requirement_code_env"),
     )
 
-    environment_rel = relationship(
-        "Environment", back_populates="environment_requirements"
+    environment = relationship(
+        "Environment", back_populates="requirements"
     )
     bugs = relationship(
         "Bug", secondary="bug_requirements", back_populates="requirements"

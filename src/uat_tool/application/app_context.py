@@ -1,6 +1,6 @@
 from typing import Any
 
-from uat_tool.infrastructure import Session, init_db
+from uat_tool.infrastructure import get_engine, get_session_factory, init_db
 from uat_tool.shared import get_logger
 
 from .uow import UnitOfWork, unit_of_work
@@ -13,12 +13,18 @@ class ApplicationContext:
 
     _instance: "ApplicationContext" = None
 
-    def __init__(self, test_mode: bool = False, test_engine=None):
-        self._session_factory = Session
-        self._services: dict[str, Any] = {}
+    def __init__(
+        self, test_mode: bool = False, test_engine=None, load_initial_data: bool = True
+    ):
         self._test_mode = test_mode
+        self._load_initial_data = load_initial_data
+
+        self._engine = test_engine or get_engine()
+
+        self._session_factory = get_session_factory(self._engine, scoped=not test_mode)
+
+        self._services: dict[str, Any] = {}
         self._is_initialized = False
-        self._test_engine = test_engine
 
     def initialize(self):
         """Inicializa el contexto de la aplicación."""
@@ -29,10 +35,7 @@ class ApplicationContext:
         try:
             logger.info("Inicializando ApplicationContext...")
 
-            # Inicializar base de datos
             self._initialize_database()
-
-            # Inicializar servicios
             self._initialize_services()
 
             self._is_initialized = True
@@ -43,18 +46,15 @@ class ApplicationContext:
             raise
 
     def _initialize_database(self):
-        """Inicializa la base de datos con datos iniciales."""
+        """Inicializa la base de datos (para tests o entorno real)."""
         try:
             logger.info("Inicializando base de datos...")
-
-            # En modo test, dropeamos y recreamos la base de datos usando el motor de test
-            drop_existing = self._test_mode
-            engine = self._test_engine if self._test_mode else None
-
-            init_db(drop_existing=drop_existing, engine=engine)
-
+            init_db(
+                drop_existing=self._test_mode,
+                engine=self._engine,
+                load_initial_data=self._load_initial_data,
+            )
             logger.info("Base de datos inicializada correctamente")
-
         except Exception as e:
             logger.error("Error inicializando base de datos: %s", e)
             raise
@@ -122,7 +122,6 @@ class ApplicationContext:
                     errors.append("%s: %s", name, e)
                     logger.error("Error cerrando servicio %s: %s", name, e)
 
-        # Limpiar siempre
         self._services.clear()
         self._is_initialized = False
 

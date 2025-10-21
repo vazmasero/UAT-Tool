@@ -1,0 +1,1 @@
+Aqui básicamente se mostrará en un futuro la política de borrado entre tablas y las cositas varias.

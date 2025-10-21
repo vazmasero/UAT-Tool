@@ -1,47 +1,47 @@
 from sqlalchemy.orm import sessionmaker
 
 from .base import Base
-from .engine import Session
-from .engine import engine as default_engine
+from .engine import get_engine
 
 
-def init_db(drop_existing: bool = False, engine=None):
+def init_db(drop_existing: bool = False, engine=None, load_initial_data: bool = True):
     """Inicializa la base de datos.
 
     Esta función crea la base de datos y todas las tablas definidas en los modelos y
     la pobla con los datos iniciales.
 
     Args:
-        drop_existing: Si True, elimina las tablas existentes primero
+        drop_existing (bool): Si True, elimina las tablas existentes primero
         engine: Motor de base de datos opcional (para testing)
+        load_initial_data (bool): Si True, carga los datos iniciales.
 
     """
-    db_engine = engine if engine is not None else default_engine
+    actual_engine = engine or get_engine()
 
     if drop_existing:
-        Base.metadata.drop_all(db_engine)
+        Base.metadata.drop_all(actual_engine)
 
-    Base.metadata.create_all(db_engine)
+    Base.metadata.create_all(actual_engine)
 
-    # Crear sesión apropiada según el engine
-    if engine is not None:
-        # Testing: crear una nueva sesión con el engine de test
-        TestSession = sessionmaker(bind=engine)
-        session = TestSession()
-    else:
-        # Producción: usar la sesión por defcto (scoped)
-        session = Session()
+    SessionLocal = sessionmaker(
+        bind=actual_engine, autoflush=False, autocommit=False, future=True
+    )
+    session = SessionLocal()
 
     try:
-        from .initial_data import load_initial_data
+        if load_initial_data:
+            from .initial_data import load_initial_data as load_data
 
-        load_initial_data(session)
+            load_data(session)
+
         session.commit()
     except Exception as e:
         session.rollback()
         raise e
     finally:
         session.close()
+
+    return actual_engine  # Se devuelve el engine únicamente por si es útil en tests
 
 
 if __name__ == "__main__":

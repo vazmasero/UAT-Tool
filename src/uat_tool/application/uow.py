@@ -27,7 +27,7 @@ from uat_tool.domain import (
     UhubUserRepository,
     UspaceRepository,
 )
-from uat_tool.infrastructure import Session
+from uat_tool.infrastructure import get_session_factory
 
 
 class UnitOfWork:
@@ -101,7 +101,8 @@ def unit_of_work() -> Generator[UnitOfWork, None, None]:
         uow.bug_repo.create(...)
         # Commit automático al salir si no hay erorres
     """
-    session = Session()
+    session_factory = get_session_factory()
+    session = session_factory()
     uow = UnitOfWork(session)
     try:
         yield uow

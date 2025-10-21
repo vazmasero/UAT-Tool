@@ -8,7 +8,7 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from uat_tool.application import ApplicationContext
+from uat_tool.application import bootstrap
 from uat_tool.presentation import MainWindow
 from uat_tool.presentation.controllers import MainController
 from uat_tool.shared import get_logger, setup_logging
@@ -47,8 +47,7 @@ class ApplicationOrchestrator:
 
             # Inicializar contexto de la aplicación
             logger.info("Configurando capa de aplicación...")
-            self.app_context = ApplicationContext.get_instance()
-            self.app_context.initialize()
+            self.app_context = bootstrap()
 
             # Configurar controlador principal
             logger.info("Configurando interfaz...")
@@ -124,10 +123,7 @@ class ApplicationOrchestrator:
         try:
             logger.info("Mostrando ventana principal...")
             self.main_window.show()
-
-            # Ejecutar aplicación
             return_code = self.app.exec()
-
             logger.info("Aplicación finalizada")
             return return_code
 

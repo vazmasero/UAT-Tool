@@ -103,6 +103,6 @@ class Campaign(AuditMixin, EnvironmentMixin, Base):
 
     campaign_runs = relationship("CampaignRun", back_populates="campaign")
     system = relationship("System", back_populates="campaigns")
-    environment_rel = relationship(
-        "Environment", back_populates="environment_campaigns"
+    environment = relationship(
+        "Environment", back_populates="campaigns"
     )

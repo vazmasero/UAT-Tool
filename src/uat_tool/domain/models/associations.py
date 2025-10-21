@@ -20,7 +20,7 @@ zone_organization = Table(
         primary_key=True,
     ),
     Column(
-        "org_id",
+        "uhub_org_id",
         Integer,
         ForeignKey("uhub_orgs.id", ondelete="RESTRICT"),
         primary_key=True,

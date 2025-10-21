@@ -37,8 +37,6 @@ class CampaignRun(EnvironmentMixin, Base):
     updated_at = Column(
         DateTime,
         server_default=func.now(),  # pylint: disable=not-callable
-        onupdate=func.now(),  # pylint: disable=not-callable
-        nullable=False,
     )
     ended_at = Column(DateTime)
     modified_by = Column(String, nullable=False)
@@ -47,8 +45,8 @@ class CampaignRun(EnvironmentMixin, Base):
     case_runs = relationship("CaseRun", back_populates="campaign_run")
     step_runs = relationship("StepRun", back_populates="campaign_run")
     bugs = relationship("Bug", back_populates="campaign_run")
-    environment_rel = relationship(
-        "Environment", back_populates="environment_campaign_runs"
+    environment = relationship(
+        "Environment", back_populates="campaign_runs"
     )
     campaign = relationship("Campaign", back_populates="campaign_runs")
 

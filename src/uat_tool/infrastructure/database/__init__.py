@@ -12,17 +12,18 @@ Configuración centralizada para PostgreSQL + SQLAlchemy.
 """
 
 from .base import AuditMixin, Base, EnvironmentMixin
-from .engine import DB_URL, Session, engine
+from .engine import get_engine, get_session_factory
 from .init_db import init_db
+from .models_init import init_models
 from .utils import get_or_create
 
 __all__ = [
     "AuditMixin",
     "EnvironmentMixin",
     "Base",
-    "Session",
-    "engine",
     "init_db",
+    "init_models",
     "get_or_create",
-    "DB_URL",
+    "get_engine",
+    "get_session_factory",
 ]

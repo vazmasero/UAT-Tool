@@ -1,5 +1,5 @@
 """
-db.models.bugs
+domain.models.bugs
 ----------------
 
 Modelos relacionados con los bugs encontrados en la aplicación.
@@ -57,7 +57,7 @@ class Bug(AuditMixin, EnvironmentMixin, Base):
     )
 
     campaign_run = relationship("CampaignRun", back_populates="bugs")
-    environment_rel = relationship("Environment", back_populates="environment_bugs")
+    environment = relationship("Environment", back_populates="bugs")
     system = relationship("System", back_populates="bugs")
     history = relationship("BugHistory", back_populates="bug")
 

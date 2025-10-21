@@ -43,7 +43,7 @@ class Email(AuditMixin, EnvironmentMixin, Base):
     )
 
     operators = relationship("Operator", back_populates="email")
-    environment_rel = relationship("Environment", back_populates="environment_emails")
+    environment = relationship("Environment", back_populates="emails")
 
 
 # ---- OPERATORS ---- #
@@ -75,8 +75,8 @@ class Operator(AuditMixin, EnvironmentMixin, Base):
     email = relationship("Email", back_populates="operators")
     drones = relationship("Drone", back_populates="operator")
     cases = relationship("Case", secondary="case_operators", back_populates="operators")
-    environment_rel = relationship(
-        "Environment", back_populates="environment_operators"
+    environment = relationship(
+        "Environment", back_populates="operators"
     )
 
 
@@ -100,7 +100,7 @@ class Drone(AuditMixin, EnvironmentMixin, Base):
     )
     operator = relationship("Operator", back_populates="drones")
     cases = relationship("Case", secondary="case_drones", back_populates="drones")
-    environment_rel = relationship("Environment", back_populates="environment_drones")
+    environment = relationship("Environment", back_populates="drones")
 
 
 # ---- U-HUB ORGANIZATIONS ---- #
@@ -124,8 +124,8 @@ class UhubOrg(AuditMixin, EnvironmentMixin, Base):
     uas_zones = relationship(
         "UasZone", secondary="zone_organization", back_populates="organizations"
     )
-    environment_rel = relationship(
-        "Environment", back_populates="environment_uhub_orgs"
+    environment = relationship(
+        "Environment", back_populates="uhub_orgs"
     )
 
     __table_args__ = (
@@ -158,8 +158,8 @@ class UhubUser(AuditMixin, EnvironmentMixin, Base):
     cases = relationship(
         "Case", secondary="case_uhub_users", back_populates="uhub_users"
     )
-    environment_rel = relationship(
-        "Environment", back_populates="environment_uhub_users"
+    environment = relationship(
+        "Environment", back_populates="uhub_users"
     )
 
     __table_args__ = (
@@ -213,8 +213,8 @@ class UasZone(AuditMixin, EnvironmentMixin, Base):
     )
 
     cases = relationship("Case", secondary="case_uas_zones", back_populates="uas_zones")
-    environment_rel = relationship(
-        "Environment", back_populates="environment_uas_zones"
+    environment = relationship(
+        "Environment", back_populates="uas_zones"
     )
 
     __table_args__ = (
@@ -239,7 +239,7 @@ class Uspace(AuditMixin, EnvironmentMixin, Base):
     name = Column(String, nullable=False)
     sectors_count = Column(Integer, nullable=False)
 
-    environment_rel = relationship("Environment", back_populates="environment_uspaces")
+    environment = relationship("Environment", back_populates="uspaces")
 
     __table_args__ = (
         UniqueConstraint("environment_id", "code", name="uq_uspace_code_env"),

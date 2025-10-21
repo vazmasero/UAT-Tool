@@ -14,6 +14,7 @@ Todos los componentes están exportados para importación directa:
 """
 
 from .app_context import ApplicationContext
+from .bootstrap import bootstrap
 from .services.auxiliary_service import AuxiliaryService
 
 # Services
@@ -26,6 +27,7 @@ from .uow import unit_of_work
 __all__ = [
     "AuxiliaryService",
     "ApplicationContext",
+    "bootstrap",
     "BugService",
     "RequirementService",
     "BaseService",

@@ -9,20 +9,19 @@ Proporciona acceso a la capa de infraestructura:
 """
 
 from .database import (
-    DB_URL,
     AuditMixin,
     Base,
     EnvironmentMixin,
-    Session,
-    engine,
+    get_engine,
     get_or_create,
+    get_session_factory,
     init_db,
 )
 
 __all__ = [
     # Configuración BD
-    "DB_URL",
-    "engine",
+    "get_engine",
+    "get_session_factory",
     "Session",
     # Base y Mixins para modelos
     "Base",

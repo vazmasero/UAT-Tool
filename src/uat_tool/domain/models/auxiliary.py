@@ -24,20 +24,20 @@ class Environment(Base):
     description = Column(Text, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)  # pylint: disable=not-callable
 
-    environment_emails = relationship("Email", back_populates="environment_rel")
-    environment_operators = relationship("Operator", back_populates="environment_rel")
-    environment_drones = relationship("Drone", back_populates="environment_rel")
-    environment_uhub_orgs = relationship("UhubOrg", back_populates="environment_rel")
-    environment_uhub_users = relationship("UhubUser", back_populates="environment_rel")
-    environment_uas_zones = relationship("UasZone", back_populates="environment_rel")
-    environment_uspaces = relationship("Uspace", back_populates="environment_rel")
-    environment_bugs = relationship("Bug", back_populates="environment_rel")
-    environment_campaigns = relationship("Campaign", back_populates="environment_rel")
-    environment_campaign_runs = relationship(
-        "CampaignRun", back_populates="environment_rel"
+    emails = relationship("Email", back_populates="environment")
+    operators = relationship("Operator", back_populates="environment")
+    drones = relationship("Drone", back_populates="environment")
+    uhub_orgs = relationship("UhubOrg", back_populates="environment")
+    uhub_users = relationship("UhubUser", back_populates="environment")
+    uas_zones = relationship("UasZone", back_populates="environment")
+    uspaces = relationship("Uspace", back_populates="environment")
+    bugs = relationship("Bug", back_populates="environment")
+    campaigns = relationship("Campaign", back_populates="environment")
+    campaign_runs = relationship(
+        "CampaignRun", back_populates="environment"
     )
-    environment_requirements = relationship(
-        "Requirement", back_populates="environment_rel"
+    requirements = relationship(
+        "Requirement", back_populates="environment"
     )
 
 
