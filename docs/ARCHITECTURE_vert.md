@@ -22,10 +22,10 @@ La aplicación sigue una arquitectura **en capas (Layered Architecture)**, con s
 graph TD
 
 %% CAPAS %%
-A[Presentation Layer<br>(controllers, dialogs, views, models, UI)] --> B[Application Layer<br>(services, DTOs, UoW, AppContext)]
-B --> C[Domain Layer<br>(entities, repositories interfaces, exceptions)]
-C --> D[Infrastructure Layer<br>(repositories concretos, database, ORM)]
-B --> E[Shared Layer<br>(logging, constants, utils)]
+A[Presentation Layer\n(controllers, dialogs, views, models, UI)] --> B[Application Layer\n(services, DTOs, UoW, AppContext)]
+B --> C[Domain Layer\n(entities, repository interfaces, exceptions)]
+C --> D[Infrastructure Layer\n(repositorios concretos, database, ORM)]
+B --> E[Shared Layer\n(logging, constants, utils)]
 A --> E
 
 %% ETIQUETAS %%
@@ -37,23 +37,23 @@ A4[UI (.ui y generados .py)]
 end
 
 subgraph "Application Layer"
-B1[Services<br>(BugService, RequirementService, etc.)]
-B2[DTOs<br>(FormDTO, TableDTO, ServiceDTO)]
-B3[UnitOfWork<br>(context manager con yield)]
-B4[AppContext<br>(inyección de dependencias)]
-B5[Bootstrap<br>(inicio y registro de dependencias)]
+B1[Services\n(BugService, RequirementService, etc.)]
+B2[DTOs\n(FormDTO, TableDTO, ServiceDTO)]
+B3[UnitOfWork\n(context manager con yield)]
+B4[AppContext\n(inyección de dependencias)]
+B5[Bootstrap\n(inicio y registro de dependencias)]
 end
 
 subgraph "Domain Layer"
 C1[Entities / Models]
-C2[Repository Interfaces<br>(Protocols)]
+C2[Repository Interfaces\n(Protocols)]
 C3[Exceptions]
 C4[Associations y reglas de dominio]
 end
 
 subgraph "Infrastructure Layer"
-D1[SQLAlchemy Repositories<br>(implementan interfaces)]
-D2[Database<br>(engine, base, init_db, utils)]
+D1[SQLAlchemy Repositories\n(implementan interfaces)]
+D2[Database\n(engine, base, init_db, utils)]
 D3[Fixtures / Alembic]
 end
 
@@ -62,6 +62,6 @@ E1[Logging]
 E2[Constants]
 E3[Utilities]
 end
-```
+
 
 
