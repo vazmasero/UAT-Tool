@@ -22,11 +22,11 @@ La aplicación sigue una arquitectura **en capas (Layered Architecture)**, con s
 graph TD
 
 %% CAPAS %%
-subgraph Presentation Layer
+subgraph Presentation_Layer
 PL1[Controllers]
-PL2[Dialogs & Views]
-PL3[Models & ProxyModels]
-PL4[UI Files (.ui y generados .py)]
+PL2[Dialogs_Views]
+PL3[Models_ProxyModels]
+PL4[UI_Files]
 end
 
 subgraph Application Layer
@@ -67,3 +67,4 @@ AL2 --> DL1
 AL3 --> DL2
 AL1 --> SL1
 PL1 --> SL1
+
